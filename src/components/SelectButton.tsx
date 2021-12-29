@@ -8,7 +8,7 @@ export default function SelectButton({selected, ...props}: SelectButtonProps) {
             {...props}
             borederColor={(selected ? 'darkgreen' : "rgba(0,0,0,1)") }
             backgroundColor={(selected ? 'green' : undefined)}
-            shadowOffcet={(selected ? { width: 0, height: 0 } : undefined ) }
+            shadowOffcet={(selected ? { width: -1, height: -1 } : undefined ) }
             borderWidth={3}
             />
     )
