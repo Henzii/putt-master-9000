@@ -1,34 +1,37 @@
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import Player from './Player';
 import RoundTabs from './RoundTabs';
-
-const gameData={
-    holes: 18,
-    pars:[3,3,3,3,4,4,3,4,5,3,4,3,4,5,4,3,3,3],
-    players: [
-        {
-            name: 'Henkka',
-            scores: [3,3,3],
-            id: 1,
-        },
-        {
-            name: 'Pekka',
-            scores:[3,3,4],
-            id: 2,
-        },
-    ]
-}
+import { useSelector } from 'react-redux';
+import { RootState } from '../utils/store';
+import { gameData } from '../reducers/gameDataReducer';
 
 export default function Peli() {
     const [selectedRound, setSelectedRound] = useState(1);
+    const gameData: gameData = useSelector((state: RootState) => state.gameData)
     return (
         <>
-        <RoundTabs tabs={gameData.holes} selectedRound={selectedRound} setSelectedRound={setSelectedRound}/>
-        <View style={{ flex: 1, justifyContent: 'flex-start' }}>
-            <Text>Peli</Text>
-            {gameData.players.map(p => <Player name={p.name} key={p.id} />)}
-        </View>
+            <RoundTabs tabs={gameData.holes} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
+            <View style={{ flex: 1, justifyContent: 'flex-start' }}>
+                <View style={peliStyles.headers}>
+                    <Text style={peliStyles.course}>{gameData.course}</Text>
+                    <Text style={peliStyles.layout}>{gameData.layout}</Text>
+                </View>
+                {gameData.players.map(p => <Player name={p.name} key={p.id} />)}
+            </View>
         </>
     )
 }
+
+const peliStyles = StyleSheet.create({
+    headers: {
+        padding: 10,
+    },
+    course: {
+        fontSize: 30,
+        fontWeight: 'bold',
+    },
+    layout: {
+        color: 'gray',
+    }
+})
