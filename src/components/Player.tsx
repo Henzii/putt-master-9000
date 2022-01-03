@@ -1,9 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Card } from 'react-native-paper';
-import Button from './Button';
 import SelectButton from './SelectButton';
-import SelectButtonGroup from './SelectButtonGroup';
 
 export default function Player({ name }: PlayerArgs) {
     const [selected, setSelected] = useState<number | null>(null)
@@ -54,16 +52,10 @@ const tyyli = StyleSheet.create({
         width: '70%'
     },
     main: {
-        borderColor: 'lightgray',
-        borderWidth: 1,
-        borderRadius: 7,
-
-        marginBottom: 5,
-
         minHeight: 120,
-        shadowOffset: { width: 5, height: 2 },
-        shadowOpacity: 0.2,
-        width: '95vw',
+        width: '100vw',
+        shadowRadius: 3,
+        marginBottom: 1,
         padding: 10,
     }
 })
