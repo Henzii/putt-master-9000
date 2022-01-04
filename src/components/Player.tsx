@@ -1,18 +1,26 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Card } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
 import SelectButton from './SelectButton';
 
-export default function Player({ name }: PlayerArgs) {
-    const [selected, setSelected] = useState<number | null>(null)
+import { gameDataPlayer, setScore } from '../reducers/gameDataReducer';
+
+export default function Player({ player, selectedRound }: PlayerArgs) {
+    const dispatch = useDispatch()
+    const handleButtonClick = (score: number) => {
+        setTimeout(() => {
+            dispatch(setScore(player.id, selectedRound, score))
+        }, 2000);
+    }
     return (
         <Card style={tyyli.main}>
             <Card.Title
-                title={name}
+                title={player.name}
             />
             <Card.Content style={tyyli.content}>
                 <View style={tyyli.contentLeft}>
-                    <Tulosnapit name={name} selected={selected} setSelected={setSelected} />
+                    <Tulosnapit name={player.name} score={player.scores[selectedRound]} setSelected={handleButtonClick} />
                 </View>
                 <View style={{ flex: 1 }}>
                     <Text>Jotain</Text>
@@ -23,20 +31,33 @@ export default function Player({ name }: PlayerArgs) {
     )
 
 }
-const Tulosnapit = ({ name, selected, setSelected }: { name: string, selected: number | null, setSelected: (i: number) => void }) => {
+const Tulosnapit = ({ name, score, setSelected }: { name: string, score: number | undefined, setSelected: (i: number) => void }) => {
+    const [pending, setPending] = useState<number | null>(null);
     const ret = [];
-    for (let i = -1; i < 4; i++) ret.push(
-        <SelectButton selected={(i === selected)}
+    const handleButtonClick = (btnNro: number) => {
+        setPending(btnNro);
+        setSelected(btnNro);
+    }
+    
+    useEffect(() => {
+        setPending(null);
+    }, [score])
+
+    for (let i = 1; i < 6; i++) ret.push(
+        <SelectButton 
+            selected={(i === score)}
+            pending={(i === pending)}
             key={name.concat(i.toString())}
             width="10vw"
-            onClick={() => setSelected(i)}
+            onClick={() => handleButtonClick(i)}
             text={i + ''}
         />)
 
     return <>{ret}</>
 }
 type PlayerArgs = {
-    name: string
+    player: gameDataPlayer,
+    selectedRound: number,
 }
 
 const tyyli = StyleSheet.create({

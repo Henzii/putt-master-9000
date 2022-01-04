@@ -7,8 +7,8 @@ import { RootState } from '../utils/store';
 import { gameData } from '../reducers/gameDataReducer';
 
 export default function Peli() {
-    const [selectedRound, setSelectedRound] = useState(1);
-    const gameData: gameData = useSelector((state: RootState) => state.gameData)
+    const [selectedRound, setSelectedRound] = useState(0);
+    const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     return (
         <>
             <RoundTabs tabs={gameData.holes} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
@@ -17,7 +17,7 @@ export default function Peli() {
                     <Text style={peliStyles.course}>{gameData.course}</Text>
                     <Text style={peliStyles.layout}>{gameData.layout}</Text>
                 </View>
-                {gameData.players.map(p => <Player name={p.name} key={p.id} />)}
+                {gameData.players.map(p => <Player key={p.id} player={p} selectedRound={selectedRound} />)}
             </View>
         </>
     )

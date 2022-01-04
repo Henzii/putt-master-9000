@@ -3,7 +3,7 @@ import { View, Text, ScrollView, Pressable, StyleSheet, SafeAreaView } from 'rea
 
 export default function RoundTabs({ tabs, selectedRound, setSelectedRound }: RoundTabsProps) {
     const tabsList: JSX.Element[] = [];
-    for (let i = 1; i <= tabs; i++) {
+    for (let i = 0; i < tabs; i++) {
         tabsList.push(
             <SingleTab 
                 key={'sc' + i}
@@ -29,7 +29,7 @@ export default function RoundTabs({ tabs, selectedRound, setSelectedRound }: Rou
 function SingleTab({ id, selected, onClick }: { id: number, selected: boolean, onClick: (n: number) => void}) {
     return (
         <Pressable style={[tabsStyle.single, (selected ? tabsStyle.selected : null)]} onPress={() => onClick(id)}>
-            <Text>{id}</Text>
+            <Text>{id+1}</Text>
         </Pressable>
     )
 }

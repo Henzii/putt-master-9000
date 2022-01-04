@@ -6,7 +6,7 @@ const defaultState = {
     players: [
         {
             name: 'Henkka',
-            scores: [3, 3, 3],
+            scores: [2, 3, 4],
             id: 1,
         },
         {
@@ -17,25 +17,50 @@ const defaultState = {
     ]
 }
 
-const reducer = (state = defaultState, action: gameDataReducerActions) => {
-    switch (action) {
+const reducer = (state = defaultState, action: gameDataReducerAction) => {
+    switch (action.type) {
         case 'TO_DO':
             return state;
+        case 'SET_SCORE':
+            const stateClone = { ...state }
+            const player = { ...stateClone.players.find(p => p.id === action.data.id) };
+            if (!player?.scores) return state;
+            player.scores[action.data.round] = action.data.score;
+            return stateClone;
+        default:
+            return state;
     }
-    return state;
 }
 
-type gameDataReducerActions = 'TO_DO'
-export interface gameData {
+export const setScore = (id: number | string, round: number, score: number): gameDataReducerAction => {
+    return {
+        type: 'SET_SCORE',
+        data: {
+            id,
+            round,
+            score
+        }
+    }
+}
+
+type gameDataReducerAction = {
+    type: 'TO_DO' | 'SET_SCORE',
+    data: {
+        id: number | string,
+        round: number,
+        score: number,
+    }
+}
+export type gameData = {
     holes: number,
     course: string,
     layout: string,
-    pars: [ number ],
-    players: [ gameDataPlayer ]
+    pars: number[],
+    players: [gameDataPlayer],
 }
-type gameDataPlayer = {
+export type gameDataPlayer = {
     name: string,
-    scores: [ number ],
+    scores: [number],
     id: number | string,
 }
 export default reducer;
