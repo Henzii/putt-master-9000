@@ -1,10 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import ToolBar from './ToolBar';
 import Menu from './Menu';
 import { Routes, Route } from 'react-router-native';
 import Peli from './Peli';
+import Frontpage from './Frontpage';
+import SelectCourses from './SelectCourse';
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -13,8 +15,10 @@ export default function App() {
       <ToolBar handleMenuClick={() => setMenuOpen(!menuOpen)} />
       <Menu menuOpen={menuOpen} />
       <Routes>
-        <Route path="/" element={<Peli />} />
-        <Route path="/" element={<Text>Etusivu</Text>} />
+        <Route path="/" element={<SelectCourses onSelect={(id) => console.log('Valittu ' + id)} />} />
+
+        <Route path="/" element={<Frontpage />} />
+        <Route path="/peli" element={<Peli />} />
       </Routes>
       <StatusBar style="auto" />
     </View>
@@ -26,6 +30,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
 });

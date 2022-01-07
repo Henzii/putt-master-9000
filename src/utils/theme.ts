@@ -8,5 +8,16 @@ export const theme = {
         primary: 'tomato',
         secondary: 'yellow',
     },
-    
+    font: {
+        sizes: {
+            normal: 14,
+            large: 20,
+            huge: 25,
+        },
+        family: 'Verdana',
+        color: {
+            primary: 'black',
+            secondary: 'lightgray',
+        }
+    }
 }
