@@ -44,11 +44,11 @@ const Tulosnapit = ({ name, score, setSelected }: { name: string, score: number 
     }, [score])
 
     for (let i = 1; i < 6; i++) ret.push(
-        <SelectButton 
+        <SelectButton
             selected={(i === score)}
             pending={(i === pending)}
             key={name.concat(i.toString())}
-            width="10%"
+            width="15%"
             onClick={() => handleButtonClick(i)}
             text={i + ''}
         />)

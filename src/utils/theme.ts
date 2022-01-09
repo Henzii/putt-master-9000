@@ -14,7 +14,7 @@ export const theme = {
             large: 20,
             huge: 25,
         },
-        family: 'Verdana',
+        family: 'serif',
         color: {
             primary: 'black',
             secondary: 'lightgray',

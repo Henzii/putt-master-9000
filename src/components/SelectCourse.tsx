@@ -9,7 +9,7 @@ const SelectCourses = ({ onSelect }: { onSelect?: (courseId: number | string) =>
         <View><Text>Loading...</Text></View>
     )
     return (
-        <View>
+        <View style={{ width: '100%' }}>
             {courses.map(c => <SingleCourse course={c} key={c.id} onClick={onSelect} />)}
         </View>
     )
@@ -37,7 +37,7 @@ const SingleCourse = ({ course, onClick }: { course: Course, onClick?: (courseId
 }
 const tyyli = StyleSheet.create({
     card: {
-        width: '95%',
+        width: '100%',
         marginBottom: 3,
         borderWidth: 1,
     },

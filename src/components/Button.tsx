@@ -9,7 +9,7 @@ export default function Button ({ text, onClick, width, heigth, ...props }:Butto
             backgroundColor: props.backgroundColor || theme.colors.primary,
             
             width: (props.fullWidth ? '100%' : (width || 'auto')),
-            height: heigth || 'auto',
+            height: heigth || '120%',
             padding: (props.fullWidth ? 20 : 5),
 
             borderRadius: (props.fullWidth ? 0 : 10),
@@ -20,12 +20,12 @@ export default function Button ({ text, onClick, width, heigth, ...props }:Butto
             shadowOpacity: props.shadowOpacity || 0.5,
             shadowRadius: 4,
             shadowOffset: props.shadowOffcet || { width: 4, height: 4},
-            textAlign: 'center',
         },
         pressed: {
             shadowOffset: { width: -1, height: -1},
         },
         text: {
+            textAlign: 'center',
             fontSize: theme.font.sizes.large,
             color: (props.color ? theme.font.color[props.color] : theme.font.color.primary)
         }
@@ -46,7 +46,7 @@ export type ButtonProps = {
     onClick?: () => void,
     color?: 'primary' | 'secondary',
     width?: string,
-    heigth?: string,
+    heigth?: number,
     fullWidth?: boolean
     borderColor?: string,
     borderWidth?: number,

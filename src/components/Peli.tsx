@@ -12,7 +12,7 @@ export default function Peli() {
     return (
         <>
             <RoundTabs gameData={gameData} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
-            <View style={{ flex: 1, justifyContent: 'flex-start' }}>
+            <View style={{ flex: 1, justifyContent: 'flex-start', width: '100%' }}>
                 <View style={peliStyles.headers}>
                     <Text style={peliStyles.course}>{gameData.course} #{selectedRound+1}</Text>
                     <Text style={peliStyles.layout}>{gameData.layout}</Text>

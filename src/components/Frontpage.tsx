@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 import { Link } from 'react-router-native';
 import { theme } from '../utils/theme';
 
@@ -8,14 +8,9 @@ const master = require('../../assets/master.png');
 const Frontpage = () => {
     return (
         <View style={tyyli.container}>
-            <img src={master} alt="Putt Master" style={{
-                backgroundImage: 'linear-gradient(to bottom, skyblue, lightgreen)',
-                width: '50%',
-                margin: '10px auto',
-                borderRadius: '30vmin',
-            }} />
-            <NaviButton text="New Game" to="/peli" />
-            <NaviButton text="Courses" to="/courses" />
+            <Image source={master} resizeMode='cover' style={tyyli.kuva} />
+            <NaviButton to="/peli" text="New Game" />
+            <NaviButton to="/courses" text="Courses" />
         </View>
     )
 }
@@ -32,21 +27,26 @@ const NaviButton = ({ text, to }: { text: string, to: string }) => {
 }
 
 const tyyli = StyleSheet.create({
-    
+    kuva: {
+        width: '50%',
+        height: '40%',
+        backgroundColor: '#afafaf'
+    },
     container: {
+        alignItems: 'center',
         minHeight: Dimensions.get('window').height,
         width: '100%',
+        backgroundColor: '#fafafa'
     },
     root: {
         borderBottomWidth: 1,
         borderColor: 'lightgray',
-        width: '100%',
-        margin: '0px auto',
-        textAlign: 'center',
+        width: Dimensions.get('window').width,
         padding: 20,
         backgroundColor: '#ffffff',
     },
     text: {
+        textAlign: 'center',
         fontSize: theme.font.sizes.large,
         fontFamily: theme.font.family
     }
