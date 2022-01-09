@@ -8,7 +8,7 @@ export default function Button ({ text, onClick, width, heigth, ...props }:Butto
         main: {
             backgroundColor: props.backgroundColor || theme.colors.primary,
             
-            width: (props.fullWidth ? '100vw' : (width || 'auto')),
+            width: (props.fullWidth ? '100%' : (width || 'auto')),
             height: heigth || 'auto',
             padding: (props.fullWidth ? 20 : 5),
 

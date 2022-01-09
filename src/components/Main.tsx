@@ -15,10 +15,9 @@ export default function App() {
       <ToolBar handleMenuClick={() => setMenuOpen(!menuOpen)} />
       <Menu menuOpen={menuOpen} />
       <Routes>
-        <Route path="/" element={<SelectCourses onSelect={(id) => console.log('Valittu ' + id)} />} />
-
-        <Route path="/" element={<Frontpage />} />
         <Route path="/peli" element={<Peli />} />
+        <Route path="/courses" element={<SelectCourses onSelect={(id) => console.log('Valittu ' + id)} />} />
+        <Route path="/" element={<Frontpage />} />
       </Routes>
       <StatusBar style="auto" />
     </View>
@@ -31,5 +30,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    
   },
 });

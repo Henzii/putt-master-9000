@@ -11,10 +11,10 @@ export default function Peli() {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     return (
         <>
-            <RoundTabs tabs={gameData.holes} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
+            <RoundTabs gameData={gameData} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
             <View style={{ flex: 1, justifyContent: 'flex-start' }}>
                 <View style={peliStyles.headers}>
-                    <Text style={peliStyles.course}>{gameData.course}</Text>
+                    <Text style={peliStyles.course}>{gameData.course} #{selectedRound+1}</Text>
                     <Text style={peliStyles.layout}>{gameData.layout}</Text>
                 </View>
                 {gameData.players.map(p => <Player key={p.id} player={p} selectedRound={selectedRound} />)}

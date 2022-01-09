@@ -1,12 +1,21 @@
 import React from 'react'
 import { View, Text, ScrollView, Pressable, StyleSheet, SafeAreaView } from 'react-native'
+import { gameData } from '../reducers/gameDataReducer';
 
-export default function RoundTabs({ tabs, selectedRound, setSelectedRound }: RoundTabsProps) {
+export default function RoundTabs({ gameData, selectedRound, setSelectedRound }: RoundTabsProps) {
     const tabsList: JSX.Element[] = [];
-    for (let i = 0; i < tabs; i++) {
+
+    for (let i = 0; i < gameData.holes; i++) {
+
+        const finished = gameData.players.reduce(( p,c ) => {
+            if (!c.scores[i]) return false;
+            return p;
+        }, true)
+
         tabsList.push(
             <SingleTab 
                 key={'sc' + i}
+                finished={finished}
                 id={i}
                 selected={(selectedRound === i)}
                 onClick={setSelectedRound}
@@ -26,23 +35,25 @@ export default function RoundTabs({ tabs, selectedRound, setSelectedRound }: Rou
     )
 }
 
-function SingleTab({ id, selected, onClick }: { id: number, selected: boolean, onClick: (n: number) => void}) {
+function SingleTab({ id, selected, onClick, finished }: { finished?: boolean, id: number, selected: boolean, onClick: (n: number) => void}) {
     return (
-        <Pressable style={[tabsStyle.single, (selected ? tabsStyle.selected : null)]} onPress={() => onClick(id)}>
-            <Text>{id+1}</Text>
+        <Pressable onPress={() => onClick(id)}>
+            <View style={[tabsStyle.single, (finished ? tabsStyle.finished : null), (selected ? tabsStyle.selected : null)]} >
+                <Text>{id+1}</Text>
+            </View>
         </Pressable>
     )
 }
 
 type RoundTabsProps = {
-    tabs: number,
+    gameData: gameData,
     selectedRound: number,
     setSelectedRound: (round: number) => void,
 }
 
 const tabsStyle = StyleSheet.create({
     container: {
-        width: '100vw',
+        width: '100%',
     },
     root: {
         display: 'flex',
@@ -51,14 +62,19 @@ const tabsStyle = StyleSheet.create({
     single: {
         textAlign: 'center',
         backgroundColor: 'rgb(250,245,245)',
+        borderWidth: 1,
+        borderTopLeftRadius: 7,
+        borderTopRightRadius: 7,
+        borderColor: 'lightgray',
+        paddingTop: '20%',
         width: 50,
         height: 50,
     },
     selected: {
-        backgroundColor: 'lightgray',
-        borderRadius: 5,
-        shadowRadius: 3,
-        marginRight: 2,
-        marginTop: 1,
+        backgroundColor: 'white',
+        borderBottomWidth: 0,
+    },
+    finished: {
+        backgroundColor: 'rgb(200,220,200)'
     }
 })

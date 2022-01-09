@@ -15,7 +15,7 @@ export default function ToolBar({ handleMenuClick }:{ handleMenuClick: () => voi
 const tyyli = StyleSheet.create({
     top: {
         position: 'relative',
-        width: '100vw',
+        width: '100%',
         height: 70,
         left: 0,
         right: 0,

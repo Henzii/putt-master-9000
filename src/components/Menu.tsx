@@ -22,7 +22,7 @@ const tyyli = StyleSheet.create({
         position: 'absolute',
         left: 0,
         top: 70,
-        zIndex: 10
+        zIndex: 10,
     }
 })
 

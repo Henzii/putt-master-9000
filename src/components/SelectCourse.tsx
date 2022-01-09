@@ -37,7 +37,7 @@ const SingleCourse = ({ course, onClick }: { course: Course, onClick?: (courseId
 }
 const tyyli = StyleSheet.create({
     card: {
-        width: '95vw',
+        width: '95%',
         marginBottom: 3,
         borderWidth: 1,
     },

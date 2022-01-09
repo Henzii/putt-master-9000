@@ -48,7 +48,7 @@ const Tulosnapit = ({ name, score, setSelected }: { name: string, score: number 
             selected={(i === score)}
             pending={(i === pending)}
             key={name.concat(i.toString())}
-            width="10vw"
+            width="10%"
             onClick={() => handleButtonClick(i)}
             text={i + ''}
         />)
@@ -74,7 +74,7 @@ const tyyli = StyleSheet.create({
     },
     main: {
         minHeight: 120,
-        width: '100vw',
+        width: '100%',
         shadowRadius: 3,
         marginBottom: 1,
         padding: 10,
