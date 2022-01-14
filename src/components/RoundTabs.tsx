@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, ScrollView, Pressable, StyleSheet, SafeAreaView } from 'react-native'
 import { gameData } from '../reducers/gameDataReducer';
+import { theme } from '../utils/theme';
 
 export default function RoundTabs({ gameData, selectedRound, setSelectedRound }: RoundTabsProps) {
     const tabsList: JSX.Element[] = [];
@@ -39,7 +40,7 @@ function SingleTab({ id, selected, onClick, finished }: { finished?: boolean, id
     return (
         <Pressable onPress={() => onClick(id)}>
             <View style={[tabsStyle.single, (finished ? tabsStyle.finished : null), (selected ? tabsStyle.selected : null)]} >
-                <Text>{id+1}</Text>
+                <Text style={tabsStyle.text}>{id+1}</Text>
             </View>
         </Pressable>
     )
@@ -59,9 +60,12 @@ const tabsStyle = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
     },
-    single: {
+    text: {
         textAlign: 'center',
-        backgroundColor: 'rgb(250,245,245)',
+        fontSize: theme.font.sizes.large,
+    },
+    single: {
+        backgroundColor: 'rgb(220,220,220)',
         borderWidth: 1,
         borderTopLeftRadius: 7,
         borderTopRightRadius: 7,
@@ -75,6 +79,6 @@ const tabsStyle = StyleSheet.create({
         borderBottomWidth: 0,
     },
     finished: {
-        backgroundColor: 'rgb(200,220,200)'
+        backgroundColor: 'rgb(180,220,180)'
     }
 })

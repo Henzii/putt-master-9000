@@ -42,7 +42,6 @@ const Tulosnapit = ({ name, score, setSelected }: { name: string, score: number 
     useEffect(() => {
         setPending(null);
     }, [score])
-
     for (let i = 1; i < 6; i++) ret.push(
         <SelectButton
             selected={(i === score)}

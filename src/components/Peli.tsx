@@ -5,6 +5,7 @@ import RoundTabs from './RoundTabs';
 import { useSelector } from 'react-redux';
 import { RootState } from '../utils/store';
 import { gameData } from '../reducers/gameDataReducer';
+import { theme } from '../utils/theme';
 
 export default function Peli() {
     const [selectedRound, setSelectedRound] = useState(0);
@@ -14,7 +15,7 @@ export default function Peli() {
             <RoundTabs gameData={gameData} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
             <View style={{ flex: 1, justifyContent: 'flex-start', width: '100%' }}>
                 <View style={peliStyles.headers}>
-                    <Text style={peliStyles.course}>{gameData.course} #{selectedRound+1}</Text>
+                    <Text style={peliStyles.course}>{gameData.course} #{selectedRound+1}, par {gameData.pars[selectedRound]}</Text>
                     <Text style={peliStyles.layout}>{gameData.layout}</Text>
                 </View>
                 {gameData.players.map(p => <Player key={p.id} player={p} selectedRound={selectedRound} />)}
@@ -28,7 +29,7 @@ const peliStyles = StyleSheet.create({
         padding: 10,
     },
     course: {
-        fontSize: 30,
+        fontSize: theme.font.sizes.huge+5,
         fontWeight: 'bold',
     },
     layout: {

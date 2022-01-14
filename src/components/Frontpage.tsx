@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 import { Link } from 'react-router-native';
 import { theme } from '../utils/theme';
 
-const master = require('../../assets/master.png');
+const master = require('../../assets/master2.png');
 
 const Frontpage = () => {
     return (
@@ -30,7 +30,6 @@ const tyyli = StyleSheet.create({
     kuva: {
         width: '50%',
         height: '40%',
-        backgroundColor: '#afafaf'
     },
     container: {
         alignItems: 'center',

@@ -10,6 +10,9 @@ export default function Menu({ menuOpen }: { menuOpen: boolean }) {
             <Link to="/peli">
                 <Text>Pelit</Text>
             </Link>
+            <Link to="/">
+                <Text>Etusivu</Text>
+            </Link>
         </View>
     )
 }

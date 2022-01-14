@@ -7,16 +7,13 @@ export default function Button ({ text, onClick, width, heigth, ...props }:Butto
     const tyyli = StyleSheet.create({
         main: {
             backgroundColor: props.backgroundColor || theme.colors.primary,
-            
             width: (props.fullWidth ? '100%' : (width || 'auto')),
             height: heigth || '120%',
             padding: (props.fullWidth ? 20 : 5),
-
             borderRadius: (props.fullWidth ? 0 : 10),
             borderColor: props.borderColor || 'black',
             borderWidth: props.borderWidth || 1,
-
-            shadowColor: 'black',
+            shadowColor: '#000',
             shadowOpacity: props.shadowOpacity || 0.5,
             shadowRadius: 4,
             shadowOffset: props.shadowOffcet || { width: 4, height: 4},
