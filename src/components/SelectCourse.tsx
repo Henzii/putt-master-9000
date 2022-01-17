@@ -5,7 +5,7 @@ import useCourses, { Course } from "../hooks/useCourses";
 import AddCourse from "./AddCourse";
 
 const SelectCourses = ({ onSelect }: { onSelect?: (courseId: number | string) => void }) => {
-    const { courses } = useCourses();
+    const courses = useCourses();
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
     const [searchQuery, setSearchQuery] = useState('')
