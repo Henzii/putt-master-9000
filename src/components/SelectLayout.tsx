@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, FlatList, ListRenderItemInfo, StyleSheet, Pressable } from "react-native";
-import { Button, Headline, Paragraph, Subheading } from 'react-native-paper'
+import { Button, Headline, Modal, Paragraph, Portal, Subheading } from 'react-native-paper'
 import useCourses, { Layout } from "../hooks/useCourses";
+import AddLayout from "./AddLayout";
 
 const SelectLayout = ({ courseId, onSelect }: SelecLayoutProps) => {
     const courses = useCourses(courseId);
+    const [ addLayoutModal, setAddLayoutModal ] = useState(false)
     if (!courses) return (
         <View>
             <Text>Loading...</Text>
@@ -13,8 +15,17 @@ const SelectLayout = ({ courseId, onSelect }: SelecLayoutProps) => {
     const course = courses[0]
     return (
         <View style={tyyli.main}>
-            <Headline>{course.name}</Headline>
-            <Button icon="plus-thick">Add layout</Button>
+            <Portal>
+                <Modal
+                    visible={addLayoutModal}
+                    onDismiss={() => setAddLayoutModal(false)}
+                    contentContainerStyle={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                >   
+                    <AddLayout onCancel={() => setAddLayoutModal(false) }/>
+                </Modal>
+            </Portal>
+            <Headline style={{ padding: 10 }}>{course.name}</Headline>
+            <Button icon="plus-thick" onPress={() => setAddLayoutModal(true)}>Add layout</Button>
             <FlatList
                 data={course.layouts}
                 renderItem={({ item }: ListRenderItemInfo<Layout>) => (
