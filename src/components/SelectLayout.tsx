@@ -10,7 +10,9 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
         if (onAddLayout) onAddLayout(course.id, layout);
         setAddLayoutModal(false);
     }
-
+    const handleLayoutSelect = (layoutId: number | string) => {
+        if (onSelect) onSelect(layoutId, course.id)
+    }
     return (
         <View style={tyyli.main}>
             <Portal>
@@ -26,7 +28,7 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
             <FlatList
                 data={course.layouts}
                 renderItem={({ item }: ListRenderItemInfo<Layout>) => (
-                    <LayoutElement layout={item} onSelect={onSelect} />
+                    <LayoutElement layout={item} onSelect={handleLayoutSelect} />
                 )}
                 ItemSeparatorComponent={SeparatorComponent}
             />
@@ -87,7 +89,7 @@ var tyyli = StyleSheet.create({
 })
 type SelecLayoutProps = {
     course: Course
-    onSelect?: (id: number | string) => void,
+    onSelect?: (id: number | string, courseId?: number | string) => void,
     onAddLayout?: (courseId: number | string, layout: Omit<Layout, "id">) => void,
 }
 

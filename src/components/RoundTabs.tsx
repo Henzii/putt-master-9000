@@ -37,9 +37,13 @@ export default function RoundTabs({ gameData, selectedRound, setSelectedRound }:
 }
 
 function SingleTab({ id, selected, onClick, finished }: { finished?: boolean, id: number, selected: boolean, onClick: (n: number) => void}) {
+    const tausta = (
+        finished && selected ? tabsStyle.finishedAndSelected :
+        selected ? tabsStyle.selected : finished ? tabsStyle.finished : null
+    )
     return (
         <Pressable onPress={() => onClick(id)}>
-            <View style={[tabsStyle.single, (finished ? tabsStyle.finished : null), (selected ? tabsStyle.selected : null)]} >
+            <View style={[tabsStyle.single, tausta]} >
                 <Text style={tabsStyle.text}>{id+1}</Text>
             </View>
         </Pressable>
@@ -80,5 +84,9 @@ const tabsStyle = StyleSheet.create({
     },
     finished: {
         backgroundColor: 'rgb(180,220,180)'
+    },
+    finishedAndSelected: {
+        borderBottomWidth: 0,
+        backgroundColor: 'rgb(180, 255, 180)'
     }
 })

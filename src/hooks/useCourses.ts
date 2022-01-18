@@ -21,8 +21,15 @@ const useCourses = (courseId?: number | string) => {
             return c;
         }))
     }
-
-    return { courses, addLayout }
+    const getLayoutById = (id: number | string) => {
+        if (!courses) return {};
+        for(const course of courses) {
+            const layout = course.layouts.find(l => l.id === id)
+            if (layout) return {layout, course}
+        }
+        return {};
+    }
+    return { courses, addLayout, getLayoutById }
 }
 
 export type Course = {

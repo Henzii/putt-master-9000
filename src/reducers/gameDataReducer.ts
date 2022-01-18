@@ -1,27 +1,10 @@
-const defaultState = {
-    holes: 18,
-    course: 'Kaljaniitty',
-    layout: 'Main',
-    pars: [3, 3, 3, 3, 4, 4, 3, 4, 5, 3, 4, 3, 4, 5, 4, 3, 3, 3],
-    players: [
-        {
-            name: 'Henkka',
-            scores: [2, 3, 4],
-            id: 1,
-        },
-        {
-            name: 'Pekka',
-            scores: [3, 3, 4],
-            id: 2,
-        },
-    ]
-}
-
-const reducer = (state = defaultState, action: gameDataReducerAction) => {
+const reducer = (state:gameData | null = null, action: gameDataReducerAction) => {
     switch (action.type) {
-        case 'TO_DO':
-            return state;
+        case 'NEW_GAME':
+            return { ...action.data }
         case 'SET_SCORE':
+            if (!state) return state;
+
             const stateClone = { ...state }
             const player = { ...stateClone.players.find(p => p.id === action.data.id) };
             if (!player?.scores) return state;
@@ -31,7 +14,12 @@ const reducer = (state = defaultState, action: gameDataReducerAction) => {
             return state;
     }
 }
-
+export const newGame = (gameData: gameData) => {
+    return {
+        type: 'NEW_GAME',
+        data: gameData,
+    }
+}
 export const setScore = (id: number | string, round: number, score: number): gameDataReducerAction => {
     return {
         type: 'SET_SCORE',
@@ -42,25 +30,30 @@ export const setScore = (id: number | string, round: number, score: number): gam
         }
     }
 }
-
-type gameDataReducerAction = {
-    type: 'TO_DO' | 'SET_SCORE',
+type newGameAction = {
+    type: 'NEW_GAME',
+    data: gameData
+}
+type setScoreAction = {
+    type: 'SET_SCORE',
     data: {
         id: number | string,
         round: number,
         score: number,
     }
 }
+type gameDataReducerAction = newGameAction | setScoreAction
+
 export type gameData = {
     holes: number,
     course: string,
     layout: string,
     pars: number[],
-    players: [gameDataPlayer],
+    players: gameDataPlayer[],
 }
 export type gameDataPlayer = {
     name: string,
-    scores: [number],
+    scores: number[],
     id: number | string,
 }
 export default reducer;

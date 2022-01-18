@@ -5,7 +5,7 @@ import useCourses, { Course, Layout } from "../hooks/useCourses";
 import AddCourse from "./AddCourse";
 import SelectLayout from "./SelectLayout";
 
-const SelectCourses = ({ onSelect }: { onSelect?: (courseId: number | string) => void }) => {
+const SelectCourses = ({ onSelect }: { onSelect?: (layoutId: number| string, courseId?: number | string) => void }) => {
     const { courses, addLayout } = useCourses();
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
@@ -14,7 +14,9 @@ const SelectCourses = ({ onSelect }: { onSelect?: (courseId: number | string) =>
     const handleAddLayout = (courseId: number | string, layout: Omit<Layout,"id">) => {
         addLayout(courseId, layout)
     }
-
+    const handleClickLayout = (layoutId: number | string, courseId?: number | string) => {
+        if (onSelect) onSelect(layoutId, courseId)
+    }
     if (!courses) return (
         <View><Text>Loading...</Text></View>
     )
@@ -41,31 +43,34 @@ const SelectCourses = ({ onSelect }: { onSelect?: (courseId: number | string) =>
                 <Button icon="magnify" onPress={() => setDisplaySearchBar(!displaySearchBar)}>Search</Button>
             </View>
             <View style={tyyli.wide}>
-                {courses.map(c => <SingleCourse course={c} key={c.id} onClick={onSelect} onAddLayout={handleAddLayout}/>)}
+                {courses.map(c => (
+                    <SingleCourse 
+                        course={c}
+                        key={c.id}
+                        onAddLayout={handleAddLayout}
+                        onLayoutClick={handleClickLayout}
+                    />
+                ))}
             </View>
         </View>
     )
 }
 
-const SingleCourse = ({ course, onClick, onAddLayout }: SingleCourseProps ) => {
-    const handlePress = () => {
-        if (onClick) onClick(course.id);
-    }
+const SingleCourse = ({ course, onAddLayout, onLayoutClick }: SingleCourseProps ) => {
     return (
             <List.Accordion
                 title={course.name}
-                onPress={handlePress}
                 description={course.layouts.length + ' layouts'}
             >
-                <SelectLayout course={course} onAddLayout={onAddLayout}/>
+                <SelectLayout course={course} onAddLayout={onAddLayout} onSelect={onLayoutClick}/>
             </List.Accordion>
     )
 }
 
 type SingleCourseProps = {
     course: Course,
-    onClick?: (courseId: number | string) => void,
     onAddLayout?: (courseId: number | string, layout: Omit<Layout, "id">) => void,
+    onLayoutClick?: (layoutId: number | string) => void,
 }
 
 const tyyli = StyleSheet.create({
