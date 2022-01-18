@@ -1,5 +1,46 @@
 import { useState, useEffect } from "react";
 
+const useCourses = (courseId?: number | string) => {
+    const [courses, setCourse] = useState<Course[]>();
+    useEffect(() => {
+        setTimeout(() => {  // Simuloidaan palvelimen viivettä
+            if (courseId) {
+                const course = initState.find(c => c.id === courseId)
+                if (course) setCourse([course])
+            }
+            setCourse(initState);
+        }, 500)
+    }, [])
+
+    const addLayout = (courseId: number | string, layout: Omit<Layout, "id">) => {
+        if (!courses) return;
+        setCourse( courses.map(c => {
+            if (c.id === courseId) {
+                c.layouts.push({...layout, id: Math.floor(Math.random() * 9999 )});
+            }
+            return c;
+        }))
+    }
+
+    return { courses, addLayout }
+}
+
+export type Course = {
+    name: string,
+    layouts: Layout[]
+    id: string | number,
+}
+
+export type Layout = {
+    name: string,
+    pars: number[],
+    par: number,
+    holes: number,
+    id: string | number
+}
+
+export default useCourses;
+
 const initState:Course[] = [
     {
         name: 'Kaljaniitty',
@@ -35,33 +76,3 @@ const initState:Course[] = [
         ]
     }
 ]
-
-const useCourses = (courseId?: number | string) => {
-    const [courses, setCourse] = useState<Course[]>();
-    useEffect(() => {
-        setTimeout(() => {  // Simuloidaan palvelimen viivettä
-            if (courseId) {
-                const course = initState.find(c => c.id === courseId)
-                if (course) setCourse([course])
-            }
-            setCourse(initState);
-        }, 500)
-    }, [])
-    return courses
-}
-
-export type Course = {
-    name: string,
-    layouts: Layout[]
-    id: string | number,
-}
-
-export type Layout = {
-    name: string,
-    pars: number[],
-    par: number,
-    holes: number,
-    id: string | number
-}
-
-export default useCourses;

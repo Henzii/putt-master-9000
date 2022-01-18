@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, ListRenderItemInfo, StyleSheet, Pressable } from "react-native";
 import { Button, Headline, Modal, Paragraph, Portal, Subheading } from 'react-native-paper'
-import useCourses, { Layout } from "../hooks/useCourses";
+import useCourses, { Course, Layout } from "../hooks/useCourses";
 import AddLayout from "./AddLayout";
 
-const SelectLayout = ({ courseId, onSelect }: SelecLayoutProps) => {
-    const courses = useCourses(courseId);
+const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
     const [ addLayoutModal, setAddLayoutModal ] = useState(false)
-    if (!courses) return (
-        <View>
-            <Text>Loading...</Text>
-        </View>
-    )
-    const course = courses[0]
+    const handleAddLayout = (layout: Omit<Layout, "id">) => {
+        if (onAddLayout) onAddLayout(course.id, layout);
+        setAddLayoutModal(false);
+    }
+
     return (
         <View style={tyyli.main}>
             <Portal>
@@ -21,10 +19,9 @@ const SelectLayout = ({ courseId, onSelect }: SelecLayoutProps) => {
                     onDismiss={() => setAddLayoutModal(false)}
                     contentContainerStyle={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                 >   
-                    <AddLayout onCancel={() => setAddLayoutModal(false) }/>
+                    <AddLayout onCancel={() => setAddLayoutModal(false) } onAdd={handleAddLayout}/>
                 </Modal>
             </Portal>
-            <Headline style={{ padding: 10 }}>{course.name}</Headline>
             <Button icon="plus-thick" onPress={() => setAddLayoutModal(true)}>Add layout</Button>
             <FlatList
                 data={course.layouts}
@@ -63,11 +60,19 @@ const SeparatorComponent = () => {
 var tyyli = StyleSheet.create({
     main: {
         width: '100%',
+        marginRight: 5,
+        borderWidth: 1,
+        borderTopWidth: 0,
+        borderColor: 'lightgray',
     },
     item: {
-        padding: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 10,
+        paddingBottom: 10,
         minHeight: 20,
-        backgroundColor: '#fafafa',
+        backgroundColor: '#fcfcfc',
+
     },
     itemSplit: {
         display: 'flex',
@@ -81,8 +86,9 @@ var tyyli = StyleSheet.create({
     }
 })
 type SelecLayoutProps = {
-    courseId: string | number,
+    course: Course
     onSelect?: (id: number | string) => void,
+    onAddLayout?: (courseId: number | string, layout: Omit<Layout, "id">) => void,
 }
 
 export default SelectLayout;

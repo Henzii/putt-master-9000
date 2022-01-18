@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, Text } from "react-native"
 import { Button, Caption, Divider, Headline, TextInput, Title } from "react-native-paper"
+import { Layout } from '../hooks/useCourses';
 
-const AddLayout = ({ onCancel }: AddLayoutProps) => {
+const AddLayout = ({ onCancel, onAdd }: AddLayoutProps) => {
     const [holes, setHoles] = useState<number | null>(null)
     const [pars, setPars] = useState<number[]>([])
     const [name, setName] = useState('')
+
     const handleHolesChange = (value: string) => {
         const holesInt = Number.parseInt(value);
         if (!isNaN(holesInt)) {
@@ -29,13 +31,13 @@ const AddLayout = ({ onCancel }: AddLayoutProps) => {
         if (onCancel) onCancel()
     }
     const handleAdd = () => {
-        const newLayout = {
+        const newLayout: Omit<Layout, 'id'> = {
             name,
             pars,
             par: pars.reduce((p,c) => p+c, 0),
-            holes
+            holes: holes || 0,
         }
-        console.log(newLayout)
+        if (onAdd) onAdd(newLayout)
     }
     return (
         <ScrollView style={tyyli.main} contentContainerStyle={{ paddingBottom: 50, }}>
@@ -101,7 +103,8 @@ const tyyli = StyleSheet.create({
     }
 })
 type AddLayoutProps = {
-    onCancel?: () => void
+    onCancel?: () => void,
+    onAdd?: (layout: Omit<Layout, "id">) => void,
 }
 
 export default AddLayout;

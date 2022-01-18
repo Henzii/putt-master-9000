@@ -19,7 +19,6 @@ export default function App() {
         <Route path="/peli" element={<Peli />} />
         <Route path="/courses" element={<SelectCourses onSelect={(id) => console.log('Valittu ' + id)} />} />
         <Route path="/" element={<Frontpage />} />
-        <Route path="/layout" element={<SelectLayout courseId={1} />} />
       </Routes>
       <StatusBar style="auto" />
     </View>

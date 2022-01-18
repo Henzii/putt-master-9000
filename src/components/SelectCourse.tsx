@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Button, Card, Modal, Searchbar, Portal, List } from "react-native-paper";
-import useCourses, { Course } from "../hooks/useCourses";
+import useCourses, { Course, Layout } from "../hooks/useCourses";
 import AddCourse from "./AddCourse";
+import SelectLayout from "./SelectLayout";
 
 const SelectCourses = ({ onSelect }: { onSelect?: (courseId: number | string) => void }) => {
-    const courses = useCourses();
+    const { courses, addLayout } = useCourses();
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
     const [searchQuery, setSearchQuery] = useState('')
+
+    const handleAddLayout = (courseId: number | string, layout: Omit<Layout,"id">) => {
+        addLayout(courseId, layout)
+    }
+
     if (!courses) return (
         <View><Text>Loading...</Text></View>
     )
@@ -35,32 +41,33 @@ const SelectCourses = ({ onSelect }: { onSelect?: (courseId: number | string) =>
                 <Button icon="magnify" onPress={() => setDisplaySearchBar(!displaySearchBar)}>Search</Button>
             </View>
             <View style={tyyli.wide}>
-                {courses.map(c => <SingleCourse course={c} key={c.id} onClick={onSelect} />)}
+                {courses.map(c => <SingleCourse course={c} key={c.id} onClick={onSelect} onAddLayout={handleAddLayout}/>)}
             </View>
         </View>
     )
 }
 
-const SingleCourse = ({ course, onClick }: { course: Course, onClick?: (courseId: number | string) => void }) => {
-    const handlePress = (id: number | string) => {
-        if (onClick) onClick(id);
+const SingleCourse = ({ course, onClick, onAddLayout }: SingleCourseProps ) => {
+    const handlePress = () => {
+        if (onClick) onClick(course.id);
     }
     return (
-            <List.Accordion 
-                title={course.name} 
+            <List.Accordion
+                title={course.name}
+                onPress={handlePress}
                 description={course.layouts.length + ' layouts'}
             >
-                {course.layouts.map(l => 
-                    <List.Item 
-                        title={l.name}
-                        description={'Par ' + l.par}
-                        key={l.id}
-                        onPress={() => handlePress(l.id)}
-                    />
-                )}
+                <SelectLayout course={course} onAddLayout={onAddLayout}/>
             </List.Accordion>
     )
 }
+
+type SingleCourseProps = {
+    course: Course,
+    onClick?: (courseId: number | string) => void,
+    onAddLayout?: (courseId: number | string, layout: Omit<Layout, "id">) => void,
+}
+
 const tyyli = StyleSheet.create({
     topButtons: {
         display: 'flex',
@@ -76,16 +83,6 @@ const tyyli = StyleSheet.create({
         marginBottom: 3,
         borderWidth: 1,
     },
-    parList: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-    },
-    parListText: {
-        color: 'gray',
-    },
-    floatingAddButton: {
 
-    }
 })
 export default SelectCourses;
