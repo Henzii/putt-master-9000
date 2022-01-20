@@ -1,35 +1,21 @@
 import { useState, useEffect } from "react";
+import { useQuery, useLazyQuery } from "react-apollo";
+import { GET_COURSES } from "../graphql/queries";
 
 const useCourses = (courseId?: number | string) => {
-    const [courses, setCourse] = useState<Course[]>();
-    useEffect(() => {
-        setTimeout(() => {  // Simuloidaan palvelimen viivettä
-            if (courseId) {
-                const course = initState.find(c => c.id === courseId)
-                if (course) setCourse([course])
-            }
-            setCourse(initState);
-        }, 500)
-    }, [])
-
+    const { data, loading, error } = useQuery(
+        GET_COURSES,
+        (courseId) ? { variables: { courseId }} : undefined,
+    );
     const addLayout = (courseId: number | string, layout: Omit<Layout, "id">) => {
-        if (!courses) return;
-        setCourse( courses.map(c => {
-            if (c.id === courseId) {
-                c.layouts.push({...layout, id: Math.floor(Math.random() * 9999 )});
-            }
-            return c;
-        }))
+        return;
     }
     const getLayoutById = (id: number | string) => {
-        if (!courses) return {};
-        for(const course of courses) {
-            const layout = course.layouts.find(l => l.id === id)
-            if (layout) return {layout, course}
-        }
-        return {};
+        if (loading || !data || !data.getCourses) return {};
+        data.getCourses.find((c:Course) => c.id === id)
     }
-    return { courses, addLayout, getLayoutById }
+    const courses = (!loading && !error && data.getCourses) ? (data.getCourses as Course[]) : undefined;
+    return { courses, addLayout, getLayoutById, loading, error: (error !== undefined) }
 }
 
 export type Course = {

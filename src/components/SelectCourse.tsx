@@ -1,12 +1,14 @@
+import gql from "graphql-tag";
 import React, { useState } from "react";
+import { useQuery } from "react-apollo";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Button, Card, Modal, Searchbar, Portal, List } from "react-native-paper";
 import useCourses, { Course, Layout } from "../hooks/useCourses";
 import AddCourse from "./AddCourse";
 import SelectLayout from "./SelectLayout";
 
-const SelectCourses = ({ onSelect }: { onSelect?: (layoutId: number| string, courseId?: number | string) => void }) => {
-    const { courses, addLayout } = useCourses();
+const SelectCourses = ({ onSelect }: { onSelect?: (layout: Layout, course?: Course) => void }) => {
+    const { courses, addLayout, loading } = useCourses();
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
     const [searchQuery, setSearchQuery] = useState('')
@@ -14,10 +16,10 @@ const SelectCourses = ({ onSelect }: { onSelect?: (layoutId: number| string, cou
     const handleAddLayout = (courseId: number | string, layout: Omit<Layout,"id">) => {
         addLayout(courseId, layout)
     }
-    const handleClickLayout = (layoutId: number | string, courseId?: number | string) => {
-        if (onSelect) onSelect(layoutId, courseId)
+    const handleClickLayout = (layout: Layout, course?: Course) => {
+        if (onSelect) onSelect(layout, course)
     }
-    if (!courses) return (
+    if (loading || !courses) return (
         <View><Text>Loading...</Text></View>
     )
 
@@ -70,7 +72,7 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick }: SingleCourseProps 
 type SingleCourseProps = {
     course: Course,
     onAddLayout?: (courseId: number | string, layout: Omit<Layout, "id">) => void,
-    onLayoutClick?: (layoutId: number | string) => void,
+    onLayoutClick?: (layout: Layout, course?: Course) => void,
 }
 
 const tyyli = StyleSheet.create({

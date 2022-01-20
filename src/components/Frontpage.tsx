@@ -11,7 +11,6 @@ const Frontpage = () => {
             <Image source={master} resizeMode='cover' style={tyyli.kuva} />
             <NaviButton to="/peli" text="New Game" />
             <NaviButton to="/courses" text="Courses" />
-            <NaviButton to="/layout" text="Layout" />
         </View>
     )
 }

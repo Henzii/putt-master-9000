@@ -7,21 +7,20 @@ import { RootState } from '../utils/store';
 import { gameData, newGame } from '../reducers/gameDataReducer';
 import { theme } from '../utils/theme';
 import SelectCourses from './SelectCourse';
-import useCourses from '../hooks/useCourses';
+import useCourses, { Course, Layout } from '../hooks/useCourses';
 
 export default function Peli() {
     const [selectedRound, setSelectedRound] = useState(0);
     const dispatch = useDispatch()
-    const { getLayoutById } = useCourses()
+
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
-    const handleNewGame = (id: number | string, courseId?: number | string) => {
-        const { layout, course } = getLayoutById(id);
-        if (!layout || !course) return;
+    
+    const handleNewGame = (layout: Layout, course?: Course) => {
         dispatch(newGame({
+            course: course?.name || 'Unknown',
             holes: layout.holes,
-            course: course.name,
-            pars: layout.pars,
             layout: layout.name,
+            pars: layout.pars,
             players: [
                 {
                     name: 'Henkka',
@@ -34,7 +33,7 @@ export default function Peli() {
                     id: 12
                 }
             ]
-        }))
+        }));
     }
     if (!gameData) {
         return (

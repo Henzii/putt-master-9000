@@ -10,8 +10,8 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
         if (onAddLayout) onAddLayout(course.id, layout);
         setAddLayoutModal(false);
     }
-    const handleLayoutSelect = (layoutId: number | string) => {
-        if (onSelect) onSelect(layoutId, course.id)
+    const handleLayoutSelect = (layout: Layout) => {
+        if (onSelect) onSelect(layout, course)
     }
     return (
         <View style={tyyli.main}>
@@ -28,7 +28,7 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
             <FlatList
                 data={course.layouts}
                 renderItem={({ item }: ListRenderItemInfo<Layout>) => (
-                    <LayoutElement layout={item} onSelect={handleLayoutSelect} />
+                    <LayoutElement key={item.id} layout={item} onSelect={handleLayoutSelect} />
                 )}
                 ItemSeparatorComponent={SeparatorComponent}
             />
@@ -36,9 +36,9 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
     )
 }
 
-const LayoutElement = ({ layout, onSelect }: { layout: Layout, onSelect?: (id: number | string) => void }) => {
+const LayoutElement = ({ layout, onSelect }: { layout: Layout, onSelect?: (layout: Layout) => void }) => {
     const handleClick = () => {
-        if (onSelect) onSelect(layout.id)
+        if (onSelect) onSelect(layout)
     }
     return (
         <Pressable onPress={handleClick}>
@@ -89,7 +89,7 @@ var tyyli = StyleSheet.create({
 })
 type SelecLayoutProps = {
     course: Course
-    onSelect?: (id: number | string, courseId?: number | string) => void,
+    onSelect?: (layout: Layout, course: Course) => void,
     onAddLayout?: (courseId: number | string, layout: Omit<Layout, "id">) => void,
 }
 
