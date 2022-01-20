@@ -3,21 +3,25 @@ import React, { useState } from "react";
 import { useQuery } from "react-apollo";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Button, Card, Modal, Searchbar, Portal, List } from "react-native-paper";
-import useCourses, { Course, Layout } from "../hooks/useCourses";
+import useCourses, { Course, Layout, NewLayout } from "../hooks/useCourses";
 import AddCourse from "./AddCourse";
 import SelectLayout from "./SelectLayout";
 
 const SelectCourses = ({ onSelect }: { onSelect?: (layout: Layout, course?: Course) => void }) => {
-    const { courses, addLayout, loading } = useCourses();
+    const { courses, loading, addLayout, addCourse } = useCourses();
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
     const [searchQuery, setSearchQuery] = useState('')
 
-    const handleAddLayout = (courseId: number | string, layout: Omit<Layout,"id">) => {
+    const handleAddLayout = (courseId: number | string, layout: NewLayout) => {
         addLayout(courseId, layout)
     }
     const handleClickLayout = (layout: Layout, course?: Course) => {
         if (onSelect) onSelect(layout, course)
+    }
+    const handleAddCourse = (newCourseName: string) => {
+        addCourse(newCourseName)
+        setDisplayAddCourse(false)
     }
     if (loading || !courses) return (
         <View><Text>Loading...</Text></View>
@@ -31,7 +35,10 @@ const SelectCourses = ({ onSelect }: { onSelect?: (layout: Layout, course?: Cour
                     onDismiss={() => setDisplayAddCourse(false)}
                     contentContainerStyle={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                 >
-                    <AddCourse />
+                    <AddCourse
+                        onCancel={() => setDisplayAddCourse(false)}
+                        onAdd={handleAddCourse}
+                    />
                 </Modal>
             </Portal>
             {displaySearchBar && <Searchbar
@@ -62,6 +69,7 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick }: SingleCourseProps 
     return (
             <List.Accordion
                 title={course.name}
+                titleStyle={{ fontSize: 18 }}
                 description={course.layouts.length + ' layouts'}
             >
                 <SelectLayout course={course} onAddLayout={onAddLayout} onSelect={onLayoutClick}/>
@@ -71,7 +79,7 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick }: SingleCourseProps 
 
 type SingleCourseProps = {
     course: Course,
-    onAddLayout?: (courseId: number | string, layout: Omit<Layout, "id">) => void,
+    onAddLayout?: (courseId: number | string, layout: NewLayout) => void,
     onLayoutClick?: (layout: Layout, course?: Course) => void,
 }
 

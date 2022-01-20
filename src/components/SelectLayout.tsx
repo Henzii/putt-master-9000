@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, ListRenderItemInfo, StyleSheet, Pressable } from "react-native";
 import { Button, Headline, Modal, Paragraph, Portal, Subheading } from 'react-native-paper'
-import useCourses, { Course, Layout } from "../hooks/useCourses";
+import useCourses, { Course, Layout, NewLayout } from "../hooks/useCourses";
 import AddLayout from "./AddLayout";
 
 const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
     const [ addLayoutModal, setAddLayoutModal ] = useState(false)
-    const handleAddLayout = (layout: Omit<Layout, "id">) => {
+    const handleAddLayout = (layout: NewLayout) => {
         if (onAddLayout) onAddLayout(course.id, layout);
         setAddLayoutModal(false);
     }
@@ -47,7 +47,7 @@ const LayoutElement = ({ layout, onSelect }: { layout: Layout, onSelect?: (layou
                     <Subheading>{layout.name}</Subheading>
                     <Subheading>Par {layout.par}</Subheading>
                 </View>
-                <Text>
+                <Text style={tyyli.pars}>
                     {layout.pars.join(' ')}
                 </Text>
             </View>
@@ -81,6 +81,9 @@ var tyyli = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
+    pars: {
+        color: 'gray',
+    },
     separator: {
         width: '100%',
         minHeight: 2,
@@ -90,7 +93,7 @@ var tyyli = StyleSheet.create({
 type SelecLayoutProps = {
     course: Course
     onSelect?: (layout: Layout, course: Course) => void,
-    onAddLayout?: (courseId: number | string, layout: Omit<Layout, "id">) => void,
+    onAddLayout?: (courseId: number | string, layout: NewLayout) => void,
 }
 
 export default SelectLayout;
