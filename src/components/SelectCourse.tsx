@@ -7,7 +7,15 @@ import useCourses, { Course, Layout, NewLayout } from "../hooks/useCourses";
 import AddCourse from "./AddCourse";
 import SelectLayout from "./SelectLayout";
 
-const SelectCourses = ({ onSelect }: { onSelect?: (layout: Layout, course?: Course) => void }) => {
+type SingleCourseProps = {
+    course: Course,
+    onAddLayout?: (courseId: number | string, layout: NewLayout) => void,
+    onLayoutClick?: (layout: Layout, course?: Course) => void,
+}
+type SelectCoursesProps = {
+    onSelect?: (layout: Layout, course?: Course) => void
+}
+const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
     const { courses, loading, addLayout, addCourse } = useCourses();
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
@@ -75,12 +83,6 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick }: SingleCourseProps 
                 <SelectLayout course={course} onAddLayout={onAddLayout} onSelect={onLayoutClick}/>
             </List.Accordion>
     )
-}
-
-type SingleCourseProps = {
-    course: Course,
-    onAddLayout?: (courseId: number | string, layout: NewLayout) => void,
-    onLayoutClick?: (layout: Layout, course?: Course) => void,
 }
 
 const tyyli = StyleSheet.create({

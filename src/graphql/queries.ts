@@ -15,3 +15,15 @@ query {
     }
   }
 `
+export const GET_ME = gql`
+query {
+  getMe {
+    id
+    name
+    friends {
+      id
+      name
+    }
+  }
+}
+`

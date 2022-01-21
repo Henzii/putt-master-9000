@@ -1,16 +1,23 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 import { Link } from 'react-router-native';
+import useMe from '../hooks/useMe';
 import { theme } from '../utils/theme';
+import Login from './Login';
 
 const master = require('../../assets/master2.png');
 
 const Frontpage = () => {
+    const { logged } = useMe()
     return (
         <View style={tyyli.container}>
             <Image source={master} resizeMode='cover' style={tyyli.kuva} />
-            <NaviButton to="/peli" text="New Game" />
-            <NaviButton to="/courses" text="Courses" />
+            {(logged) ? 
+            <>
+                <NaviButton to="/peli" text="New Game" />
+                <NaviButton to="/courses" text="Courses" />
+                <NaviButton to="/friends" text="Friends" />
+            </>: <Login />}
         </View>
     )
 }
@@ -40,8 +47,10 @@ const tyyli = StyleSheet.create({
     root: {
         borderBottomWidth: 1,
         borderColor: 'lightgray',
+        elevation: 5,
+        marginTop: 5,
         width: Dimensions.get('window').width,
-        padding: 20,
+        padding: 25,
         backgroundColor: '#ffffff',
     },
     text: {

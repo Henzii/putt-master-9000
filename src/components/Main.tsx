@@ -8,6 +8,7 @@ import Peli from './Peli';
 import Frontpage from './Frontpage';
 import SelectCourses from './SelectCourse';
 import SelectLayout from './SelectLayout';
+import FriendsList from './FriendsList';
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -17,7 +18,8 @@ export default function App() {
       <Menu menuOpen={menuOpen} />
       <Routes>
         <Route path="/peli" element={<Peli />} />
-        <Route path="/courses" element={<SelectCourses onSelect={(id) => console.log('Valittu ' + id)} />} />
+        <Route path="/courses" element={<SelectCourses />} />
+        <Route path="/friends" element={<FriendsList />} />
         <Route path="/" element={<Frontpage />} />
       </Routes>
       <StatusBar style="auto" />
