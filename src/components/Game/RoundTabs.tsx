@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, ScrollView, Pressable, StyleSheet, SafeAreaView } from 'react-native'
-import { gameData } from '../reducers/gameDataReducer';
-import { theme } from '../utils/theme';
+import { gameData } from '../../reducers/gameDataReducer';
+import { theme } from '../../utils/theme';
 
 export default function RoundTabs({ gameData, selectedRound, setSelectedRound }: RoundTabsProps) {
     const tabsList: JSX.Element[] = [];

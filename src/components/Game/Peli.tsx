@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import Player from './Player';
 import RoundTabs from './RoundTabs';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../utils/store';
-import { gameData, newGame } from '../reducers/gameDataReducer';
-import { theme } from '../utils/theme';
-import SelectCourses from './SelectCourse';
-import useCourses, { Course, Layout } from '../hooks/useCourses';
+import { RootState } from '../../utils/store';
+import { gameData, newGame } from '../../reducers/gameDataReducer';
+import { theme } from '../../utils/theme';
+import SelectCourses from '../SelectCourse';
+import useCourses, { Course, Layout } from '../../hooks/useCourses';
+import { Title } from 'react-native-paper';
 
 export default function Peli() {
     const [selectedRound, setSelectedRound] = useState(0);
@@ -17,6 +18,7 @@ export default function Peli() {
     
     const handleNewGame = (layout: Layout, course?: Course) => {
         dispatch(newGame({
+            gameId: 'dadkasdkasd',
             course: course?.name || 'Unknown',
             holes: layout.holes,
             layout: layout.name,
@@ -37,7 +39,10 @@ export default function Peli() {
     }
     if (!gameData) {
         return (
-            <SelectCourses onSelect={handleNewGame} />
+            <>
+                <Title>Select course</Title>
+                <SelectCourses onSelect={handleNewGame} />
+            </>
         )
     }
     return (

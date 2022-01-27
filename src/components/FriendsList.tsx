@@ -7,7 +7,7 @@ import { addNotification } from '../reducers/notificationReducer';
 import AddFriend from './AddFriend';
 
 type FriendListProps = {
-    onClick?: (id: number | string) => void,
+    onClick?: (id: number | string, name?: string) => void,
 }
 
 const FriendsList = (props: FriendListProps) => {
@@ -42,9 +42,9 @@ const FriendsList = (props: FriendListProps) => {
     )
 }
 
-const SingleFriend = ({ friend, onClick }: { friend: User, onClick?: (id: number | string) => void }) => {
+const SingleFriend = ({ friend, onClick }: { friend: User, onClick?: (id: number | string, name?: string) => void }) => {
     const handleFriendClick = () => {
-        if (onClick) onClick(friend.id);
+        if (onClick) onClick(friend.id, friend.name);
     }
     return (
         <Pressable onPress={handleFriendClick}>

@@ -4,7 +4,8 @@ import { StyleSheet, View } from 'react-native';
 import ToolBar from './ToolBar';
 import Menu from './Menu';
 import { Routes, Route } from 'react-router-native';
-import Peli from './Peli';
+
+import Game from './Game';
 import Frontpage from './Frontpage';
 import SelectCourses from './SelectCourse';
 import FriendsList from './FriendsList';
@@ -18,7 +19,7 @@ export default function App() {
       <ToolBar handleMenuClick={() => setMenuOpen(!menuOpen)} />
       <Menu menuOpen={menuOpen} />
       <Routes>
-        <Route path="/peli" element={<Peli />} />
+        <Route path="/game" element={<Game />} />
         <Route path="/courses" element={<SelectCourses />} />
         <Route path="/friends" element={<FriendsList />} />
         <Route path="/" element={<Frontpage />} />

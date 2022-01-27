@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
-import SelectButton from './SelectButton';
+import SelectButton from '../SelectButton';
 
-import { gameDataPlayer, setScore } from '../reducers/gameDataReducer';
+import { gameDataPlayer, setScore } from '../../reducers/gameDataReducer';
 
 export default function Player({ player, selectedRound }: PlayerArgs) {
     const dispatch = useDispatch()
