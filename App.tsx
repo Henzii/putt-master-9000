@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppRegistry } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper'
 import { NativeRouter } from 'react-router-native';
@@ -11,16 +11,20 @@ import store from './src/utils/store';
 import { client } from './src/graphql/apolloClient';
 
 export default function App() {
+  useEffect(() => {
+    console.log('PuttMaster has arrived')
+  }, [])
   return (
-    <ApolloProvider client={client}>
-      <PaperProvider theme={theme}>
-        <ReduxProvider store={store}>
+    <ReduxProvider store={store}>
+      <ApolloProvider client={client}>
+        <PaperProvider theme={theme}>
           <NativeRouter>
             <Main />
           </NativeRouter>
-        </ReduxProvider>
-      </PaperProvider>
-    </ApolloProvider>
+        </PaperProvider>
+      </ApolloProvider>
+    </ReduxProvider>
+
   );
 }
 

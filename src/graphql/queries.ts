@@ -20,10 +20,18 @@ query {
   getMe {
     id
     name
-    friends {
+  }
+}`
+
+export const GET_ME_WITH_FRIENDS = gql`
+  query {
+    getMe {
       id
       name
+      friends {
+        id
+        name
+      }
     }
   }
-}
 `

@@ -8,7 +8,7 @@ import Login from './Login';
 const master = require('../../assets/master2.png');
 
 const Frontpage = () => {
-    const { logged } = useMe()
+    const { logged } = useMe();
     return (
         <View style={tyyli.container}>
             <Image source={master} resizeMode='cover' style={tyyli.kuva} />
@@ -47,8 +47,6 @@ const tyyli = StyleSheet.create({
     root: {
         borderBottomWidth: 1,
         borderColor: 'lightgray',
-        elevation: 5,
-        marginTop: 5,
         width: Dimensions.get('window').width,
         padding: 25,
         backgroundColor: '#ffffff',

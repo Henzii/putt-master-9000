@@ -7,13 +7,14 @@ import { Routes, Route } from 'react-router-native';
 import Peli from './Peli';
 import Frontpage from './Frontpage';
 import SelectCourses from './SelectCourse';
-import SelectLayout from './SelectLayout';
 import FriendsList from './FriendsList';
+import Notifications from './Notifications';
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   return (
     <View style={styles.container}>
+      <Notifications />
       <ToolBar handleMenuClick={() => setMenuOpen(!menuOpen)} />
       <Menu menuOpen={menuOpen} />
       <Routes>

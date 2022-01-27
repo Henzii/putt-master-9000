@@ -11,3 +11,13 @@ export const ADD_COURSE = gql`
         addCourse(name: $name)
     }
 `
+export const LOGIN = gql`
+    mutation($user: String!, $password: String!) {
+        login(user: $user, password: $password)
+    }
+`
+export const ADD_FRIEND = gql`
+    mutation($friendName: String) {
+        addFriend(friendName: $friendName)
+    }
+`

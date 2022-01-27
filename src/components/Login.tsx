@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Headline, TextInput } from "react-native-paper";
 import useMe from '../hooks/useMe';
 
 const Login = () => {
     const { me, login, logged } = useMe();
-    const handleLogin = () => {
-        login('jotain', 'jotain')
+    const [ username, setUsername] = useState('')
+    const [ password, setPassword] = useState('')
+    const handleLogin = async () => {
+        await login(username, password)
+        setUsername('')
+        setPassword('')
     }
-    console.log(me)
     return (
         <View style={tyyli.main}>
             <Headline>Must now one login</Headline>
-            <TextInput label="Username" mode='outlined' autoComplete={false} />
-            <TextInput secureTextEntry label="Password" mode='outlined' autoComplete={false} />
+            <TextInput label="Username" mode='outlined' autoComplete={false} value={username} onChangeText={(v) => setUsername(v)}/>
+            <TextInput secureTextEntry label="Password" mode='outlined' autoComplete={false} value={password} onChangeText={(v) => setPassword(v)}/>
             <Button onPress={handleLogin} style={tyyli.nappi} mode='contained' color='skyblue'>Login</Button>
         </View>
     )

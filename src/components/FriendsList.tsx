@@ -1,19 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
-import { Button, Headline, Subheading } from 'react-native-paper';
+import { Button, Headline, Modal, Portal, Subheading } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
 import useMe, { User } from '../hooks/useMe';
+import { addNotification } from '../reducers/notificationReducer';
+import AddFriend from './AddFriend';
 
 type FriendListProps = {
-    onClick?: (id: number|string) => void,
+    onClick?: (id: number | string) => void,
 }
 
 const FriendsList = (props: FriendListProps) => {
-    const { me } = useMe();
-
+    const { me } = useMe(true);
+    const [addFriendModal, setAddFriendModal] = useState(false);
+    const dispatch = useDispatch();
     return (
         <View style={tyyli.main}>
+            <Portal>
+                <Modal
+                    visible={addFriendModal}
+                    onDismiss={() => setAddFriendModal(false)}
+                    contentContainerStyle={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                >
+                    <AddFriend onCancel={() => setAddFriendModal(false)} />
+                </Modal>
+            </Portal>
             <View style={tyyli.buttons}>
-                <Button>Add friend</Button>
+                <Button onPress={() => setAddFriendModal(true)}>Add friend</Button>
                 <Button>Kill friend</Button>
             </View>
             <Headline style={tyyli.otsikko}>My friends &lt;3</Headline>
@@ -29,7 +42,7 @@ const FriendsList = (props: FriendListProps) => {
     )
 }
 
-const SingleFriend = ({ friend, onClick }: { friend: User, onClick?: (id: number|string) => void }) => {
+const SingleFriend = ({ friend, onClick }: { friend: User, onClick?: (id: number | string) => void }) => {
     const handleFriendClick = () => {
         if (onClick) onClick(friend.id);
     }
