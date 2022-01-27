@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, ScrollView, Pressable, StyleSheet, SafeAreaView } from 'react-native'
-import { gameData } from '../../reducers/gameDataReducer';
+import { Game } from '../../hooks/useGame';
 import { theme } from '../../utils/theme';
 
 export default function RoundTabs({ gameData, selectedRound, setSelectedRound }: RoundTabsProps) {
@@ -8,7 +8,7 @@ export default function RoundTabs({ gameData, selectedRound, setSelectedRound }:
 
     for (let i = 0; i < gameData.holes; i++) {
 
-        const finished = gameData.players.reduce(( p,c ) => {
+        const finished = gameData.scorecards.reduce(( p,c ) => {
             if (!c.scores[i]) return false;
             return p;
         }, true)
@@ -51,7 +51,7 @@ function SingleTab({ id, selected, onClick, finished }: { finished?: boolean, id
 }
 
 type RoundTabsProps = {
-    gameData: gameData,
+    gameData: Game,
     selectedRound: number,
     setSelectedRound: (round: number) => void,
 }

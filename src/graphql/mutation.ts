@@ -21,3 +21,17 @@ export const ADD_FRIEND = gql`
         addFriend(friendName: $friendName)
     }
 `
+
+export const CREATE_GAME = gql`
+    mutation ($layoutId: ID!) {
+        createGame(layoutId: $layoutId)
+    }
+`
+
+export const ADD_PLAYERS_TO_GAME = gql`
+    mutation ($gameId: ID!, $playerIds: [ID!]!) {
+        addPlayersToGame(gameId: $gameId, playerIds: $playerIds) {
+            id
+        }
+    }
+`

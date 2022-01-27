@@ -23,7 +23,7 @@ const CreateGame = (props: CreateGameProps) => {
     const [addFriend, setAddFriend] = useState(false);
     const me = useMe();
 
-    useEffect(() => {
+    useEffect(() => {   // Kirjautuneet tiedot playerlistiin mounttauksen yhteydessä
         if (me.me) {
             setNewGameData({
                 ...newGameData,

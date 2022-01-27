@@ -35,3 +35,21 @@ export const GET_ME_WITH_FRIENDS = gql`
     }
   }
 `
+
+export const GET_GAME = gql`
+  query($gameId: ID!) {
+    getGame(gameId: $gameId) {
+      course
+      layout
+      pars
+      holes
+      scorecards {
+        scores
+        user {
+          id
+          name
+        }
+      }
+    }
+}
+`

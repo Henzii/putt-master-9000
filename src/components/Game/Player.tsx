@@ -2,28 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
+import { ADD_PLAYERS_TO_GAME } from '../../graphql/mutation';
+import { Scorecard } from '../../hooks/useGame';
+import { User } from '../../hooks/useMe';
 import SelectButton from '../SelectButton';
 
-import { gameDataPlayer, setScore } from '../../reducers/gameDataReducer';
-
-export default function Player({ player, selectedRound }: PlayerArgs) {
-    const dispatch = useDispatch()
+export default function Player({ player, selectedRound, pars }: PlayerArgs) {
     const handleButtonClick = (score: number) => {
-        setTimeout(() => {
-            dispatch(setScore(player.id, selectedRound, score))
-        }, 2000);
     }
     return (
         <Card style={tyyli.main}>
             <Card.Title
-                title={player.name}
+                title={player.user.name}
             />
             <Card.Content style={tyyli.content}>
                 <View style={tyyli.contentLeft}>
-                    <Tulosnapit name={player.name} score={player.scores[selectedRound]} setSelected={handleButtonClick} />
+                    <Tulosnapit name={player.user.name} score={player.scores[selectedRound]} setSelected={handleButtonClick} />
                 </View>
-                <View style={{ flex: 1 }}>
-                    <Text>Jotain</Text>
+                <View style={tyyli.contentRight}>
+                    <Text style={tyyli.crText}>
+                        {player.scores.reduce((p, c, i) => {
+                            if (!c) return p;
+                            return p + (c - pars[i])
+                        }, 0)}
+                    </Text>
                 </View>
             </Card.Content>
         </Card>
@@ -55,7 +57,8 @@ const Tulosnapit = ({ name, score, setSelected }: { name: string, score: number 
     return <>{ret}</>
 }
 type PlayerArgs = {
-    player: gameDataPlayer,
+    player: Scorecard,
+    pars: number[],
     selectedRound: number,
 }
 
@@ -66,10 +69,19 @@ const tyyli = StyleSheet.create({
         justifyContent: 'space-around'
     },
     contentLeft: {
-        flex: 3,
+        flex: 4,
         flexDirection: 'row',
         justifyContent: 'space-around',
         width: '70%'
+    },
+    contentRight: {
+        flex: 1,
+        display: 'flex',
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+    },
+    crText: {
+        fontSize: 20,
     },
     main: {
         minHeight: 120,
