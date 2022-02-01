@@ -33,7 +33,8 @@ export type Game = {
 }
 export type Scorecard = {
     scores: number[],
-    user: User
+    user: User,
+    total?: number,
 }
 
 export type SetScoreArgs = {

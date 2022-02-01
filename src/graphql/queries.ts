@@ -45,6 +45,7 @@ export const GET_GAME = gql`
       holes
       scorecards {
         scores
+        total
         user {
           id
           name

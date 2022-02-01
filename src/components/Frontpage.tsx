@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
+import { View, Text, StyleSheet, Dimensions, Image, ScrollView } from "react-native";
 import { Button } from 'react-native-paper';
 import { Link } from 'react-router-native';
 import useMe from '../hooks/useMe';
@@ -11,24 +11,24 @@ const master = require('../../assets/master2.png');
 const Frontpage = () => {
     const { me, logged, logout, login } = useMe();
     return (
-        <View style={tyyli.container}>
-            <Image source={master} resizeMode='cover' style={tyyli.kuva} />
-            {(logged) ? 
-            <>
-                <NaviButton to="/game" text="New Game" />
-                <NaviButton to="/games" text="Old games" />
-                <NaviButton to="/courses" text="Courses" />
-                <NaviButton to="/friends" text="Friends" />
-                <Button onPress={logout}>Logout</Button>
-                <Text>Logged in as {me?.name}</Text>
-            </>
-            :
-            <>
-                <Login login={login} />
-                <Link to="/signUp"><Text>Sign up!</Text></Link>
-            </>
+        <ScrollView contentContainerStyle={tyyli.container} >
+            <Image source={master} resizeMode='stretch' style={tyyli.kuva} />
+            {(logged) ?
+                <>
+                    <NaviButton to="/game" text="New Game" />
+                    <NaviButton to="/games" text="Old games" />
+                    <NaviButton to="/courses" text="Courses" />
+                    <NaviButton to="/friends" text="Friends" />
+                    <Text>Logged in as {me?.name}</Text>
+                    <Button onPress={logout}>Logout</Button>
+                </>
+                :
+                <>
+                    <Login login={login} />
+                    <Link to="/signUp"><Text>Sign up!</Text></Link>
+                </>
             }
-        </View>
+        </ScrollView>
     )
 }
 
@@ -45,20 +45,23 @@ const NaviButton = ({ text, to }: { text: string, to: string }) => {
 
 const tyyli = StyleSheet.create({
     kuva: {
-        width: '50%',
-        height: '40%',
+        width: 300,
+        height: 300
     },
     container: {
+        width: Dimensions.get('window').width,
         alignItems: 'center',
-        minHeight: Dimensions.get('window').height,
-        width: '100%',
+        height: 1000,
         backgroundColor: '#fafafa'
     },
     root: {
-        borderBottomWidth: 1,
+        borderWidth: 1,
         borderColor: 'lightgray',
-        width: Dimensions.get('window').width,
-        padding: 25,
+        width: Dimensions.get('window').width * 0.8,
+        borderRadius: 15,
+        padding: 20,
+        elevation: 4,
+        marginBottom: 17,
         backgroundColor: '#ffffff',
     },
     text: {

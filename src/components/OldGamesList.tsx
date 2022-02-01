@@ -3,6 +3,7 @@ import { useQuery } from 'react-apollo';
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import { Paragraph, Subheading, Title } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-native';
 import { GET_OLD_GAMES } from '../graphql/queries';
 import { Game } from '../hooks/useGame';
 import { newGame } from '../reducers/gameDataReducer';
@@ -10,9 +11,10 @@ import { newGame } from '../reducers/gameDataReducer';
 const OldGamesList = () => {
     const { data, loading } = useQuery<{ getGames: Game[] }>(GET_OLD_GAMES);
     const dispatch = useDispatch();
+    const navi = useNavigate();
     const handleGameActivation = (gameId: string) => {
         dispatch(newGame(gameId));
-        
+        navi('/game');
     }
     if (loading || !data?.getGames) {
         return (

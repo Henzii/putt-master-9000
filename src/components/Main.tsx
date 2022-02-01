@@ -2,8 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import ToolBar from './ToolBar';
-import Menu from './Menu';
-import { Routes, Route } from 'react-router-native';
+
+import { Routes, Route, useNavigate } from 'react-router-native';
 
 import Game from './Game';
 import Frontpage from './Frontpage';
@@ -15,12 +15,14 @@ import SignUp from './SignUp';
 import Login from './Login';
 
 export default function App() {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const navi = useNavigate();
+  const goBack = () => {
+    navi(-1);
+  }
   return (
     <View style={styles.container}>
       <Notifications />
-      <ToolBar handleMenuClick={() => setMenuOpen(!menuOpen)} />
-      <Menu menuOpen={menuOpen} />
+      <ToolBar handleMenuClick={goBack} />
       <Routes>
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/game" element={<Game />} />

@@ -6,8 +6,8 @@ import { Appbar, Menu as PaperMenu } from 'react-native-paper'
 export default function ToolBar({ handleMenuClick }:{ handleMenuClick: () => void} ) {
     return (
         <Appbar style={tyyli.top}>
-            <Appbar.Action icon="menu" onPress={handleMenuClick} />
-            <Appbar.Content title="PuttMaster 9000" />
+            <Appbar.Action icon="arrow-left" onPress={handleMenuClick} />
+            <Appbar.Content title="FuDisc 9000" />
         </Appbar>
     )
 };
@@ -22,5 +22,8 @@ const tyyli = StyleSheet.create({
         top: 0,
         zIndex: 100
 
+    },
+    title: {
+        color: 'red',
     }
 })
