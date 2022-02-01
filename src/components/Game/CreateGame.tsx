@@ -35,10 +35,10 @@ const CreateGame = (props: CreateGameProps) => {
         }
     }, [me.me])
 
-    const handleSelectCourse = (layout: Layout, course?: Course) => {
+    const handleSelectCourse = (layout: Layout, course: Course) => {
         setNewGameData({
             ...newGameData,
-            course: course || null,
+            course: course,
             layout: layout,
         })
         setSelectCourse(false)

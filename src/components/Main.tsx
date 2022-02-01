@@ -10,6 +10,9 @@ import Frontpage from './Frontpage';
 import SelectCourses from './SelectCourse';
 import FriendsList from './FriendsList';
 import Notifications from './Notifications';
+import OldGamesList from './OldGamesList';
+import SignUp from './SignUp';
+import Login from './Login';
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -19,7 +22,9 @@ export default function App() {
       <ToolBar handleMenuClick={() => setMenuOpen(!menuOpen)} />
       <Menu menuOpen={menuOpen} />
       <Routes>
+        <Route path="/signUp" element={<SignUp />} />
         <Route path="/game" element={<Game />} />
+        <Route path="/games" element={<OldGamesList />} />
         <Route path="/courses" element={<SelectCourses />} />
         <Route path="/friends" element={<FriendsList />} />
         <Route path="/" element={<Frontpage />} />

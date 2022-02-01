@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Headline, TextInput } from "react-native-paper";
+import { Navigate } from 'react-router-native';
 import useMe from '../hooks/useMe';
 
-const Login = () => {
-    const { me, login, logged } = useMe();
+const Login = ({ login }: {login: (s1: string, s2: string) => void }) => {
     const [ username, setUsername] = useState('')
     const [ password, setPassword] = useState('')
-    const handleLogin = async () => {
-        await login(username, password)
+    const handleLogin = () => {
+        login(username, password)
         setUsername('')
         setPassword('')
+        
     }
     return (
         <View style={tyyli.main}>

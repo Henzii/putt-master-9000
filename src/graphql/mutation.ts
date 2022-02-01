@@ -5,7 +5,6 @@ export const ADD_LAYOUT = gql`
         addLayout(courseId: $courseId, layout: $layout)
     }
 `
-
 export const ADD_COURSE = gql`
     mutation ($name: String!) {
         addCourse(name: $name)
@@ -21,17 +20,29 @@ export const ADD_FRIEND = gql`
         addFriend(friendName: $friendName)
     }
 `
-
 export const CREATE_GAME = gql`
-    mutation ($layoutId: ID!) {
-        createGame(layoutId: $layoutId)
+    mutation ($courseId: ID!, $layoutId: ID!) {
+        createGame(courseId: $courseId, layoutId: $layoutId)
     }
 `
-
 export const ADD_PLAYERS_TO_GAME = gql`
     mutation ($gameId: ID!, $playerIds: [ID!]!) {
         addPlayersToGame(gameId: $gameId, playerIds: $playerIds) {
             id
         }
+    }
+`
+export const SET_SCORE = gql`
+    mutation($gameId: ID!, $playerId: ID!, $hole: Int!, $value: Int!) {
+        setScore(gameId: $gameId, playerId: $playerId, hole: $hole, value: $value) {
+        scorecards {
+            scores
+        }
+        }
+    }
+`
+export const CREATE_USER = gql`
+    mutation($name: String!, $password: String!, $email: String) {
+        createUser(name: $name, password: $password, email: $email)
     }
 `

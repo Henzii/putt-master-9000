@@ -7,7 +7,7 @@ export default function Menu({ menuOpen }: { menuOpen: boolean }) {
     if (!menuOpen) return null;
     return (
         <View style={tyyli.root}>
-            <Link to="/peli">
+            <Link to="/game">
                 <Text>Pelit</Text>
             </Link>
             <Link to="/">

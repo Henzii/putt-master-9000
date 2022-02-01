@@ -10,10 +10,10 @@ import SelectLayout from "./SelectLayout";
 type SingleCourseProps = {
     course: Course,
     onAddLayout?: (courseId: number | string, layout: NewLayout) => void,
-    onLayoutClick?: (layout: Layout, course?: Course) => void,
+    onLayoutClick?: (layout: Layout, course: Course) => void,
 }
 type SelectCoursesProps = {
-    onSelect?: (layout: Layout, course?: Course) => void
+    onSelect?: (layout: Layout, course: Course) => void
 }
 const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
     const { courses, loading, addLayout, addCourse } = useCourses();
@@ -24,7 +24,7 @@ const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
     const handleAddLayout = (courseId: number | string, layout: NewLayout) => {
         addLayout(courseId, layout)
     }
-    const handleClickLayout = (layout: Layout, course?: Course) => {
+    const handleClickLayout = (layout: Layout, course: Course) => {
         if (onSelect) onSelect(layout, course)
     }
     const handleAddCourse = (newCourseName: string) => {

@@ -1,12 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost'
 import { setContext } from 'apollo-link-context';
-const API_URL = 'http://192.168.1.3:4000/graphql'
+
+const API_URL = (process.env.NODE_ENV !== 'development')
+    ? 'https://puttmaster.herokuapp.com/graphql'
+    : 'http://192.168.1.5:8080/graphql';
+
 
 const httpLink = new HttpLink({
     uri: API_URL,
 })
-
 const authLink = setContext( async (root: unknown, { headers }) => {
     const token = await AsyncStorage.getItem('token')
     return { 

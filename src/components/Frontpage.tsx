@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
+import { Button } from 'react-native-paper';
 import { Link } from 'react-router-native';
 import useMe from '../hooks/useMe';
 import { theme } from '../utils/theme';
@@ -8,16 +9,25 @@ import Login from './Login';
 const master = require('../../assets/master2.png');
 
 const Frontpage = () => {
-    const { logged } = useMe();
+    const { me, logged, logout, login } = useMe();
     return (
         <View style={tyyli.container}>
             <Image source={master} resizeMode='cover' style={tyyli.kuva} />
             {(logged) ? 
             <>
                 <NaviButton to="/game" text="New Game" />
+                <NaviButton to="/games" text="Old games" />
                 <NaviButton to="/courses" text="Courses" />
                 <NaviButton to="/friends" text="Friends" />
-            </>: <Login />}
+                <Button onPress={logout}>Logout</Button>
+                <Text>Logged in as {me?.name}</Text>
+            </>
+            :
+            <>
+                <Login login={login} />
+                <Link to="/signUp"><Text>Sign up!</Text></Link>
+            </>
+            }
         </View>
     )
 }

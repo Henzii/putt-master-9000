@@ -7,8 +7,16 @@ import { Scorecard } from '../../hooks/useGame';
 import { User } from '../../hooks/useMe';
 import SelectButton from '../SelectButton';
 
-export default function Player({ player, selectedRound, pars }: PlayerArgs) {
+type PlayerArgs = {
+    player: Scorecard,
+    pars: number[],
+    selectedRound: number,
+    setScore: (playerId: string, selectedRound: number, value: number) => void,
+}
+
+export default function Player({ player, selectedRound, pars, setScore }: PlayerArgs) {
     const handleButtonClick = (score: number) => {
+        setScore(player.user.id as string, selectedRound, score)
     }
     return (
         <Card style={tyyli.main}>
@@ -56,11 +64,7 @@ const Tulosnapit = ({ name, score, setSelected }: { name: string, score: number 
 
     return <>{ret}</>
 }
-type PlayerArgs = {
-    player: Scorecard,
-    pars: number[],
-    selectedRound: number,
-}
+
 
 const tyyli = StyleSheet.create({
     content: {

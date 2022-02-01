@@ -7,8 +7,16 @@ import useGame from '../../hooks/useGame';
 
 export default function Game({ gameId }: { gameId: string }) {
     const [selectedRound, setSelectedRound] = useState(0);
-    
-    const { data, ready } = useGame(gameId);
+    const { data, ready, setScore } = useGame(gameId);
+    const handleScoreChange = (playerId: string, selectedRound: number, value: number) => {
+        console.log('Setscore for player', playerId, 'round', selectedRound, 'value', value);
+        setScore({
+            gameId,
+            playerId,
+            hole: selectedRound,
+            value,
+        })
+    }
     if (!data || !ready) {
         return (
             <View>
@@ -24,7 +32,15 @@ export default function Game({ gameId }: { gameId: string }) {
                     <Text style={peliStyles.course}>{data.course} #{selectedRound + 1}, par {data.pars[selectedRound]}</Text>
                     <Text style={peliStyles.layout}>{data.layout}</Text>
                 </View>
-                {data.scorecards.map(p => <Player pars={data.pars} key={p.user.id} player={p} selectedRound={selectedRound} />)}
+                {data.scorecards.map(p => 
+                    <Player
+                        pars={data.pars}
+                        key={p.user.id}
+                        player={p}
+                        selectedRound={selectedRound}
+                        setScore={handleScoreChange}
+                    />
+                )}
             </View>
         </>
     )
