@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image, ScrollView } from "react-native";
 import { Button } from 'react-native-paper';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-native';
 import useMe from '../hooks/useMe';
+import { RootState } from '../utils/store';
 import { theme } from '../utils/theme';
 import Login from './Login';
 
@@ -10,15 +12,18 @@ const master = require('../../assets/master2.png');
 
 const Frontpage = () => {
     const { me, logged, logout, login } = useMe();
+    const gameData = useSelector((state: RootState) => state.gameData)
+    
     return (
         <ScrollView contentContainerStyle={tyyli.container} >
             <Image source={master} resizeMode='stretch' style={tyyli.kuva} />
             {(logged) ?
                 <>
-                    <NaviButton to="/game" text="New Game" />
+                    <NaviButton to="/game" text={gameData?.gameId ? 'Continue game' : 'New game' } />
                     <NaviButton to="/games" text="Old games" />
                     <NaviButton to="/courses" text="Courses" />
                     <NaviButton to="/friends" text="Friends" />
+                    <NaviButton to="/settings" text="Settings" />
                     <Text>Logged in as {me?.name}</Text>
                     <Button onPress={logout}>Logout</Button>
                 </>
@@ -61,7 +66,7 @@ const tyyli = StyleSheet.create({
         borderRadius: 15,
         padding: 20,
         elevation: 4,
-        marginBottom: 17,
+        marginBottom: 13,
         backgroundColor: '#ffffff',
     },
     text: {

@@ -13,6 +13,7 @@ import Notifications from './Notifications';
 import OldGamesList from './OldGamesList';
 import SignUp from './SignUp';
 import Login from './Login';
+import Settings from './Settings';
 
 export default function App() {
   const navi = useNavigate();
@@ -29,6 +30,7 @@ export default function App() {
         <Route path="/games" element={<OldGamesList />} />
         <Route path="/courses" element={<SelectCourses />} />
         <Route path="/friends" element={<FriendsList />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/" element={<Frontpage />} />
       </Routes>
       <StatusBar style="auto" />
@@ -39,7 +41,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fafafa',
     alignItems: 'center',
     justifyContent: 'flex-start',
     
