@@ -5,9 +5,14 @@ export const theme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
-        primary: 'tomato',
+        primary: '#508572',
         secondary: 'yellow',
+        accent: 'red',
+        background: '#fff',
+        mainBackground: '#fafafa',
+        surface: '#fefefe',
     },
+    roundess: 2,
     font: {
         sizes: {
             normal: 14,

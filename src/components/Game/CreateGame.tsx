@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text } from "react-native"
-import { Button, Caption, Divider, Subheading, Title } from 'react-native-paper';
+import { Button, Subheading, Title } from 'react-native-paper';
 import { Course, Layout } from '../../hooks/useCourses';
 import useMe, { User } from '../../hooks/useMe';
 import FriendsList from '../FriendsList';
 import SelectCourses from '../SelectCourse';
+import Container from '../ThemedComponents/Container';
 
 export type NewGameData = {
     course: Course | null,
@@ -62,7 +63,7 @@ const CreateGame = (props: CreateGameProps) => {
     if (addFriend) return <FriendsList onClick={handleAddFriend} />
     
     return (
-        <View style={tyyli.main}>
+        <Container>
             <Title style={tyyli.title}>Create game</Title>
             <Subheading>Selected course</Subheading>
             <View style={tyyli.selectCourse}>
@@ -80,15 +81,11 @@ const CreateGame = (props: CreateGameProps) => {
                 <Button color='green' mode='contained' onPress={handleCreate}>Create</Button>
                 <Button color='red' mode='contained' onPress={props.onCancel}>Cancel</Button>
             </View>
-        </View>
+        </Container>
     )
 }
 
 const tyyli = StyleSheet.create({
-    main: {
-        width: '100%',
-        padding: 20,
-    },
     selectCourse: {
         width: '100%',
         display: 'flex',

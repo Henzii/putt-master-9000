@@ -11,17 +11,14 @@ import store from './src/utils/store';
 import { client } from './src/graphql/apolloClient';
 
 export default function App() {
-  useEffect(() => {
-    console.log('PuttMaster has arrived')
-  }, [])
   return (
     <ReduxProvider store={store}>
       <ApolloProvider client={client}>
-        <PaperProvider theme={theme}>
-          <NativeRouter>
+        <NativeRouter>
+          <PaperProvider theme={theme}>
             <Main />
-          </NativeRouter>
-        </PaperProvider>
+          </PaperProvider>
+        </NativeRouter>
       </ApolloProvider>
     </ReduxProvider>
 

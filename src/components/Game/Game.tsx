@@ -4,6 +4,7 @@ import Player from './Player';
 import RoundTabs from './RoundTabs';
 import { theme } from '../../utils/theme';
 import useGame from '../../hooks/useGame';
+import Container from '../ThemedComponents/Container';
 
 export default function Game({ gameId }: { gameId: string }) {
     const [selectedRound, setSelectedRound] = useState(0);
@@ -27,7 +28,7 @@ export default function Game({ gameId }: { gameId: string }) {
     return (
         <>
             <RoundTabs gameData={data} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
-            <View style={{ flex: 1, justifyContent: 'flex-start', width: '100%' }}>
+            <Container noPadding>
                 <View style={peliStyles.headers}>
                     <Text style={peliStyles.course}>{data.course} #{selectedRound + 1}, par {data.pars[selectedRound]}</Text>
                     <Text style={peliStyles.layout}>{data.layout}</Text>
@@ -41,7 +42,7 @@ export default function Game({ gameId }: { gameId: string }) {
                         setScore={handleScoreChange}
                     />
                 )}
-            </View>
+            </Container>
         </>
     )
 }

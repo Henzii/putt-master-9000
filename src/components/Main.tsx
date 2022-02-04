@@ -21,7 +21,7 @@ export default function App() {
     navi(-1);
   }
   return (
-    <View style={styles.container}>
+    <>
       <Notifications />
       <ToolBar handleMenuClick={goBack} />
       <Routes>
@@ -34,16 +34,6 @@ export default function App() {
         <Route path="/" element={<Frontpage />} />
       </Routes>
       <StatusBar style="auto" />
-    </View>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fafafa',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    
-  },
-});

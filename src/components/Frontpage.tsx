@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image, ScrollView } from "react-native";
-import { Button } from 'react-native-paper';
+import { Button, useTheme } from 'react-native-paper';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-native';
 import useMe from '../hooks/useMe';
 import { RootState } from '../utils/store';
 import { theme } from '../utils/theme';
 import Login from './Login';
+import Container from './ThemedComponents/Container';
 
 const master = require('../../assets/master2.png');
 
@@ -15,7 +17,8 @@ const Frontpage = () => {
     const gameData = useSelector((state: RootState) => state.gameData)
     
     return (
-        <ScrollView contentContainerStyle={tyyli.container} >
+        <Container noPadding>
+        <ScrollView contentContainerStyle={{ alignItems: 'center', paddingBottom: 20, }}>
             <Image source={master} resizeMode='stretch' style={tyyli.kuva} />
             {(logged) ?
                 <>
@@ -34,30 +37,25 @@ const Frontpage = () => {
                 </>
             }
         </ScrollView>
+        </Container>
     )
 }
 
 const NaviButton = ({ text, to }: { text: string, to: string }) => {
+    const { colors, fonts } = useTheme();
     return (
         <Link to={to}>
-            <View style={tyyli.root}>
-                <Text style={tyyli.text}>{text}</Text>
+            <View style={[tyyli.root, { backgroundColor: colors.background }]}>
+                <Text style={{ textAlign: 'center', fontSize: 18, }}>{text}</Text>
             </View>
         </Link>
 
     )
 }
-
 const tyyli = StyleSheet.create({
     kuva: {
-        width: 300,
-        height: 300
-    },
-    container: {
-        width: Dimensions.get('window').width,
-        alignItems: 'center',
-        height: 1000,
-        backgroundColor: '#fafafa'
+        width: 250,
+        height: 250
     },
     root: {
         borderWidth: 1,
@@ -67,13 +65,7 @@ const tyyli = StyleSheet.create({
         padding: 20,
         elevation: 4,
         marginBottom: 13,
-        backgroundColor: '#ffffff',
     },
-    text: {
-        textAlign: 'center',
-        fontSize: theme.font.sizes.large,
-        fontFamily: theme.font.family
-    }
 })
 
 export default Frontpage;
