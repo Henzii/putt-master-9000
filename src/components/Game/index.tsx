@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-apollo';
 import { BottomNavigation } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-native';
 import { ADD_PLAYERS_TO_GAME, CREATE_GAME } from '../../graphql/mutation';
+import { GET_OLD_GAMES } from '../../graphql/queries';
 import { gameData, newGame } from '../../reducers/gameDataReducer';
 import { addNotification } from '../../reducers/notificationReducer';
 import { RootState } from '../../utils/store';
@@ -13,9 +15,10 @@ import Summary from './Summary';
 
 export default function() {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
-    const [createGameMutation] = useMutation(CREATE_GAME);
+    const [createGameMutation] = useMutation(CREATE_GAME, { refetchQueries: [ { query: GET_OLD_GAMES }]});
     const [addPlayersMutation] = useMutation(ADD_PLAYERS_TO_GAME);
     const dispatch = useDispatch();
+    const navi = useNavigate();
 
     // Alanaville:
     const [navIndex, setNavIndex] = useState(0);
@@ -29,7 +32,6 @@ export default function() {
         setupRoute: Setup,
         summaryRoute: Summary,
     })
-
     const handleCreateGame = async (data: NewGameData) => {
         if (!data.layout || !data.course) return;
         const res = await createGameMutation({
@@ -46,7 +48,7 @@ export default function() {
     }
     // Jos peliä ei ladattuna, näytetään CreateGame
     if (!gameData?.gameId) {
-        return <CreateGame onCreate={handleCreateGame}/>
+        return <CreateGame onCreate={handleCreateGame} onCancel={() => navi(-1)} />
     }
     return (
         <BottomNavigation

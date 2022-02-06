@@ -43,6 +43,7 @@ export const GET_GAME = gql`
       layout
       pars
       holes
+      isOpen
       scorecards {
         scores
         total
@@ -60,6 +61,7 @@ export const GET_OLD_GAMES = gql`
       course
       layout
       id
+      isOpen
     }
   }
 `

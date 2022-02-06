@@ -33,7 +33,7 @@ const Frontpage = () => {
                 :
                 <>
                     <Login login={login} />
-                    <Link to="/signUp"><Text>Sign up!</Text></Link>
+                    <Link to="/signUp"><Button>Sign up!</Button></Link>
                 </>
             }
         </ScrollView>

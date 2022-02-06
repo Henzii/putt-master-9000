@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text } from "react-native"
-import { Button, Subheading, Title } from 'react-native-paper';
+import { Button, Subheading, Title, useTheme } from 'react-native-paper';
 import { Course, Layout } from '../../hooks/useCourses';
 import useMe, { User } from '../../hooks/useMe';
 import FriendsList from '../FriendsList';
@@ -22,6 +22,7 @@ const CreateGame = (props: CreateGameProps) => {
 
     const [selectCourse, setSelectCourse] = useState(false);
     const [addFriend, setAddFriend] = useState(false);
+    const { colors } = useTheme();
     const me = useMe();
 
     useEffect(() => {   // Kirjautuneet tiedot playerlistiin mounttauksen yhteydessä
@@ -62,6 +63,9 @@ const CreateGame = (props: CreateGameProps) => {
     if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} />
     if (addFriend) return <FriendsList onClick={handleAddFriend} />
     
+    // Luodaan tyyli, parametrinä teeman väritys    
+    const tyyli = createStyle(colors);
+
     return (
         <Container>
             <Title style={tyyli.title}>Create game</Title>
@@ -85,7 +89,7 @@ const CreateGame = (props: CreateGameProps) => {
     )
 }
 
-const tyyli = StyleSheet.create({
+const createStyle = (colors?: ReactNativePaper.ThemeColors) => StyleSheet.create({
     selectCourse: {
         width: '100%',
         display: 'flex',
@@ -95,6 +99,7 @@ const tyyli = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         borderColor: 'lightgray',
+        backgroundColor: colors?.surface,
         marginBottom: 20,
         borderRadius: 5,
     },
@@ -106,6 +111,7 @@ const tyyli = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         borderColor: 'lightgray',
+        backgroundColor: colors?.surface,
         marginBottom: 20,
     },
     player: {

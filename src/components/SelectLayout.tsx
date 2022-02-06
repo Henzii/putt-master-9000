@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, ListRenderItemInfo, StyleSheet, Pressable } from "react-native";
-import { Button, Headline, Modal, Paragraph, Portal, Subheading } from 'react-native-paper'
+import { Button, Headline, Modal, Paragraph, Portal, Subheading, useTheme } from 'react-native-paper'
 import useCourses, { Course, Layout, NewLayout } from "../hooks/useCourses";
 import AddLayout from "./AddLayout";
 
@@ -37,12 +37,13 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
 }
 
 const LayoutElement = ({ layout, onSelect }: { layout: Layout, onSelect?: (layout: Layout) => void }) => {
+    const { colors } = useTheme();
     const handleClick = () => {
         if (onSelect) onSelect(layout)
     }
     return (
         <Pressable onPress={handleClick}>
-            <View style={tyyli.item}>
+            <View style={[tyyli.item, { backgroundColor: colors.surface }]}>
                 <View style={tyyli.itemSplit}>
                     <Subheading>{layout.name}</Subheading>
                     <Subheading>Par {layout.par}</Subheading>
@@ -62,10 +63,9 @@ const SeparatorComponent = () => {
 var tyyli = StyleSheet.create({
     main: {
         width: '100%',
-        marginRight: 5,
         borderWidth: 1,
         borderTopWidth: 0,
-        borderColor: 'lightgray',
+        borderRadius: 5,
     },
     item: {
         paddingLeft: 20,
@@ -73,8 +73,6 @@ var tyyli = StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
         minHeight: 20,
-        backgroundColor: '#fcfcfc',
-
     },
     itemSplit: {
         display: 'flex',

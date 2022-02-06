@@ -5,7 +5,7 @@ type ContainerProps = {
     children: any,
     fullScreen?: boolean,
     noFlex?: boolean,
-    style?: StyleSheet,
+    style?: Object,
     noPadding?: boolean    
 }
 
@@ -15,7 +15,7 @@ const Container = (props: ContainerProps) => {
         props.fullScreen && tyylit.fullScreen,
         { backgroundColor: '#fafafa' },
         !props.noFlex && { flex: 1 },
-        { ...props.style },
+        props.style,
         {
             padding: (props.noPadding) ? 0: 20,
         }

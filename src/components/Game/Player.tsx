@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Card } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
-import { ADD_PLAYERS_TO_GAME } from '../../graphql/mutation';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { Button, Card } from 'react-native-paper';
 import { Scorecard } from '../../hooks/useGame';
-import { User } from '../../hooks/useMe';
-import SelectButton from '../SelectButton';
 
 type PlayerArgs = {
     player: Scorecard,
@@ -18,6 +14,7 @@ export default function Player({ player, selectedRound, pars, setScore }: Player
     const handleButtonClick = (score: number) => {
         setScore(player.user.id as string, selectedRound, score)
     }
+    const napitData = [1, 2, 3, 4, 5, 6]
     return (
         <Card style={tyyli.main}>
             <Card.Title
@@ -25,7 +22,20 @@ export default function Player({ player, selectedRound, pars, setScore }: Player
             />
             <Card.Content style={tyyli.content}>
                 <View style={tyyli.contentLeft}>
-                    <Tulosnapit name={player.user.name} score={player.scores[selectedRound]} setSelected={handleButtonClick} />
+                    <FlatList
+                        data={napitData}
+                        renderItem={({ item, index }) => {
+                            return <ScoreButton
+                                number={item}
+                                onClick={handleButtonClick}
+                                selected={(player.scores[selectedRound] - 1 === index)}
+                            />
+                        }}
+                        horizontal
+                        onEndReached={() => napitData.push(napitData.length + 1)}
+                        onEndReachedThreshold={0.1}
+                        keyExtractor={item => 'avain'+player.user.id+item}
+                    />
                 </View>
                 <View style={tyyli.contentRight}>
                     <Text style={tyyli.crText}>
@@ -41,42 +51,52 @@ export default function Player({ player, selectedRound, pars, setScore }: Player
     )
 
 }
-const Tulosnapit = ({ name, score, setSelected }: { name: string, score: number | undefined, setSelected: (i: number) => void }) => {
-    const [pending, setPending] = useState<number | null>(null);
-    const ret = [];
-    const handleButtonClick = (btnNro: number) => {
-        setPending(btnNro);
-        setSelected(btnNro);
-    }
-    
+const ScoreButton = ({ onClick, number, selected }: { onClick?: (score: number) => void, number: number, selected: boolean }) => {
+    const [pending, setPending] = useState(false);
     useEffect(() => {
-        setPending(null);
-    }, [score])
-    for (let i = 1; i < 6; i++) ret.push(
-        <SelectButton
-            selected={(i === score)}
-            pending={(i === pending)}
-            key={name.concat(i.toString())}
-            width="15%"
-            onClick={() => handleButtonClick(i)}
-            text={i + ''}
-        />)
-
-    return <>{ret}</>
+        if (selected && pending) setPending(false)
+    }, [selected])
+    const handleButtonClick = () => {
+        setPending(true);
+        if (onClick) onClick(number);
+    }
+    const bgStyles = [
+        tyyli.scoreButton,
+        pending && tyyli.scoreButtonPending,
+        selected && tyyli.scoreButtonSelected,
+    ]
+    return (
+        <Button
+            mode='contained'
+            style={bgStyles}
+            onPress={handleButtonClick}
+        >
+            {number}
+        </Button>
+    )
 }
 
-
 const tyyli = StyleSheet.create({
+    scoreButton: {
+        marginRight: 10,
+        borderWidth: 1,
+        borderColor: '#000',
+    },
+    scoreButtonPending: {
+        borderColor: 'orange',
+        backgroundColor: 'darkgreen',
+    },
+    scoreButtonSelected: {
+        backgroundColor: 'salmon',
+        borderColor: 'green'
+    },
     content: {
-        flex: 1,
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around'
     },
     contentLeft: {
         flex: 4,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        width: '70%'
     },
     contentRight: {
         flex: 1,

@@ -9,13 +9,14 @@ import { RootState } from '../../utils/store';
 const Summary = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const { data, ready } = useGame(gameData.gameId);
-    if (!ready || ! data) {
+    if (!ready || !data) {
         return (
             <View>
                 <Text>Loading...</Text>
             </View>
         )
     }
+    const sortedScorecards = [...data.scorecards].sort((a,b) => (a.total || 0) - (b.total || 0))
     return (
         <View>
             <DataTable>
@@ -25,7 +26,7 @@ const Summary = () => {
                     <DataTable.Title>Total</DataTable.Title>
                     <DataTable.Title>+/-</DataTable.Title>
                 </DataTable.Header>
-                {data.scorecards.sort((a,b) => (a.total || 0) - (b.total || 0)).map( (sc, index) => {
+                {sortedScorecards.map((sc, index) => {
                     return (
                         <DataTable.Row key={sc.user.id}>
                             <DataTable.Cell>{index+1}</DataTable.Cell>

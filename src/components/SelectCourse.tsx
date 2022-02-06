@@ -6,6 +6,7 @@ import { Button, Card, Modal, Searchbar, Portal, List } from "react-native-paper
 import useCourses, { Course, Layout, NewLayout } from "../hooks/useCourses";
 import AddCourse from "./AddCourse";
 import SelectLayout from "./SelectLayout";
+import Container from "./ThemedComponents/Container";
 
 type SingleCourseProps = {
     course: Course,
@@ -36,7 +37,7 @@ const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
     )
 
     return (
-        <View style={tyyli.wide}>
+        <Container noPadding>
             <Portal>
                 <Modal
                     visible={displayAddCourse}
@@ -59,41 +60,45 @@ const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
                 <Button icon="plus-thick" onPress={() => setDisplayAddCourse(true)}>Add Course</Button>
                 <Button icon="magnify" onPress={() => setDisplaySearchBar(!displaySearchBar)}>Search</Button>
             </View>
-            <View style={tyyli.wide}>
+            <Container noPadding>
                 {courses.map(c => (
-                    <SingleCourse 
+                    <SingleCourse
                         course={c}
                         key={c.id}
                         onAddLayout={handleAddLayout}
                         onLayoutClick={handleClickLayout}
                     />
                 ))}
-            </View>
-        </View>
+            </Container>
+        </Container>
     )
 }
 
-const SingleCourse = ({ course, onAddLayout, onLayoutClick }: SingleCourseProps ) => {
+const SingleCourse = ({ course, onAddLayout, onLayoutClick }: SingleCourseProps) => {
     return (
-            <List.Accordion
-                title={course.name}
-                titleStyle={{ fontSize: 18 }}
-                description={course.layouts.length + ' layouts'}
-            >
-                <SelectLayout course={course} onAddLayout={onAddLayout} onSelect={onLayoutClick}/>
-            </List.Accordion>
+        <List.Accordion
+            style={tyyli.container}
+            title={course.name}
+            titleStyle={{ fontSize: 18 }}
+            description={course.layouts.length + ' layouts'}
+        >
+            <SelectLayout course={course} onAddLayout={onAddLayout} onSelect={onLayoutClick} />
+        </List.Accordion>
     )
 }
 
 const tyyli = StyleSheet.create({
+    container: {
+        borderWidth: 1,
+        borderRadius: 5,
+        marginTop: 5,
+        
+    },
     topButtons: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         padding: 10,
-    },
-    wide: {
-        width: '100%',
     },
     card: {
         width: '100%',

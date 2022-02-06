@@ -12,7 +12,7 @@ export const theme = {
         mainBackground: '#fafafa',
         surface: '#fefefe',
     },
-    roundess: 2,
+    roundess: 7,
     font: {
         sizes: {
             normal: 14,

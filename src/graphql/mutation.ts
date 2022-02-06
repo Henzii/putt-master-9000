@@ -35,14 +35,21 @@ export const ADD_PLAYERS_TO_GAME = gql`
 export const SET_SCORE = gql`
     mutation($gameId: ID!, $playerId: ID!, $hole: Int!, $value: Int!) {
         setScore(gameId: $gameId, playerId: $playerId, hole: $hole, value: $value) {
-        scorecards {
-            scores
-        }
+            scorecards {
+                scores
+            }
         }
     }
 `
 export const CREATE_USER = gql`
     mutation($name: String!, $password: String!, $email: String) {
         createUser(name: $name, password: $password, email: $email)
+    }
+`
+export const CLOSE_GAME = gql`
+    mutation($gameId: ID!) {
+        closeGame(gameId: $gameId) {
+            isOpen
+        }
     }
 `

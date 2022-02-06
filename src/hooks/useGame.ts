@@ -14,7 +14,9 @@ const useGame = (gameId: string) => {
     const setScore = async (args: SetScoreArgs) => {
         const res = await setScoreMutation({ variables: args });
     }
-
+    const updateScorecardsCache = (scorecards: Scorecard[]) => {
+        // TODO
+    }
     return {
         data: data?.getGame ?? null,
         ready: (!loading && !error),
