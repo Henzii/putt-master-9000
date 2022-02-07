@@ -2,7 +2,7 @@
   "expo": {
     "name": "putt-master-9000",
     "slug": "putt-master-9000",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -24,7 +24,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "Puttmaster.apk"
+      "package": "com.henzisoft.puttmaster9000",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"

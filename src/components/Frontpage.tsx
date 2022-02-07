@@ -44,7 +44,7 @@ const Frontpage = () => {
 const NaviButton = ({ text, to }: { text: string, to: string }) => {
     const { colors, fonts } = useTheme();
     return (
-        <Link to={to}>
+        <Link to={to} underlayColor="none">
             <View style={[tyyli.root, { backgroundColor: colors.background }]}>
                 <Text style={{ textAlign: 'center', fontSize: 18, }}>{text}</Text>
             </View>

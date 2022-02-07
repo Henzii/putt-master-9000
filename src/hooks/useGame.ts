@@ -20,6 +20,7 @@ const useGame = (gameId: string) => {
     return {
         data: data?.getGame ?? null,
         ready: (!loading && !error),
+        error,
         setScore,
     }
 }

@@ -38,7 +38,6 @@ export default function() {
             variables: { courseId: data.course.id, layoutId: data.layout.id }
         })
         const newGameId = res.data.createGame;
-        console.log('New game:', newGameId);
         await addPlayersMutation({ variables: {
             gameId: newGameId,
             playerIds: data.players.map(p => p.id)

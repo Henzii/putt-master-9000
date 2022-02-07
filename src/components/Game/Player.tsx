@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 import { Button, Card } from 'react-native-paper';
 import { Scorecard } from '../../hooks/useGame';
 
@@ -14,7 +14,7 @@ export default function Player({ player, selectedRound, pars, setScore }: Player
     const handleButtonClick = (score: number) => {
         setScore(player.user.id as string, selectedRound, score)
     }
-    const napitData = [1, 2, 3, 4, 5, 6]
+    const napitData = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     return (
         <Card style={tyyli.main}>
             <Card.Title
@@ -32,9 +32,12 @@ export default function Player({ player, selectedRound, pars, setScore }: Player
                             />
                         }}
                         horizontal
-                        onEndReached={() => napitData.push(napitData.length + 1)}
+                        onEndReached={() => {
+                            if (napitData.length < 50) napitData.push(napitData.length + 1)
+                        }}
                         onEndReachedThreshold={0.1}
                         keyExtractor={item => 'avain'+player.user.id+item}
+                        initialScrollIndex={0}
                     />
                 </View>
                 <View style={tyyli.contentRight}>
@@ -66,21 +69,24 @@ const ScoreButton = ({ onClick, number, selected }: { onClick?: (score: number) 
         selected && tyyli.scoreButtonSelected,
     ]
     return (
-        <Button
-            mode='contained'
+        <Pressable
             style={bgStyles}
             onPress={handleButtonClick}
         >
-            {number}
-        </Button>
+            <Text>{number}</Text>
+        </Pressable>
     )
 }
 
 const tyyli = StyleSheet.create({
     scoreButton: {
-        marginRight: 10,
+        marginRight: 5,
         borderWidth: 1,
         borderColor: '#000',
+        backgroundColor: 'lightgray',
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        borderRadius: 7,
     },
     scoreButtonPending: {
         borderColor: 'orange',

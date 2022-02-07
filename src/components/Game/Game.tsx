@@ -5,13 +5,13 @@ import RoundTabs from './RoundTabs';
 import { theme } from '../../utils/theme';
 import useGame from '../../hooks/useGame';
 import Container from '../ThemedComponents/Container';
-import { Button, Title } from 'react-native-paper';
+import { Button, Paragraph, Title } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { unloadGame } from '../../reducers/gameDataReducer';
 
 export default function Game({ gameId }: { gameId: string }) {
     const [selectedRound, setSelectedRound] = useState(0);
-    const { data, ready, setScore } = useGame(gameId);
+    const { data, ready, error, setScore } = useGame(gameId);
     const handleScoreChange = (playerId: string, selectedRound: number, value: number) => {
         setScore({
             gameId,
@@ -19,6 +19,16 @@ export default function Game({ gameId }: { gameId: string }) {
             hole: selectedRound,
             value,
         })
+    }
+    if (error?.message) {
+        return (
+            <Container>
+                <Title>Error!</Title>
+                <Paragraph>
+                    {error.message}
+                </Paragraph>
+            </Container>
+        )
     }
     if (!data || !ready) {
         return (

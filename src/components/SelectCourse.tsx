@@ -60,7 +60,7 @@ const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
                 <Button icon="plus-thick" onPress={() => setDisplayAddCourse(true)}>Add Course</Button>
                 <Button icon="magnify" onPress={() => setDisplaySearchBar(!displaySearchBar)}>Search</Button>
             </View>
-            <Container noPadding>
+            <Container style={{ margin: 7 }} noPadding>
                 {courses.map(c => (
                     <SingleCourse
                         course={c}
