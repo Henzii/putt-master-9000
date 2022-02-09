@@ -8,23 +8,21 @@ import { GET_GAME } from '../../graphql/queries';
 import { RootState } from '../../utils/store';
 import { gameData } from '../../reducers/gameDataReducer';
 import Container from '../ThemedComponents/Container';
-import useGame, { Game } from '../../hooks/useGame';
+import useGame from '../../hooks/useGame';
 import { addNotification } from '../../reducers/notificationReducer';
+import useTextInput from '../../hooks/useTextInput';
 
 const Setup = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
-    const [beers, setBeers] = useState<number | null>(null);
     const dispatch = useDispatch();
     const [closeGameMutation] = useMutation(CLOSE_GAME, { refetchQueries: [{ query: GET_GAME, variables: { gameId: gameData.gameId } }] })
     const {data: game} = useGame(gameData.gameId)
+    const [beerInput] = useTextInput({
+        numeric: true,
+        callBack: (value) => console.log('Callback arvo: ', value),
+        callBackDelay: 1000,
+    });
 
-    const handleBeersChange = (value: string) => {
-        if (value === '') setBeers(null);
-
-        const intValue = Number.parseInt(value);
-        if (isNaN(intValue)) return;
-        setBeers(intValue);
-    }
     const handleGameEnd = async () => {
         const res = await closeGameMutation({ variables: { gameId: gameData.gameId }});
         if (!res.data.closeGame.isOpen) {
@@ -44,11 +42,9 @@ const Setup = () => {
             </Paragraph>
             <TextInput
                 autoComplete={false}
-                keyboardType='numeric'
-                value={(beers) ? beers.toString() : ''}
-                onChangeText={handleBeersChange}
                 style={tyyli.numberInput}
                 label='# beers'
+                {...beerInput}
             />
             <Divider style={tyyli.divider} />
             <Paragraph>
