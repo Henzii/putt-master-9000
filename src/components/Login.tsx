@@ -16,8 +16,8 @@ const Login = ({ login }: {login: (s1: string, s2: string) => void }) => {
     return (
         <View style={tyyli.main}>
             <Title>Please insert credit card</Title>
-            <TextInput label="Username" mode='outlined' autoComplete={false} value={username} onChangeText={(v) => setUsername(v)}/>
-            <TextInput secureTextEntry label="Password" mode='outlined' autoComplete={false} value={password} onChangeText={(v) => setPassword(v)}/>
+            <TextInput testID='user' label="Username" mode='outlined' autoComplete={false} value={username} onChangeText={(v) => setUsername(v)}/>
+            <TextInput testID='password' secureTextEntry label="Password" mode='outlined' autoComplete={false} value={password} onChangeText={(v) => setPassword(v)}/>
             <Button onPress={handleLogin} style={tyyli.nappi} mode='contained'>Login</Button>
         </View>
     )
