@@ -6,19 +6,18 @@ import { gameData } from '../../reducers/gameDataReducer';
 import { RootState } from '../../utils/store';
 import Container from '../ThemedComponents/Container';
 import { Table, Rows, Row, Col, TableWrapper } from 'react-native-table-component';
+import Loading from '../Loading';
 
 const Summary = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const { data, ready } = useGame(gameData.gameId);
     if (!ready || !data) {
         return (
-            <View>
-                <Text>Loading...</Text>
-            </View>
+            <Loading />
         )
     }
     const sortedScorecards = [...data.scorecards].sort((a, b) => (a.total || 0) - (b.total || 0))
-    const tableHeaders = ['#', 'Player', ...data.pars.map((p, i) => i + 1), 'Total']
+    const tableHeaders = ['#', 'Player', ...data.pars.map((p, i) => i + 1), 'Total', '+/-', 'bHc', 'hcTot']
     const playersData = sortedScorecards.map((sc, i) => {
         const scoret: (number | string)[] = [...sc.scores];
         // Tehdään tekemättömistä väylistä tyhjiä...
@@ -29,9 +28,12 @@ const Summary = () => {
         sc.user.name,
         ...scoret,
         sc.total || '?',
+        (sc.total || 0) - data.par,
+        (sc.beers/2),
+        (sc.total || 0) - (sc.beers/2)
         ]
     })
-    const leveydet = [20, 80, ...data.pars.map(p => 30), 50]
+    const leveydet = [20, 80, ...data.pars.map(p => 30), 50, 50, 50, 50]
     return (
         <ScrollView horizontal>
             <Container>

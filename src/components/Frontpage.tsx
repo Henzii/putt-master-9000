@@ -1,21 +1,25 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image, ScrollView } from "react-native";
 import { Button, useTheme } from 'react-native-paper';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-native';
 import useMe from '../hooks/useMe';
 import { RootState } from '../utils/store';
-import { theme } from '../utils/theme';
+import Loading from './Loading';
 import Login from './Login';
 import Container from './ThemedComponents/Container';
 
 const master = require('../../assets/master2.png');
 
 const Frontpage = () => {
-    const { me, logged, logout, login } = useMe();
+    const { me, logged, logout, login, loading } = useMe();
     const gameData = useSelector((state: RootState) => state.gameData)
     
+    if (loading) {
+        return (
+            <Loading loadingText='Connecting to server...' />
+        )
+    }
     return (
         <Container noPadding>
         <ScrollView contentContainerStyle={{ alignItems: 'center', paddingBottom: 20, }}>

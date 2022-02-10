@@ -1,13 +1,15 @@
 import React from 'react';
 import { useQuery } from 'react-apollo';
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
-import { Chip, Paragraph, Subheading, Title, useTheme } from 'react-native-paper';
+import { Caption, Chip, Paragraph, Subheading, Title, useTheme } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-native';
 import { GET_OLD_GAMES } from '../graphql/queries';
 import { Game } from '../hooks/useGame';
 import { newGame } from '../reducers/gameDataReducer';
+import Loading from './Loading';
 import Container from './ThemedComponents/Container';
+import { format } from 'date-fns';
 
 const OldGamesList = () => {
     const { data, loading } = useQuery<{ getGames: Game[] }>(GET_OLD_GAMES);
@@ -19,7 +21,7 @@ const OldGamesList = () => {
     }
     if (loading || !data?.getGames) {
         return (
-            <View><Text>Loading...</Text></View>
+            <Loading />
         )
     }
 
@@ -44,18 +46,26 @@ const SingleGame = ({ game, onClick }: { game: Game, onClick?: (id: string) => v
     const handleGameClick = () => {
         if (onClick) onClick(game.id);
     }
+    const date = format(new Date(game.date), 'dd.MM.yyyy HH:mm');
     return (
         <Pressable onPress={handleGameClick} >
             <View style={[tyyli.singleGame, { backgroundColor: colors.surface }, (game.isOpen) ? { opacity: 1 } : null]}>
-                <View>
+                <View style={tyyli.split}>
                     <Title>{game.course}</Title>
-                    <Subheading>{game.layout}</Subheading>
+                    <Caption>{date}</Caption>
                 </View>
-                <View>
-                    {game.isOpen ? <Chip icon="lock-open-variant">Open</Chip> : null }
+                <View style={tyyli.split}>
+                    <View>
+                    <Subheading>{game.layout}</Subheading>
+                    </View>
+                    <View>
+                        {game.isOpen 
+                            ? <Chip style={tyyli.chippi} icon="lock-open-variant">Open</Chip>
+                            : <Title>{game.myScorecard.total} ({(game.myScorecard.total || 0) - game.par})</Title>}
+                    </View>
                 </View>
             </View>
-        </Pressable>
+        </Pressable >
     )
 }
 const Separator = () => {
@@ -64,12 +74,20 @@ const Separator = () => {
     )
 }
 const tyyli = StyleSheet.create({
+    chippi: {
+        marginBottom: 5,
+    },
+    split: {
+        flex: 1,
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between',
+    },
     singleGame: {
         padding: 5,
         paddingLeft: 20,
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        paddingRight: 10,
+        paddingBottom: 10,
         alignItems: 'center',
     },
     separator: {

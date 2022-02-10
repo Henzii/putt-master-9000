@@ -53,3 +53,10 @@ export const CLOSE_GAME = gql`
         }
     }
 `
+export const SET_BEERS = gql`
+    mutation($gameId: ID!, $beers: Int!) {
+        setBeersDrank(gameId: $gameId, beers: $beers) {
+            id
+        }
+    }
+`

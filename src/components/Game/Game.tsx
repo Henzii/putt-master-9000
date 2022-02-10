@@ -5,9 +5,10 @@ import RoundTabs from './RoundTabs';
 import { theme } from '../../utils/theme';
 import useGame from '../../hooks/useGame';
 import Container from '../ThemedComponents/Container';
-import { Button, Paragraph, Title } from 'react-native-paper';
+import { ActivityIndicator, Button, Paragraph, Title } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { unloadGame } from '../../reducers/gameDataReducer';
+import Loading from '../Loading';
 
 export default function Game({ gameId }: { gameId: string }) {
     const [selectedRound, setSelectedRound] = useState(0);
@@ -32,9 +33,7 @@ export default function Game({ gameId }: { gameId: string }) {
     }
     if (!data || !ready) {
         return (
-            <View>
-                <Text>Loading or something....</Text>
-            </View>
+            <Loading />
         )
     }
     if (!data.isOpen) {

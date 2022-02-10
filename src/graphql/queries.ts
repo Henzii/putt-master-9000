@@ -39,18 +39,24 @@ export const GET_ME_WITH_FRIENDS = gql`
 export const GET_GAME = gql`
   query($gameId: ID!) {
     getGame(gameId: $gameId) {
+      date
       course
       layout
       pars
+      par
       holes
       isOpen
       scorecards {
         scores
         total
+        beers
         user {
           id
           name
         }
+      }
+      myScorecard {
+        beers
       }
     }
 }
@@ -58,10 +64,15 @@ export const GET_GAME = gql`
 export const GET_OLD_GAMES = gql`
   query {
     getGames {
+      date
       course
       layout
       id
+      par
       isOpen
+      myScorecard {
+        total
+      }
     }
   }
 `

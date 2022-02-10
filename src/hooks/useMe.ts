@@ -38,7 +38,7 @@ const useMe = (getFriends = false) => {
         setLoggedIn(false);
         refetch();
     }
-    return { me: data?.getMe ?? null, logged: loggedIn, login, logout }
+    return { me: data?.getMe ?? null, logged: loggedIn, login, logout, loading }
 }
 
 

@@ -15,18 +15,22 @@ import useTextInput from '../../hooks/useTextInput';
 const Setup = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const dispatch = useDispatch();
-    const [closeGameMutation] = useMutation(CLOSE_GAME, { refetchQueries: [{ query: GET_GAME, variables: { gameId: gameData.gameId } }] })
-    const {data: game} = useGame(gameData.gameId)
+    const gameHook = useGame(gameData.gameId)
     const [beerInput] = useTextInput({
         numeric: true,
-        callBack: (value) => console.log('Callback arvo: ', value),
+        callBack: async (value) => {
+            const beers = Number.parseInt(value) || 0;
+            if (isNaN(beers) || !await gameHook.setBeers(beers)) {
+                dispatch(addNotification('Beers not drank for some reason!', 'alert'));
+            }
+        },
         callBackDelay: 1000,
+        defaultValue: gameHook.data?.myScorecard.beers.toString() || '',
     });
-
+    const game = gameHook.data;
     const handleGameEnd = async () => {
-        const res = await closeGameMutation({ variables: { gameId: gameData.gameId }});
-        if (!res.data.closeGame.isOpen) {
-            dispatch(addNotification('Game is now closed', 'success'))
+        if (await gameHook.closeGame()) {
+            dispatch(addNotification('Game closed', 'success'))
         } else {
             dispatch(addNotification('Something went wrong :(', 'alert'))
         }
@@ -38,7 +42,7 @@ const Setup = () => {
         <Container>
             <Title>Beers</Title>
             <Paragraph>
-                Beers drank during the round
+                Number of beers drunk
             </Paragraph>
             <TextInput
                 autoComplete={false}
