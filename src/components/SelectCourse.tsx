@@ -1,8 +1,6 @@
-import gql from "graphql-tag";
 import React, { useState } from "react";
-import { useQuery } from "react-apollo";
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import { Button, Card, Modal, Searchbar, Portal, List } from "react-native-paper";
+import { View, Text, StyleSheet } from "react-native";
+import { Button, Modal, Searchbar, Portal, List } from "react-native-paper";
 import useCourses, { Course, Layout, NewLayout } from "../hooks/useCourses";
 import AddCourse from "./AddCourse";
 import SelectLayout from "./SelectLayout";
@@ -81,6 +79,7 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick }: SingleCourseProps)
             title={course.name}
             titleStyle={{ fontSize: 18 }}
             description={course.layouts.length + ' layouts'}
+            testID='SingleCourse'
         >
             <SelectLayout course={course} onAddLayout={onAddLayout} onSelect={onLayoutClick} />
         </List.Accordion>

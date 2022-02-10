@@ -30,6 +30,7 @@
     "redux": "^4.1.2"
   },
   "devDependencies": {
+    "@apollo/react-testing": "^3.1.4",
     "@babel/core": "^7.12.9",
     "@testing-library/jest-native": "^4.0.4",
     "@testing-library/react-native": "^9.0.0",
