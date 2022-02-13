@@ -18,7 +18,6 @@ describe('<SelectCourse /> testit', () => {
         )
         // Loading... teksti löytyy
         expect(getByText("Loading...")).toBeDefined()
-
         await waitFor(() => {
             // Molemmat testiradat renderöityy
             expect(getByText('Testirata1')).toBeDefined();

@@ -38,11 +38,18 @@ export const testiRadat = [
 export const getCoursesMocks = {
     request: {
         query: GET_COURSES,
-        variables: {},
+        variables: {
+            limit: 9,
+            offset: 0,
+        },
     },
     result: {
         data: {
-            getCourses: testiRadat
+            getCourses: {
+                hasMore: false,
+                nextOffset: null,
+                courses: testiRadat
+            }
         }
     }
 };
