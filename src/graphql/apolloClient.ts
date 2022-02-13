@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost'
+import { HttpLink, ApolloClient, InMemoryCache } from 'apollo-boost';
 import { setContext } from 'apollo-link-context';
+
 
 const API_URL = (process.env.NODE_ENV !== 'development')
     ? 'https://puttmaster.herokuapp.com/graphql'

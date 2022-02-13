@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from 'react-apollo';
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import { Button, Caption, Divider, Paragraph, TextInput, Title } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { CLOSE_GAME } from '../../graphql/mutation';
@@ -35,6 +35,9 @@ const Setup = () => {
             dispatch(addNotification('Something went wrong :(', 'alert'))
         }
     }
+    const handleAbandonGame = () => {
+        Alert.alert('NO!')
+    }  
     if (!game) {
         return (<View><Text>Loading...</Text></View>)
     }
@@ -48,11 +51,12 @@ const Setup = () => {
                 autoComplete={false}
                 style={tyyli.numberInput}
                 label='# beers'
+                disabled={!gameHook.data?.isOpen}
                 {...beerInput}
             />
             <Divider style={tyyli.divider} />
             <Paragraph>
-                End the game.
+                Stop drinking and end the game.
             </Paragraph>
             <Button 
                 mode='contained'
@@ -64,7 +68,7 @@ const Setup = () => {
             <Paragraph>
                 Abandon game. Delete everything related to this game
             </Paragraph>
-            <Button style={tyyli.nappi} mode='contained' color='red'>Abandon game</Button>
+            <Button style={tyyli.nappi} mode='contained' color='red' onPress={handleAbandonGame}>Abandon game</Button>
             <Divider style={tyyli.divider} />
             <Paragraph style={{ color: 'gray' }}>
                 Game ID: {gameData.gameId}

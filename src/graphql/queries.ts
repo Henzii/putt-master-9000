@@ -1,8 +1,11 @@
 import gql from "graphql-tag";
 
 export const GET_COURSES = gql`
-query {
-    getCourses {
+query ($limit: Int!, $offset: Int!, $search: String) {
+  getCourses (limit: $limit, offset: $offset, search: $search) {
+    hasMore
+    nextOffset
+    courses {
       name
       id
       layouts {
@@ -14,6 +17,7 @@ query {
       }
     }
   }
+}
 `
 export const GET_ME = gql`
 query {

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import { Button, Modal, Searchbar, Portal, List } from "react-native-paper";
 import useCourses, { Course, Layout, NewLayout } from "../hooks/useCourses";
 import AddCourse from "./AddCourse";
+import Loading from "./Loading";
 import SelectLayout from "./SelectLayout";
 import Container from "./ThemedComponents/Container";
 
@@ -15,7 +16,7 @@ type SelectCoursesProps = {
     onSelect?: (layout: Layout, course: Course) => void
 }
 const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
-    const { courses, loading, addLayout, addCourse } = useCourses();
+    const { courses, loading, addLayout, addCourse, fetchMore } = useCourses();
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
     const [searchQuery, setSearchQuery] = useState('')
@@ -30,8 +31,8 @@ const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
         addCourse(newCourseName)
         setDisplayAddCourse(false)
     }
-    if (loading || !courses) return (
-        <View><Text>Loading...</Text></View>
+    if (!courses) return (
+        <Loading />
     )
 
     return (
@@ -58,20 +59,25 @@ const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
                 <Button icon="plus-thick" onPress={() => setDisplayAddCourse(true)}>Add Course</Button>
                 <Button icon="magnify" onPress={() => setDisplaySearchBar(!displaySearchBar)}>Search</Button>
             </View>
-            <Container style={{ margin: 7 }} noPadding>
-                {courses.map(c => (
+            <FlatList
+                data={courses}
+                keyExtractor={(item) => item.id as string}
+                ItemSeparatorComponent={Separaattori}
+                ListFooterComponent={(loading) ? <Loading noFullScreen loadingText="" /> : <Text>The end is here</Text>}
+                onEndReached={fetchMore}
+                onEndReachedThreshold={0.1}
+                renderItem={({ item }) => (
                     <SingleCourse
-                        course={c}
-                        key={c.id}
+                        course={item}
                         onAddLayout={handleAddLayout}
                         onLayoutClick={handleClickLayout}
-                    />
-                ))}
-            </Container>
+                    />)
+                }
+            />
         </Container>
     )
 }
-
+const Separaattori = () => <View style={tyyli.separaattori} />
 const SingleCourse = ({ course, onAddLayout, onLayoutClick }: SingleCourseProps) => {
     return (
         <List.Accordion
@@ -88,10 +94,7 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick }: SingleCourseProps)
 
 const tyyli = StyleSheet.create({
     container: {
-        borderWidth: 1,
-        borderRadius: 5,
-        marginTop: 5,
-        
+        padding: 3,
     },
     topButtons: {
         display: 'flex',
@@ -104,6 +107,9 @@ const tyyli = StyleSheet.create({
         marginBottom: 3,
         borderWidth: 1,
     },
-
+    separaattori: {
+        height: 2,
+        backgroundColor: 'rgba(0,0,0,0.1)'
+    }
 })
 export default SelectCourses;

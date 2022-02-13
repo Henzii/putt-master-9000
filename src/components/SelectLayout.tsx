@@ -63,9 +63,7 @@ const SeparatorComponent = () => {
 var tyyli = StyleSheet.create({
     main: {
         width: '100%',
-        borderWidth: 1,
-        borderTopWidth: 0,
-        borderRadius: 5,
+        marginBottom: 10,
     },
     item: {
         paddingLeft: 20,

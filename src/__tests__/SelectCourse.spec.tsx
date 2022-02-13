@@ -20,7 +20,7 @@ describe('<SelectCourse /> testit', () => {
         expect(getByText("Loading...")).toBeDefined()
 
         await waitFor(() => {
-            // Molemmat testiradat löytyy
+            // Molemmat testiradat renderöityy
             expect(getByText('Testirata1')).toBeDefined();
             expect(getByText('Testirata2')).toBeDefined();
         })
@@ -33,7 +33,7 @@ describe('<SelectCourse /> testit', () => {
         // Testilayout tulee näkyviin
         expect(layout1).toBeDefined();
 
-        // Klikataan layoutti
+        // Klikataan layouttia
         fireEvent.press(layout1);
 
         // onSelect propsi räjähtää
