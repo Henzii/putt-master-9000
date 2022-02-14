@@ -56,7 +56,7 @@ const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
                 onChangeText={(text) => setSearchQuery(text)}
             />}
             <View style={tyyli.topButtons}>
-                <Button icon="plus-thick" onPress={() => setDisplayAddCourse(true)}>Add Course</Button>
+                <Button icon="plus-thick" onPress={() => setDisplayAddCourse(true)} testID="AddCourseButton">Add Course</Button>
                 <Button icon="magnify" onPress={() => setDisplaySearchBar(!displaySearchBar)}>Search</Button>
             </View>
             <FlatList
@@ -94,7 +94,7 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick }: SingleCourseProps)
 
 const tyyli = StyleSheet.create({
     container: {
-        padding: 3,
+        padding: 5,
     },
     topButtons: {
         display: 'flex',
@@ -108,7 +108,7 @@ const tyyli = StyleSheet.create({
         borderWidth: 1,
     },
     separaattori: {
-        height: 2,
+        height: 1,
         backgroundColor: 'rgba(0,0,0,0.1)'
     }
 })

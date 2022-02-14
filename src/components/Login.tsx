@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { Button, Title, TextInput } from "react-native-paper";
 import { Navigate } from 'react-router-native';
 import useMe from '../hooks/useMe';
+import Container from './ThemedComponents/Container';
 
 const Login = ({ login }: {login: (s1: string, s2: string) => void }) => {
     const [ username, setUsername] = useState('')
@@ -14,21 +15,16 @@ const Login = ({ login }: {login: (s1: string, s2: string) => void }) => {
         
     }
     return (
-        <View style={tyyli.main}>
+        <Container fullWidth>
             <Title>Please insert credit card</Title>
             <TextInput testID='user' label="Username" mode='outlined' autoComplete={false} value={username} onChangeText={(v) => setUsername(v)}/>
             <TextInput testID='password' secureTextEntry label="Password" mode='outlined' autoComplete={false} value={password} onChangeText={(v) => setPassword(v)}/>
             <Button onPress={handleLogin} style={tyyli.nappi} mode='contained'>Login</Button>
-        </View>
+        </Container>
     )
 }
 
 const tyyli = StyleSheet.create({
-    main: {
-        width: '100%',
-        padding: 10,
-        display: 'flex',
-    },
     nappi: {
         marginTop: 10,
         padding: 5,

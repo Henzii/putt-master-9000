@@ -10,7 +10,7 @@ export const theme = {
         accent: 'red',
         background: '#fff',
         mainBackground: '#fafafa',
-        surface: '#eff7ef',
+        surface: '#eff3ef',
     },
     roundess: 7,
     font: {

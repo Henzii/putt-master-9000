@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import React, { useState } from 'react';
 import Player from './Player';
 import RoundTabs from './RoundTabs';
@@ -47,15 +47,18 @@ export default function Game({ gameId }: { gameId: string }) {
                     <Text style={peliStyles.course}>{data.course} #{selectedRound + 1}, par {data.pars[selectedRound]}</Text>
                     <Text style={peliStyles.layout}>{data.layout}</Text>
                 </View>
-                {data.scorecards.map(p =>
-                    <Player
+                <FlatList
+                    data={data.scorecards}
+                    keyExtractor={(item) => item.user.id as string}
+                    renderItem={({item}) => (
+                        <Player
                         pars={data.pars}
-                        key={p.user.id}
-                        player={p}
+                        player={item}
                         selectedRound={selectedRound}
                         setScore={handleScoreChange}
                     />
-                )}
+                    )}
+                />
             </Container>
         </>
     )
@@ -89,7 +92,7 @@ const peliStyles = StyleSheet.create({
         fontSize: 30,
     },
     course: {
-        fontSize: theme.font.sizes.huge + 5,
+        fontSize: 30,
         fontWeight: 'bold',
     },
     layout: {

@@ -10,7 +10,7 @@ const AddCourse = ({onCancel, onAdd}: AddCourseProps) => {
     }
     return (
         <View style={tyyli.root}>
-            <Title style={{ fontSize: 20 }}>Add Course</Title>
+            <Title style={{ fontSize: 20 }} testID="AddCourseTitle">Add Course</Title>
             <Caption>Name:</Caption>
             <TextInput value={newName} autoComplete={false} placeholder="Course name" onChangeText={(value) => setNewName(value)}/>
             <View style={tyyli.split}>

@@ -6,6 +6,7 @@ type ContainerProps = {
     fullScreen?: boolean,
     noFlex?: boolean,
     style?: Object,
+    fullWidth?: boolean
     noPadding?: boolean    
 }
 
@@ -13,6 +14,7 @@ const Container = (props: ContainerProps) => {
     const { colors } = useTheme();
     const tyyli = [
         props.fullScreen && tyylit.fullScreen,
+        props.fullWidth && tyylit.fullWidth,
         { backgroundColor: '#fafafa' },
         !props.noFlex && { flex: 1 },
         props.style,
@@ -28,6 +30,9 @@ const Container = (props: ContainerProps) => {
 }
 
 const tyylit = StyleSheet.create({
+    fullWidth: {
+        width: '100%',
+    },
     fullScreen: {
         width: '100%',
         minHeight: Dimensions.get('screen').height,

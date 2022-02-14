@@ -3,8 +3,8 @@ import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import { Button, Headline, Modal, Portal, Subheading } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import useMe, { User } from '../hooks/useMe';
-import { addNotification } from '../reducers/notificationReducer';
 import AddFriend from './AddFriend';
+import Container from './ThemedComponents/Container';
 
 type FriendListProps = {
     onClick?: (id: number | string, name?: string) => void,
@@ -15,7 +15,7 @@ const FriendsList = (props: FriendListProps) => {
     const [addFriendModal, setAddFriendModal] = useState(false);
     const dispatch = useDispatch();
     return (
-        <View style={tyyli.main}>
+        <Container noPadding>
             <Portal>
                 <Modal
                     visible={addFriendModal}
@@ -38,7 +38,7 @@ const FriendsList = (props: FriendListProps) => {
                 )}
                 ItemSeparatorComponent={Separaattori}
             />
-        </View>
+        </Container>
     )
 }
 

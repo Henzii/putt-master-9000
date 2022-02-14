@@ -7,9 +7,10 @@ import { Provider } from 'react-native-paper';
 import { getCoursesMocks, testiRadat } from './graphqlMocks';
 
 describe('<SelectCourse /> testit', () => {
+
     it('Komponentti renreröityy oikein', async () => {
         const onSelect = jest.fn();
-        const { getByText, debug, getAllByTestId } = render(
+        const { getByText, debug, getAllByTestId, getByTestId } = render(
             <Provider>
                 <MockedProvider addTypename={false} mocks={[getCoursesMocks]}>
                     <SelectCourses onSelect={onSelect}/>
@@ -41,5 +42,11 @@ describe('<SelectCourse /> testit', () => {
         // onSelect saa oikeat parametrit, eka = layout, toka = course
         expect(onSelect.mock.calls[0][0]).toEqual(testiRadat[0].layouts[0])
         expect(onSelect.mock.calls[0][1]).toEqual(testiRadat[0])
+
+         // Painetaan Add Course nappia
+         fireEvent.press( getByTestId('AddCourseButton') )
+
+         // AddCourse aukeaa -> AddCourse otsikko löytyy
+         expect( getByTestId('AddCourseTitle')).toBeDefined();
     })
 })
