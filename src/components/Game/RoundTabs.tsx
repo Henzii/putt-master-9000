@@ -8,20 +8,30 @@ export default function RoundTabs({ gameData, selectedRound, setSelectedRound }:
 
     for (let i = 0; i < gameData.holes; i++) {
 
-        const finished = gameData.scorecards.reduce(( p,c ) => {
-            if (!c.scores[i]) return false;
-            return p;
-        }, true)
+        // Monenko pelaajan tuloksia kyseiseltä väylältä on kirjattuna
+        const scoresEnteredForRound = gameData.scorecards.reduce(( p,c ) => {
+            if (!c.scores[i]) return p;
+            return ++p;
+        },0);
+        
+        // Onko väylä valmis = kaikille pelaajille kirjattu väylältä tulos
+        const finished = (scoresEnteredForRound === gameData.scorecards.length);
+
+        if (i>0 && scoresEnteredForRound > 0 && !tabsList[i-1].props.finished) {
+            tabsList[i-1] = <SingleTab key={'singleTab'+(i-1)} {...tabsList[i-1].props} skipped={true} />
+        }
 
         tabsList.push(
             <SingleTab 
-                key={'sc' + i}
+                key={'singleTab' + i}
+                skipped={false}
                 finished={finished}
                 id={i}
                 selected={(selectedRound === i)}
                 onClick={setSelectedRound}
             />
         );
+        
     }
     return (
         <View style={tabsStyle.container}>
@@ -36,10 +46,11 @@ export default function RoundTabs({ gameData, selectedRound, setSelectedRound }:
     )
 }
 
-function SingleTab({ id, selected, onClick, finished }: { finished?: boolean, id: number, selected: boolean, onClick: (n: number) => void}) {
+function SingleTab({ id, selected, onClick, finished, skipped }: SingleTabProps ) {
     const tausta = (
         finished && selected ? tabsStyle.finishedAndSelected :
-        selected ? tabsStyle.selected : finished ? tabsStyle.finished : null
+        selected ? tabsStyle.selected : finished ? tabsStyle.finished :
+        skipped ? tabsStyle.skipped : null
     )
     return (
         <Pressable onPress={() => onClick(id)}>
@@ -49,7 +60,13 @@ function SingleTab({ id, selected, onClick, finished }: { finished?: boolean, id
         </Pressable>
     )
 }
-
+type SingleTabProps = {
+    id: number,
+    selected: boolean,
+    onClick: (n: number) => void,
+    finished: boolean,
+    skipped: boolean,
+}
 type RoundTabsProps = {
     gameData: Game,
     selectedRound: number,
@@ -81,6 +98,9 @@ const tabsStyle = StyleSheet.create({
     selected: {
         backgroundColor: 'white',
         borderBottomWidth: 0,
+    },
+    skipped: {
+        backgroundColor: 'rgb(225,120,120)'
     },
     finished: {
         backgroundColor: 'rgb(180,220,180)'
