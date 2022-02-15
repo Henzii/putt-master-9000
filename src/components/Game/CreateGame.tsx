@@ -74,13 +74,13 @@ const CreateGame = (props: CreateGameProps) => {
                 <Text>{newGameData?.course?.name || 'N'} / {newGameData?.layout?.name || 'A'}</Text>
                 <Button onPress={() => setSelectCourse(true)}>Select</Button>
             </View>
-            <Subheading>Select players</Subheading>
+            <Subheading>Players</Subheading>
             <View style={tyyli.selectPlayers}>
                 {newGameData.players.map((p, i) =>
                     <Text key={p.id} style={[tyyli.player, (i%2!==0 ? tyyli.even : null)]}>{p.name}</Text>
                 )}
             </View>
-                <Button onPress={() => setAddFriend(true)}>Add player</Button>
+            <Button onPress={() => setAddFriend(true)}>Add player</Button>
             <View style={tyyli.bottomButtons}>
                 <Button color='green' mode='contained' onPress={handleCreate}>Create</Button>
                 <Button color='red' mode='contained' onPress={props.onCancel}>Cancel</Button>
