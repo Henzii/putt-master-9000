@@ -1,13 +1,13 @@
-import React, { useState } from "react"
-import { useMutation } from "react-apollo"
-import { View, Text, StyleSheet, TextInputChangeEventData } from "react-native"
-import { Button, Caption, TextInput, Title } from "react-native-paper"
+import React, { useState } from "react";
+import { useMutation } from "react-apollo";
+import { View, Text, StyleSheet, TextInputChangeEventData } from "react-native";
+import { Button, Caption, TextInput, Title } from "react-native-paper";
 
 const AddCourse = ({onCancel, onAdd}: AddCourseProps) => {
-    const [newName, setNewName] = useState('')
+    const [newName, setNewName] = useState('');
     const handleAddCourse = () => {
-        if (onAdd) onAdd(newName)
-    }
+        if (onAdd) onAdd(newName);
+    };
     return (
         <View style={tyyli.root}>
             <Title style={{ fontSize: 20 }} testID="AddCourseTitle">Add Course</Title>
@@ -18,8 +18,8 @@ const AddCourse = ({onCancel, onAdd}: AddCourseProps) => {
                 <Button icon="cancel" onPress={onCancel} mode="contained" color='red'>Cancel</Button>
             </View>
         </View>
-    )
-}
+    );
+};
 const tyyli = StyleSheet.create({
     root: {
         width: '90%',
@@ -33,7 +33,7 @@ const tyyli = StyleSheet.create({
         flexDirection: 'row',
         margin: 20,
     }
-})
+});
 type AddCourseProps = {
     onCancel?: () => void,
     onAdd?: (name: string) => void,

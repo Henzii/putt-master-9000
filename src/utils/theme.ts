@@ -25,4 +25,4 @@ export const theme = {
             secondary: 'lightgray',
         }
     }
-}
+};

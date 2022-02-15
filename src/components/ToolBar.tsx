@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { GestureResponderEvent, StyleSheet } from 'react-native';
-import { Appbar, Menu as PaperMenu } from 'react-native-paper'
+import { Appbar, Menu as PaperMenu } from 'react-native-paper';
 
 export default function ToolBar({ handleMenuClick }:{ handleMenuClick: () => void} ) {
     return (
@@ -9,8 +9,8 @@ export default function ToolBar({ handleMenuClick }:{ handleMenuClick: () => voi
             <Appbar.Action icon="arrow-left" onPress={handleMenuClick} />
             <Appbar.Content title="FuDisc 9000" />
         </Appbar>
-    )
-};
+    );
+}
 
 const tyyli = StyleSheet.create({
     top: {
@@ -26,4 +26,4 @@ const tyyli = StyleSheet.create({
     title: {
         color: 'red',
     }
-})
+});

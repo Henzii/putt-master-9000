@@ -4,17 +4,17 @@ import { SET_SCORE, CLOSE_GAME, SET_BEERS } from "../graphql/mutation";
 import { GET_GAME } from "../graphql/queries";
 import { User } from "./useMe";
 
-LogBox.ignoreLogs(['Setting a timer'])  // Hmm...
+LogBox.ignoreLogs(['Setting a timer']);  // Hmm...
 
 const useGame = (gameId: string) => {
     const { data, loading, error } = useQuery<{ getGame: Game }>(
-        GET_GAME, 
-        { 
+        GET_GAME,
+        {
             variables: { gameId },
             fetchPolicy: 'cache-and-network',
             pollInterval: (2000*60),      // Pollataan kahden minuutin välein kunnes subscriptionit
-        })
-    const [closeGameMutation] = useMutation(CLOSE_GAME, { refetchQueries: [{ query: GET_GAME, variables: { gameId } }] })
+        });
+    const [closeGameMutation] = useMutation(CLOSE_GAME, { refetchQueries: [{ query: GET_GAME, variables: { gameId } }] });
     const [setBeersMutation] = useMutation(SET_BEERS);
     const [setScoreMutation] = useMutation(SET_SCORE, {
         refetchQueries: [
@@ -23,15 +23,15 @@ const useGame = (gameId: string) => {
     });
     const setBeers = async (beers: number) => {
         try {
-            await setBeersMutation({ variables: { gameId, beers }})
+            await setBeersMutation({ variables: { gameId, beers }});
             return true;
         } catch (e) {
             return false;
         }
-    }
+    };
     const setScore = async (args: SetScoreArgs) => {
         const res = await setScoreMutation({ variables: args });
-    }
+    };
     const closeGame = async () => {
         try {
             await closeGameMutation({ variables: { gameId }});
@@ -39,10 +39,10 @@ const useGame = (gameId: string) => {
         } catch (e) {
             return false;
         }
-    }
+    };
     const updateScorecardsCache = (scorecards: Scorecard[]) => {
         // TODO
-    }
+    };
 
     return {
         data: data?.getGame ?? null,
@@ -51,8 +51,8 @@ const useGame = (gameId: string) => {
         setScore,
         closeGame,
         setBeers,
-    }
-}
+    };
+};
 
 export type Game = {
     id: string,

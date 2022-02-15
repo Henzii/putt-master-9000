@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text, ScrollView, Pressable, StyleSheet, SafeAreaView } from 'react-native'
+import React from 'react';
+import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { Game } from '../../hooks/useGame';
 import { theme } from '../../utils/theme';
 
@@ -11,18 +11,18 @@ export default function RoundTabs({ gameData, selectedRound, setSelectedRound }:
         // Monenko pelaajan tuloksia kyseiseltä väylältä on kirjattuna
         const scoresEnteredForRound = gameData.scorecards.reduce(( p,c ) => {
             if (!c.scores[i]) return p;
-            return ++p;
+            return (p+1);
         },0);
-        
+
         // Onko väylä valmis = kaikille pelaajille kirjattu väylältä tulos
         const finished = (scoresEnteredForRound === gameData.scorecards.length);
 
         if (i>0 && scoresEnteredForRound > 0 && !tabsList[i-1].props.finished) {
-            tabsList[i-1] = <SingleTab key={'singleTab'+(i-1)} {...tabsList[i-1].props} skipped={true} />
+            tabsList[i-1] = <SingleTab key={'singleTab'+(i-1)} {...tabsList[i-1].props} skipped={true} />;
         }
 
         tabsList.push(
-            <SingleTab 
+            <SingleTab
                 key={'singleTab' + i}
                 skipped={false}
                 finished={finished}
@@ -31,11 +31,11 @@ export default function RoundTabs({ gameData, selectedRound, setSelectedRound }:
                 onClick={setSelectedRound}
             />
         );
-        
+
     }
     return (
         <View style={tabsStyle.container}>
-            <ScrollView 
+            <ScrollView
                 horizontal
                 contentContainerStyle={tabsStyle.root}
                 showsHorizontalScrollIndicator={false}
@@ -43,22 +43,24 @@ export default function RoundTabs({ gameData, selectedRound, setSelectedRound }:
                 {tabsList}
             </ScrollView>
         </View>
-    )
+    );
 }
 
 function SingleTab({ id, selected, onClick, finished, skipped }: SingleTabProps ) {
     const tausta = (
         finished && selected ? tabsStyle.finishedAndSelected :
-        selected ? tabsStyle.selected : finished ? tabsStyle.finished :
-        skipped ? tabsStyle.skipped : null
-    )
+        selected ? tabsStyle.selected :
+        finished ? tabsStyle.finished :
+        skipped ? tabsStyle.skipped :
+        null
+    );
     return (
         <Pressable onPress={() => onClick(id)}>
             <View style={[tabsStyle.single, tausta]} >
                 <Text style={tabsStyle.text}>{id+1}</Text>
             </View>
         </Pressable>
-    )
+    );
 }
 type SingleTabProps = {
     id: number,
@@ -109,4 +111,4 @@ const tabsStyle = StyleSheet.create({
         borderBottomWidth: 0,
         backgroundColor: 'rgb(180, 255, 180)'
     }
-})
+});

@@ -18,11 +18,11 @@ const OldGamesList = () => {
     const handleGameActivation = (gameId: string) => {
         dispatch(newGame(gameId));
         navi('/game');
-    }
+    };
     if (loading || !data?.getGames) {
         return (
             <Loading />
-        )
+        );
     }
 
     return (
@@ -39,13 +39,13 @@ const OldGamesList = () => {
                 ItemSeparatorComponent={Separator}
             />
         </Container>
-    )
-}
+    );
+};
 const SingleGame = ({ game, onClick }: { game: Game, onClick?: (id: string) => void }) => {
     const { colors } = useTheme();
     const handleGameClick = () => {
         if (onClick) onClick(game.id);
-    }
+    };
     const date = format(new Date(game.date), 'dd.MM.yyyy HH:mm');
     return (
         <Pressable onPress={handleGameClick} >
@@ -59,20 +59,20 @@ const SingleGame = ({ game, onClick }: { game: Game, onClick?: (id: string) => v
                     <Subheading>{game.layout}</Subheading>
                     </View>
                     <View>
-                        {game.isOpen 
+                        {game.isOpen
                             ? <Chip style={tyyli.chippi} icon="lock-open-variant">Open</Chip>
                             : <Title>{game.myScorecard.total} ({(game.myScorecard.total || 0) - game.par})</Title>}
                     </View>
                 </View>
             </View>
         </Pressable >
-    )
-}
+    );
+};
 const Separator = () => {
     return (
         <View style={tyyli.separator} />
-    )
-}
+    );
+};
 const tyyli = StyleSheet.create({
     chippi: {
         marginBottom: 5,
@@ -94,6 +94,6 @@ const tyyli = StyleSheet.create({
         backgroundColor: 'lightgray',
         height: 1,
     }
-})
+});
 
 export default OldGamesList;

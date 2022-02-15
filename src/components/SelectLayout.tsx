@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, ListRenderItemInfo, StyleSheet, Pressable } from "react-native";
-import { Button, Headline, Modal, Paragraph, Portal, Subheading, useTheme } from 'react-native-paper'
-import useCourses, { Course, Layout, NewLayout } from "../hooks/useCourses";
+import { Button, Modal, Portal, Subheading, useTheme } from 'react-native-paper';
+import { Course, Layout, NewLayout } from "../hooks/useCourses";
 import AddLayout from "./AddLayout";
 
 const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
-    const [ addLayoutModal, setAddLayoutModal ] = useState(false)
+    const [ addLayoutModal, setAddLayoutModal ] = useState(false);
     const handleAddLayout = (layout: NewLayout) => {
         if (onAddLayout) onAddLayout(course.id, layout);
         setAddLayoutModal(false);
-    }
+    };
     const handleLayoutSelect = (layout: Layout) => {
-        if (onSelect) onSelect(layout, course)
-    }
+        if (onSelect) onSelect(layout, course);
+    };
     return (
         <View style={tyyli.main}>
             <Portal>
@@ -20,7 +20,7 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
                     visible={addLayoutModal}
                     onDismiss={() => setAddLayoutModal(false)}
                     contentContainerStyle={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-                >   
+                >
                     <AddLayout onCancel={() => setAddLayoutModal(false) } onAdd={handleAddLayout}/>
                 </Modal>
             </Portal>
@@ -33,14 +33,14 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
                 ItemSeparatorComponent={SeparatorComponent}
             />
         </View>
-    )
-}
+    );
+};
 
 const LayoutElement = ({ layout, onSelect }: { layout: Layout, onSelect?: (layout: Layout) => void }) => {
     const { colors } = useTheme();
     const handleClick = () => {
-        if (onSelect) onSelect(layout)
-    }
+        if (onSelect) onSelect(layout);
+    };
     return (
         <Pressable onPress={handleClick}>
             <View style={[tyyli.item, { backgroundColor: colors.surface }]}>
@@ -53,14 +53,14 @@ const LayoutElement = ({ layout, onSelect }: { layout: Layout, onSelect?: (layou
                 </Text>
             </View>
         </Pressable>
-    )
-}
+    );
+};
 const SeparatorComponent = () => {
     return (
         <View style={tyyli.separator} />
-    )
-}
-var tyyli = StyleSheet.create({
+    );
+};
+const tyyli = StyleSheet.create({
     main: {
         width: '100%',
         marginBottom: 10,
@@ -85,7 +85,7 @@ var tyyli = StyleSheet.create({
         minHeight: 2,
         backgroundColor: '#efefef'
     }
-})
+});
 type SelecLayoutProps = {
     course: Course
     onSelect?: (layout: Layout, course: Course) => void,

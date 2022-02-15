@@ -33,7 +33,7 @@ export const testiRadat = [
             }
         ]
     }
-]
+];
 
 export const getCoursesMocks = {
     request: {
@@ -54,4 +54,3 @@ export const getCoursesMocks = {
     }
 };
 
-    

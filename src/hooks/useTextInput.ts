@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 type Options = {
     numeric?: boolean
@@ -18,22 +18,23 @@ const useTextInput = (options: Options): HookReturn => {
         if (options.numeric) {
             if (!Number.parseInt(text) && text !== '') return;
         }
-        if (options.callBack) {
-            if (timerId) clearTimeout(timerId)
-            setTimerId(setTimeout(() => options.callBack!(text), options.callBackDelay || 500));
+        if (typeof options.callBack === 'function') {
+            if (timerId) clearTimeout(timerId);
+            const cb = options.callBack;
+            setTimerId(setTimeout(() => cb(text), options.callBackDelay || 500));
         }
         setValue(text);
-    }
+    };
     useEffect(() => {
         return () => {
-            if (timerId) clearTimeout(timerId)
-        }
-    })
+            if (timerId) clearTimeout(timerId);
+        };
+    });
     return [{
         value,
         onChangeText,
         keyboardType: (options.numeric ? 'numeric' : 'default'),
-    }]
-}
+    }];
+};
 
 export default useTextInput;

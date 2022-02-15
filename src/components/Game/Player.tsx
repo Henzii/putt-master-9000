@@ -13,9 +13,9 @@ type PlayerArgs = {
 
 export default function Player({ player, selectedRound, pars, setScore }: PlayerArgs) {
     const handleButtonClick = (score: number) => {
-        setScore(player.user.id as string, selectedRound, score)
-    }
-    const napitData = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        setScore(player.user.id as string, selectedRound, score);
+    };
+    const napitData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     return (
         <Card style={tyyli.main}>
             <Card.Title
@@ -30,11 +30,11 @@ export default function Player({ player, selectedRound, pars, setScore }: Player
                                 number={item}
                                 onClick={handleButtonClick}
                                 selected={(player.scores[selectedRound] - 1 === index)}
-                            />
+                            />;
                         }}
                         horizontal
                         onEndReached={() => {
-                            if (napitData.length < 50) napitData.push(napitData.length + 1)
+                            if (napitData.length < 50) napitData.push(napitData.length + 1);
                         }}
                         onEndReachedThreshold={0.1}
                         keyExtractor={item => 'avain'+player.user.id+item}
@@ -49,23 +49,23 @@ export default function Player({ player, selectedRound, pars, setScore }: Player
             </Card.Content>
         </Card>
 
-    )
+    );
 
 }
 const ScoreButton = ({ onClick, number, selected }: { onClick?: (score: number) => void, number: number, selected: boolean }) => {
     const [pending, setPending] = useState(false);
     useEffect(() => {
-        if (selected && pending) setPending(false)
-    }, [selected])
+        if (selected && pending) setPending(false);
+    }, [selected]);
     const handleButtonClick = () => {
         setPending(true);
         if (onClick) onClick(number);
-    }
+    };
     const bgStyles = [
         tyyli.scoreButton,
         pending && tyyli.scoreButtonPending,
         selected && tyyli.scoreButtonSelected,
-    ]
+    ];
     return (
         <Pressable
             style={bgStyles}
@@ -73,8 +73,8 @@ const ScoreButton = ({ onClick, number, selected }: { onClick?: (score: number) 
         >
             <Text>{number}</Text>
         </Pressable>
-    )
-}
+    );
+};
 
 const tyyli = StyleSheet.create({
     scoreButton: {
@@ -118,4 +118,4 @@ const tyyli = StyleSheet.create({
         marginBottom: 1,
         padding: 10,
     }
-})
+});

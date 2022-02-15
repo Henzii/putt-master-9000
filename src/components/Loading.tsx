@@ -10,14 +10,14 @@ const Loading = ({loadingText = 'Loading...', noFullScreen=false}: LoadingProps)
         tyyli.container,
         tyyli.teksti,
         (!noFullScreen && tyyli.fullScreen)
-    ]
+    ];
     return (
         <View style={tyylit}>
             <ActivityIndicator animating size={'large'} testID="progress" />
             <Caption style={tyyli.teksti}>{loadingText}</Caption>
         </View>
-    )
-}
+    );
+};
 const tyyli = StyleSheet.create({
     container: {
         display: 'flex',
@@ -32,5 +32,5 @@ const tyyli = StyleSheet.create({
         height: Dimensions.get('window').height*0.8,
         justifyContent: 'center',
     }
-})
+});
 export default Loading;

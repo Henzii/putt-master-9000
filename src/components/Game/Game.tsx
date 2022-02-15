@@ -19,8 +19,8 @@ export default function Game({ gameId }: { gameId: string }) {
             playerId,
             hole: selectedRound,
             value,
-        })
-    }
+        });
+    };
     if (error?.message) {
         return (
             <Container>
@@ -29,15 +29,15 @@ export default function Game({ gameId }: { gameId: string }) {
                     {error.message}
                 </Paragraph>
             </Container>
-        )
+        );
     }
     if (!data || !ready) {
         return (
             <Loading />
-        )
+        );
     }
     if (!data.isOpen) {
-        return <ClosedGame />
+        return <ClosedGame />;
     }
     return (
         <>
@@ -61,7 +61,7 @@ export default function Game({ gameId }: { gameId: string }) {
                 />
             </Container>
         </>
-    )
+    );
 }
 const ClosedGame = () => {
     const dispatch = useDispatch();
@@ -69,14 +69,14 @@ const ClosedGame = () => {
     // Uusi peli -> poistetaan pelin tiedot redux-storesta jolloin createGame näkymä avautuu
     const handleButtonClick = () => {
         dispatch(unloadGame());
-    }
+    };
     return (
         <View style={peliStyles.gameover}>
             <Title style={peliStyles.gameoverText}>Game over!</Title>
             <Button onPress={handleButtonClick}>Start a new game</Button>
         </View>
-    )
-}
+    );
+};
 const peliStyles = StyleSheet.create({
     headers: {
         padding: 10,
@@ -85,7 +85,7 @@ const peliStyles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        
+
     },
     gameoverText: {
         color: 'gray',
@@ -98,4 +98,4 @@ const peliStyles = StyleSheet.create({
     layout: {
         color: 'gray',
     }
-})
+});

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { AppRegistry } from 'react-native';
-import { Provider as PaperProvider } from 'react-native-paper'
+import { Provider as PaperProvider } from 'react-native-paper';
 import { NativeRouter } from 'react-router-native';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ApolloProvider } from 'react-apollo';
@@ -25,4 +25,4 @@ export default function App() {
   );
 }
 
-AppRegistry.registerComponent('putt-master-9000', () => App)
+AppRegistry.registerComponent('putt-master-9000', () => App);

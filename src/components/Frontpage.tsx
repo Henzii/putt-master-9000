@@ -9,16 +9,17 @@ import Loading from './Loading';
 import Login from './Login';
 import Container from './ThemedComponents/Container';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const master = require('../../assets/master2.png');
 
 const Frontpage = () => {
     const { me, logged, logout, login, loading } = useMe();
-    const gameData = useSelector((state: RootState) => state.gameData)
-    
+    const gameData = useSelector((state: RootState) => state.gameData);
+
     if (loading) {
         return (
             <Loading loadingText='Connecting to server...' />
-        )
+        );
     }
     return (
         <Container noPadding>
@@ -42,11 +43,11 @@ const Frontpage = () => {
             }
         </ScrollView>
         </Container>
-    )
-}
+    );
+};
 
 const NaviButton = ({ text, to }: { text: string, to: string }) => {
-    const { colors, fonts } = useTheme();
+    const { colors } = useTheme();
     return (
         <Link to={to} underlayColor="none">
             <View style={[tyyli.root, { backgroundColor: colors.background }]}>
@@ -54,8 +55,8 @@ const NaviButton = ({ text, to }: { text: string, to: string }) => {
             </View>
         </Link>
 
-    )
-}
+    );
+};
 const tyyli = StyleSheet.create({
     kuva: {
         width: 250,
@@ -70,6 +71,6 @@ const tyyli = StyleSheet.create({
         elevation: 4,
         marginBottom: 13,
     },
-})
+});
 
 export default Frontpage;

@@ -6,14 +6,14 @@ import useMe from '../hooks/useMe';
 import Container from './ThemedComponents/Container';
 
 const Login = ({ login }: {login: (s1: string, s2: string) => void }) => {
-    const [ username, setUsername] = useState('')
-    const [ password, setPassword] = useState('')
+    const [ username, setUsername] = useState('');
+    const [ password, setPassword] = useState('');
     const handleLogin = () => {
-        login(username, password)
-        setUsername('')
-        setPassword('')
-        
-    }
+        login(username, password);
+        setUsername('');
+        setPassword('');
+
+    };
     return (
         <Container fullWidth>
             <Title>Please insert credit card</Title>
@@ -21,14 +21,14 @@ const Login = ({ login }: {login: (s1: string, s2: string) => void }) => {
             <TextInput testID='password' secureTextEntry label="Password" mode='outlined' autoComplete={false} value={password} onChangeText={(v) => setPassword(v)}/>
             <Button onPress={handleLogin} style={tyyli.nappi} mode='contained'>Login</Button>
         </Container>
-    )
-}
+    );
+};
 
 const tyyli = StyleSheet.create({
     nappi: {
         marginTop: 10,
         padding: 5,
     }
-})
+});
 
 export default Login;

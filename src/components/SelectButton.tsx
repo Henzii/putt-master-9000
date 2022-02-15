@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { View, Text } from 'react-native'
-import Button, { ButtonProps } from './Button'
+import React, { useState } from 'react';
+import { View, Text } from 'react-native';
+import Button, { ButtonProps } from './Button';
 
 export default function SelectButton({selected, pending, ...props}: SelectButtonProps) {
     return (
@@ -12,7 +12,7 @@ export default function SelectButton({selected, pending, ...props}: SelectButton
             borderWidth={3}
             color="secondary"
             />
-    )
+    );
 }
 
 interface SelectButtonProps extends ButtonProps {

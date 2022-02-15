@@ -17,7 +17,7 @@ const Setup = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const dispatch = useDispatch();
     const navi = useNavigate();
-    const gameHook = useGame(gameData.gameId)
+    const gameHook = useGame(gameData.gameId);
     const [beerInput] = useTextInput({
         numeric: true,
         callBack: async (value) => {
@@ -39,9 +39,9 @@ const Setup = () => {
                     text: 'Close it!',
                     onPress: async () => {
                         if (await gameHook.closeGame()) {
-                            dispatch(addNotification('Game closed', 'success'))
+                            dispatch(addNotification('Game closed', 'success'));
                         } else {
-                            dispatch(addNotification('Something went wrong :(', 'alert'))
+                            dispatch(addNotification('Something went wrong :(', 'alert'));
                         }
                     }
                 },
@@ -50,12 +50,12 @@ const Setup = () => {
                     onPress: () => null
                 }
             ]
-        )
-    }
+        );
+    };
     const handleQuitGame = () => {
         navi('/');
         dispatch(unloadGame());
-    }
+    };
     const handleAbandonGame = () => {
         Alert.alert(
             'Are you sure',
@@ -70,10 +70,10 @@ const Setup = () => {
                     onPress:() => null
                 }
             ]
-        )
-    }
+        );
+    };
     if (!game) {
-        return (<View><Text>Loading...</Text></View>)
+        return (<View><Text>Loading...</Text></View>);
     }
     return (
         <Container>
@@ -119,8 +119,8 @@ const Setup = () => {
                 Game ID: {gameData.gameId}
             </Paragraph>
         </Container>
-    )
-}
+    );
+};
 const tyyli = StyleSheet.create({
     divider: {
         marginTop: 15,
@@ -134,5 +134,5 @@ const tyyli = StyleSheet.create({
         paddingVertical: 5,
         borderRadius: 7,
     }
-})
+});
 export default Setup;

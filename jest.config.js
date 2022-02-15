@@ -1,5 +1,6 @@
 // jest.config.js
 // Sync object
+// eslint-disable-next-line no-undef
 module.exports = {
     testEnvironment: "jsdom",
     preset: "jest-expo",
@@ -33,7 +34,7 @@ module.exports = {
       "node_modules/(?!(jest-)?@?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|sentry-expo|native-base)"
     ],
     coverageReporters: [
-      "json-summary", 
+      "json-summary",
       "text",
       "lcov"
     ]

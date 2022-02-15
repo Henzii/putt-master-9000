@@ -19,7 +19,7 @@ export default function App() {
   const navi = useNavigate();
   const goBack = () => {
     navi(-1);
-  }
+  };
   return (
     <>
       <Notifications />

@@ -37,21 +37,21 @@ const FriendsList = (props: FriendListProps) => {
                 ItemSeparatorComponent={Separaattori}
             />
         </Container>
-    )
-}
+    );
+};
 
 const SingleFriend = ({ friend, onClick }: { friend: User, onClick?: (id: number | string, name?: string) => void }) => {
     const handleFriendClick = () => {
         if (onClick) onClick(friend.id, friend.name);
-    }
+    };
     return (
         <Pressable onPress={handleFriendClick}>
             <View style={tyyli.singleFriend}>
                 <Subheading>{friend.name}</Subheading>
             </View>
         </Pressable>
-    )
-}
+    );
+};
 const Separaattori = () => (<View style={tyyli.separator} />);
 
 const tyyli = StyleSheet.create({
@@ -80,5 +80,5 @@ const tyyli = StyleSheet.create({
     otsikko: {
         textAlign: 'center',
     }
-})
+});
 export default FriendsList;

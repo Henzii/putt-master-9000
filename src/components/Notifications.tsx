@@ -22,8 +22,8 @@ const Notifications = () => {
                 </Subheading>
             </Snackbar>
         </Portal>
-    )
-}
+    );
+};
 
 const tyyli = StyleSheet.create({
     main: {
@@ -40,6 +40,6 @@ const tyyli = StyleSheet.create({
     warning: {
         backgroundColor: 'orange',
     }
-})
+});
 
 export default Notifications;

@@ -12,24 +12,24 @@ type AddFriendProps = {
 }
 
 const AddFriend = ({ onCancel }: AddFriendProps) => {
-    const [friendName, setFriendName] = useState('')
+    const [friendName, setFriendName] = useState('');
     const [addFriendMutation] = useMutation(ADD_FRIEND, { refetchQueries: [{ query: GET_ME_WITH_FRIENDS }] });
     const dispatch = useDispatch();
 
     const handleAdd = async () => {
             const res = await addFriendMutation({ variables: { friendName } });
         if (res.data.addFriend) {
-            dispatch(addNotification('Friend added! Nice job little buddy!', 'success'))
+            dispatch(addNotification('Friend added! Nice job little buddy!', 'success'));
             if (onCancel) onCancel();
         } else {
-            dispatch(addNotification('Friend not found or request denied', 'alert'))
-            setFriendName('')
+            dispatch(addNotification('Friend not found or request denied', 'alert'));
+            setFriendName('');
         }
-    }
+    };
     return (
         <View style={tyyli.main}>
             <Headline>Add friend</Headline>
-            <Caption>Who's your daddy?</Caption>
+            <Caption>Who&apos;s your daddy?</Caption>
             <TextInput
                 autoComplete={false}
                 value={friendName}
@@ -43,8 +43,8 @@ const AddFriend = ({ onCancel }: AddFriendProps) => {
             </View>
 
         </View>
-    )
-}
+    );
+};
 
 const tyyli = StyleSheet.create({
     main: {
@@ -59,6 +59,6 @@ const tyyli = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
     }
-})
+});
 
 export default AddFriend;

@@ -16,20 +16,20 @@ describe('<SelectCourse /> testit', () => {
                     <SelectCourses onSelect={onSelect}/>
                 </MockedProvider>
             </Provider>
-        )
+        );
         // Loading... teksti löytyy
-        expect(getByText("Loading...")).toBeDefined()
+        expect(getByText("Loading...")).toBeDefined();
         await waitFor(() => {
             // Molemmat testiradat renderöityy
             expect(getByText('Testirata1')).toBeDefined();
             expect(getByText('Testirata2')).toBeDefined();
-        })
+        });
 
         // Klikataan ensimmäistä rataa
-        fireEvent.press( getAllByTestId('SingleCourse')[0] )
+        fireEvent.press( getAllByTestId('SingleCourse')[0] );
 
-        const layout1 = getByText('Testilayout1')
-        
+        const layout1 = getByText('Testilayout1');
+
         // Testilayout tulee näkyviin
         expect(layout1).toBeDefined();
 
@@ -40,13 +40,13 @@ describe('<SelectCourse /> testit', () => {
         expect(onSelect).toHaveBeenCalled();
 
         // onSelect saa oikeat parametrit, eka = layout, toka = course
-        expect(onSelect.mock.calls[0][0]).toEqual(testiRadat[0].layouts[0])
-        expect(onSelect.mock.calls[0][1]).toEqual(testiRadat[0])
+        expect(onSelect.mock.calls[0][0]).toEqual(testiRadat[0].layouts[0]);
+        expect(onSelect.mock.calls[0][1]).toEqual(testiRadat[0]);
 
          // Painetaan Add Course nappia
-         fireEvent.press( getByTestId('AddCourseButton') )
+         fireEvent.press( getByTestId('AddCourseButton') );
 
          // AddCourse aukeaa -> AddCourse otsikko löytyy
          expect( getByTestId('AddCourseTitle')).toBeDefined();
-    })
-})
+    });
+});

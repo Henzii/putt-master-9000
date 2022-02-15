@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text } from "react-native"
+import { StyleSheet, View, Text } from "react-native";
 import { Button, Subheading, Title, useTheme } from 'react-native-paper';
 import { Course, Layout } from '../../hooks/useCourses';
 import useMe, { User } from '../../hooks/useMe';
@@ -33,18 +33,18 @@ const CreateGame = (props: CreateGameProps) => {
                     id: me.me.id,
                     name: me.me.name
                 }]
-            })
+            });
         }
-    }, [me.me])
+    }, [me.me]);
 
     const handleSelectCourse = (layout: Layout, course: Course) => {
         setNewGameData({
             ...newGameData,
             course: course,
             layout: layout,
-        })
-        setSelectCourse(false)
-    }
+        });
+        setSelectCourse(false);
+    };
     const handleAddFriend = (id: string | number, name?: string) => {
 
         // Jos pelaa ei ole listalla, lisätään se...
@@ -52,18 +52,18 @@ const CreateGame = (props: CreateGameProps) => {
             setNewGameData({
                 ...newGameData,
                 players: newGameData.players.concat({ id, name: name || 'unknown' })
-            })
+            });
         }
         setAddFriend(false);
-    }
+    };
     const handleCreate = () => {
-        if (props.onCreate) props.onCreate(newGameData)
-    }
+        if (props.onCreate) props.onCreate(newGameData);
+    };
 
-    if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} />
-    if (addFriend) return <FriendsList onClick={handleAddFriend} />
-    
-    // Luodaan tyyli, parametrinä teeman väritys    
+    if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} />;
+    if (addFriend) return <FriendsList onClick={handleAddFriend} />;
+
+    // Luodaan tyyli, parametrinä teeman väritys
     const tyyli = createStyle(colors);
 
     return (
@@ -86,8 +86,8 @@ const CreateGame = (props: CreateGameProps) => {
                 <Button color='red' mode='contained' onPress={props.onCancel}>Cancel</Button>
             </View>
         </Container>
-    )
-}
+    );
+};
 
 const createStyle = (colors?: ReactNativePaper.ThemeColors) => StyleSheet.create({
     selectCourse: {
@@ -132,6 +132,6 @@ const createStyle = (colors?: ReactNativePaper.ThemeColors) => StyleSheet.create
         borderTopWidth: 1,
         borderTopColor: 'lightgray',
     }
-})
+});
 
 export default CreateGame;

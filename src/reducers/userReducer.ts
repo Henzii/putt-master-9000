@@ -6,7 +6,7 @@ const reducer = (state: UserData | undefined, action: UserReducerAction) => {
         default:
             return state;
     }
-}
+};
 
 type UserData = {
     id: number | string,

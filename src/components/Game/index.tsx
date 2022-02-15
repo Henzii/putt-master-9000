@@ -13,7 +13,7 @@ import Game from './Game';
 import Setup from './Setup';
 import Summary from './Summary';
 
-export default function() {
+export default function GameContainer() {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const [createGameMutation] = useMutation(CREATE_GAME, { refetchQueries: [ { query: GET_OLD_GAMES }]});
     const [addPlayersMutation] = useMutation(ADD_PLAYERS_TO_GAME);
@@ -26,28 +26,28 @@ export default function() {
         {key: 'gameRoute', title: 'Scorecard', icon: 'counter'},
         {key: 'summaryRoute', title: 'Summary', icon: 'format-list-numbered'},
         {key: 'setupRoute', title: 'Setup', icon: 'cog-outline'},
-    ])
+    ]);
     const naviScenes = BottomNavigation.SceneMap({
         gameRoute: () => <Game gameId={gameData.gameId} />,
         setupRoute: Setup,
         summaryRoute: Summary,
-    })
+    });
     const handleCreateGame = async (data: NewGameData) => {
         if (!data.layout || !data.course) return;
         const res = await createGameMutation({
             variables: { courseId: data.course.id, layoutId: data.layout.id }
-        })
+        });
         const newGameId = res.data.createGame;
         await addPlayersMutation({ variables: {
             gameId: newGameId,
             playerIds: data.players.map(p => p.id)
-        }})
+        }});
         dispatch(newGame(newGameId));
         dispatch(addNotification('New game created!', 'success'));
-    }
+    };
     // Jos peliä ei ladattuna, näytetään CreateGame
     if (!gameData?.gameId) {
-        return <CreateGame onCreate={handleCreateGame} onCancel={() => navi(-1)} />
+        return <CreateGame onCreate={handleCreateGame} onCancel={() => navi(-1)} />;
     }
     return (
         <BottomNavigation
@@ -56,7 +56,7 @@ export default function() {
             onIndexChange={setNavIndex}
             renderScene={naviScenes}
         />
-    )    
-    
+    );
+
 }
 

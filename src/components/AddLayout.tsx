@@ -1,45 +1,45 @@
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView, View, Text } from "react-native"
-import { Button, Caption, Divider, Headline, TextInput, Title } from "react-native-paper"
+import { StyleSheet, ScrollView, View, Text } from "react-native";
+import { Button, Caption, Divider, Headline, TextInput, Title } from "react-native-paper";
 import { Layout, NewLayout } from '../hooks/useCourses';
 
 const AddLayout = ({ onCancel, onAdd }: AddLayoutProps) => {
-    const [holes, setHoles] = useState<number>()
-    const [pars, setPars] = useState<number[]>([])
-    const [name, setName] = useState('')
+    const [holes, setHoles] = useState<number>();
+    const [pars, setPars] = useState<number[]>([]);
+    const [name, setName] = useState('');
 
     const handleHolesChange = (value: string) => {
         const holesInt = Number.parseInt(value);
         if (!isNaN(holesInt) && holesInt > 0 && holesInt <= 100) { // Jos arvosta saadaan numero
-            setHoles(holesInt)
-            setPars(Array(holesInt).fill(3))
+            setHoles(holesInt);
+            setPars(Array(holesInt).fill(3));
         } else if (value === '') {  // Jos tyhjä arvo, paltaan alkuasetelmaan
-            setHoles(undefined)
-            setPars([])
+            setHoles(undefined);
+            setPars([]);
         }
-    }
+    };
     const handleParChange = (hole: number, rawPar: number | string) => {
         let par = rawPar;
         if (typeof par === 'string') {
-            par = Number.parseInt(par)
+            par = Number.parseInt(par);
         }
         if (isNaN(par) || par < 0 || par > 20) return;
-        
-        const parsCopy = [...pars]
+
+        const parsCopy = [...pars];
         parsCopy[hole] = par;
-        setPars(parsCopy)
-    }
+        setPars(parsCopy);
+    };
     const handleCancel = () => {
-        if (onCancel) onCancel()
-    }
+        if (onCancel) onCancel();
+    };
     const handleAdd = () => {
         const newLayout: NewLayout = {
             name,
             pars,
             holes: holes || 0,
-        }
-        if (onAdd) onAdd(newLayout)
-    }
+        };
+        if (onAdd) onAdd(newLayout);
+    };
     return (
         <ScrollView style={tyyli.main} contentContainerStyle={{ paddingBottom: 20, }}>
             <Headline>Add layout</Headline>
@@ -58,11 +58,11 @@ const AddLayout = ({ onCancel, onAdd }: AddLayoutProps) => {
                 <Button onPress={handleCancel} icon="cancel" color='red' mode='contained'>Cancel</Button>
             </View>
         </ScrollView>
-    )
-}
+    );
+};
 
 const HolesPars = ({ onParChange, pars }: { pars: number[], onParChange: (hole: number, par: number | string) => void }) => {
-    const returni = []
+    const returni = [];
     for (let i = 0; i < pars.length; i++) {
         if (!pars[i]) continue;
         returni.push(<TextInput
@@ -75,14 +75,14 @@ const HolesPars = ({ onParChange, pars }: { pars: number[], onParChange: (hole: 
             dense
             autoComplete={false}
             keyboardType='numeric'
-        />)
+        />);
     }
     return (
         <View style={tyyli.parList}>
             {returni}
         </View>
-    )
-}
+    );
+};
 
 const tyyli = StyleSheet.create({
     main: {
@@ -104,7 +104,7 @@ const tyyli = StyleSheet.create({
         justifyContent: 'space-evenly',
         marginTop: 15,
     }
-})
+});
 type AddLayoutProps = {
     onCancel?: () => void,
     onAdd?: (layout: NewLayout) => void,

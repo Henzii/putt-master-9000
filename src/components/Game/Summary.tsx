@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from "react-native"
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSelector } from 'react-redux';
 import useGame from '../../hooks/useGame';
 import { gameData } from '../../reducers/gameDataReducer';
@@ -14,10 +14,10 @@ const Summary = () => {
     if (!ready || !data) {
         return (
             <Loading />
-        )
+        );
     }
-    const sortedScorecards = [...data.scorecards].sort((a, b) => (a.total || 0) - (b.total || 0))
-    const tableHeaders = ['#', 'Player', ...data.pars.map((p, i) => i + 1), 'Total', '+/-', 'bHc', 'hcTot']
+    const sortedScorecards = [...data.scorecards].sort((a, b) => (a.total || 0) - (b.total || 0));
+    const tableHeaders = ['#', 'Player', ...data.pars.map((p, i) => i + 1), 'Total', '+/-', 'bHc', 'hcTot'];
     const playersData = sortedScorecards.map((sc, i) => {
         const scoret: (number | string)[] = [...sc.scores];
         // Tehdään tekemättömistä väylistä tyhjiä...
@@ -31,9 +31,9 @@ const Summary = () => {
         sc.plusminus,
         (sc.beers/2),
         (sc.total || 0) - (sc.beers/2)
-        ]
-    })
-    const leveydet = [20, 80, ...data.pars.map(p => 30), 50, 50, 50, 50]
+        ];
+    });
+    const leveydet = [20, 80, ...data.pars.map(p => 30), 50, 50, 50, 50];
     return (
         <ScrollView horizontal>
             <Container>
@@ -43,8 +43,8 @@ const Summary = () => {
                 </Table>
             </Container>
         </ScrollView>
-    )
-}
+    );
+};
 const tyylit = StyleSheet.create({
     header: {
         backgroundColor: 'rgb(90,200,90)',
@@ -55,5 +55,5 @@ const tyylit = StyleSheet.create({
     },
     rivit: {
     }
-})
+});
 export default Summary;

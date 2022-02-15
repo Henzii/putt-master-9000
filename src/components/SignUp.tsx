@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from 'react-apollo';
-import { NativeSyntheticEvent, StyleSheet, Text, TextInputChangeEventData, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Button, Subheading, TextInput, Title } from 'react-native-paper';
 import { CREATE_USER } from '../graphql/mutation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -14,7 +14,7 @@ const SignUp = () => {
         password: '',
         password2: '',
         email: '',
-    })
+    });
     const [createUserMutation] = useMutation(CREATE_USER);
     const dispatch = useDispatch();
     const navi = useNavigate();
@@ -23,7 +23,7 @@ const SignUp = () => {
         if (userData.password.length < 5 || userData.password !== userData.password2) return false;
         if (userData.name.length < 3) return false;
         return true;
-    }
+    };
     const handleSignUp = async () => {
         if (!validateUserData()) return;
         try {
@@ -33,13 +33,13 @@ const SignUp = () => {
                 email: userData.email
             }});
             await AsyncStorage.setItem('token', token.data?.createUser);
-            console.log(token.data?.createUser)
+            console.log(token.data?.createUser);
             navi("/");
-            
+
         } catch(e) {
             dispatch(addNotification('Error when creating user! ' + (e as Error).message ));
         }
-    }
+    };
     return (
         <View style={tyyli.main}>
             <Title>Signup</Title>
@@ -59,9 +59,9 @@ const SignUp = () => {
             </Container>
             <Button onPress={handleSignUp} mode='contained' disabled={!validateUserData()}>Sign up!</Button>
         </View>
-    )
-}
-const Container = ({ children }: { children: JSX.Element[] | JSX.Element }) => <View style={tyyli.container}>{children}</View>
+    );
+};
+const Container = ({ children }: { children: JSX.Element[] | JSX.Element }) => <View style={tyyli.container}>{children}</View>;
 const tyyli = StyleSheet.create({
     main: {
         width: '100%',
@@ -74,6 +74,6 @@ const tyyli = StyleSheet.create({
         marginTop: 20,
         marginBottom: 10,
     }
-})
+});
 
 export default SignUp;

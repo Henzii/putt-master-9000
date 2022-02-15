@@ -18,14 +18,14 @@ query ($limit: Int!, $offset: Int!, $search: String) {
     }
   }
 }
-`
+`;
 export const GET_ME = gql`
 query {
   getMe {
     id
     name
   }
-}`
+}`;
 
 export const GET_ME_WITH_FRIENDS = gql`
   query {
@@ -38,7 +38,7 @@ export const GET_ME_WITH_FRIENDS = gql`
       }
     }
   }
-`
+`;
 
 export const GET_GAME = gql`
   query($gameId: ID!) {
@@ -65,7 +65,7 @@ export const GET_GAME = gql`
       }
     }
 }
-`
+`;
 export const GET_OLD_GAMES = gql`
   query {
     getGames {
@@ -80,4 +80,4 @@ export const GET_OLD_GAMES = gql`
       }
     }
   }
-`
+`;

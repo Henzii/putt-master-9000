@@ -26,7 +26,7 @@ export default function Button ({ text, onClick, width, heigth, ...props }:Butto
             fontSize: theme.font.sizes.large,
             color: (props.color ? theme.font.color[props.color] : theme.font.color.primary)
         }
-    })
+    });
     return (
         <View style={[tyyli.main, (pressed) ? tyyli.pressed: null ]}>
             <Pressable onPress={onClick} onPressIn={() => setPressed(true)} onPressOut={() => setPressed(false)}>
@@ -35,7 +35,7 @@ export default function Button ({ text, onClick, width, heigth, ...props }:Butto
                 </Text>
             </Pressable>
         </View>
-    )
+    );
 }
 
 export type ButtonProps = {

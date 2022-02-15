@@ -1,17 +1,17 @@
 import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
-import { useTheme } from 'react-native-paper';
+//import { useTheme } from 'react-native-paper';
 type ContainerProps = {
     children: any,
     fullScreen?: boolean,
     noFlex?: boolean,
-    style?: Object,
+    style?: any,
     fullWidth?: boolean
-    noPadding?: boolean    
+    noPadding?: boolean
 }
 
 const Container = (props: ContainerProps) => {
-    const { colors } = useTheme();
+//    const { colors } = useTheme();
     const tyyli = [
         props.fullScreen && tyylit.fullScreen,
         props.fullWidth && tyylit.fullWidth,
@@ -21,13 +21,13 @@ const Container = (props: ContainerProps) => {
         {
             padding: (props.noPadding) ? 0: 20,
         }
-    ]
+    ];
     return (
         <View style={tyyli}>
             {props.children}
         </View>
-    )
-}
+    );
+};
 
 const tyylit = StyleSheet.create({
     fullWidth: {
@@ -37,6 +37,6 @@ const tyylit = StyleSheet.create({
         width: '100%',
         minHeight: Dimensions.get('screen').height,
     },
-})
+});
 
 export default Container;

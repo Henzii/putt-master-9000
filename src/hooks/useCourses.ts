@@ -7,20 +7,20 @@ const useCourses = () => {
     const [addCourseMutation] = useMutation(ADD_COURSE);
     const { data, loading, error, fetchMore } = useQuery<RawCourseData>(
         GET_COURSES,
-        { 
-            variables: { 
+        {
+            variables: {
                 limit: 9,
                 offset: 0
             },
             fetchPolicy: 'cache-and-network'
         }
-    )
+    );
     const handleFetchMore = () => {
         if (data && data.getCourses.hasMore) {
             fetchMore({
                 variables: { limit: 5, offset: data.getCourses.nextOffset },
                 updateQuery: (previous, { fetchMoreResult }) => {
-                    console.log(fetchMoreResult?.getCourses.nextOffset)
+                    console.log(fetchMoreResult?.getCourses.nextOffset);
                     if (!fetchMoreResult) return previous;
                     return {
                         getCourses: {
@@ -29,27 +29,27 @@ const useCourses = () => {
                         }
                     };
                 }
-            })
+            });
         }
-    }
+    };
     const addLayout = async (courseId: number | string, layout: NewLayout) => {
         try {
-            const id = await addLayoutMutation({ variables: { courseId, layout } })
+            const id = await addLayoutMutation({ variables: { courseId, layout } });
             return id.data.addLayout;
         } catch (e) {
-            console.log('ERROR', e)
+            console.log('ERROR', e);
         }
-    }
+    };
     const addCourse = async (newCourseName: string) => {
         try {
-            const id = await addCourseMutation({ variables: { name: newCourseName } })
+            const id = await addCourseMutation({ variables: { name: newCourseName } });
             return id.data.addCourse;
         } catch (e) {
-            console.log('ERROR', e)
+            console.log('ERROR', e);
         }
-    }
-    return { courses: data?.getCourses?.courses || undefined, loading, error, addLayout, addCourse, fetchMore: handleFetchMore }
-}
+    };
+    return { courses: data?.getCourses?.courses || undefined, loading, error, addLayout, addCourse, fetchMore: handleFetchMore };
+};
 export type Course = {
     name: string,
     layouts: Layout[]

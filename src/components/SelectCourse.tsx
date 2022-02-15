@@ -19,21 +19,21 @@ const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
     const { courses, loading, addLayout, addCourse, fetchMore } = useCourses();
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('')
+    const [searchQuery, setSearchQuery] = useState('');
 
     const handleAddLayout = (courseId: number | string, layout: NewLayout) => {
-        addLayout(courseId, layout)
-    }
+        addLayout(courseId, layout);
+    };
     const handleClickLayout = (layout: Layout, course: Course) => {
-        if (onSelect) onSelect(layout, course)
-    }
+        if (onSelect) onSelect(layout, course);
+    };
     const handleAddCourse = (newCourseName: string) => {
-        addCourse(newCourseName)
-        setDisplayAddCourse(false)
-    }
+        addCourse(newCourseName);
+        setDisplayAddCourse(false);
+    };
     if (!courses) return (
         <Loading />
-    )
+    );
 
     return (
         <Container noPadding>
@@ -75,9 +75,9 @@ const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
                 }
             />
         </Container>
-    )
-}
-const Separaattori = () => <View style={tyyli.separaattori} />
+    );
+};
+const Separaattori = () => <View style={tyyli.separaattori} />;
 const SingleCourse = ({ course, onAddLayout, onLayoutClick }: SingleCourseProps) => {
     return (
         <List.Accordion
@@ -89,8 +89,8 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick }: SingleCourseProps)
         >
             <SelectLayout course={course} onAddLayout={onAddLayout} onSelect={onLayoutClick} />
         </List.Accordion>
-    )
-}
+    );
+};
 
 const tyyli = StyleSheet.create({
     container: {
@@ -111,5 +111,5 @@ const tyyli = StyleSheet.create({
         height: 1,
         backgroundColor: 'rgba(0,0,0,0.1)'
     }
-})
+});
 export default SelectCourses;

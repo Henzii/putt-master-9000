@@ -6,8 +6,8 @@ const Divider = () => {
     const { colors } = useTheme();
     return (
         <PaperDivider style={[tyyli.root, { backgroundColor: colors.primary, opacity: 0.7 }]} />
-    )
-}
+    );
+};
 
 const tyyli = StyleSheet.create({
     root: {
@@ -15,6 +15,6 @@ const tyyli = StyleSheet.create({
         marginBottom: 13,
         height: 1,
     }
-})
+});
 
 export default Divider;
