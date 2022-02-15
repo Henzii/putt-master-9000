@@ -3,13 +3,14 @@ import { Alert, StyleSheet, Text, View } from 'react-native';
 import { Paragraph, Switch, Title, TouchableRipple } from 'react-native-paper';
 import Container from './ThemedComponents/Container';
 import Divider from './ThemedComponents/Divider';
+import appInfo from '../../app.json';
 
 const Settings = () => {
 
     const [blockFriends, setBlockFriends] = useState(false);
     const handleBlockFriendsChange = () => {
         setBlockFriends(!blockFriends);
-        Alert.alert('NO!');
+        Alert.alert('Not yet implemented');
     };
 
     const handleDelete = () => {
@@ -22,26 +23,25 @@ const Settings = () => {
                 },
                 {
                     text: 'Delete',
-                    onPress: () => Alert.alert('NO!')
+                    onPress: () => Alert.alert('Not yet implemented')
                 }
             ]
         );
     };
     return (
         <Container>
-            <Title>Password</Title>
-            <Paragraph>
-                Change password
-            </Paragraph>
-            <Divider />
             <Title>Friends</Title>
             <Paragraph>
                 Block other users from adding you as a friend.
             </Paragraph>
             <View style={tyyli.split}>
-                <Text>Leave me aloner</Text>
-                <Switch value={blockFriends} onValueChange={handleBlockFriendsChange}/>
+                <Text>Leave me alone</Text>
+                <Switch value={blockFriends} onValueChange={handleBlockFriendsChange} />
             </View>
+            <Divider />
+            <Title>App info</Title>
+            <InfoText text1="version" text2={appInfo.expo.version} />
+            <InfoText text1="build" text2={appInfo.expo.android.versionCode.toString()} />
             <Divider />
             <Title>Delete account</Title>
             <Paragraph>
@@ -53,13 +53,20 @@ const Settings = () => {
         </Container>
     );
 };
-
+const InfoText = ({ text1, text2 }: { text1: string, text2: string }) => {
+    return (
+        <View style={[tyyli.split]}>
+            <Text>{text1}</Text>
+            <Text style={{ fontWeight: 'bold' }}>{text2}</Text>
+        </View>
+    );
+};
 const tyyli = StyleSheet.create({
     deleteContainer: {
         display: 'flex',
         alignItems: 'center',
     },
-     delete: {
+    delete: {
         width: '90%',
         textAlign: 'center',
         backgroundColor: 'darkred',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { Alert, FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import { Button, Headline, Modal, Portal, Subheading } from 'react-native-paper';
 import useMe, { User } from '../hooks/useMe';
 import AddFriend from './AddFriend';
@@ -12,6 +12,9 @@ type FriendListProps = {
 const FriendsList = (props: FriendListProps) => {
     const { me } = useMe(true);
     const [addFriendModal, setAddFriendModal] = useState(false);
+    const handleKillFriend = () => {
+        Alert.alert('Not yet implemented');
+    };
     return (
         <Container noPadding>
             <Portal>
@@ -25,7 +28,7 @@ const FriendsList = (props: FriendListProps) => {
             </Portal>
             <View style={tyyli.buttons}>
                 <Button onPress={() => setAddFriendModal(true)}>Add friend</Button>
-                <Button>Kill friend</Button>
+                <Button onPress={handleKillFriend}>Kill friend</Button>
             </View>
             <Headline style={tyyli.otsikko}>My friends &lt;3</Headline>
             <FlatList
