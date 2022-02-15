@@ -1,11 +1,11 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { useSelector } from 'react-redux';
 import useGame from '../../hooks/useGame';
 import { gameData } from '../../reducers/gameDataReducer';
 import { RootState } from '../../utils/store';
 import Container from '../ThemedComponents/Container';
-import { Table, Rows, Row, Col, TableWrapper } from 'react-native-table-component';
+import { Table, Rows, Row } from 'react-native-table-component';
 import Loading from '../Loading';
 
 const Summary = () => {
@@ -37,8 +37,8 @@ const Summary = () => {
     return (
         <ScrollView horizontal>
             <Container>
-                <Table borderStyle={{ borderWidth: 1 }}>
-                    <Row data={tableHeaders} style={tyylit.header} textStyle={tyylit.text} widthArr={leveydet} />
+                <Table>
+                    <Row data={tableHeaders} style={tyylit.header} textStyle={tyylit.headerText} widthArr={leveydet} />
                     <Rows data={playersData} textStyle={tyylit.text} style={tyylit.rivit} widthArr={leveydet} />
                 </Table>
             </Container>
@@ -49,11 +49,19 @@ const tyylit = StyleSheet.create({
     header: {
         backgroundColor: 'rgb(90,200,90)',
     },
+    headerText: {
+        textAlign: 'center',
+        paddingVertical: 5,
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
     text: {
         textAlign: 'center',
         paddingVertical: 5,
     },
     rivit: {
+        borderBottomWidth: 1,
+        borderColor: 'lightgray'
     }
 });
 export default Summary;

@@ -8,7 +8,7 @@
     "eject": "expo eject",
     "expo": "expo",
     "test": "jest",
-    "lint": "eslint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@apollo/client": "^3.5.8",

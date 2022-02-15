@@ -2,10 +2,9 @@ import { View, Text, StyleSheet, FlatList } from 'react-native';
 import React, { useState } from 'react';
 import Player from './Player';
 import RoundTabs from './RoundTabs';
-import { theme } from '../../utils/theme';
 import useGame from '../../hooks/useGame';
 import Container from '../ThemedComponents/Container';
-import { ActivityIndicator, Button, Paragraph, Title } from 'react-native-paper';
+import { Button, Paragraph, Title } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { unloadGame } from '../../reducers/gameDataReducer';
 import Loading from '../Loading';
@@ -52,7 +51,6 @@ export default function Game({ gameId }: { gameId: string }) {
                     keyExtractor={(item) => item.user.id as string}
                     renderItem={({item}) => (
                         <Player
-                        pars={data.pars}
                         player={item}
                         selectedRound={selectedRound}
                         setScore={handleScoreChange}

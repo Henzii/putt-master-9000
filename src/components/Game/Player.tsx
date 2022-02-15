@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
-import { Button, Card } from 'react-native-paper';
-import { ADD_PLAYERS_TO_GAME } from '../../graphql/mutation';
+import { Card } from 'react-native-paper';
 import { Scorecard } from '../../hooks/useGame';
 
 type PlayerArgs = {
     player: Scorecard,
-    pars: number[],
     selectedRound: number,
     setScore: (playerId: string, selectedRound: number, value: number) => void,
 }
 
-export default function Player({ player, selectedRound, pars, setScore }: PlayerArgs) {
+export default function Player({ player, selectedRound, setScore }: PlayerArgs) {
     const handleButtonClick = (score: number) => {
         setScore(player.user.id as string, selectedRound, score);
     };

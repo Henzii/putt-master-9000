@@ -2,10 +2,10 @@ import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 //import { useTheme } from 'react-native-paper';
 type ContainerProps = {
-    children: any,
+    children: React.ReactElement | React.ReactElement[] ,
     fullScreen?: boolean,
     noFlex?: boolean,
-    style?: any,
+    style?: { [key: string]: string | number},
     fullWidth?: boolean
     noPadding?: boolean
 }
@@ -15,12 +15,12 @@ const Container = (props: ContainerProps) => {
     const tyyli = [
         props.fullScreen && tyylit.fullScreen,
         props.fullWidth && tyylit.fullWidth,
-        { backgroundColor: '#fafafa' },
         !props.noFlex && { flex: 1 },
-        props.style,
         {
             padding: (props.noPadding) ? 0: 20,
-        }
+            backgroundColor: '#fafafa'
+        },
+        props.style,
     ];
     return (
         <View style={tyyli}>

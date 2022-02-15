@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
-import { useMutation } from 'react-apollo';
-import { Alert, StyleSheet, Text, View } from "react-native";
-import { Button, Caption, Divider, Paragraph, TextInput, Title } from 'react-native-paper';
+import React from 'react';
+import { Alert, StyleSheet } from "react-native";
+import { Button, Divider, Paragraph, TextInput, Title } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { CLOSE_GAME } from '../../graphql/mutation';
-import { GET_GAME } from '../../graphql/queries';
 import { RootState } from '../../utils/store';
 import { gameData, unloadGame } from '../../reducers/gameDataReducer';
 import Container from '../ThemedComponents/Container';
@@ -12,6 +9,7 @@ import useGame from '../../hooks/useGame';
 import { addNotification } from '../../reducers/notificationReducer';
 import useTextInput from '../../hooks/useTextInput';
 import { useNavigate } from 'react-router-native';
+import Loading from '../Loading';
 
 const Setup = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
@@ -33,10 +31,14 @@ const Setup = () => {
     const handleGameEnd = async () => {
         Alert.alert(
             'Are you sure?',
-            'After closing you will no longer be able to enter scores or drink beer',
+            'After closing the game you will no longer be able to enter scores or drink beer',
             [
                 {
-                    text: 'Close it!',
+                    text: 'Cancel',
+                    onPress: () => null
+                },
+                {
+                    text: 'Do it!',
                     onPress: async () => {
                         if (await gameHook.closeGame()) {
                             dispatch(addNotification('Game closed', 'success'));
@@ -45,10 +47,6 @@ const Setup = () => {
                         }
                     }
                 },
-                {
-                    text: 'Cancel',
-                    onPress: () => null
-                }
             ]
         );
     };
@@ -62,18 +60,18 @@ const Setup = () => {
             'Everything will be deleted',
             [
                 {
+                    text: 'Cancel',
+                    onPress:() => null
+                },
+                {
                     text: 'Yes!',
                     onPress: () => null
                 },
-                {
-                    text: 'No... :P',
-                    onPress:() => null
-                }
             ]
         );
     };
     if (!game) {
-        return (<View><Text>Loading...</Text></View>);
+        return (<Loading />);
     }
     return (
         <Container>

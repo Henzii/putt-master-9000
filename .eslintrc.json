@@ -21,7 +21,7 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "semi": "warn",
+        "semi": "error",
         "no-trailing-spaces": "error",
         "no-extra-semi": "error",
         "no-unexpected-multiline": "error",
