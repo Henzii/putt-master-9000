@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import { Button, Headline, Modal, Portal, Subheading } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
 import useMe, { User } from '../hooks/useMe';
 import AddFriend from './AddFriend';
 import Container from './ThemedComponents/Container';
@@ -13,7 +12,6 @@ type FriendListProps = {
 const FriendsList = (props: FriendListProps) => {
     const { me } = useMe(true);
     const [addFriendModal, setAddFriendModal] = useState(false);
-    const dispatch = useDispatch();
     return (
         <Container noPadding>
             <Portal>

@@ -28,7 +28,7 @@ const Summary = () => {
         sc.user.name,
         ...scoret,
         sc.total || '?',
-        (sc.total || 0) - data.par,
+        sc.plusminus,
         (sc.beers/2),
         (sc.total || 0) - (sc.beers/2)
         ]

@@ -54,6 +54,7 @@ export const GET_GAME = gql`
         scores
         total
         beers
+        plusminus
         user {
           id
           name

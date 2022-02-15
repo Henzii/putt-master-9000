@@ -7,7 +7,11 @@ import { addNotification } from '../reducers/notificationReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const useMe = (getFriends = false) => {
-    const { data, loading, error, client, refetch } = useQuery<{ getMe: User }>((getFriends ? GET_ME_WITH_FRIENDS : GET_ME), { fetchPolicy: 'cache-and-network' });
+    
+    // Jos getFriend, valitaan query jossa on ystävät mukana
+    const query = getFriends ? GET_ME_WITH_FRIENDS : GET_ME;
+
+    const { data, loading, error, client, refetch } = useQuery<RawUser>(query, { fetchPolicy: 'cache-and-network' });
     const [loginMutation] = useMutation(LOGIN, { refetchQueries: [{ query: GET_ME }, { query: GET_ME_WITH_FRIENDS }] });
     const [loggedIn, setLoggedIn] = useState(false);
     const dispatch = useDispatch();
@@ -48,5 +52,7 @@ export type User = {
     email: string | null,
     friends?: User[]
 }
-
+type RawUser = {
+    getMe: User,
+}
 export default useMe;

@@ -6,15 +6,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CLOSE_GAME } from '../../graphql/mutation';
 import { GET_GAME } from '../../graphql/queries';
 import { RootState } from '../../utils/store';
-import { gameData } from '../../reducers/gameDataReducer';
+import { gameData, unloadGame } from '../../reducers/gameDataReducer';
 import Container from '../ThemedComponents/Container';
 import useGame from '../../hooks/useGame';
 import { addNotification } from '../../reducers/notificationReducer';
 import useTextInput from '../../hooks/useTextInput';
+import { useNavigate } from 'react-router-native';
 
 const Setup = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const dispatch = useDispatch();
+    const navi = useNavigate();
     const gameHook = useGame(gameData.gameId)
     const [beerInput] = useTextInput({
         numeric: true,
@@ -29,15 +31,47 @@ const Setup = () => {
     });
     const game = gameHook.data;
     const handleGameEnd = async () => {
-        if (await gameHook.closeGame()) {
-            dispatch(addNotification('Game closed', 'success'))
-        } else {
-            dispatch(addNotification('Something went wrong :(', 'alert'))
-        }
+        Alert.alert(
+            'Are you sure?',
+            'After closing you will no longer be able to enter scores or drink beer',
+            [
+                {
+                    text: 'Close it!',
+                    onPress: async () => {
+                        if (await gameHook.closeGame()) {
+                            dispatch(addNotification('Game closed', 'success'))
+                        } else {
+                            dispatch(addNotification('Something went wrong :(', 'alert'))
+                        }
+                    }
+                },
+                {
+                    text: 'Cancel',
+                    onPress: () => null
+                }
+            ]
+        )
+    }
+    const handleQuitGame = () => {
+        navi('/');
+        dispatch(unloadGame());
     }
     const handleAbandonGame = () => {
-        Alert.alert('NO!')
-    }  
+        Alert.alert(
+            'Are you sure',
+            'Everything will be deleted',
+            [
+                {
+                    text: 'Yes!',
+                    onPress: () => null
+                },
+                {
+                    text: 'No... :P',
+                    onPress:() => null
+                }
+            ]
+        )
+    }
     if (!game) {
         return (<View><Text>Loading...</Text></View>)
     }
@@ -58,12 +92,23 @@ const Setup = () => {
             <Paragraph>
                 Stop drinking and end the game.
             </Paragraph>
-            <Button 
+            <Button
                 mode='contained'
                 style={tyyli.nappi}
                 onPress={handleGameEnd}
                 disabled={!game.isOpen}
-            >End game</Button>
+            >End game
+            </Button>
+            <Divider style={tyyli.divider} />
+            <Paragraph>
+               Quit game{(gameHook.data?.isOpen) ? ', leave the game open':''}. Praise the lord!
+            </Paragraph>
+            <Button
+                onPress={handleQuitGame}
+                mode='contained'
+                style={tyyli.nappi}
+            >Quit</Button>
+
             <Divider style={tyyli.divider} />
             <Paragraph>
                 Abandon game. Delete everything related to this game

@@ -69,6 +69,7 @@ export type Game = {
 export type Scorecard = {
     scores: number[],
     user: User,
+    plusminus?: number,
     beers: number,
     total?: number,
 }

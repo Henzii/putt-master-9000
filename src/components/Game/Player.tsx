@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 import { Button, Card } from 'react-native-paper';
+import { ADD_PLAYERS_TO_GAME } from '../../graphql/mutation';
 import { Scorecard } from '../../hooks/useGame';
 
 type PlayerArgs = {
@@ -42,10 +43,7 @@ export default function Player({ player, selectedRound, pars, setScore }: Player
                 </View>
                 <View style={tyyli.contentRight}>
                     <Text style={tyyli.crText}>
-                        {player.scores.reduce((p, c, i) => {
-                            if (!c) return p;
-                            return p + (c - pars[i])
-                        }, 0)}
+                        {player.plusminus}
                     </Text>
                 </View>
             </Card.Content>
