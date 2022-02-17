@@ -14,6 +14,7 @@ const tyyli = StyleSheet.create({
         marginTop: 13,
         marginBottom: 13,
         height: 1,
+        width: '100%',
     }
 });
 

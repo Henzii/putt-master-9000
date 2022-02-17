@@ -30,7 +30,7 @@ const useGame = (gameId: string) => {
         }
     };
     const setScore = async (args: SetScoreArgs) => {
-        const res = await setScoreMutation({ variables: args });
+        await setScoreMutation({ variables: args });
     };
     const closeGame = async () => {
         try {
@@ -40,10 +40,10 @@ const useGame = (gameId: string) => {
             return false;
         }
     };
+    /* TODO
     const updateScorecardsCache = (scorecards: Scorecard[]) => {
-        // TODO
     };
-
+    */
     return {
         data: data?.getGame ?? null,
         ready: (!loading && !error),

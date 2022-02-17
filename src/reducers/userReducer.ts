@@ -1,4 +1,4 @@
-const reducer = (state: UserData | undefined, action: UserReducerAction) => {
+export const reducer = (state: UserData | undefined, action: UserReducerAction) => {
     switch(action.type) {
         case 'SET_USER': {
             return action.data;

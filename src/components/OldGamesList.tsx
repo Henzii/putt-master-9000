@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from 'react-apollo';
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { FlatList, Pressable, StyleSheet, View } from "react-native";
 import { Caption, Chip, Paragraph, Subheading, Title, useTheme } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-native';

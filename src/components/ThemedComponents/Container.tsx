@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View, ScrollView } from 'react-native';
 //import { useTheme } from 'react-native-paper';
 type ContainerProps = {
     children: React.ReactElement | React.ReactElement[] ,
@@ -8,6 +8,7 @@ type ContainerProps = {
     style?: { [key: string]: string | number},
     fullWidth?: boolean
     noPadding?: boolean
+    withScrollView?: boolean
 }
 
 const Container = (props: ContainerProps) => {
@@ -22,6 +23,13 @@ const Container = (props: ContainerProps) => {
         },
         props.style,
     ];
+    if (props.withScrollView) {
+        return (
+            <ScrollView contentContainerStyle={tyyli}>
+                {props.children}
+            </ScrollView>
+        );
+    }
     return (
         <View style={tyyli}>
             {props.children}

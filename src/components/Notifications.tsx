@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Caption, Headline, Portal, Snackbar, Subheading, Text } from "react-native-paper";
+import { Portal, Snackbar, Subheading } from "react-native-paper";
 import { useDispatch, useSelector } from 'react-redux';
 import { removeNotification } from '../reducers/notificationReducer';
 import { RootState } from '../utils/store';

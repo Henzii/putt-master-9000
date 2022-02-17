@@ -33,7 +33,7 @@ const Summary = () => {
         (sc.total || 0) - (sc.beers/2)
         ];
     });
-    const leveydet = [20, 80, ...data.pars.map(p => 30), 50, 50, 50, 50];
+    const leveydet = [20, 80, ...data.pars.map(() => 30), 50, 50, 50, 50];
     return (
         <ScrollView horizontal>
             <Container>

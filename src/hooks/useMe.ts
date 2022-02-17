@@ -11,7 +11,7 @@ const useMe = (getFriends = false) => {
     // Jos getFriend, valitaan query jossa on ystävät mukana
     const query = getFriends ? GET_ME_WITH_FRIENDS : GET_ME;
 
-    const { data, loading, error, client, refetch } = useQuery<RawUser>(query, { fetchPolicy: 'cache-and-network' });
+    const { data, loading, client, refetch } = useQuery<RawUser>(query, { fetchPolicy: 'cache-and-network' });
     const [loginMutation] = useMutation(LOGIN, { refetchQueries: [{ query: GET_ME }, { query: GET_ME_WITH_FRIENDS }] });
     const [loggedIn, setLoggedIn] = useState(false);
     const dispatch = useDispatch();

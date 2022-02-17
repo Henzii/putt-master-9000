@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { Alert, FlatList, Pressable, StyleSheet, View } from "react-native";
 import { Button, Headline, Modal, Portal, Subheading } from 'react-native-paper';
 import useMe, { User } from '../hooks/useMe';
 import AddFriend from './AddFriend';

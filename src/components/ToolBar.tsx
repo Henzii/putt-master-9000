@@ -1,13 +1,13 @@
 
 import React from 'react';
-import { GestureResponderEvent, StyleSheet } from 'react-native';
-import { Appbar, Menu as PaperMenu } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import { Appbar } from 'react-native-paper';
 
 export default function ToolBar({ handleMenuClick }:{ handleMenuClick: () => void} ) {
     return (
         <Appbar style={tyyli.top}>
             <Appbar.Action icon="arrow-left" onPress={handleMenuClick} />
-            <Appbar.Content title="FuDisc 9000" />
+            <Appbar.Content title="FuDisc" />
         </Appbar>
     );
 }

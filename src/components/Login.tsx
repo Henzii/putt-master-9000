@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { Button, Title, TextInput } from "react-native-paper";
-import { Navigate } from 'react-router-native';
-import useMe from '../hooks/useMe';
 import Container from './ThemedComponents/Container';
 
 const Login = ({ login }: {login: (s1: string, s2: string) => void }) => {
