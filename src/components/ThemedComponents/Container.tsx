@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions, StyleSheet, View, ScrollView } from 'react-native';
 //import { useTheme } from 'react-native-paper';
 type ContainerProps = {
-    children: React.ReactElement | React.ReactElement[] ,
+    children: React.ReactElement | null | (React.ReactElement | null)[],
     fullScreen?: boolean,
     noFlex?: boolean,
     style?: { [key: string]: string | number},

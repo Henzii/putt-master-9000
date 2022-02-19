@@ -49,12 +49,12 @@ const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
                     />
                 </Modal>
             </Portal>
-            {displaySearchBar && <Searchbar
+            {displaySearchBar ? <Searchbar
                 autoComplete={false}
                 placeholder="Search"
                 value={searchQuery}
                 onChangeText={(text) => setSearchQuery(text)}
-            />}
+            /> : null}
             <View style={tyyli.topButtons}>
                 <Button icon="plus-thick" onPress={() => setDisplayAddCourse(true)} testID="AddCourseButton">Add Course</Button>
                 <Button icon="magnify" onPress={() => setDisplaySearchBar(!displaySearchBar)}>Search</Button>

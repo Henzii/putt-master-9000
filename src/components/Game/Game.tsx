@@ -43,17 +43,17 @@ export default function Game({ gameId }: { gameId: string }) {
             <RoundTabs gameData={data} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
             <Container noPadding>
                 <View style={peliStyles.headers}>
-                    <Text style={peliStyles.course}>{data.course} #{selectedRound + 1}, par {data.pars[selectedRound]}</Text>
-                    <Text style={peliStyles.layout}>{data.layout}</Text>
+                    <Text testID="GameRata" style={peliStyles.course}>{data.course} #{selectedRound + 1}, par {data.pars[selectedRound]}</Text>
+                    <Text testID="GameLayout" style={peliStyles.layout}>{data.layout}</Text>
                 </View>
                 <FlatList
                     data={data.scorecards}
                     keyExtractor={(item) => item.user.id as string}
                     renderItem={({item}) => (
                         <Player
-                        player={item}
-                        selectedRound={selectedRound}
-                        setScore={handleScoreChange}
+                            player={item}
+                            selectedRound={selectedRound}
+                            setScore={handleScoreChange}
                     />
                     )}
                 />

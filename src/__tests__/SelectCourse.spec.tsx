@@ -10,9 +10,9 @@ describe('<SelectCourse /> testit', () => {
 
     it('Komponentti renreröityy oikein', async () => {
         const onSelect = jest.fn();
-        const { getByText, debug, getAllByTestId, getByTestId } = render(
+        const { getByText, getAllByTestId, getByTestId } = render(
             <Provider>
-                <MockedProvider addTypename={false} mocks={[getCoursesMocks]}>
+                <MockedProvider addTypename={false} mocks={getCoursesMocks}>
                     <SelectCourses onSelect={onSelect}/>
                 </MockedProvider>
             </Provider>
