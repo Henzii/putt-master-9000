@@ -1,5 +1,6 @@
-import { GET_COURSES, GET_GAME } from "../graphql/queries";
+import { GET_COURSES, GET_GAME, GET_ME_WITH_FRIENDS } from "../graphql/queries";
 import { Game } from "../hooks/useGame";
+import { User } from "../hooks/useMe";
 export const testiRadat = [
     {
         name: 'Testirata1',
@@ -35,6 +36,23 @@ export const testiRadat = [
         ]
     }
 ];
+export const testiMe: User= {
+    name: 'Testuser',
+    id: 'userid1',
+    email: '',
+    friends: [
+        {
+            name: 'TestUser2',
+            id: 'userid2',
+            email: '',
+        },
+        {
+            name: 'TestUser3',
+            id: 'userid3',
+            email: '',
+        }
+    ]
+};
 export const testiPeli: Game = {
     id: 'g1',
     course: testiRadat[0].name,
@@ -79,6 +97,16 @@ export const testiPeli: Game = {
     ]
 };
 export const getCoursesMocks = [
+    {
+        request: {
+            query: GET_ME_WITH_FRIENDS,
+        },
+        result: {
+            data: {
+                getMe: testiMe
+            }
+        }
+    },
     {
         request: {
             query: GET_GAME,

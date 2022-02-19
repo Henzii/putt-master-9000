@@ -37,5 +37,8 @@ module.exports = {
       "json-summary",
       "text",
       "lcov"
+    ],
+    setupFiles: [
+      './src/__tests__/asyncStorageMock.js'
     ]
   };
