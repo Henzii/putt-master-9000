@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, waitFor, fireEvent } from '@testing-library/react-native';
+import { render, waitFor } from '@testing-library/react-native';
 import Game from '../components/Game/Game';
 import { MockedProvider } from '@apollo/react-testing';
 //import { Provider } from 'react-native-paper';

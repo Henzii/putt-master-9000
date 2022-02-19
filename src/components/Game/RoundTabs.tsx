@@ -55,7 +55,7 @@ function SingleTab({ id, selected, onClick, finished, skipped }: SingleTabProps 
         null
     );
     return (
-        <Pressable onPress={() => onClick(id)}>
+        <Pressable onPress={() => onClick(id)} testID="SingleTab">
             <View style={[tabsStyle.single, tausta]} >
                 <Text style={tabsStyle.text}>{id+1}</Text>
             </View>
@@ -70,7 +70,7 @@ type SingleTabProps = {
     skipped: boolean,
 }
 type RoundTabsProps = {
-    gameData: Game,
+    gameData: Pick<Game, 'holes' | 'scorecards'>,
     selectedRound: number,
     setSelectedRound: (round: number) => void,
 }
