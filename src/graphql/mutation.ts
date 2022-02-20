@@ -2,7 +2,17 @@ import gql from "graphql-tag";
 
 export const ADD_LAYOUT = gql`
     mutation ($courseId: ID!, $layout: NewLayout!) {
-        addLayout(courseId: $courseId, layout: $layout)
+        addLayout(courseId: $courseId, layout: $layout) {
+            id
+            name
+            layouts {
+                id
+                name
+                par
+                pars
+                holes
+            }
+        }
     }
 `;
 export const ADD_COURSE = gql`
