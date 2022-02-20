@@ -7,7 +7,13 @@ export const ADD_LAYOUT = gql`
 `;
 export const ADD_COURSE = gql`
     mutation ($name: String!) {
-        addCourse(name: $name)
+        addCourse(name: $name) {
+            id
+            name
+            layouts {
+                id
+            }
+        }
     }
 `;
 export const LOGIN = gql`

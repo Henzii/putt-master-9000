@@ -1,10 +1,15 @@
-import { useMutation, useQuery } from "react-apollo";
+import { useQuery, useMutation } from "react-apollo";
+
 import { ADD_COURSE, ADD_LAYOUT } from "../graphql/mutation";
 import { GET_COURSES } from "../graphql/queries";
+import { newCourseUpdateCache } from "../utils/courseCacheUpdates";
 
 const useCourses = () => {
     const [addLayoutMutation] = useMutation(ADD_LAYOUT, { refetchQueries: [{ query: GET_COURSES }] });
-    const [addCourseMutation] = useMutation(ADD_COURSE);
+    const [addCourseMutation] = useMutation(ADD_COURSE, {
+        // Päivittää välimuiston radan lisäämisen jälkeen
+        update: newCourseUpdateCache,
+    });
     const { data, loading, error, fetchMore } = useQuery<RawCourseData>(
         GET_COURSES,
         {
@@ -16,7 +21,7 @@ const useCourses = () => {
         }
     );
     const handleFetchMore = () => {
-        if (data && data.getCourses.hasMore) {
+        if (data && data.getCourses.hasMore && !loading) {
             fetchMore({
                 variables: { limit: 5, offset: data.getCourses.nextOffset },
                 updateQuery: (previous, { fetchMoreResult }) => {
@@ -42,8 +47,7 @@ const useCourses = () => {
     };
     const addCourse = async (newCourseName: string) => {
         try {
-            const id = await addCourseMutation({ variables: { name: newCourseName } });
-            return id.data.addCourse;
+            await addCourseMutation({ variables: { name: newCourseName } });
         } catch (e) {
             console.log('ERROR', e);
         }
