@@ -23,7 +23,8 @@ const AddLayout = ({ onCancel, onAdd }: AddLayoutProps) => {
         if (typeof par === 'string') {
             par = Number.parseInt(par);
         }
-        if (isNaN(par) || par < 0 || par > 20) return;
+        if (rawPar === '') par = 0;
+        if ((isNaN(par) || par < 0 || par > 20)) return;
 
         const parsCopy = [...pars];
         parsCopy[hole] = par;
@@ -64,14 +65,14 @@ const AddLayout = ({ onCancel, onAdd }: AddLayoutProps) => {
 const HolesPars = ({ onParChange, pars }: { pars: number[], onParChange: (hole: number, par: number | string) => void }) => {
     const returni = [];
     for (let i = 0; i < pars.length; i++) {
-        if (!pars[i]) continue;
+        if (pars[i] === undefined) continue;
         returni.push(<TextInput
             key={`HolesParsKey${i}`}
             style={tyyli.singlePar}
             onChangeText={(value) => onParChange(i, value)}
             mode='outlined'
             label={`Hole ${i+1}`}
-            value={pars[i]+''}
+            value={pars[i] > 0 ? pars[i]+'' : ''}
             dense
             autoComplete={false}
             keyboardType='numeric'
