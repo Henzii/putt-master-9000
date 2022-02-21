@@ -41,6 +41,7 @@ export default function Player({ player, selectedRound, setScore }: PlayerArgs) 
                 </View>
                 <View style={tyyli.contentRight}>
                     <Text style={tyyli.crText}>
+                        {((player.plusminus || 0) > 0 ? '+' : '')}
                         {player.plusminus}
                     </Text>
                 </View>
@@ -107,7 +108,7 @@ const tyyli = StyleSheet.create({
         justifyContent: 'center',
     },
     crText: {
-        fontSize: 20,
+        fontSize: 23,
     },
     main: {
         minHeight: 120,

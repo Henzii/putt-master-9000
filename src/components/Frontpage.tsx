@@ -8,17 +8,24 @@ import { RootState } from '../utils/store';
 import Loading from './Loading';
 import Login from './Login';
 import Container from './ThemedComponents/Container';
+import ErrorScreen from './ErrorScreen';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const master = require('../../assets/master2.png');
 
 const Frontpage = () => {
-    const { me, logged, logout, login, loading } = useMe();
+    const { me, logged, logout, login, loading, error } = useMe();
     const gameData = useSelector((state: RootState) => state.gameData);
 
     if (loading) {
         return (
             <Loading loadingText='Connecting to server...' />
+        );
+    }
+    console.log(error?.message);
+    if (error) {
+        return (
+            <ErrorScreen errorMessage={error?.message} />
         );
     }
     return (
