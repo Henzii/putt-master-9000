@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useMutation, useQuery } from 'react-apollo';
-import { LOGIN } from '../graphql/mutation';
+import { LOGIN, UPDATE_MY_SETTINGS } from '../graphql/mutation';
 import { GET_ME, GET_ME_WITH_FRIENDS } from '../graphql/queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -11,6 +11,23 @@ const useMe = (getFriends = false) => {
 
     const { data, loading, client, error, refetch } = useQuery<RawUser>(query, { fetchPolicy: 'cache-and-network' });
     const [loginMutation] = useMutation(LOGIN, { refetchQueries: [{ query: GET_ME }, { query: GET_ME_WITH_FRIENDS }] });
+    const [updateSettingsMutation] = useMutation(UPDATE_MY_SETTINGS, {
+        update: (cache, result) => {
+            const newSettingsResult = result.data.changeSettings;
+            const oldCache = cache.readQuery<RawUser>({ query: GET_ME });
+            cache.writeQuery({
+                query: GET_ME,
+                data: {
+                    getMe: {
+                        ...oldCache?.getMe || null,
+                        ...newSettingsResult,
+                    }
+                }
+            });
+            console.log(oldCache);
+        }
+    });
+
     const [loggedIn, setLoggedIn] = useState(false);
     useEffect( () => {
         if (data?.getMe && !loggedIn) {
@@ -36,7 +53,10 @@ const useMe = (getFriends = false) => {
         setLoggedIn(false);
         refetch();
     };
-    return { me: data?.getMe ?? null, logged: loggedIn, login, logout, loading, error};
+    const updateSettings = async (newSettings: Pick<User, 'blockFriendRequests'>) => {
+        await updateSettingsMutation({ variables: newSettings });
+    };
+    return { me: data?.getMe ?? null, logged: loggedIn, login, logout, loading, error, updateSettings};
 };
 
 
@@ -44,7 +64,8 @@ export type User = {
     name: string,
     id: number | string,
     email: string | null,
-    friends?: User[]
+    friends?: User[],
+    blockFriendRequests?: boolean,
 }
 type RawUser = {
     getMe: User,

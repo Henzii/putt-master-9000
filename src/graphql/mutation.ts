@@ -76,3 +76,10 @@ export const SET_BEERS = gql`
         }
     }
 `;
+export const UPDATE_MY_SETTINGS = gql`
+    mutation($blockFriendRequests: Boolean) {
+        changeSettings(blockFriendRequests: $blockFriendRequests) {
+            blockFriendRequests
+        }
+    }
+`;

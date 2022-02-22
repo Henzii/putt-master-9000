@@ -22,15 +22,13 @@ const Frontpage = () => {
             <Loading loadingText='Connecting to server...' />
         );
     }
-    console.log(error?.message);
     if (error) {
         return (
             <ErrorScreen errorMessage={error?.message} />
         );
     }
     return (
-        <Container noPadding>
-        <ScrollView contentContainerStyle={{ alignItems: 'center', paddingBottom: 20, }}>
+        <Container noFlex withScrollView style={{ alignItems: 'center' }}>
             <Image source={master} resizeMode='stretch' style={tyyli.kuva} />
             {(logged) ?
                 <>
@@ -48,7 +46,6 @@ const Frontpage = () => {
                     <Link to="/signUp"><Button>Sign up!</Button></Link>
                 </>
             }
-        </ScrollView>
         </Container>
     );
 };

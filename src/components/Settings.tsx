@@ -4,13 +4,12 @@ import { Paragraph, Switch, Title, TouchableRipple } from 'react-native-paper';
 import Container from './ThemedComponents/Container';
 import Divider from './ThemedComponents/Divider';
 import appInfo from '../../app.json';
+import useMe from '../hooks/useMe';
 
 const Settings = () => {
-
-    const [blockFriends, setBlockFriends] = useState(false);
+    const { me, updateSettings } = useMe();
     const handleBlockFriendsChange = () => {
-        setBlockFriends(!blockFriends);
-        Alert.alert('Not yet implemented');
+        updateSettings({ blockFriendRequests: !me?.blockFriendRequests });
     };
 
     const handleDelete = () => {
@@ -36,7 +35,10 @@ const Settings = () => {
             </Paragraph>
             <View style={tyyli.split}>
                 <Text>Leave me alone</Text>
-                <Switch value={blockFriends} onValueChange={handleBlockFriendsChange} />
+                <Switch
+                    value={me?.blockFriendRequests}
+                    onValueChange={handleBlockFriendsChange}
+                    />
             </View>
             <Divider />
             <Title>App info</Title>
