@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Paragraph, Switch, Title, TouchableRipple } from 'react-native-paper';
 import Container from './ThemedComponents/Container';
 import Divider from './ThemedComponents/Divider';
@@ -33,13 +33,16 @@ const Settings = () => {
             <Paragraph>
                 Block other users from adding you as a friend.
             </Paragraph>
-            <View style={tyyli.split}>
-                <Text>Leave me alone</Text>
-                <Switch
-                    value={me?.blockFriendRequests}
-                    onValueChange={handleBlockFriendsChange}
+            <Pressable onPress={handleBlockFriendsChange} testID='blockFriendRequests'>
+                <View style={tyyli.split}>
+                    <Text>Leave me alone</Text>
+                    <Switch
+                        testID='blockFriendRequestsSwitch'
+                        value={me?.blockFriendRequests}
+                        onValueChange={handleBlockFriendsChange}
                     />
-            </View>
+                </View>
+            </Pressable>
             <Divider />
             <Title>App info</Title>
             <InfoText text1="version" text2={appInfo.expo.version} />
