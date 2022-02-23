@@ -78,7 +78,7 @@ export const GET_STATS = gql`
       games
       id
       scores
-      hc
+      median10
     }
   }
 `;

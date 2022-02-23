@@ -17,7 +17,7 @@ const Summary = () => {
         );
     }
     const sortedScorecards = [...data.scorecards].sort((a, b) => (a.total || 0) - (b.total || 0));
-    const tableHeaders = ['#', 'Player', ...data.pars.map((p, i) => i + 1), 'Total', '+/-', 'bHc', 'hcTot'];
+    const tableHeaders = ['#', 'Player', ...data.pars.map((p, i) => i + 1), 'Total', '+/-', 'Hc', 'bHc', 'hcTot', 'Hc+/-'];
     const playersData = sortedScorecards.map((sc, i) => {
         const scoret: (number | string)[] = [...sc.scores];
         // Tehdään tekemättömistä väylistä tyhjiä...
@@ -29,11 +29,13 @@ const Summary = () => {
         ...scoret,
         sc.total || '?',
         sc.plusminus,
+        sc.median10 - data.par,
         (sc.beers/2),
-        (sc.total || 0) - (sc.beers/2)
+        (sc.total || 0) - (sc.beers/2) - (sc.median10 - data.par),
+        (sc.total || 0)  - (sc.beers/2) - (sc.median10 - data.par) - data.par,
         ];
     });
-    const leveydet = [20, 80, ...data.pars.map(() => 30), 50, 50, 50, 50];
+    const leveydet = [20, 80, ...data.pars.map(() => 30), 50, 50, 50, 50, 50, 50];
     return (
         <ScrollView horizontal>
             <Container>

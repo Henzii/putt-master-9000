@@ -72,6 +72,7 @@ export type Scorecard = {
     plusminus?: number,
     beers: number,
     total?: number,
+    median10: number,
 }
 
 export type SetScoreArgs = {

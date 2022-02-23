@@ -27,5 +27,6 @@ export const CORE_SCORECARD_INFO = gql`
         total
         beers
         plusminus
+        median10
     }
 `;

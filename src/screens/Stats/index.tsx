@@ -10,17 +10,17 @@ import { Course, Layout } from '../../hooks/useCourses';
 import ErrorScreen from '../../components/ErrorScreen';
 
 const Stats = () => {
-    const [selectedCourse, setSelectedCourse] = useState<{ course: string, layout: string } | null>(null);
+    const [selectedCourse, setSelectedCourse] = useState<{ course: Course, layout: Layout } | null>(null);
     const [loadStats, { data, loading, error }] = useLazyQuery(GET_STATS);
     const [selectCourse, setSelectCourse] = useState(false);
     useEffect(() => {
         if (selectedCourse) {
-            loadStats({ variables: { course: selectedCourse.course, layout: selectedCourse.layout } });
+            loadStats({ variables: { course: selectedCourse.course.name, layout: selectedCourse.layout.name } });
         }
     }, [selectedCourse]);
 
     const handleCourseSelect = (layout: Layout, course: Course) => {
-        setSelectedCourse({ course: course.name, layout: layout.name });
+        setSelectedCourse({ course, layout });
         setSelectCourse(false);
     };
     if (error) {
@@ -45,8 +45,8 @@ const Stats = () => {
                                     Course: (Malmis / Main)
                                 </Paragraph>
                                 <Text>Games: {data.getHc[0].games}</Text>
-                                <Text>Hc: {data.getHc[0].hc}</Text>
-                                <Text>Scores: {data.getHc[0].scores.join(', ')} </Text>
+                                <Text>Hc: {data.getHc[0].median10 - (selectedCourse?.layout.par ?? 0)}</Text>
+                                <Text>Scores: {data.getHc[0].scores.map((n:number) => n-(selectedCourse?.layout.par||0)).join(', ')} </Text>
                             </>
             }
         </Container>
