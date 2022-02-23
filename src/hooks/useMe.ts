@@ -12,6 +12,7 @@ const useMe = (getFriends = false) => {
     const { data, loading, client, error, refetch } = useQuery<RawUser>(query, { fetchPolicy: 'cache-and-network' });
     const [loginMutation] = useMutation(LOGIN, { refetchQueries: [{ query: GET_ME }, { query: GET_ME_WITH_FRIENDS }] });
     const [updateSettingsMutation] = useMutation(UPDATE_MY_SETTINGS, {
+        // Päivitetään vastaus/uudet asetukset välimuistiin
         update: (cache, result) => {
             const newSettingsResult = result.data.changeSettings;
             const oldCache = cache.readQuery<RawUser>({ query: GET_ME });
@@ -19,12 +20,11 @@ const useMe = (getFriends = false) => {
                 query: GET_ME,
                 data: {
                     getMe: {
-                        ...oldCache?.getMe || null,
+                        ...oldCache?.getMe,
                         ...newSettingsResult,
                     }
                 }
             });
-            console.log(oldCache);
         }
     });
 

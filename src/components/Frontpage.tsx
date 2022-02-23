@@ -36,6 +36,7 @@ const Frontpage = () => {
                     <NaviButton to="/games" text="Old games" />
                     <NaviButton to="/courses" text="Courses" />
                     <NaviButton to="/friends" text="Friends" />
+                    <NaviButton to="/stats" text="Stats" />
                     <NaviButton to="/settings" text="Settings" />
                     <Text>Logged in as {me?.name}</Text>
                     <Button onPress={logout}>Logout</Button>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Alert, StyleSheet, Text, View } from 'react-native';
 import { Paragraph, Switch, Title, TouchableRipple } from 'react-native-paper';
 import Container from './ThemedComponents/Container';

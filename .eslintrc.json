@@ -26,6 +26,7 @@
         "no-extra-semi": "error",
         "no-unexpected-multiline": "error",
         "no-multiple-empty-lines": "error",
-        "no-param-reassign": "error"
+        "no-param-reassign": "error",
+        "no-console": "warn"
     }
 }

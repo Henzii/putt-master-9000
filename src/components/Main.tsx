@@ -12,6 +12,7 @@ import Notifications from './Notifications';
 import OldGamesList from './OldGamesList';
 import SignUp from './SignUp';
 import Settings from './Settings';
+import Stats from '../screens/Stats';
 
 export default function App() {
   const navi = useNavigate();
@@ -29,6 +30,7 @@ export default function App() {
         <Route path="/courses" element={<SelectCourses />} />
         <Route path="/friends" element={<FriendsList />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/stats" element={<Stats />} />
         <Route path="/" element={<Frontpage />} />
       </Routes>
       <StatusBar style="auto" />

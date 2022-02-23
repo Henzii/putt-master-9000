@@ -71,3 +71,14 @@ ${CORE_GAME_INFO}
     }
   }
 `;
+
+export const GET_STATS = gql`
+  query {
+    getHc {
+      games
+      id
+      scores
+      hc
+    }
+  }
+`;
