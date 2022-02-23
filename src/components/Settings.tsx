@@ -35,7 +35,7 @@ const Settings = () => {
             </Paragraph>
             <Pressable onPress={handleBlockFriendsChange} testID='blockFriendRequests'>
                 <View style={tyyli.split}>
-                    <Text>Leave me alone</Text>
+                    <Text>{me?.blockFriendRequests ? '(ง •̀_•́)ง BLOCK!' : '(っ◕‿◕)っ  (•_• )'}</Text>
                     <Switch
                         testID='blockFriendRequestsSwitch'
                         value={me?.blockFriendRequests}

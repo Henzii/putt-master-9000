@@ -37,15 +37,17 @@ const Stats = () => {
                 (loading)
                     ? <Loading noFullScreen />
                     : (!data)
-                        ? <Text>Select course</Text>
-                        : <>
-                            <Paragraph>
-                                Course: (Malmis / Main)
-                            </Paragraph>
-                            <Text>Games: {data.getHc[0].games}</Text>
-                            <Text>Hc: {data.getHc[0].hc}</Text>
-                            <Text>Scores: {data.getHc[0].scores.join(', ')} </Text>
-                        </>
+                        ? <Text>Hmm... select course maybe?</Text>
+                        : (data.getHc.length === 0)
+                            ? <Text>No data</Text>
+                            : <>
+                                <Paragraph>
+                                    Course: (Malmis / Main)
+                                </Paragraph>
+                                <Text>Games: {data.getHc[0].games}</Text>
+                                <Text>Hc: {data.getHc[0].hc}</Text>
+                                <Text>Scores: {data.getHc[0].scores.join(', ')} </Text>
+                            </>
             }
         </Container>
     );
