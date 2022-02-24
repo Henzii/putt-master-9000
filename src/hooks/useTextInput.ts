@@ -11,6 +11,16 @@ type HookReturn = [{
     onChangeText: (text: string) => void,
     keyboardType: 'numeric' | 'default',
 }]
+/**
+* Palauttaa arrayn ensimmäisessä alkiossa value, onChangeText ja keyboardType
+*
+* @param options
+* objekti joka sisältää callBackDelay (ms), numeric (boolean) ja callBack -funktion
+*
+* @example
+* const [textInputs] = useTextInput({ callBackDelay: 1000, callBack: (value) => console.log('Value: ', value )});
+* return <TextInput {...textInputs} />;
+**/
 const useTextInput = (options: Options): HookReturn => {
     const [value, setValue] = useState(options.defaultValue || '');
     const [timerId, setTimerId] = useState<undefined | NodeJS.Timeout>();

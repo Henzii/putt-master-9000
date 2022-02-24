@@ -1,19 +1,22 @@
+import { useState } from 'react';
 import { useQuery, useMutation } from "react-apollo";
 
 import { ADD_COURSE, ADD_LAYOUT } from "../graphql/mutation";
 import { GET_COURSES } from "../graphql/queries";
 import { newCourseUpdateCache, newLayoutUpdateCache } from "../utils/courseCacheUpdates";
 
-const useCourses = () => {
+const useCourses = (search = '') => {
     const [addLayoutMutation] = useMutation(ADD_LAYOUT, { update: newLayoutUpdateCache });
     const [addCourseMutation] = useMutation(ADD_COURSE, { update: newCourseUpdateCache });
+    const [searchString, setSearchString] = useState(search);
 
     const { data, loading, error, fetchMore } = useQuery<RawCourseData>(
         GET_COURSES,
         {
             variables: {
                 limit: 9,
-                offset: 0
+                offset: 0,
+                search: searchString,
             },
             fetchPolicy: 'cache-and-network'
         }
@@ -23,7 +26,6 @@ const useCourses = () => {
             fetchMore({
                 variables: { limit: 5, offset: data.getCourses.nextOffset },
                 updateQuery: (previous, { fetchMoreResult }) => {
-                    console.log(fetchMoreResult?.getCourses.nextOffset);
                     if (!fetchMoreResult) return previous;
                     return {
                         getCourses: {
@@ -49,7 +51,7 @@ const useCourses = () => {
             console.log('ERROR', e);
         }
     };
-    return { courses: data?.getCourses?.courses || undefined, loading, error, addLayout, addCourse, fetchMore: handleFetchMore };
+    return { courses: data?.getCourses?.courses || undefined, loading, error, addLayout, addCourse, fetchMore: handleFetchMore, setSearchString, searchString };
 };
 export type Course = {
     name: string,

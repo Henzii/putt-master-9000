@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { Button, Modal, Searchbar, Portal, List } from "react-native-paper";
 import useCourses, { Course, Layout, NewLayout } from "../hooks/useCourses";
+import useTextInput from "../hooks/useTextInput";
 import AddCourse from "./AddCourse";
 import Loading from "./Loading";
 import SelectLayout from "./SelectLayout";
@@ -16,10 +17,11 @@ type SelectCoursesProps = {
     onSelect?: (layout: Layout, course: Course) => void
 }
 const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
-    const { courses, loading, addLayout, addCourse, fetchMore } = useCourses();
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('');
+    const { courses, loading, addLayout, addCourse, fetchMore, ...restOfUseCourses } = useCourses();
+
+    const [searchInput] = useTextInput({ defaultValue: '', callBackDelay: 500, callBack: restOfUseCourses.setSearchString });
 
     const handleAddLayout = (courseId: number | string, layout: NewLayout) => {
         addLayout(courseId, layout);
@@ -51,9 +53,7 @@ const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
             </Portal>
             {displaySearchBar ? <Searchbar
                 autoComplete={false}
-                placeholder="Search"
-                value={searchQuery}
-                onChangeText={(text) => setSearchQuery(text)}
+               {...searchInput}
             /> : null}
             <View style={tyyli.topButtons}>
                 <Button icon="plus-thick" onPress={() => setDisplayAddCourse(true)} testID="AddCourseButton">Add Course</Button>
