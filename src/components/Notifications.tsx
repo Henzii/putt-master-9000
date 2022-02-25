@@ -27,6 +27,7 @@ const Notifications = () => {
 
 const tyyli = StyleSheet.create({
     main: {
+        opacity: 0.8,
     },
     info: {
         backgroundColor: 'blue',

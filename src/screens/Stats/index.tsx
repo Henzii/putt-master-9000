@@ -45,7 +45,7 @@ const Stats = () => {
                                     Course: (Malmis / Main)
                                 </Paragraph>
                                 <Text>Games: {data.getHc[0].games}</Text>
-                                <Text>Hc: {data.getHc[0].median10 - (selectedCourse?.layout.par ?? 0)}</Text>
+                                <Text>Hc: {data.getHc[0].hc}</Text>
                                 <Text>Scores: {data.getHc[0].scores.map((n:number) => n-(selectedCourse?.layout.par||0)).join(', ')} </Text>
                             </>
             }

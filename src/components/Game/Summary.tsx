@@ -24,16 +24,15 @@ const Summary = () => {
         for (let i = 0; i < data.holes; i++) {
             if (!scoret[i]) scoret[i] = ' ';
         }
-        const hc = (sc.median10 > 0) ? sc.median10 - data.par : 0;
         return [i + 1,
         sc.user.name,
         ...scoret,
         sc.total || '?',
         sc.plusminus,
-        hc,
+        sc.hc,
         (sc.beers/2),
-        (sc.total || 0) - (sc.beers/2) - (hc),
-        (sc.total) ? (sc.total - (sc.beers/2) - hc - data.par) : '?',
+        (sc.total || 0) - (sc.beers/2) - (sc.hc),
+        (sc.plusminus || 0) - (sc.beers/2) - sc.hc || '?',
         ];
     });
     const leveydet = [20, 80, ...data.pars.map(() => 30), 50, 50, 50, 50, 50, 50];
