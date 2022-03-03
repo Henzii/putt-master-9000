@@ -11,7 +11,7 @@ import useTextInput from '../../hooks/useTextInput';
 import { useNavigate } from 'react-router-native';
 import Loading from '../Loading';
 
-const Setup = () => {
+const Setup = ({ onAbandonGame }: { onAbandonGame: () => void}) => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const dispatch = useDispatch();
     const navi = useNavigate();
@@ -65,7 +65,7 @@ const Setup = () => {
                 },
                 {
                     text: 'Yes!',
-                    onPress: () => null
+                    onPress: onAbandonGame
                 },
             ]
         );
@@ -109,9 +109,9 @@ const Setup = () => {
 
             <Divider style={tyyli.divider} />
             <Paragraph>
-                Abandon game. Delete everything related to this game
+                If the game is finished, only your scorecard will be burned in hell.
             </Paragraph>
-            <Button style={tyyli.nappi} mode='contained' color='red' onPress={handleAbandonGame}>Abandon game</Button>
+            <Button style={tyyli.nappi} mode='contained' color='red' onPress={handleAbandonGame}>Discard game</Button>
             <Divider style={tyyli.divider} />
             <Paragraph style={{ color: 'gray' }}>
                 Game ID: {gameData.gameId}

@@ -42,7 +42,7 @@ const Stats = () => {
                             ? <Text>No data</Text>
                             : <>
                                 <Paragraph>
-                                    Course: (Malmis / Main)
+                                    Course: {selectedCourse?.course.name + ' / ' + selectedCourse?.layout.name}
                                 </Paragraph>
                                 <Text>Games: {data.getHc[0].games}</Text>
                                 <Text>Hc: {data.getHc[0].hc}</Text>

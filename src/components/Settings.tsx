@@ -5,14 +5,27 @@ import Container from './ThemedComponents/Container';
 import Divider from './ThemedComponents/Divider';
 import appInfo from '../../app.json';
 import useMe from '../hooks/useMe';
+import { useMutation } from 'react-apollo';
+import { DELETE_ACCOUNT } from '../graphql/mutation';
+import { useNavigate } from 'react-router-native';
 
 const Settings = () => {
-    const { me, updateSettings } = useMe();
+    const { me, updateSettings, logout } = useMe();
+    const navi = useNavigate();
+    const [deleteAccountMutation] = useMutation(DELETE_ACCOUNT);
     const handleBlockFriendsChange = () => {
         updateSettings({ blockFriendRequests: !me?.blockFriendRequests });
     };
-
-    const handleDelete = () => {
+    const handleDeleteAccount = async () => {
+        // Poistetaan tunnukset
+        const res = await deleteAccountMutation();
+        if (res.data.deleteAccount) {
+            // Kirjaudutaan ulos
+            logout();
+            navi('/');
+        }
+    };
+    const confirmDelete = () => {
         Alert.alert(
             'Delete account?',
             'Deleted account cannot be restored!',
@@ -22,7 +35,7 @@ const Settings = () => {
                 },
                 {
                     text: 'Delete',
-                    onPress: () => Alert.alert('Not yet implemented')
+                    onPress: handleDeleteAccount
                 }
             ]
         );
@@ -52,7 +65,7 @@ const Settings = () => {
             <Paragraph>
                 To delete your account, hold down the &apos;delete&apos; button for five seconds.
             </Paragraph>
-            <TouchableRipple onPress={() => null} delayLongPress={4000} onLongPress={handleDelete} style={tyyli.deleteContainer} >
+            <TouchableRipple onPress={() => null} delayLongPress={4000} onLongPress={confirmDelete} style={tyyli.deleteContainer} >
                 <Text style={tyyli.delete}>Delete</Text>
             </TouchableRipple>
         </Container>

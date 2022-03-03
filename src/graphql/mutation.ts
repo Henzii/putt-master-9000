@@ -36,6 +36,11 @@ export const ADD_FRIEND = gql`
         addFriend(friendName: $friendName)
     }
 `;
+export const REMOVE_FRIEND = gql`
+    mutation($friendId: ID!) {
+        removeFriend(friendId: $friendId)
+    }
+`;
 export const CREATE_GAME = gql`
     mutation ($courseId: ID!, $layoutId: ID!) {
         createGame(courseId: $courseId, layoutId: $layoutId)
@@ -81,5 +86,15 @@ export const UPDATE_MY_SETTINGS = gql`
         changeSettings(blockFriendRequests: $blockFriendRequests) {
             blockFriendRequests
         }
+    }
+`;
+export const DELETE_ACCOUNT = gql`
+    mutation {
+        deleteAccount
+    }
+`;
+export const ABANDON_GAME = gql`
+    mutation abandonGame($gameId: ID!) {
+        abandonGame(gameId: $gameId)
     }
 `;

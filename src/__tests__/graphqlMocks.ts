@@ -1,7 +1,8 @@
 import { GET_COURSES, GET_GAME, GET_ME_WITH_FRIENDS } from "../graphql/queries";
 import { Game } from "../hooks/useGame";
 import { User } from "../hooks/useMe";
-export const testiRadat = [
+import { Course, RawCourseData } from "../hooks/useCourses";
+export const testiRadat: Course[] = [
     {
         name: 'Testirata1',
         id: 'id1',
@@ -64,6 +65,7 @@ export const testiPeli: Game = {
     isOpen: true,
     myScorecard: {
         scores: [ 2,3,2,3,2,3,2,3,2],
+        hc: 0,
         beers: 0,
         user: {
             id: 'u1',
@@ -74,6 +76,7 @@ export const testiPeli: Game = {
     scorecards: [
         {
             scores: [ 2,3,2,3,2,3,2,3,2],
+            hc: 0,
             beers: 0,
             total: 12,
             plusminus: 30,
@@ -85,6 +88,7 @@ export const testiPeli: Game = {
         },
         {
             scores: [ 3,2,3,2,3,2,3,2,3],
+            hc: 0,
             beers: 0,
             total: 11,
             plusminus: -20,
@@ -126,6 +130,7 @@ export const getCoursesMocks = [
             variables: {
                 limit: 9,
                 offset: 0,
+                search: '',
             },
         },
         result: {

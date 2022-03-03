@@ -1,20 +1,32 @@
+import { useMutation } from 'react-apollo';
 import React, { useState } from 'react';
 import { Alert, FlatList, Pressable, StyleSheet, View } from "react-native";
 import { Button, Headline, Modal, Portal, Subheading } from 'react-native-paper';
+import { REMOVE_FRIEND } from '../graphql/mutation';
 import useMe, { User } from '../hooks/useMe';
 import AddFriend from './AddFriend';
+import ErrorScreen from './ErrorScreen';
+import Loading from './Loading';
 import Container from './ThemedComponents/Container';
+import { GET_ME_WITH_FRIENDS } from '../graphql/queries';
 
 type FriendListProps = {
     onClick?: (id: number | string, name?: string) => void,
 }
 
 const FriendsList = (props: FriendListProps) => {
-    const { me } = useMe(true);
+    const { me, loading, error } = useMe(true);
     const [addFriendModal, setAddFriendModal] = useState(false);
-    const handleKillFriend = () => {
-        Alert.alert('Not yet implemented');
+    const [removeFriend] = useMutation(REMOVE_FRIEND, { refetchQueries: [{ query: GET_ME_WITH_FRIENDS }] });
+    const handleKillFriend = (friendId: string | number) => {
+        removeFriend({ variables: { friendId }});
     };
+    if (loading) {
+        return <Loading />;
+    }
+    if (error) {
+        return <ErrorScreen errorMessage={error.message} />;
+    }
     return (
         <Container noPadding>
             <Portal>
@@ -28,14 +40,13 @@ const FriendsList = (props: FriendListProps) => {
             </Portal>
             <View style={tyyli.buttons}>
                 <Button onPress={() => setAddFriendModal(true)}>Add friend</Button>
-                <Button onPress={handleKillFriend}>Kill friend</Button>
             </View>
             <Headline style={tyyli.otsikko}>My friends &lt;3</Headline>
             <FlatList
                 style={tyyli.lista}
                 data={me?.friends}
                 renderItem={({ item }) => (
-                    <SingleFriend onClick={props.onClick} friend={item} />
+                    <SingleFriend onClick={props.onClick} onDelete={handleKillFriend} friend={item} />
                 )}
                 ItemSeparatorComponent={Separaattori}
             />
@@ -43,14 +54,18 @@ const FriendsList = (props: FriendListProps) => {
     );
 };
 
-const SingleFriend = ({ friend, onClick }: { friend: User, onClick?: (id: number | string, name?: string) => void }) => {
+const SingleFriend = ({ friend, onClick, onDelete }: { friend: User, onClick?: (id: number | string, name?: string) => void, onDelete?: (id: string) => void }) => {
     const handleFriendClick = () => {
         if (onClick) onClick(friend.id, friend.name);
+    };
+    const handleDelete = () => {
+        if (onDelete) onDelete(friend.id as string);
     };
     return (
         <Pressable onPress={handleFriendClick}>
             <View style={tyyli.singleFriend}>
                 <Subheading>{friend.name}</Subheading>
+                <Button onPress={handleDelete}>del</Button>
             </View>
         </Pressable>
     );
@@ -62,6 +77,9 @@ const tyyli = StyleSheet.create({
         width: '100%',
     },
     singleFriend: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
         padding: 22,
     },
     buttons: {

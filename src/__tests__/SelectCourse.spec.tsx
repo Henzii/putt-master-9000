@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { render, waitFor, fireEvent } from '@testing-library/react-native';
 import SelectCourses from '../components/SelectCourse';
 import { MockedProvider } from '@apollo/react-testing';
@@ -23,7 +22,7 @@ describe('<SelectCourse /> testit', () => {
             // Molemmat testiradat renderöityy
             expect(getByText('Testirata1')).toBeDefined();
             expect(getByText('Testirata2')).toBeDefined();
-        });
+        }, { timeout: 3000 });
 
         // Klikataan ensimmäistä rataa
         fireEvent.press( getAllByTestId('SingleCourse')[0] );

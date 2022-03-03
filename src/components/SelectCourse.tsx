@@ -4,6 +4,7 @@ import { Button, Modal, Searchbar, Portal, List } from "react-native-paper";
 import useCourses, { Course, Layout, NewLayout } from "../hooks/useCourses";
 import useTextInput from "../hooks/useTextInput";
 import AddCourse from "./AddCourse";
+import ErrorScreen from "./ErrorScreen";
 import Loading from "./Loading";
 import SelectLayout from "./SelectLayout";
 import Container from "./ThemedComponents/Container";
@@ -19,7 +20,7 @@ type SelectCoursesProps = {
 const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
-    const { courses, loading, addLayout, addCourse, fetchMore, ...restOfUseCourses } = useCourses();
+    const { courses, loading, addLayout, addCourse, fetchMore, error, ...restOfUseCourses } = useCourses();
 
     const [searchInput] = useTextInput({ defaultValue: '', callBackDelay: 500, callBack: restOfUseCourses.setSearchString });
 
@@ -35,6 +36,9 @@ const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
     };
     if (!courses) return (
         <Loading />
+    );
+    if (error) return (
+        <ErrorScreen errorMessage="Error" />
     );
 
     return (

@@ -39,6 +39,6 @@ module.exports = {
       "lcov"
     ],
     setupFiles: [
-      './src/__tests__/asyncStorageMock.js'
+      './src/__tests__/mocks/asyncStorageMock.js'
     ]
   };

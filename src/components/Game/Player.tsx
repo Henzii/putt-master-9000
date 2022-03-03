@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 import { Card } from 'react-native-paper';
 import { Scorecard } from '../../hooks/useGame';
@@ -8,12 +8,32 @@ type PlayerArgs = {
     selectedRound: number,
     setScore: (playerId: string, selectedRound: number, value: number) => void,
 }
+/**
+ *  ### Pejaala
+ *  Renderöi yhden pelaajan + tulosnapit
+ *
+ *  @param player Pelaajan Scorecard
+ *  @param selectedRound Valittu kierros
+ *  @param setScore callback tuloksen asettamiselle. Saa parateriksi tuloksen
+ */
+export default function Player({ player, selectedRound, setScore }: PlayerArgs): JSX.Element {
+    const [pendingButton, setPendingButton] = useState<number | undefined>();
+    const listRef = useRef<FlatList>(null);
+    const napitData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-export default function Player({ player, selectedRound, setScore }: PlayerArgs) {
+    // Tulosten päivittyessä poistetaan pelaajalta pending
+    useEffect(() => {
+        if (pendingButton) setPendingButton(undefined);
+    }, [player]);
+    // Valittu rata vaihtuu, scrollataan alkuun
+    useEffect(() => {
+        listRef.current?.scrollToIndex({ index: 0 });
+    }, [selectedRound]);
+
     const handleButtonClick = (score: number) => {
         setScore(player.user.id as string, selectedRound, score);
+        setPendingButton(score);
     };
-    const napitData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     return (
         <Card style={tyyli.main}>
             <Card.Title
@@ -22,12 +42,14 @@ export default function Player({ player, selectedRound, setScore }: PlayerArgs) 
             <Card.Content style={tyyli.content}>
                 <View style={tyyli.contentLeft}>
                     <FlatList
+                        ref={listRef}
                         data={napitData}
                         renderItem={({ item, index }) => {
                             return <ScoreButton
                                 number={item}
                                 onClick={handleButtonClick}
                                 selected={(player.scores[selectedRound] - 1 === index)}
+                                pending={(pendingButton === item)}
                             />;
                         }}
                         horizontal
@@ -35,7 +57,7 @@ export default function Player({ player, selectedRound, setScore }: PlayerArgs) 
                             if (napitData.length < 50) napitData.push(napitData.length + 1);
                         }}
                         onEndReachedThreshold={0.1}
-                        keyExtractor={item => 'avain'+player.user.id+item}
+                        keyExtractor={item => 'avain' + player.user.id + item}
                         initialScrollIndex={0}
                     />
                 </View>
@@ -51,15 +73,7 @@ export default function Player({ player, selectedRound, setScore }: PlayerArgs) 
     );
 
 }
-const ScoreButton = ({ onClick, number, selected }: { onClick?: (score: number) => void, number: number, selected: boolean }) => {
-    const [pending, setPending] = useState(false);
-    useEffect(() => {
-        if (selected && pending) setPending(false);
-    }, [selected]);
-    const handleButtonClick = () => {
-        setPending(true);
-        if (onClick) onClick(number);
-    };
+const ScoreButton = ({ onClick, number, selected, pending }: { onClick?: (score: number) => void, number: number, selected: boolean, pending: boolean }) => {
     const bgStyles = [
         tyyli.scoreButton,
         pending && tyyli.scoreButtonPending,
@@ -68,7 +82,7 @@ const ScoreButton = ({ onClick, number, selected }: { onClick?: (score: number) 
     return (
         <Pressable
             style={bgStyles}
-            onPress={handleButtonClick}
+            onPress={onClick?.bind(this, number)}
         >
             <Text>{number}</Text>
         </Pressable>

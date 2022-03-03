@@ -27,7 +27,6 @@ const useMe = (getFriends = false) => {
             });
         }
     });
-
     const [loggedIn, setLoggedIn] = useState(false);
     useEffect( () => {
         if (data?.getMe && !loggedIn) {
