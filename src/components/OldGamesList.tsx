@@ -12,7 +12,7 @@ import Container from './ThemedComponents/Container';
 import { format } from 'date-fns';
 
 const OldGamesList = () => {
-    const { data, loading } = useQuery<{ getGames: Game[] }>(GET_OLD_GAMES);
+    const { data, loading } = useQuery<{ getGames: Game[] }>(GET_OLD_GAMES, { fetchPolicy: 'cache-and-network' });
     const dispatch = useDispatch();
     const navi = useNavigate();
     const handleGameActivation = (gameId: string) => {
@@ -56,7 +56,7 @@ const SingleGame = ({ game, onClick }: { game: Game, onClick?: (id: string) => v
                 </View>
                 <View style={tyyli.split}>
                     <View>
-                    <Subheading>{game.layout}</Subheading>
+                        <Subheading>{game.layout}</Subheading>
                     </View>
                     <View>
                         {game.isOpen
