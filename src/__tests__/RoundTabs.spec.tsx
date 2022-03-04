@@ -2,7 +2,7 @@ import React from 'react';
 
 import { render, fireEvent } from '@testing-library/react-native';
 //import { Provider } from 'react-native-paper';
-import RoundTabs from '../components/Game/RoundTabs';
+import RoundTabs from '../screens/Game/RoundTabs';
 
 const testGame = {
     holes: 9,

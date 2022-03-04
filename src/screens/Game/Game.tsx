@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import Player from './Player';
 import RoundTabs from './RoundTabs';
 import useGame from '../../hooks/useGame';
-import Container from '../ThemedComponents/Container';
+import Container from '../../components/ThemedComponents/Container';
 import { Button, Paragraph, Title } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { unloadGame } from '../../reducers/gameDataReducer';
-import Loading from '../Loading';
+import Loading from '../../components/Loading';
 
 export default function Game({ gameId }: { gameId: string }) {
     const [selectedRound, setSelectedRound] = useState(0);

@@ -18,8 +18,19 @@ const FriendsList = (props: FriendListProps) => {
     const { me, loading, error } = useMe(true);
     const [addFriendModal, setAddFriendModal] = useState(false);
     const [removeFriend] = useMutation(REMOVE_FRIEND, { refetchQueries: [{ query: GET_ME_WITH_FRIENDS }] });
-    const handleKillFriend = (friendId: string | number) => {
-        removeFriend({ variables: { friendId }});
+    const handleKillFriend = (friendId: string | number, friendName?: string) => {
+        Alert.alert(
+            'Byebye friend',
+            `I hate ${friendName}. I want him gone!`,
+            [
+                { text: 'Cancel' },
+                {
+                    text: 'Do it',
+                    onPress: () => removeFriend({ variables: { friendId }})
+                }
+            ]
+        );
+        //removeFriend({ variables: { friendId }});
     };
     if (loading) {
         return <Loading />;
@@ -54,18 +65,18 @@ const FriendsList = (props: FriendListProps) => {
     );
 };
 
-const SingleFriend = ({ friend, onClick, onDelete }: { friend: User, onClick?: (id: number | string, name?: string) => void, onDelete?: (id: string) => void }) => {
+const SingleFriend = ({ friend, onClick, onDelete }: { friend: User, onClick?: (id: number | string, name?: string) => void, onDelete?: (id: string, name?: string) => void }) => {
     const handleFriendClick = () => {
         if (onClick) onClick(friend.id, friend.name);
     };
     const handleDelete = () => {
-        if (onDelete) onDelete(friend.id as string);
+        if (onDelete) onDelete(friend.id as string, friend.name);
     };
     return (
         <Pressable onPress={handleFriendClick}>
             <View style={tyyli.singleFriend}>
                 <Subheading>{friend.name}</Subheading>
-                <Button onPress={handleDelete}>del</Button>
+                <Button onPress={handleDelete}>Kill</Button>
             </View>
         </Pressable>
     );

@@ -4,12 +4,12 @@ import { Button, Divider, Paragraph, TextInput, Title } from 'react-native-paper
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../utils/store';
 import { gameData, unloadGame } from '../../reducers/gameDataReducer';
-import Container from '../ThemedComponents/Container';
+import Container from '../../components/ThemedComponents/Container';
 import useGame from '../../hooks/useGame';
 import { addNotification } from '../../reducers/notificationReducer';
 import useTextInput from '../../hooks/useTextInput';
 import { useNavigate } from 'react-router-native';
-import Loading from '../Loading';
+import Loading from '../../components/Loading';
 
 const Setup = ({ onAbandonGame }: { onAbandonGame: () => void}) => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;

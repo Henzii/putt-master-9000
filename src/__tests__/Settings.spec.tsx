@@ -2,7 +2,7 @@ import React from 'react';
 
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import { MockedProvider } from '@apollo/react-testing';
-import Settings from '../components/Settings';
+import Settings from '../screens/Settings';
 import { getMeMock, updateMySettingsMock } from './mocks/getMeMock';
 import { Provider } from 'react-native-paper';
 

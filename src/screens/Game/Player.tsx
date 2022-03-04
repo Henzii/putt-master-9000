@@ -20,7 +20,6 @@ export default function Player({ player, selectedRound, setScore }: PlayerArgs):
     const [pendingButton, setPendingButton] = useState<number | undefined>();
     const listRef = useRef<FlatList>(null);
     const napitData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
     // Tulosten päivittyessä poistetaan pelaajalta pending
     useEffect(() => {
         if (pendingButton) setPendingButton(undefined);
@@ -66,6 +65,12 @@ export default function Player({ player, selectedRound, setScore }: PlayerArgs):
                         {((player.plusminus || 0) > 0 ? '+' : '')}
                         {player.plusminus}
                     </Text>
+                    {(player.scores[selectedRound] > 5) ?
+                        <Text>&nbsp;
+                            ({player.scores[selectedRound]})
+                        </Text>
+                        : null
+                    }
                 </View>
             </Card.Content>
         </Card>
@@ -118,8 +123,9 @@ const tyyli = StyleSheet.create({
     contentRight: {
         flex: 1,
         display: 'flex',
-        alignItems: 'flex-end',
+        flexDirection: 'row',
         justifyContent: 'center',
+        alignItems: 'center',
     },
     crText: {
         fontSize: 23,

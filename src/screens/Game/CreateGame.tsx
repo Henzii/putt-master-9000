@@ -3,9 +3,9 @@ import { StyleSheet, View, Text } from "react-native";
 import { Button, Subheading, Title, useTheme } from 'react-native-paper';
 import { Course, Layout } from '../../hooks/useCourses';
 import useMe, { User } from '../../hooks/useMe';
-import FriendsList from '../FriendsList';
-import SelectCourses from '../SelectCourse';
-import Container from '../ThemedComponents/Container';
+import FriendsList from '../../components/FriendsList';
+import SelectCourses from '../../components/SelectCourse';
+import Container from '../../components/ThemedComponents/Container';
 
 export type NewGameData = {
     course: Course | null,

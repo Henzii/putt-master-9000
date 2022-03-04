@@ -1,17 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, Image, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 import { Button, useTheme } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-native';
-import useMe from '../hooks/useMe';
-import { RootState } from '../utils/store';
-import Loading from './Loading';
-import Login from './Login';
-import Container from './ThemedComponents/Container';
-import ErrorScreen from './ErrorScreen';
+import useMe from '../../hooks/useMe';
+import { RootState } from '../../utils/store';
+import Loading from '../../components/Loading';
+import Login from '../../components/Login';
+import Container from '../../components/ThemedComponents/Container';
+import ErrorScreen from '../../components/ErrorScreen';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const master = require('../../assets/master2.png');
+const master = require('../../../assets/master2.png');
 
 const Frontpage = () => {
     const { me, logged, logout, login, loading, error } = useMe();

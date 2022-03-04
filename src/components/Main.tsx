@@ -4,14 +4,14 @@ import ToolBar from './ToolBar';
 
 import { Routes, Route, useNavigate } from 'react-router-native';
 
-import Game from './Game';
-import Frontpage from './Frontpage';
+import Game from '../screens/Game';
+import Frontpage from '../screens/Frontpage';
 import SelectCourses from './SelectCourse';
 import FriendsList from './FriendsList';
 import Notifications from './Notifications';
 import OldGamesList from './OldGamesList';
 import SignUp from './SignUp';
-import Settings from './Settings';
+import Settings from '../screens/Settings';
 import Stats from '../screens/Stats';
 
 export default function App() {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { render, waitFor } from '@testing-library/react-native';
-import Game from '../components/Game/Game';
+import Game from '../screens/Game/Game';
 import { MockedProvider } from '@apollo/react-testing';
 //import { Provider } from 'react-native-paper';
 import { getCoursesMocks, testiPeli } from './graphqlMocks';

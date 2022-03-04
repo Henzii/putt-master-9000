@@ -1,12 +1,12 @@
 import React from 'react';
 import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Paragraph, Switch, Title, TouchableRipple } from 'react-native-paper';
-import Container from './ThemedComponents/Container';
-import Divider from './ThemedComponents/Divider';
-import appInfo from '../../app.json';
-import useMe from '../hooks/useMe';
+import Container from '../../components/ThemedComponents/Container';
+import Divider from '../../components/ThemedComponents/Divider';
+import appInfo from '../../../app.json';
+import useMe from '../../hooks/useMe';
 import { useMutation } from 'react-apollo';
-import { DELETE_ACCOUNT } from '../graphql/mutation';
+import { DELETE_ACCOUNT } from '../../graphql/mutation';
 import { useNavigate } from 'react-router-native';
 
 const Settings = () => {

@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import useGame from '../../hooks/useGame';
 import { gameData } from '../../reducers/gameDataReducer';
 import { RootState } from '../../utils/store';
-import Container from '../ThemedComponents/Container';
+import Container from '../../components/ThemedComponents/Container';
 import { Table, Rows, Row } from 'react-native-table-component';
-import Loading from '../Loading';
+import Loading from '../../components/Loading';
 
 const Summary = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
