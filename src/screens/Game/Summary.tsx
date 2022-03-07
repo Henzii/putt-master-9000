@@ -7,7 +7,6 @@ import { RootState } from '../../utils/store';
 import Container from '../../components/ThemedComponents/Container';
 import { Table, Row, Cell, Cols, TableWrapper } from 'react-native-table-component';
 import Loading from '../../components/Loading';
-import { Header } from 'react-native/Libraries/NewAppScreen';
 
 const Summary = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
@@ -36,10 +35,9 @@ const Summary = () => {
             <ScrollView horizontal>
                 <Table>
                     <Row data={tableHeaders} style={tyylit.header} textStyle={tyylit.headerText} widthArr={leveydet} />
-                    {sortedScorecards.map((sc, i) => (
+                    {sortedScorecards.map((sc) => (
                         <SinglePlayerDataRow
                             key={sc.user.id + 'scData'}
-                            position={i + 1}
                             pars={data.pars}
                             scorecard={sc} />)
                     )}
@@ -48,7 +46,7 @@ const Summary = () => {
         </Container>
     );
 };
-const SinglePlayerDataRow = ({ scorecard, position, pars }: { scorecard: Scorecard, position: number, pars: number[] }) => {
+const SinglePlayerDataRow = ({ scorecard, pars }: { scorecard: Scorecard, pars: number[] }) => {
     const pickColor = (par: number, score: number) => {
         switch (par - score) {
             case 0:
