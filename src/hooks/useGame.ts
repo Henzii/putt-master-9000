@@ -48,6 +48,7 @@ const useGame = (gameId: string) => {
         data: data?.getGame ?? null,
         ready: (!loading && !error),
         error,
+        loading,
         setScore,
         closeGame,
         setBeers,
