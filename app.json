@@ -3,7 +3,6 @@
     "name": "FuDisc",
     "slug": "putt-master-9000",
     "version": "0.6.2",
-    "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
