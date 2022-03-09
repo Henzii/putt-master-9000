@@ -1,0 +1,16 @@
+{
+    "poems": [
+        {
+            "author": "From The Old Stone Cross, by William Butler Yeats (1865 – 1939)",
+            "text": "A statesman is an easy man, he tells his lies by rote.\nA journalist invents his lies, and rams them down your throat.\nSo stay at home and drink your beer and let the neighbors vote."
+        },
+        {
+            "author": "Old Somersetshire English song",
+            "text": "Why, we’ll smoke and drink our beer.\nFor I like a drop of good beer, I does.\nI’ze fond of good beer, I is.\nLet gentlemen fine sit down to their wine.\nBut we’ll all of us here stick to our beer."
+        },
+        {
+            "author": "Antti",
+            "text": "Kun juon olutta, pitävät akat turpansa kiinnni."
+        }
+    ]
+}

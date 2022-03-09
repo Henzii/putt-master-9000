@@ -1,13 +1,12 @@
 import React from 'react';
 import { Alert, StyleSheet } from "react-native";
-import { Button, Divider, Paragraph, TextInput, Title } from 'react-native-paper';
+import { Button, Divider, Paragraph } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../utils/store';
 import { gameData, unloadGame } from '../../reducers/gameDataReducer';
 import Container from '../../components/ThemedComponents/Container';
 import useGame from '../../hooks/useGame';
 import { addNotification } from '../../reducers/notificationReducer';
-import useTextInput from '../../hooks/useTextInput';
 import { useNavigate } from 'react-router-native';
 import Loading from '../../components/Loading';
 
@@ -16,17 +15,6 @@ const Setup = ({ onAbandonGame }: { onAbandonGame: () => void}) => {
     const dispatch = useDispatch();
     const navi = useNavigate();
     const gameHook = useGame(gameData.gameId);
-    const [beerInput] = useTextInput({
-        numeric: true,
-        callBack: async (value) => {
-            const beers = Number.parseInt(value) || 0;
-            if (isNaN(beers) || !await gameHook.setBeers(beers)) {
-                dispatch(addNotification('Beers not drank for some reason!', 'alert'));
-            }
-        },
-        callBackDelay: 1000,
-        defaultValue: gameHook.data?.myScorecard.beers.toString() || '',
-    });
     const game = gameHook.data;
     const handleGameEnd = async () => {
         Alert.alert(
@@ -75,18 +63,6 @@ const Setup = ({ onAbandonGame }: { onAbandonGame: () => void}) => {
     }
     return (
         <Container>
-            <Title>Beers</Title>
-            <Paragraph>
-                Number of beers drunk
-            </Paragraph>
-            <TextInput
-                autoComplete={false}
-                style={tyyli.numberInput}
-                label='# beers'
-                disabled={!gameHook.data?.isOpen}
-                {...beerInput}
-            />
-            <Divider style={tyyli.divider} />
             <Paragraph>
                 Stop drinking and end the game.
             </Paragraph>

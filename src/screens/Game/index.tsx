@@ -28,7 +28,7 @@ export default function GameContainer() {
     const dispatch = useDispatch();
     const navi = useNavigate();
 
-    const { data, error, loading } = useGame(gameData.gameId);
+    const { data, error, loading, setBeers } = useGame(gameData.gameId);
 
     const [navIndex, setNavIndex] = useState(0);
     const [navRoutes] = useState([
@@ -71,7 +71,7 @@ export default function GameContainer() {
     const naviScenes = BottomNavigation.SceneMap({
         gameRoute: () => <Game gameId={gameData.gameId} />,
         setupRoute: () => <Setup onAbandonGame={handleAbandonGame} />,
-        beerRoute: () => <Beers data={data} />,
+        beerRoute: () => <Beers data={data} setBeers={setBeers} />,
         summaryRoute: Summary,
     });
     const handleAbandonGame = async () => {

@@ -15,15 +15,15 @@ const useGame = (gameId: string) => {
             pollInterval: (2000*60),      // Pollataan kahden minuutin välein kunnes subscriptionit
         });
     const [closeGameMutation] = useMutation(CLOSE_GAME, { refetchQueries: [{ query: GET_GAME, variables: { gameId } }] });
-    const [setBeersMutation] = useMutation(SET_BEERS);
+    const [setBeersMutation] = useMutation(SET_BEERS, {});
     const [setScoreMutation] = useMutation(SET_SCORE, {
         refetchQueries: [
             { query: GET_GAME, variables: { gameId } }
         ]
     });
-    const setBeers = async (beers: number) => {
+    const setBeers = async (playerId: string | number, beers: number) => {
         try {
-            await setBeersMutation({ variables: { gameId, beers }});
+            await setBeersMutation({ variables: { gameId, playerId, beers }});
             return true;
         } catch (e) {
             return false;
