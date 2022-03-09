@@ -35,7 +35,7 @@ const Beers = () => {
         <Container withScrollView>
             <Title>Beers</Title>
             <View style={tyylit.inputContainer}>
-                {data.scorecards.map(sc => <SingleJuoppo sc={sc} key={sc.user.id} onChange={handleBeersChange} />)}
+                {data.scorecards.map(sc => <SingleJuoppo disabled={!data.isOpen} sc={sc} key={sc.user.id} onChange={handleBeersChange} />)}
             </View>
             <Paragraph style={{ fontStyle: 'italic' }}>
                 {poem}
@@ -48,7 +48,7 @@ const Beers = () => {
     );
 };
 const Beer = () => <Ionicons name="beer-outline" size={24} color="black" style={{ paddingBottom: 5 }} />;
-const SingleJuoppo = ({ sc, onChange }: { sc: Scorecard, onChange: (playerId: string, beers: string) => void }) => {
+const SingleJuoppo = ({ sc, onChange, disabled }: { sc: Scorecard, onChange: (playerId: string, beers: string) => void, disabled: boolean }) => {
     const beerInput = useTextInput({
         numeric: true,
         defaultValue: sc.beers.toString() || '',
@@ -66,6 +66,7 @@ const SingleJuoppo = ({ sc, onChange }: { sc: Scorecard, onChange: (playerId: st
                 autoComplete={false}
                 mode='outlined'
                 dense
+                disabled={disabled}
                 style={tyylit.input}
             />
             {beerIcons}

@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { useMutation } from 'react-apollo';
+import React, { useEffect, useState } from 'react';
+import { useMutation, useApolloClient } from 'react-apollo';
 import { BottomNavigation } from 'react-native-paper';
+import { AppState } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-native';
-import { ABANDON_GAME, ADD_PLAYERS_TO_GAME, CREATE_GAME } from '../../graphql/mutation';
+import { ADD_PLAYERS_TO_GAME, CREATE_GAME } from '../../graphql/mutation';
 import { GET_OLD_GAMES } from '../../graphql/queries';
-import { gameData, newGame, unloadGame } from '../../reducers/gameDataReducer';
+import { gameData, newGame } from '../../reducers/gameDataReducer';
 import { addNotification } from '../../reducers/notificationReducer';
 import { RootState } from '../../utils/store';
 import Beers from './Beers';
@@ -20,10 +21,10 @@ export default function GameContainer() {
     */
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const [createGameMutation] = useMutation(CREATE_GAME, { refetchQueries: [{ query: GET_OLD_GAMES }] });
-    const [abandonGameMutation] = useMutation(ABANDON_GAME, { refetchQueries: [{ query: GET_OLD_GAMES }] });
     const [addPlayersMutation] = useMutation(ADD_PLAYERS_TO_GAME);
     const dispatch = useDispatch();
     const navi = useNavigate();
+    const client = useApolloClient();
 
     const [navIndex, setNavIndex] = useState(0);
     const [navRoutes] = useState([
@@ -32,10 +33,21 @@ export default function GameContainer() {
         { key: 'beerRoute', title: 'Beers', icon: 'beer-outline' },
         { key: 'setupRoute', title: 'Setup', icon: 'cog-outline' },
     ]);
+    useEffect(() => {
+        // Listeneri joka kuuntelee sovelluksen tilaa
+        AppState.addEventListener('change', _handleAppStateChange);
+        return () => AppState.removeEventListener('change', _handleAppStateChange);
+    }, []);
     /*
         ******************
     */
 
+    // Kun sovellus palaa taustatilasta, päivitetään data palvelimelta
+    const _handleAppStateChange = (nextAppState: string) => {
+        if (nextAppState === 'active') {
+            client.reFetchObservableQueries(true);
+        }
+    };
     const handleCreateGame = async (data: NewGameData) => {
         if (!data.layout || !data.course) return;
         const res = await createGameMutation({
@@ -59,19 +71,10 @@ export default function GameContainer() {
     // Alanaville:
     const naviScenes = BottomNavigation.SceneMap({
         gameRoute: Game,
-        setupRoute: () => <Setup onAbandonGame={handleAbandonGame} />,
+        setupRoute: Setup,
         beerRoute: Beers,
         summaryRoute: Summary,
     });
-    const handleAbandonGame = async () => {
-        const res = await abandonGameMutation({ variables: { gameId: gameData.gameId } });
-        if (res.data.abandonGame) {
-            dispatch(unloadGame());
-            dispatch(addNotification('Game abandoned', 'success'));
-        } else {
-            dispatch(addNotification('Something went wrong!', 'alert'));
-        }
-    };
     return (
         <BottomNavigation
             shifting={false}

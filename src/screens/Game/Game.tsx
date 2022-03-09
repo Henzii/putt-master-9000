@@ -9,12 +9,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { gameData, unloadGame } from '../../reducers/gameDataReducer';
 import Loading from '../../components/Loading';
 import { RootState } from '../../utils/store';
+import ErrorScreen from '../../components/ErrorScreen';
 
 export default function Game() {
     const [selectedRound, setSelectedRound] = useState(0);
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const gameId = gameData.gameId;
-    const { data, ready, error, setScore } = useGame(gameId);
+    const { data, loading, error, setScore } = useGame(gameId);
 
     const handleScoreChange = (playerId: string, selectedRound: number, value: number) => {
         setScore({
@@ -24,24 +25,14 @@ export default function Game() {
             value,
         });
     };
-    if (error?.message) {
-        return (
-            <Container>
-                <Title>Error!</Title>
-                <Paragraph>
-                    {error.message}
-                </Paragraph>
-            </Container>
-        );
-    }
-    if (!data || !ready) {
-        return (
-            <Loading />
-        );
+    if (!data && loading) return <Loading />;
+    if (!data || error) {
+        return <ErrorScreen errorMessage='Error just happened!' />;
     }
     if (!data.isOpen) {
         return <ClosedGame />;
     }
+    console.log('Game screen!');
     return (
         <>
             <RoundTabs gameData={data} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
