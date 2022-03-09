@@ -9,13 +9,18 @@ import useGame from '../../hooks/useGame';
 import { addNotification } from '../../reducers/notificationReducer';
 import { useNavigate } from 'react-router-native';
 import Loading from '../../components/Loading';
+import { useMutation } from 'react-apollo';
+import { ABANDON_GAME } from '../../graphql/mutation';
+import { GET_OLD_GAMES } from '../../graphql/queries';
 
-const Setup = ({ onAbandonGame }: { onAbandonGame: () => void}) => {
+const Setup = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const dispatch = useDispatch();
     const navi = useNavigate();
     const gameHook = useGame(gameData.gameId);
+    const [abandonGameMutation] = useMutation(ABANDON_GAME, { refetchQueries: [{ query: GET_OLD_GAMES }] });
     const game = gameHook.data;
+
     const handleGameEnd = async () => {
         Alert.alert(
             'Are you sure?',
@@ -38,11 +43,21 @@ const Setup = ({ onAbandonGame }: { onAbandonGame: () => void}) => {
             ]
         );
     };
+    const handleAbandonGame = async () => {
+        const res = await abandonGameMutation({ variables: { gameId: gameData.gameId } });
+        if (res.data.abandonGame) {
+            dispatch(unloadGame());
+            dispatch(addNotification('Game abandoned', 'success'));
+        } else {
+            dispatch(addNotification('Something went wrong!', 'alert'));
+        }
+    };
+
     const handleQuitGame = () => {
         navi('/');
         dispatch(unloadGame());
     };
-    const handleAbandonGame = () => {
+    const verifyAbandonGame = () => {
         Alert.alert(
             'Are you sure',
             'Everything will be deleted',
@@ -53,7 +68,7 @@ const Setup = ({ onAbandonGame }: { onAbandonGame: () => void}) => {
                 },
                 {
                     text: 'Yes!',
-                    onPress: onAbandonGame
+                    onPress: handleAbandonGame
                 },
             ]
         );
@@ -89,7 +104,7 @@ const Setup = ({ onAbandonGame }: { onAbandonGame: () => void}) => {
             <Paragraph>
                 If the game is finished, only your scorecard will be burned in hell.
             </Paragraph>
-            <Button style={tyyli.nappi} mode='contained' color='red' onPress={handleAbandonGame}>Discard game</Button>
+            <Button style={tyyli.nappi} mode='contained' color='red' onPress={verifyAbandonGame}>Discard game</Button>
             <Divider style={tyyli.divider} />
             <Paragraph style={{ color: 'gray' }}>
                 Game ID: {gameData.gameId}
