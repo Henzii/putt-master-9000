@@ -1,17 +1,21 @@
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import React, { useState } from 'react';
 import Player from './Player';
-import RoundTabs from './RoundTabs';
+import RoundTabs from '../../components/RoundTabs';
 import useGame from '../../hooks/useGame';
 import Container from '../../components/ThemedComponents/Container';
 import { Button, Paragraph, Title } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
-import { unloadGame } from '../../reducers/gameDataReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { gameData, unloadGame } from '../../reducers/gameDataReducer';
 import Loading from '../../components/Loading';
+import { RootState } from '../../utils/store';
 
-export default function Game({ gameId }: { gameId: string }) {
+export default function Game() {
     const [selectedRound, setSelectedRound] = useState(0);
+    const gameData = useSelector((state: RootState) => state.gameData) as gameData;
+    const gameId = gameData.gameId;
     const { data, ready, error, setScore } = useGame(gameId);
+
     const handleScoreChange = (playerId: string, selectedRound: number, value: number) => {
         setScore({
             gameId,

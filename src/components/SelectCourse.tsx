@@ -22,7 +22,7 @@ const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
     const { courses, loading, addLayout, addCourse, fetchMore, error, ...restOfUseCourses } = useCourses();
 
-    const [searchInput] = useTextInput({ defaultValue: '', callBackDelay: 500, callBack: restOfUseCourses.setSearchString });
+    const searchInput = useTextInput({ defaultValue: '', callBackDelay: 500 }, restOfUseCourses.setSearchString );
 
     const handleAddLayout = (courseId: number | string, layout: NewLayout) => {
         addLayout(courseId, layout);

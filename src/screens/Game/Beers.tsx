@@ -2,16 +2,32 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Paragraph, TextInput, Title } from "react-native-paper";
 import Container from "../../components/ThemedComponents/Container";
-import { Game, Scorecard } from '../../hooks/useGame';
+import useGame, { Scorecard } from '../../hooks/useGame';
 import useTextInput from '../../hooks/useTextInput';
 import { Ionicons } from '@expo/vector-icons';
 import beerPoems from '../../utils/beerPoems.json';
-const Beers = ({ data, setBeers }: { data: Game, setBeers: (playerId: string, beers: number) => void }) => {
+import Loading from '../../components/Loading';
+import ErrorScreen from '../../components/ErrorScreen';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../utils/store';
+import { gameData } from '../../reducers/gameDataReducer';
+
+const Beers = () => {
+
+    const gameData = useSelector((state: RootState) => state.gameData) as gameData;
+
+    const gameId = gameData.gameId;
+    const { data, setBeers, loading, error } = useGame(gameId);
 
     const handleBeersChange = (playerId: string, beers: string) => {
         const beersInt = Number.parseInt(beers);
         setBeers(playerId, beersInt);
     };
+    if (!data && loading) {
+        return <Loading />;
+    } else if (!data || error) {
+        return <ErrorScreen errorMessage='Whaaaat?!' />;
+    }
     const randomi = Math.floor( Math.random() * beerPoems.poems.length);
     const poem = beerPoems.poems[randomi].text;
     const author = beerPoems.poems[randomi].author;
