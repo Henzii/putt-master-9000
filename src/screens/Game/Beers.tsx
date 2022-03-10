@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Caption, Headline, Paragraph, TextInput, Title } from "react-native-paper";
+import { Headline, Paragraph, TextInput } from "react-native-paper";
 import Container from "../../components/ThemedComponents/Container";
 import useGame, { Scorecard } from '../../hooks/useGame';
 import useTextInput from '../../hooks/useTextInput';

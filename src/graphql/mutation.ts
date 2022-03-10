@@ -1,5 +1,4 @@
 import gql from "graphql-tag";
-import { CORE_SCORECARD_INFO } from "./fragments";
 
 export const ADD_LAYOUT = gql`
     mutation ($courseId: ID!, $layout: NewLayout!) {

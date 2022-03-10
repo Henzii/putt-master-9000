@@ -5,7 +5,7 @@ import useGame, { Scorecard } from '../../hooks/useGame';
 import { gameData } from '../../reducers/gameDataReducer';
 import { RootState } from '../../utils/store';
 import Container from '../../components/ThemedComponents/Container';
-import { Table, Row, Cell, Cols, TableWrapper } from 'react-native-table-component';
+import { Table, Row, Cell, TableWrapper, Rows } from 'react-native-table-component';
 import Loading from '../../components/Loading';
 
 const Summary = () => {
@@ -19,17 +19,16 @@ const Summary = () => {
     const sortedScorecards = [...data.scorecards].sort((a, b) => (a.total || 0) - (b.total || 0));
     const tableHeaders = [...data.pars.map((p, i) => i + 1), 'Total', '+/-', 'Hc', 'bHc', 'hcTot', 'Hc+/-'];
     const leveydet = [...data.pars.map(() => 30), 50, 50, 50, 50, 50, 50];
-    const nimetJaSijoitukset = sortedScorecards.reduce((p: [string[], string[]], c, i) => {
-        p[0].push((i+1)+'');
-        p[1].push(c.user.name);
+    const nimetJaSijoitukset = sortedScorecards.reduce((p:Array<Array<string>>, c, i) => {
+        p.push([(i+1)+'.', c.user.name]);
         return p;
-    }, [[],[]]);
+    }, []);
     return (
         <Container noPadding style={{ flexDirection: 'row' }}>
             <View style={{ width: 110 }}>
                 <Table>
-                    <Row data={['#', 'Player']} widthArr={[30, 80]} style={tyylit.header} textStyle={tyylit.headerText} />
-                    <Cols data={nimetJaSijoitukset} widthArr={[30,80]} textStyle={[tyylit.text, tyylit.scoreCell]}  />
+                    <Row data={['#', 'Player']} widthArr={[30, 80]} style={[tyylit.header]} textStyle={tyylit.headerText} />
+                    <Rows data={nimetJaSijoitukset} widthArr={[30,80]} textStyle={[tyylit.text, tyylit.scoreCell]} style={tyylit.rivi}  />
                 </Table>
             </View>
             <ScrollView horizontal>
@@ -84,7 +83,8 @@ const SinglePlayerDataRow = ({ scorecard, pars }: { scorecard: Scorecard, pars: 
 const tyylit = StyleSheet.create({
     scoreCell: {
         borderRadius: 20,
-        marginTop: 3,
+        //marginTop: 2,
+        marginVertical: 4,
     },
     doubleBogie: {
         backgroundColor: '#fcbc9a',
@@ -103,6 +103,8 @@ const tyylit = StyleSheet.create({
     },
     rivi: {
         flexDirection: 'row',
+        borderColor: '#50857233',
+        borderBottomWidth: 1,
     },
     header: {
         backgroundColor: 'rgb(90,200,90)',
@@ -117,9 +119,5 @@ const tyylit = StyleSheet.create({
         textAlign: 'center',
         paddingVertical: 5,
     },
-    rivit: {
-        borderBottomWidth: 1,
-        borderColor: 'lightgray'
-    }
 });
 export default Summary;

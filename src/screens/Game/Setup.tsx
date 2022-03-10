@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, StyleSheet } from "react-native";
-import { Button, Divider, Headline, Paragraph, Title } from 'react-native-paper';
+import { Button, Divider, Headline, Paragraph } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../utils/store';
 import { gameData, unloadGame } from '../../reducers/gameDataReducer';
