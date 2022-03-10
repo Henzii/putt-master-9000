@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "react-apollo";
 import { LogBox } from "react-native";
 import { SET_SCORE, CLOSE_GAME, SET_BEERS } from "../graphql/mutation";
 import { GET_GAME } from "../graphql/queries";
+import { updateScorecard } from "../utils/gameCahcheUpdates";
 import { User } from "./useMe";
 
 LogBox.ignoreLogs(['Setting a timer']);  // Hmm...
@@ -15,7 +16,9 @@ const useGame = (gameId: string) => {
             pollInterval: (2000*60),      // Pollataan kahden minuutin välein kunnes subscriptionit
         });
     const [closeGameMutation] = useMutation(CLOSE_GAME, { refetchQueries: [{ query: GET_GAME, variables: { gameId } }] });
-    const [setBeersMutation] = useMutation(SET_BEERS, {});
+    const [setBeersMutation] = useMutation(SET_BEERS, {
+        update: (cache, result) => updateScorecard(cache, gameId, result.data.setBeersDrank)
+    });
     const [setScoreMutation] = useMutation(SET_SCORE, {
         refetchQueries: [
             { query: GET_GAME, variables: { gameId } }

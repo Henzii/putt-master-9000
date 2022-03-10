@@ -5,7 +5,7 @@ import { setContext } from 'apollo-link-context';
 
 const API_URL = (process.env.NODE_ENV !== 'development')
     ? 'https://puttmaster.herokuapp.com/graphql'
-    : 'http://192.168.1.5:8080/graphql';
+    : 'http://192.168.1.3:8080/graphql';
 
 
 const httpLink = new HttpLink({

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, StyleSheet } from "react-native";
-import { Button, Divider, Paragraph, Title } from 'react-native-paper';
+import { Button, Divider, Headline, Paragraph, Title } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../utils/store';
 import { gameData, unloadGame } from '../../reducers/gameDataReducer';
@@ -79,9 +79,9 @@ const Setup = () => {
 
     return (
         <Container>
-            <Title>Setup</Title>
+            <Headline>Setup</Headline>
             <Paragraph>
-                Stop drinking and end the game.
+                Stop drinking and close the game.
             </Paragraph>
             <Button
                 mode='contained'
@@ -92,7 +92,7 @@ const Setup = () => {
             </Button>
             <Divider style={tyyli.divider} />
             <Paragraph>
-               Quit game{(gameHook.data?.isOpen) ? ', leave the game open':''}. Praise the lord!
+               Return to main menu
             </Paragraph>
             <Button
                 onPress={handleQuitGame}

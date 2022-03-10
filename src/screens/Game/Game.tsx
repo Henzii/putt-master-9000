@@ -4,7 +4,7 @@ import Player from './Player';
 import RoundTabs from '../../components/RoundTabs';
 import useGame from '../../hooks/useGame';
 import Container from '../../components/ThemedComponents/Container';
-import { Button, Paragraph, Title } from 'react-native-paper';
+import { Button, Title } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { gameData, unloadGame } from '../../reducers/gameDataReducer';
 import Loading from '../../components/Loading';
@@ -32,7 +32,6 @@ export default function Game() {
     if (!data.isOpen) {
         return <ClosedGame />;
     }
-    console.log('Game screen!');
     return (
         <>
             <RoundTabs gameData={data} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />

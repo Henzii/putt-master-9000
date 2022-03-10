@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import { CORE_SCORECARD_INFO } from "./fragments";
 
 export const ADD_LAYOUT = gql`
     mutation ($courseId: ID!, $layout: NewLayout!) {
@@ -77,7 +78,10 @@ export const CLOSE_GAME = gql`
 export const SET_BEERS = gql`
     mutation($gameId: ID!, $playerId: ID!, $beers: Int!) {
         setBeersDrank(gameId: $gameId, playerId: $playerId, beers: $beers) {
-            id
+            user
+            scorecard {
+                beers
+            }
         }
     }
 `;

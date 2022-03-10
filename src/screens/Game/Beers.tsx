@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Paragraph, TextInput, Title } from "react-native-paper";
+import { Caption, Headline, Paragraph, TextInput, Title } from "react-native-paper";
 import Container from "../../components/ThemedComponents/Container";
 import useGame, { Scorecard } from '../../hooks/useGame';
 import useTextInput from '../../hooks/useTextInput';
@@ -18,6 +18,13 @@ const Beers = () => {
 
     const gameId = gameData.gameId;
     const { data, setBeers, loading, error } = useGame(gameId);
+    const [poem, setPoem] = useState({ poem: '', author: '' });
+    useEffect(() => {
+        const randomi = Math.floor(Math.random() * beerPoems.poems.length);
+        const poem = beerPoems.poems[randomi].text;
+        const author = beerPoems.poems[randomi].author;
+        setPoem({ poem, author });
+    }, []);
 
     const handleBeersChange = (playerId: string, beers: string) => {
         const beersInt = Number.parseInt(beers);
@@ -28,20 +35,17 @@ const Beers = () => {
     } else if (!data || error) {
         return <ErrorScreen errorMessage='Whaaaat?!' />;
     }
-    const randomi = Math.floor( Math.random() * beerPoems.poems.length);
-    const poem = beerPoems.poems[randomi].text;
-    const author = beerPoems.poems[randomi].author;
     return (
         <Container withScrollView>
-            <Title>Beers</Title>
+            <Headline>Beers</Headline>
             <View style={tyylit.inputContainer}>
                 {data.scorecards.map(sc => <SingleJuoppo disabled={!data.isOpen} sc={sc} key={sc.user.id} onChange={handleBeersChange} />)}
             </View>
             <Paragraph style={{ fontStyle: 'italic' }}>
-                {poem}
+                {poem.poem}
             </Paragraph>
             <Paragraph style={{ fontWeight: 'bold' }}>
-                {author}
+                {poem.author}
             </Paragraph>
 
         </Container>
@@ -55,8 +59,8 @@ const SingleJuoppo = ({ sc, onChange, disabled }: { sc: Scorecard, onChange: (pl
         callBackDelay: 1000,
     }, (value) => onChange(sc.user.id as string, value));
     const beerIcons = [];
-    for (let i=0;i<sc.beers;i++) {
-        beerIcons.push(<Beer key={sc.user.id+'beer'+i} />);
+    for (let i = 0; i < sc.beers; i++) {
+        beerIcons.push(<Beer key={sc.user.id + 'beer' + i} />);
     }
     return (
         <View style={tyylit.inputWithBeers}>
