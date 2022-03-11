@@ -27,8 +27,8 @@ export const ADD_COURSE = gql`
     }
 `;
 export const LOGIN = gql`
-    mutation($user: String!, $password: String!) {
-        login(user: $user, password: $password)
+    mutation($user: String!, $password: String!, $pushToken: String) {
+        login(user: $user, password: $password, pushToken: $pushToken)
     }
 `;
 export const ADD_FRIEND = gql`

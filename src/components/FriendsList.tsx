@@ -21,7 +21,7 @@ const FriendsList = (props: FriendListProps) => {
     const handleKillFriend = (friendId: string | number, friendName?: string) => {
         Alert.alert(
             'Byebye friend',
-            `I hate ${friendName}. I want him gone!`,
+            `Friends are replaceable but disc golf is for life!\n\nReally remove ${friendName}?`,
             [
                 { text: 'Cancel' },
                 {
@@ -49,10 +49,7 @@ const FriendsList = (props: FriendListProps) => {
                     <AddFriend onCancel={() => setAddFriendModal(false)} />
                 </Modal>
             </Portal>
-            <View style={tyyli.buttons}>
-                <Button onPress={() => setAddFriendModal(true)}>Add friend</Button>
-            </View>
-            <Headline style={tyyli.otsikko}>My friends &lt;3</Headline>
+            <Headline style={tyyli.otsikko}>Friends</Headline>
             <FlatList
                 style={tyyli.lista}
                 data={me?.friends}
@@ -61,6 +58,7 @@ const FriendsList = (props: FriendListProps) => {
                 )}
                 ItemSeparatorComponent={Separaattori}
             />
+            <Button onPress={() => setAddFriendModal(true)}>Add friend</Button>
         </Container>
     );
 };

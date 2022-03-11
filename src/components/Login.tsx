@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { StyleSheet } from "react-native";
 import { Button, Title, TextInput } from "react-native-paper";
+import { useDispatch } from 'react-redux';
+import { addNotification } from '../reducers/notificationReducer';
 import Container from './ThemedComponents/Container';
 
-const Login = ({ login }: {login: (s1: string, s2: string) => void }) => {
+const Login = ({ login }: {login: (s1: string, s2: string) => Promise<void> }) => {
     const [ username, setUsername] = useState('');
     const [ password, setPassword] = useState('');
+    const dispatch = useDispatch();
     const handleLogin = () => {
-        login(username, password);
-        setUsername('');
-        setPassword('');
+        login(username, password).catch(() => {
+            dispatch(addNotification('Wrong username or password', 'alert'));
+            setPassword('');
+        });
 
     };
     return (

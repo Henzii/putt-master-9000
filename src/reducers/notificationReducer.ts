@@ -22,7 +22,7 @@ export const removeNotification = ():RemoveFirstAction => {
         type: 'REMOVE_FIRST',
     };
 };
-type Notification = {
+export type Notification = {
     message: string,
     type?: 'info' | 'alert' | 'success' | 'warning'
 }
