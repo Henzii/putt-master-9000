@@ -11,6 +11,9 @@ npm-debug.*
 web-build/
 
 coverage
+./google-services.json
+google-services.json
+
 
 # macOS
 .DS_Store

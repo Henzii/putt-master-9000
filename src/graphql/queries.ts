@@ -82,3 +82,15 @@ export const GET_STATS = gql`
     }
   }
 `;
+
+export const SEARCH_USER = gql`
+  query($search: String!) {
+    searchUser(search: $search) {
+      users {
+        id
+        name
+      }
+      hasMore
+    }
+  }
+`;
