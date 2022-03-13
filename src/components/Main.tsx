@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useRef } from 'react';
+import { BackHandler } from 'react-native';
 import ToolBar from './ToolBar';
 
 import { Routes, Route, useNavigate } from 'react-router-native';
@@ -23,7 +24,12 @@ export default function App() {
     const navi = useNavigate();
     const dispatch = useDispatch();
     const notificListener = useRef<any>();
+
     useEffect(() => {
+        const handleBack = () => {
+            navi(-1);
+            return true;
+        };
         // Haetaan push notifikaatioiden token ja tallennetaan se asyncstorageen
         registerForPushNotificationsAsync().then(token => {
             if (token) AsyncStorage.setItem('pushToken', token);
@@ -32,18 +38,20 @@ export default function App() {
         });
         // Lisätään listeneri kuuntelemaan push notifikaatioita ja laitetaan ne omaan notifikaationininononon
         notificListener.current = addNotificationReceivedListener(notification => {
-            dispatch(addNotification(notification.request.content.body || 'Received and empty notification', 'info'));
+            dispatch(addNotification(notification.request.content.body || 'Received and empty notification???', 'info'));
         });
-        return () => removeNotificationSubscription(notificListener.current);
+        // Listeneri kännykän back-napille
+        BackHandler.addEventListener('hardwareBackPress', handleBack);
+        return () => {
+            // Poistetaan listenerit
+            removeNotificationSubscription(notificListener.current);
+            BackHandler.removeEventListener('hardwareBackPress', handleBack);
+        };
     }, []);
-
-    const goBack = () => {
-        navi(-1);
-    };
     return (
         <>
             <Notifications />
-            <ToolBar handleMenuClick={goBack} />
+            <ToolBar />
             <Routes>
                 <Route path="/signUp" element={<SignUp />} />
                 <Route path="/game" element={<Game />} />

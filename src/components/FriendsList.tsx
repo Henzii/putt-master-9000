@@ -30,7 +30,6 @@ const FriendsList = (props: FriendListProps) => {
                 }
             ]
         );
-        //removeFriend({ variables: { friendId }});
     };
     if (loading) {
         return <Loading />;
@@ -74,7 +73,7 @@ const SingleFriend = ({ friend, onClick, onDelete }: { friend: User, onClick?: (
         <Pressable onPress={handleFriendClick}>
             <View style={tyyli.singleFriend}>
                 <Subheading>{friend.name}</Subheading>
-                <Button onPress={handleDelete}>Kill</Button>
+                <Button onPress={handleDelete}>Remove</Button>
             </View>
         </Pressable>
     );

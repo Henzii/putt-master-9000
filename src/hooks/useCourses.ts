@@ -22,19 +22,23 @@ const useCourses = (search = '') => {
         }
     );
     const handleFetchMore = () => {
-        if (data && data.getCourses.hasMore && !loading) {
-            fetchMore({
-                variables: { limit: 5, offset: data.getCourses.nextOffset },
-                updateQuery: (previous, { fetchMoreResult }) => {
-                    if (!fetchMoreResult) return previous;
-                    return {
-                        getCourses: {
-                            ...fetchMoreResult.getCourses,
-                            courses: previous.getCourses.courses.concat(fetchMoreResult.getCourses.courses),
-                        }
-                    };
-                }
-            });
+        if (data && data.getCourses.hasMore && !loading && fetchMore) {
+            try {
+                fetchMore({
+                    variables: { limit: 5, offset: data.getCourses.nextOffset },
+                    updateQuery: (previous, { fetchMoreResult }) => {
+                        if (!fetchMoreResult) return previous;
+                        return {
+                            getCourses: {
+                                ...fetchMoreResult.getCourses,
+                                courses: previous.getCourses.courses.concat(fetchMoreResult.getCourses.courses),
+                            }
+                        };
+                    }
+                });
+            } catch (e) {
+                console.error('Error while fetching more courses...');
+            }
         }
     };
     const addLayout = async (courseId: number | string, layout: NewLayout) => {

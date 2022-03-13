@@ -10,7 +10,7 @@ export const newCourseUpdateCache = (cache: DataProxy, result: FetchResult) => {
     if (!cacheQuery?.getCourses.courses) return;
     // Muokataan välimuistia niin, että siellä on vain uusi, lisätty rata
     cache.writeQuery({
-        query: GET_COURSES, variables: { limit: 9, offset: 0 },
+        query: GET_COURSES, variables: { limit: 9, offset: 0, search: '' },
         data: {
             getCourses: {
                 __typename: 'GetCoursesResponse',
