@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import { Button, Modal, Searchbar, Portal, List } from "react-native-paper";
-import useCourses, { Course, Layout, NewLayout } from "../hooks/useCourses";
+import { Button, Modal, Searchbar, Portal, List, Title } from "react-native-paper";
+import useCourses, { Coordinates, Course, Layout, NewLayout } from "../hooks/useCourses";
 import useTextInput from "../hooks/useTextInput";
 import AddCourse from "./AddCourse";
 import ErrorScreen from "./ErrorScreen";
@@ -17,13 +17,13 @@ type SingleCourseProps = {
     expanded: Course['id'] | null,
 }
 type SelectCoursesProps = {
-    onSelect?: (layout: Layout, course: Course) => void
+    onSelect?: (layout: Layout, course: Course) => void,
+    title?: string,
 }
-const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
+const SelectCourses = ({ onSelect, title }: SelectCoursesProps) => {
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
     const { courses, loading, addLayout, addCourse, fetchMore, error, ...restOfUseCourses } = useCourses();
-
     const searchInput = useTextInput({ defaultValue: '', callBackDelay: 500 }, restOfUseCourses.setSearchString);
 
     const [expandedCourse, setExpandedCourse] = useState<null | Course['id']>(null);
@@ -36,19 +36,19 @@ const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
     const handleClickCourse = (courseId: Course['id'] | null) => {
         setExpandedCourse(courseId);
     };
-    const handleAddCourse = (newCourseName: string) => {
-        addCourse(newCourseName);
+    const handleAddCourse = (newCourseName: string, coordinates: Coordinates) => {
+        addCourse(newCourseName, coordinates);
         setDisplayAddCourse(false);
     };
     const handleClickSearch = () => {
         const disp = !displaySearchBar;
         setDisplaySearchBar(disp);
     };
+    if (error) return (
+        <ErrorScreen errorMessage={error.message} />
+    );
     if (!courses) return (
         <Loading />
-    );
-    if (error) return (
-        <ErrorScreen errorMessage="Error" />
     );
 
     return (
@@ -59,12 +59,13 @@ const SelectCourses = ({ onSelect }: SelectCoursesProps) => {
                     onDismiss={() => setDisplayAddCourse(false)}
                     contentContainerStyle={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                 >
-                    <AddCourse
+                    {displayAddCourse && <AddCourse
                         onCancel={() => setDisplayAddCourse(false)}
                         onAdd={handleAddCourse}
-                    />
+                    />}
                 </Modal>
             </Portal>
+            {title ? <Title style={{ textAlign: 'center' }}>{title}</Title> : null}
             {displaySearchBar ? <Searchbar
                 autoComplete={false}
                 {...searchInput}
@@ -113,6 +114,15 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expan
                 title={course.name}
                 titleStyle={titleStyles}
                 description={course.layouts.length + ' layouts'}
+                right={() =>
+                    <>
+                        <List.Icon
+                            style={tyyli.tight}
+                            color='gray'
+                            icon="map-marker-distance" />
+                        <Text style={tyyli.tight}>{course.distance.string || '?'}</Text>
+                    </>
+                }
                 descriptionStyle={[titleStyles, { fontSize: 14 }]}
                 testID='SingleCourse'
                 onPress={handleCourseClick}
@@ -137,6 +147,11 @@ const tyyli = StyleSheet.create({
     },
     opened: {
         fontSize: 20,
+    },
+    tight: {
+        margin: 0,
+        padding: 0,
+        color: 'gray',
     },
     topButtons: {
         display: 'flex',

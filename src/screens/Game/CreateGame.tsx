@@ -60,7 +60,7 @@ const CreateGame = (props: CreateGameProps) => {
         if (props.onCreate) props.onCreate(newGameData);
     };
 
-    if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} />;
+    if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} title="New game" />;
     if (addFriend) return <FriendsList onClick={handleAddFriend} />;
 
     // Luodaan tyyli, parametrinä teeman väritys

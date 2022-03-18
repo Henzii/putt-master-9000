@@ -18,7 +18,7 @@ const Summary = () => {
     }
     const sortedScorecards = [...data.scorecards].sort((a, b) => (a.total || 0) - (b.total || 0));
     const tableHeaders = [...data.pars.map((p, i) => i + 1), 'Total', '+/-', 'Hc', 'bHc', 'hcTot', 'Hc+/-'];
-    const leveydet = [...data.pars.map(() => 30), 50, 50, 50, 50, 50, 50];
+    const leveydet = [...data.pars.map(() => 29), 50, 50, 50, 50, 50, 50];
     const nimetJaSijoitukset = sortedScorecards.reduce((p:Array<Array<string>>, c, i) => {
         p.push([(i+1)+'.', c.user.name]);
         return p;
@@ -28,12 +28,12 @@ const Summary = () => {
             <View style={{ width: 110 }}>
                 <Table>
                     <Row data={['#', 'Player']} widthArr={[30, 80]} style={[tyylit.header]} textStyle={tyylit.headerText} />
-                    <Rows data={nimetJaSijoitukset} widthArr={[30,80]} textStyle={[tyylit.text, tyylit.scoreCell]} style={tyylit.rivi}  />
+                    <Rows data={nimetJaSijoitukset} widthArr={[30,80]} textStyle={[tyylit.text, tyylit.scoreCell]} style={[tyylit.rivi]}  />
                 </Table>
             </View>
             <ScrollView horizontal>
                 <Table>
-                    <Row data={tableHeaders} style={tyylit.header} textStyle={tyylit.headerText} widthArr={leveydet} />
+                    <Row data={tableHeaders} style={tyylit.header} textStyle={[tyylit.headerText]} widthArr={leveydet} />
                     {sortedScorecards.map((sc) => (
                         <SinglePlayerDataRow
                             key={sc.user.id + 'scData'}
@@ -65,7 +65,7 @@ const SinglePlayerDataRow = ({ scorecard, pars }: { scorecard: Scorecard, pars: 
             data={scorecard.scores[i] || ' '}
             textStyle={tyylit.text}
             style={[tyylit.scoreCell, pickColor(p, scorecard.scores[i])]}
-            width={30}
+            width={27}
         />);
     });
     return (
@@ -82,9 +82,10 @@ const SinglePlayerDataRow = ({ scorecard, pars }: { scorecard: Scorecard, pars: 
 };
 const tyylit = StyleSheet.create({
     scoreCell: {
-        borderRadius: 20,
+        borderRadius: 7,
         //marginTop: 2,
         marginVertical: 4,
+        marginLeft: 2,
     },
     doubleBogie: {
         backgroundColor: '#fcbc9a',
@@ -113,11 +114,12 @@ const tyylit = StyleSheet.create({
         textAlign: 'center',
         paddingVertical: 5,
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: 15,
+        paddingLeft: 2
     },
     text: {
         textAlign: 'center',
-        paddingVertical: 5,
+        paddingVertical: 7,
     },
 });
 export default Summary;

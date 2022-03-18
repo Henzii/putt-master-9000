@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import React, { useState } from 'react';
 import Player from './Player';
+import { Dimensions } from 'react-native';
 import RoundTabs from '../../components/RoundTabs';
 import useGame from '../../hooks/useGame';
 import Container from '../../components/ThemedComponents/Container';
@@ -32,25 +33,47 @@ export default function Game() {
     if (!data.isOpen) {
         return <ClosedGame />;
     }
+    // Apumuuttuja jolla todetaan swiippaus vasemmalle
+    let touchPos = [0,0];
     return (
         <>
             <RoundTabs gameData={data} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
-            <Container noPadding>
-                <View style={peliStyles.headers}>
-                    <Text testID="GameRata" style={peliStyles.course}>{data.course} #{selectedRound + 1}, par {data.pars[selectedRound]}</Text>
-                    <Text testID="GameLayout" style={peliStyles.layout}>{data.layout}</Text>
-                </View>
-                <FlatList
-                    data={data.scorecards}
-                    keyExtractor={(item) => item.user.id as string}
-                    renderItem={({item}) => (
-                        <Player
-                            player={item}
-                            selectedRound={selectedRound}
-                            setScore={handleScoreChange}
+            <Container noPadding fullScreen>
+                <View
+                    style={{ minHeight: '100%' }}
+                    onTouchStart={(e) => touchPos = [e.nativeEvent.pageX, e.nativeEvent.pageY] }
+                    onTouchEnd={(e) => {
+                        // 70 % ruudun leveydesä
+                        const width70 = Dimensions.get('screen').width*0.7;
+                        // Jos kosketus on Y-suunnassa yli 30 -> return
+                        if (Math.abs( e.nativeEvent.pageY - touchPos[1] ) >= 50) return;
+
+                        const movement = e.nativeEvent.pageX - touchPos[0];
+                        // Jos liike X-suunnassa on vähemmän kuin 70% leveydestä
+                        if (Math.abs( movement ) < width70) return;
+
+                        if ( movement > 0 && selectedRound > 0) setSelectedRound((v) => v - 1);
+                        else if (movement < 0 && selectedRound < data.holes-1 ) setSelectedRound((v) => v + 1);
+                    }}
+                >
+                    <View
+                        style={peliStyles.headers}
+                    >
+                        <Text testID="GameRata" style={peliStyles.course}>{data.course} #{selectedRound + 1}, par {data.pars[selectedRound]}</Text>
+                        <Text testID="GameLayout" style={peliStyles.layout}>{data.layout}</Text>
+                    </View>
+                    <FlatList
+                        data={data.scorecards}
+                        keyExtractor={(item) => item.user.id as string}
+                        renderItem={({ item }) => (
+                            <Player
+                                player={item}
+                                selectedRound={selectedRound}
+                                setScore={handleScoreChange}
+                            />
+                        )}
                     />
-                    )}
-                />
+                </View>
             </Container>
         </>
     );

@@ -9,7 +9,7 @@ const Login = ({ login }: {login: (s1: string, s2: string) => Promise<void> }) =
     const [ username, setUsername] = useState('');
     const [ password, setPassword] = useState('');
     const dispatch = useDispatch();
-    const handleLogin = () => {
+    const handleLogin = async () => {
         login(username, password).catch(() => {
             dispatch(addNotification('Wrong username or password', 'alert'));
             setPassword('');

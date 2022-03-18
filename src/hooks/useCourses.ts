@@ -1,26 +1,35 @@
-import { useState } from 'react';
-import { useQuery, useMutation } from "react-apollo";
+import { useEffect, useState } from 'react';
+import { useQuery, useMutation, useApolloClient } from "react-apollo";
 
 import { ADD_COURSE, ADD_LAYOUT } from "../graphql/mutation";
 import { GET_COURSES } from "../graphql/queries";
-import { newCourseUpdateCache, newLayoutUpdateCache } from "../utils/courseCacheUpdates";
+import useGPS from './useGPS';
 
-const useCourses = (search = '') => {
-    const [addLayoutMutation] = useMutation(ADD_LAYOUT, { update: newLayoutUpdateCache });
-    const [addCourseMutation] = useMutation(ADD_COURSE, { update: newCourseUpdateCache });
-    const [searchString, setSearchString] = useState(search);
+const useCourses = () => {
 
-    const { data, loading, error, fetchMore } = useQuery<RawCourseData>(
+    const [addLayoutMutation] = useMutation(ADD_LAYOUT);
+    const [addCourseMutation] = useMutation(ADD_COURSE);
+    const [searchString, setSearchString] = useState('');
+    const gps = useGPS();
+    const { data, loading, error, fetchMore, refetch } = useQuery<RawCourseData>(
         GET_COURSES,
         {
             variables: {
                 limit: 9,
                 offset: 0,
                 search: searchString,
+                coordinates: [0, 0]
             },
             fetchPolicy: 'cache-and-network'
         }
     );
+    useEffect(() => {
+        // Kun GPS-paikannus on saatu, haetaan data uudestaan gepsi koordinaattien kera
+        if (gps.ready) {
+            //console.log('Ready', gps.lon, gps.lat);
+            refetch({ coordinates: [ gps.lon, gps.lat ]});
+        }
+    }, [gps.loading]);
     const handleFetchMore = () => {
         if (data && data.getCourses.hasMore && !loading && fetchMore) {
             try {
@@ -48,9 +57,10 @@ const useCourses = (search = '') => {
             console.log('ERROR', e);
         }
     };
-    const addCourse = async (newCourseName: string) => {
+    const addCourse = async (newCourseName: string, coordinates: Coordinates) => {
         try {
-            await addCourseMutation({ variables: { name: newCourseName } });
+            await addCourseMutation({ variables: { name: newCourseName, coordinates } });
+            refetch({ limit: 1, offset: 0, search: newCourseName });
         } catch (e) {
             console.log('ERROR', e);
         }
@@ -61,8 +71,15 @@ export type Course = {
     name: string,
     layouts: Layout[]
     id: string | number,
+    distance: {
+        meters: number,
+        string: string,
+    }
 }
-
+export type Coordinates = {
+    lat: number,
+    lon: number
+}
 export type Layout = {
     name: string,
     pars: number[],

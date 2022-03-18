@@ -38,7 +38,7 @@ export default function App() {
         });
         // Lisätään listeneri kuuntelemaan push notifikaatioita ja laitetaan ne omaan notifikaationininononon
         notificListener.current = addNotificationReceivedListener(notification => {
-            dispatch(addNotification(notification.request.content.body || 'Received and empty notification???', 'info'));
+            dispatch(addNotification(notification.request.content.body || 'Received an empty notification???', 'info'));
         });
         // Listeneri kännykän back-napille
         BackHandler.addEventListener('hardwareBackPress', handleBack);

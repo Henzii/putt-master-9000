@@ -16,12 +16,16 @@ export const ADD_LAYOUT = gql`
     }
 `;
 export const ADD_COURSE = gql`
-    mutation ($name: String!) {
-        addCourse(name: $name) {
+    mutation ($name: String!, $coordinates: InputLocation) {
+        addCourse(name: $name, coordinates: $coordinates) {
             id
             name
             layouts {
                 id
+            }
+            distance {
+                meters
+                string
             }
         }
     }
