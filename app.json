@@ -26,7 +26,10 @@
       },
       "package": "com.henzisoft.puttmaster9000",
       "versionCode": 20,
-      "permissions": []
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
