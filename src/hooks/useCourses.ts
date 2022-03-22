@@ -65,7 +65,8 @@ const useCourses = () => {
             console.log('ERROR', e);
         }
     };
-    return { courses: data?.getCourses?.courses || undefined, loading, error, addLayout, addCourse, fetchMore: handleFetchMore, setSearchString, searchString };
+    return { courses: data?.getCourses?.courses || undefined,
+        loading, error, addLayout, addCourse, fetchMore: handleFetchMore, setSearchString, searchString, gpsAvailable: gps.ready };
 };
 export type Course = {
     name: string,

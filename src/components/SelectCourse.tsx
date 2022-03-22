@@ -15,6 +15,7 @@ type SingleCourseProps = {
     onLayoutClick?: (layout: Layout, course: Course) => void,
     onCourseClick?: (courseId: Course['id'] | null) => void,
     expanded: Course['id'] | null,
+    showDistance?: boolean,
 }
 type SelectCoursesProps = {
     onSelect?: (layout: Layout, course: Course) => void,
@@ -89,6 +90,7 @@ const SelectCourses = ({ onSelect, title }: SelectCoursesProps) => {
                         onLayoutClick={handleClickLayout}
                         onCourseClick={handleClickCourse}
                         expanded={expandedCourse}
+                        showDistance={restOfUseCourses.gpsAvailable}
                     />)
                 }
             />
@@ -96,7 +98,7 @@ const SelectCourses = ({ onSelect, title }: SelectCoursesProps) => {
     );
 };
 const Separaattori = () => <View style={tyyli.separaattori} />;
-const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expanded }: SingleCourseProps) => {
+const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expanded, showDistance = true }: SingleCourseProps) => {
     const handleCourseClick = () => {
         if (!onCourseClick) return;
         if (expanded === course.id) onCourseClick(null);
@@ -107,6 +109,18 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expan
         (expanded === course.id && tyyli.opened),
         (expanded !== null && expanded !== course.id && tyyli.notOpened),
     ];
+    const distance = () => {
+        if (!showDistance) return null;
+        return (
+            <>
+                <List.Icon
+                    style={tyyli.tight}
+                    color='gray'
+                    icon="map-marker-distance" />
+                <Text style={tyyli.tight}>{course.distance.string || '?'}</Text>
+            </>
+        );
+    };
     return (
         <View style={tyyli.container}>
             <List.Accordion
@@ -114,15 +128,7 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expan
                 title={course.name}
                 titleStyle={titleStyles}
                 description={course.layouts.length + ' layouts'}
-                right={() =>
-                    <>
-                        <List.Icon
-                            style={tyyli.tight}
-                            color='gray'
-                            icon="map-marker-distance" />
-                        <Text style={tyyli.tight}>{course.distance.string || '?'}</Text>
-                    </>
-                }
+                right={distance}
                 descriptionStyle={[titleStyles, { fontSize: 14 }]}
                 testID='SingleCourse'
                 onPress={handleCourseClick}
