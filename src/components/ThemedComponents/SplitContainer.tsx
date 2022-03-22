@@ -2,11 +2,17 @@ import React from 'react';
 import { View, StyleSheet, ViewComponent } from 'react-native';
 
 type SplitContainerProps = {
-    children: React.ReactElement[] | null | React.ReactElement;
+    children: React.ReactElement[] | null | React.ReactElement,
+    left?: boolean,
+    bottonMargin?: boolean,
+    spaceAround?: boolean
 }
-const SplitContainer = ({children} : SplitContainerProps) => {
+const SplitContainer = ({children, ...props} : SplitContainerProps) => {
     const style = [
-        tyylit.main
+        tyylit.main,
+        (props.left && tyylit.left),
+        (props.bottonMargin && tyylit.bottomMargin),
+        (props.spaceAround && tyylit.spaceAround),
     ];
     return (
         <View style={style}>
@@ -21,6 +27,15 @@ const tyylit = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+    },
+    left: {
+        left: 1
+    },
+    spaceAround: {
+        justifyContent: 'space-around'
+    },
+    bottomMargin: {
+        marginBottom: 10,
     }
 });
 export default SplitContainer;

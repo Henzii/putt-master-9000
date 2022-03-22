@@ -46,7 +46,7 @@ const useMe = (getFriends = false) => {
         await client.clearStore();
         setLoggedIn(false);
     };
-    const updateSettings = async (newSettings: Pick<User, 'blockFriendRequests'>) => {
+    const updateSettings = async (newSettings: (Pick<User, 'blockFriendRequests'> | { password: string }) ) => {
         await updateSettingsMutation({ variables: newSettings });
     };
     return { me: data?.getMe ?? null, logged: loggedIn, login, logout, loading, error, updateSettings };

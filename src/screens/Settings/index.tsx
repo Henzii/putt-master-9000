@@ -8,11 +8,15 @@ import useMe from '../../hooks/useMe';
 import { useMutation } from 'react-apollo';
 import { DELETE_ACCOUNT } from '../../graphql/mutation';
 import { useNavigate } from 'react-router-native';
+import ChangePassword from './ChangePassword';
+import { useDispatch } from 'react-redux';
+import { addNotification } from '../../reducers/notificationReducer';
 
 const Settings = () => {
     const { me, updateSettings, logout } = useMe();
     const navi = useNavigate();
     const [deleteAccountMutation] = useMutation(DELETE_ACCOUNT);
+    const dispatch = useDispatch();
     const handleBlockFriendsChange = () => {
         updateSettings({ blockFriendRequests: !me?.blockFriendRequests });
     };
@@ -23,6 +27,14 @@ const Settings = () => {
             // Kirjaudutaan ulos
             logout();
             navi('/');
+        }
+    };
+    const handlePasswordChange = async (newPassword: string) => {
+        try {
+            await updateSettings({ password: newPassword });
+            dispatch(addNotification('Password changed!', 'success'));
+        } catch (e) {
+            dispatch(addNotification(`Password NOT changed, error: ${(e as Error).message}`, 'alert'));
         }
     };
     const confirmDelete = () => {
@@ -56,6 +68,8 @@ const Settings = () => {
                     />
                 </View>
             </Pressable>
+            <Divider />
+            <ChangePassword onPasswordChange={handlePasswordChange} />
             <Divider />
             <Title>App info</Title>
             <InfoText text1="version" text2={appInfo.expo.version} />

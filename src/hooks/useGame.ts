@@ -65,6 +65,7 @@ export type Game = {
     holes: number,
     pars: number[],
     date: string,
+    startTime: number,
     par: number,
     isOpen: boolean,
     scorecards: Scorecard[],
