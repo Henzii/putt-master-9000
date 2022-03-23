@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useMutation } from 'react-apollo';
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import { Button, Subheading, TextInput, Title } from 'react-native-paper';
 import { CREATE_USER } from '../graphql/mutation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../reducers/notificationReducer';
 import { useNavigate } from 'react-router-native';
+import Container from './ThemedComponents/Container';
 
 const SignUp = () => {
     const [userData, setUserData] = useState({
@@ -19,60 +20,61 @@ const SignUp = () => {
     const dispatch = useDispatch();
     const navi = useNavigate();
 
-    const validateUserData = () => {
-        if (userData.password.length < 5 || userData.password !== userData.password2) return false;
-        if (userData.name.length < 3) return false;
-        return true;
-    };
     const handleSignUp = async () => {
-        if (!validateUserData()) return;
+        if (userData.name.length < 4) {
+            Alert.alert('Error', 'Name too short!');
+            return;
+        }
+        if (userData.password.length < 5) {
+            Alert.alert('Error', 'Password too short. Min 5 letters.');
+            return;
+        }
+        if (userData.password !== userData.password2) {
+            Alert.alert('Error', 'Passwords don\'t match!');
+            return;
+        }
         try {
-            const token = await createUserMutation({ variables: {
-                name: userData.name,
-                password: userData.password,
-                email: userData.email
-            }});
+            const token = await createUserMutation({
+                variables: {
+                    name: userData.name,
+                    password: userData.password,
+                    email: userData.email
+                }
+            });
             await AsyncStorage.setItem('token', token.data?.createUser);
-            console.log(token.data?.createUser);
             navi("/");
 
-        } catch(e) {
-            dispatch(addNotification('Error when creating user! ' + (e as Error).message ));
+        } catch (e) {
+            dispatch(addNotification('Error when creating user! ' + (e as Error).message));
         }
     };
     return (
-        <View style={tyyli.main}>
+        <Container withScrollView style={tyyli.main}>
             <Title>Signup</Title>
-            <Container>
-                <Subheading>Username</Subheading>
-                <TextInput value={userData.name} autoComplete={false} mode='outlined' label="Username" onChangeText={(value) => setUserData({...userData, name: value })} />
-            </Container>
-            <Container>
-                <Subheading>Password</Subheading>
-                <TextInput value={userData.password} autoComplete={false} mode='outlined' label="Password" secureTextEntry onChangeText={(val) => setUserData({...userData, password: val })} />
-                <TextInput value={userData.password2} autoComplete={false} mode='outlined' label="Confirm password" secureTextEntry onChangeText={(val) => setUserData({ ...userData, password2: val })}/>
-            </Container>
-            <Container>
-                <Subheading>Email</Subheading>
-                <Text>Optional</Text>
-                <TextInput value={userData.email} autoComplete={false} mode='outlined' label="Email" onChangeText={(val) => setUserData({...userData, email: val })} />
-            </Container>
-            <Button onPress={handleSignUp} mode='contained' disabled={!validateUserData()}>Sign up!</Button>
-        </View>
+            <Subheading style={tyyli.subheading}>Username</Subheading>
+            <TextInput value={userData.name} autoComplete={false} mode='outlined' label="Username" onChangeText={(value) => setUserData({ ...userData, name: value })} />
+            <Subheading style={tyyli.subheading}>Password</Subheading>
+            <TextInput value={userData.password} autoComplete={false} mode='outlined' label="Password" secureTextEntry onChangeText={(val) => setUserData({ ...userData, password: val })} />
+            <TextInput value={userData.password2} autoComplete={false} mode='outlined' label="Confirm password" secureTextEntry onChangeText={(val) => setUserData({ ...userData, password2: val })} />
+            <Subheading style={tyyli.subheading}>Email</Subheading>
+            <Text>Optional</Text>
+            <TextInput value={userData.email} autoComplete={false} mode='outlined' label="Email" onChangeText={(val) => setUserData({ ...userData, email: val })} />
+            <Button style={tyyli.nappi} onPress={handleSignUp} mode='contained'>Sign up!</Button>
+        </Container>
     );
 };
-const Container = ({ children }: { children: JSX.Element[] | JSX.Element }) => <View style={tyyli.container}>{children}</View>;
+
 const tyyli = StyleSheet.create({
     main: {
-        width: '100%',
-        padding: 20,
+        padding: 30,
     },
-    inputs: {
-        marginTop: 10,
-    },
-    container: {
+    subheading: {
         marginTop: 20,
-        marginBottom: 10,
+    },
+    nappi: {
+        marginTop: 30,
+        padding: 10,
+        borderRadius: 10,
     }
 });
 

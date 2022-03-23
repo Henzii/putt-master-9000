@@ -9,7 +9,7 @@ import { Game } from '../hooks/useGame';
 import { newGame } from '../reducers/gameDataReducer';
 import Loading from './Loading';
 import Container from './ThemedComponents/Container';
-import { format } from 'date-fns';
+import { format, fromUnixTime } from 'date-fns';
 
 const OldGamesList = () => {
     const { data, loading } = useQuery<{ getGames: Game[] }>(GET_OLD_GAMES, { fetchPolicy: 'cache-and-network' });
@@ -46,7 +46,7 @@ const SingleGame = ({ game, onClick }: { game: Game, onClick?: (id: string) => v
     const handleGameClick = () => {
         if (onClick) onClick(game.id);
     };
-    const date = format(new Date(game.date), 'dd.MM.yyyy HH:mm');
+    const date = format(fromUnixTime(game.startTime/1000), 'dd.MM.yyyy HH:mm');
     return (
         <Pressable onPress={handleGameClick} >
             <View style={[tyyli.singleGame, { backgroundColor: colors.surface }, (game.isOpen) ? { opacity: 1 } : null]}>
