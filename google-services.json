@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "528580038299",
+    "project_id": "fudisc-6bad9",
+    "storage_bucket": "fudisc-6bad9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528580038299:android:b8fa96ed2f21eabd67c03e",
+        "android_client_info": {
+          "package_name": "com.henzisoft.puttmaster9000"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "528580038299-t5mngps3gbkk6shg4oe6d349b56vr7pf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.henzisoft.puttmaster9000",
+            "certificate_hash": "2df3fcd7418932f5d9332c1eeb4a713e863c90a7"
+          }
+        },
+        {
+          "client_id": "528580038299-61sgjeqbj9qqjkl34tl1bkh6osa2fvds.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1v8W-jcgfX6UPCvdeag1A4trTvY0y2zg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "528580038299-61sgjeqbj9qqjkl34tl1bkh6osa2fvds.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -96,6 +96,9 @@ const Setup = () => {
             </Button>
             <Divider />
             <Subheading>Date</Subheading>
+            <Paragraph>
+                {formattedDate}
+            </Paragraph>
             <Divider />
             <Paragraph>
                 Return to main menu
