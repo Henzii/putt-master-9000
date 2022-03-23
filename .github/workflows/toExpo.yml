@@ -22,11 +22,5 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
       - name: Install
         run: npm install
-      - name: Add google-services.json
-        env:
-          FILU: ${{ secrets.GOOGLE_JSON }}
-        run: echo $FILU > google-services.json
-      - name: List
-        run: ls
       - name: Build App
         run: eas build -p android --non-interactive

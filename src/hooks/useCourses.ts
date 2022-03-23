@@ -25,7 +25,7 @@ const useCourses = () => {
     );
     useEffect(() => {
         // Kun GPS-paikannus on saatu, haetaan data uudestaan gepsi koordinaattien kera
-        if (gps.ready) {
+        if (gps.ready && refetch) {
             //console.log('Ready', gps.lon, gps.lat);
             refetch({ coordinates: [ gps.lon, gps.lat ]});
         }

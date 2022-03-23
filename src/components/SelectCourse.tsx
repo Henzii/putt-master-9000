@@ -1,22 +1,16 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import { Button, Modal, Searchbar, Portal, List, Title } from "react-native-paper";
+import { Button, Modal, Searchbar, Portal, List, Title, Paragraph } from "react-native-paper";
 import useCourses, { Coordinates, Course, Layout, NewLayout } from "../hooks/useCourses";
+import useLiveData from '../hooks/useLiveData';
 import useTextInput from "../hooks/useTextInput";
 import AddCourse from "./AddCourse";
 import ErrorScreen from "./ErrorScreen";
 import Loading from "./Loading";
 import SelectLayout from "./SelectLayout";
 import Container from "./ThemedComponents/Container";
+import SplitContainer from "./ThemedComponents/SplitContainer";
 
-type SingleCourseProps = {
-    course: Course,
-    onAddLayout?: (courseId: number | string, layout: NewLayout) => void,
-    onLayoutClick?: (layout: Layout, course: Course) => void,
-    onCourseClick?: (courseId: Course['id'] | null) => void,
-    expanded: Course['id'] | null,
-    showDistance?: boolean,
-}
 type SelectCoursesProps = {
     onSelect?: (layout: Layout, course: Course) => void,
     title?: string,
@@ -26,7 +20,7 @@ const SelectCourses = ({ onSelect, title }: SelectCoursesProps) => {
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
     const { courses, loading, addLayout, addCourse, fetchMore, error, ...restOfUseCourses } = useCourses();
     const searchInput = useTextInput({ defaultValue: '', callBackDelay: 500 }, restOfUseCourses.setSearchString);
-
+    const liveData = useLiveData();
     const [expandedCourse, setExpandedCourse] = useState<null | Course['id']>(null);
     const handleAddLayout = (courseId: number | string, layout: NewLayout) => {
         addLayout(courseId, layout);
@@ -51,7 +45,6 @@ const SelectCourses = ({ onSelect, title }: SelectCoursesProps) => {
     if (!courses) return (
         <Loading />
     );
-
     return (
         <Container noPadding>
             <Portal>
@@ -86,6 +79,7 @@ const SelectCourses = ({ onSelect, title }: SelectCoursesProps) => {
                 renderItem={({ item }) => (
                     <SingleCourse
                         course={item}
+                        liveData={liveData ? liveData[item.name] : undefined}
                         onAddLayout={handleAddLayout}
                         onLayoutClick={handleClickLayout}
                         onCourseClick={handleClickCourse}
@@ -98,7 +92,18 @@ const SelectCourses = ({ onSelect, title }: SelectCoursesProps) => {
     );
 };
 const Separaattori = () => <View style={tyyli.separaattori} />;
-const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expanded, showDistance = true }: SingleCourseProps) => {
+
+type SingleCourseProps = {
+    course: Course,
+    onAddLayout?: (courseId: number | string, layout: NewLayout) => void,
+    onLayoutClick?: (layout: Layout, course: Course) => void,
+    onCourseClick?: (courseId: Course['id'] | null) => void,
+    expanded: Course['id'] | null,
+    showDistance?: boolean,
+    liveData?: { live: number, today: number }
+}
+
+const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expanded, showDistance = true, liveData }: SingleCourseProps) => {
     const handleCourseClick = () => {
         if (!onCourseClick) return;
         if (expanded === course.id) onCourseClick(null);
@@ -109,26 +114,28 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expan
         (expanded === course.id && tyyli.opened),
         (expanded !== null && expanded !== course.id && tyyli.notOpened),
     ];
-    const distance = () => {
-        if (!showDistance) return null;
+    const InfoIcons = () => {
         return (
-            <>
-                <List.Icon
-                    style={tyyli.tight}
-                    color='gray'
-                    icon="map-marker-distance" />
-                <Text style={tyyli.tight}>{course.distance.string || '?'}</Text>
-            </>
+            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                {liveData && <LiveDataIcon live={liveData} />}
+                {showDistance && <CourseDistanceIcon distance={course.distance} />}
+            </View>
         );
     };
+    let description = course.layouts.length + ' layout' + (course.layouts.length > 1 ? 's' : '');
+    // Jos rata on avattu & liveDataa tarjolla, lisätään se descriptioniin
+    if (expanded === course.id && liveData) {
+        description = description.concat(`\nCurrently ${liveData.live} players (today's total: ${liveData.today})`);
+    }
     return (
         <View style={tyyli.container}>
             <List.Accordion
                 style={tyyli.container}
                 title={course.name}
                 titleStyle={titleStyles}
-                description={course.layouts.length + ' layouts'}
-                right={distance}
+                description={description}
+                descriptionNumberOfLines={3}
+                right={InfoIcons}
                 descriptionStyle={[titleStyles, { fontSize: 14 }]}
                 testID='SingleCourse'
                 onPress={handleCourseClick}
@@ -139,7 +146,29 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expan
         </View>
     );
 };
-
+const CourseDistanceIcon = ({ distance }: { distance: { string: string } }) => {
+    return (<View style={{ display: 'flex', flexDirection: 'column' }}>
+        <List.Icon
+            style={tyyli.tight}
+            color='gray'
+            icon="map-marker-distance" />
+        <Text style={tyyli.tight}>{distance.string || '?'}</Text>
+    </View>);
+};
+const LiveDataIcon = ({ live }: { live: { today: number, live: number } }) => {
+    const icon = (live.live === 0) ? 'signal-cellular-outline'
+        : (live.live > 40) ? 'signal-cellular-3'
+            : (live.live > 15) ? 'signal-cellular-2'
+                : (live.live > 0) ? 'signal-cellular-1'
+                    : 'signal-off';
+    return (
+        <List.Icon
+            style={tyyli.tight}
+            icon={icon}
+            color='gray'
+        />
+    );
+};
 const tyyli = StyleSheet.create({
     container: {
         padding: 5,
