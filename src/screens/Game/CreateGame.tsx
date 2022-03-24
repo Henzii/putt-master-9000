@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text } from "react-native";
-import { Button, Subheading, Title, useTheme } from 'react-native-paper';
+import { Button, Chip, Headline, Subheading, Title, useTheme } from 'react-native-paper';
 import { Course, Layout } from '../../hooks/useCourses';
 import useMe, { User } from '../../hooks/useMe';
 import FriendsList from '../../components/FriendsList';
 import SelectCourses from '../../components/SelectCourse';
 import Container from '../../components/ThemedComponents/Container';
+import SplitContainer from '../../components/ThemedComponents/SplitContainer';
+import Loading from '../../components/Loading';
+import ErrorScreen from '../../components/ErrorScreen';
 
 export type NewGameData = {
     course: Course | null,
@@ -36,7 +39,12 @@ const CreateGame = (props: CreateGameProps) => {
             });
         }
     }, [me.me]);
-
+    if (me.loading) {
+        return <Loading />;
+    }
+    if (me.error || !me.me) {
+        return <ErrorScreen errorMessage='Cannot get current user?'/>;
+    }
     const handleSelectCourse = (layout: Layout, course: Course) => {
         setNewGameData({
             ...newGameData,
@@ -56,6 +64,13 @@ const CreateGame = (props: CreateGameProps) => {
         }
         setAddFriend(false);
     };
+    const handleRemoveFriend = (id: string | number) => {
+        const updatedGameData: NewGameData = {
+            ...newGameData,
+            players: newGameData.players.filter(p => p.id !== id)
+        };
+        setNewGameData(updatedGameData);
+    };
     const handleCreate = () => {
         if (props.onCreate) props.onCreate(newGameData);
     };
@@ -67,20 +82,41 @@ const CreateGame = (props: CreateGameProps) => {
     const tyyli = createStyle(colors);
 
     return (
-        <Container>
-            <Title style={tyyli.title}>Create game</Title>
-            <Subheading>Selected course</Subheading>
-            <View style={tyyli.selectCourse}>
-                <Text>{newGameData?.course?.name || 'N'} / {newGameData?.layout?.name || 'A'}</Text>
-                <Button onPress={() => setSelectCourse(true)}>Select</Button>
+        <Container withScrollView>
+            <Headline>New Game</Headline>
+            <Title style={tyyli.title}>Course</Title>
+            <View style={tyyli.courseContainer}>
+                <Text style={tyyli.courseText}>Course</Text>
+                <Text style={tyyli.courseTextBig}>{newGameData.course?.name || '-'}</Text>
             </View>
-            <Subheading>Players</Subheading>
-            <View style={tyyli.selectPlayers}>
-                {newGameData.players.map((p, i) =>
-                    <Text key={p.id} style={[tyyli.player, (i%2!==0 ? tyyli.even : null)]}>{p.name}</Text>
-                )}
+            <View style={tyyli.courseContainer}>
+                <Text style={tyyli.courseText}>Layout</Text>
+                <Text style={tyyli.courseTextBig}>{newGameData.layout?.name || '-'}</Text>
             </View>
-            <Button onPress={() => setAddFriend(true)}>Add player</Button>
+            <View style={tyyli.courseContainer}>
+                <Text style={tyyli.courseText}>Holes</Text>
+                <Text style={tyyli.courseText}>{newGameData.layout?.holes || '-'}</Text>
+            </View>
+            <View style={tyyli.courseContainer}>
+                <Text style={tyyli.courseText}>Par</Text>
+                <Text style={tyyli.courseText}>{newGameData.layout?.par || '-'}</Text>
+            </View>
+            <Button style={tyyli.button} onPress={() => setSelectCourse(true)} compact mode={newGameData.course ? 'outlined' : 'contained'}>
+                {newGameData.course ? 'Change course' : 'Select course'}
+            </Button>
+            <Title style={tyyli.title}>Players</Title>
+            <>
+                {newGameData.players.map((player, i) => {
+                    return <Chip
+                                style={tyyli.chip}
+                                key={player.id}
+                                icon='account'
+                                onClose={player.id !== me.me?.id ? () => handleRemoveFriend(player.id) : undefined}
+                                textStyle={{ fontSize: 16 }}
+                            >{player.name}</Chip>;
+                })}
+            </>
+            <Button style={tyyli.button} compact mode='outlined' onPress={() => setAddFriend(true)}>Add player</Button>
             <View style={tyyli.bottomButtons}>
                 <Button color='green' mode='contained' onPress={handleCreate}>Create</Button>
                 <Button color='red' mode='contained' onPress={props.onCancel}>Cancel</Button>
@@ -90,37 +126,34 @@ const CreateGame = (props: CreateGameProps) => {
 };
 
 const createStyle = (colors?: ReactNativePaper.ThemeColors) => StyleSheet.create({
-    selectCourse: {
-        width: '100%',
+    chip: {
         display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderWidth: 1,
-        padding: 10,
-        borderColor: 'lightgray',
         backgroundColor: colors?.surface,
-        marginBottom: 20,
-        borderRadius: 5,
+        marginTop: 5,
+        elevation: 2,
+        fontSize: 20,
+        maxWidth: '70%'
+    },
+    courseText: {
+        width: '50%',
     },
     title: {
-        marginBottom: 15,
-        fontSize: 25,
+        marginVertical: 10,
     },
-    selectPlayers: {
-        borderWidth: 1,
-        borderRadius: 5,
-        borderColor: 'lightgray',
-        backgroundColor: colors?.surface,
-        marginBottom: 20,
+    courseTextBig: {
+        width: '50%',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
-    player: {
-        width: '100%',
-        fontSize: 15,
-        padding: 10,
+    courseContainer: {
+        width: '70%',
+        minWidth: 200,
+        display: 'flex',
+        flexDirection: 'row',
     },
-    even: {
-        backgroundColor: '#fafafa'
+    button: {
+        maxWidth: 150,
+        marginTop: 15,
     },
     bottomButtons: {
         display: 'flex',

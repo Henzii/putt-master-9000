@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, StyleSheet, ViewComponent } from 'react-native';
+import { View, StyleSheet, ViewStyle } from 'react-native';
 
 type SplitContainerProps = {
     children: React.ReactElement[] | null | React.ReactElement,
     left?: boolean,
     bottonMargin?: boolean,
-    spaceAround?: boolean
+    spaceAround?: boolean,
+    style?: ViewStyle,
 }
 const SplitContainer = ({children, ...props} : SplitContainerProps) => {
     const style = [
@@ -13,6 +14,7 @@ const SplitContainer = ({children, ...props} : SplitContainerProps) => {
         (props.left && tyylit.left),
         (props.bottonMargin && tyylit.bottomMargin),
         (props.spaceAround && tyylit.spaceAround),
+        props.style || null,
     ];
     return (
         <View style={style}>
