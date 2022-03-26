@@ -5,7 +5,7 @@ import { ADD_COURSE, ADD_LAYOUT } from "../graphql/mutation";
 import { GET_COURSES } from "../graphql/queries";
 import useGPS from './useGPS';
 
-const useCourses = () => {
+const useCourses = (showDistance = true) => {
 
     const [addLayoutMutation] = useMutation(ADD_LAYOUT);
     const [addCourseMutation] = useMutation(ADD_COURSE);
@@ -25,7 +25,7 @@ const useCourses = () => {
     );
     useEffect(() => {
         // Kun GPS-paikannus on saatu, haetaan data uudestaan gepsi koordinaattien kera
-        if (gps.ready && refetch) {
+        if (gps.ready && refetch && showDistance) {
             //console.log('Ready', gps.lon, gps.lat);
             refetch({ coordinates: [ gps.lon, gps.lat ]});
         }
@@ -66,7 +66,7 @@ const useCourses = () => {
         }
     };
     return { courses: data?.getCourses?.courses || undefined,
-        loading, error, addLayout, addCourse, fetchMore: handleFetchMore, setSearchString, searchString, gpsAvailable: gps.ready };
+        loading, error, addLayout, addCourse, fetchMore: handleFetchMore, setSearchString, searchString, gpsAvailable: gps.ready && showDistance };
 };
 export type Course = {
     name: string,

@@ -6,17 +6,19 @@ type LiveData = {
         today: number,
     }
 }
-const useLiveData = () => {
+const useLiveData = (enabled = true) => {
     const [liveData, setLiveData] = useState<LiveData | undefined>();
     useEffect(() => {
-        getLiveData().then(res => {
-            if (res) {
-                setLiveData(res);
-            }
-        }).catch((e) => {
-            // eslint-disable-next-line no-console
-            console.log('Failed to fetch live data,', e);
-        });
+        if (enabled) {
+            getLiveData().then(res => {
+                if (res) {
+                    setLiveData(res);
+                }
+            }).catch((e) => {
+                // eslint-disable-next-line no-console
+                console.log('Failed to fetch live data,', e);
+            });
+        }
     }, []);
     return liveData;
 };
