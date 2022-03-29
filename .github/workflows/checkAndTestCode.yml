@@ -5,7 +5,7 @@ on:
     branches: [master, main]
     types: [opened, synchronize]
 
-job:
+jobs:
   Intall_and_test:
     runs-on: ubuntu-latest
     steps:
