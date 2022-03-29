@@ -8,7 +8,7 @@ const ErrorScreen = ({ errorMessage}: { errorMessage: string }) => {
             <Paragraph style={{ textAlign: 'center', fontSize: 30, padding: 30, fontWeight: 'bold' }}>
             ¯\_(ツ)_/¯
             </Paragraph>
-            <Title>Error</Title>
+            <Title testID='ErrorTitle'>Error</Title>
             <Paragraph>
                 {errorMessage}
             </Paragraph>

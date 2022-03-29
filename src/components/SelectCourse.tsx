@@ -14,13 +14,15 @@ import SplitContainer from "./ThemedComponents/SplitContainer";
 type SelectCoursesProps = {
     onSelect?: (layout: Layout, course: Course) => void,
     title?: string,
+    showDistance?: boolean,
+    showTraffic?: boolean,
 }
-const SelectCourses = ({ onSelect, title }: SelectCoursesProps) => {
+const SelectCourses = ({ onSelect, title, showTraffic=true, showDistance=true }: SelectCoursesProps) => {
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
-    const { courses, loading, addLayout, addCourse, fetchMore, error, ...restOfUseCourses } = useCourses();
+    const { courses, loading, addLayout, addCourse, fetchMore, error, ...restOfUseCourses } = useCourses(showDistance);
+    const liveData = useLiveData(showTraffic);
     const searchInput = useTextInput({ defaultValue: '', callBackDelay: 500 }, restOfUseCourses.setSearchString);
-    const liveData = useLiveData();
     const [expandedCourse, setExpandedCourse] = useState<null | Course['id']>(null);
     const handleAddLayout = (courseId: number | string, layout: NewLayout) => {
         addLayout(courseId, layout);

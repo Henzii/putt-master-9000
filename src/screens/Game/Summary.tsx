@@ -64,7 +64,7 @@ const SinglePlayerDataRow = ({ scorecard, pars }: { scorecard: Scorecard, pars: 
             key={scorecard.user.name + i + 'score'}
             data={scorecard.scores[i] || ' '}
             textStyle={tyylit.text}
-            style={[tyylit.scoreCell, pickColor(p, scorecard.scores[i])]}
+            style={[tyylit.scoreBall, tyylit.scoreCell, pickColor(p, scorecard.scores[i])]}
             width={27}
         />);
     });
@@ -82,10 +82,13 @@ const SinglePlayerDataRow = ({ scorecard, pars }: { scorecard: Scorecard, pars: 
 };
 const tyylit = StyleSheet.create({
     scoreCell: {
-        borderRadius: 7,
+        borderRadius: 30,
         //marginTop: 2,
-        marginVertical: 4,
+        marginVertical: 6,
         marginLeft: 2,
+    },
+    scoreBall: {
+        elevation: 2,
     },
     doubleBogie: {
         backgroundColor: '#fcbc9a',
@@ -100,7 +103,7 @@ const tyylit = StyleSheet.create({
         backgroundColor: '#aadaf2',
     },
     par: {
-        backgroundColor: '#50857255'
+        backgroundColor: '#a5d4c3'
     },
     rivi: {
         flexDirection: 'row',
@@ -112,14 +115,14 @@ const tyylit = StyleSheet.create({
     },
     headerText: {
         textAlign: 'center',
-        paddingVertical: 5,
+        paddingVertical: 7,
         fontWeight: 'bold',
         fontSize: 15,
-        paddingLeft: 2
+        paddingLeft: 2,
     },
     text: {
         textAlign: 'center',
-        paddingVertical: 7,
+        paddingVertical: 5,
     },
 });
 export default Summary;

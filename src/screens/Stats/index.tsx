@@ -26,7 +26,7 @@ const Stats = () => {
         <ErrorScreen errorMessage={error.message} />;
     }
     if (!selectedCourse) {
-        return <SelectCourses onSelect={handleCourseSelect} title="Show stats from" />;
+        return <SelectCourses onSelect={handleCourseSelect} title="Show stats from" showTraffic={false} showDistance={false} />;
     }
     if (loading || !data) {
         return <Loading />;

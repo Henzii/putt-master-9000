@@ -5,14 +5,38 @@ import { MockedProvider } from '@apollo/react-testing';
 import Settings from '../screens/Settings';
 import { getMeMock, updateMySettingsMock } from './mocks/getMeMock';
 import { Provider } from 'react-native-paper';
+import { InMemoryCache } from 'apollo-boost';
 
 const wrappedSettings = () => (
     <Provider>
-        <MockedProvider mocks={[getMeMock, updateMySettingsMock]} addTypename={true}>
+        <MockedProvider mocks={[getMeMock, updateMySettingsMock]} addTypename={true}
+            cache={
+                new InMemoryCache({
+                    addTypename: false,
+                    fragmentMatcher: { match: () => true },
+                })
+            }>
             <Settings />
         </MockedProvider>
     </Provider>
 );
+jest.mock('react-router-native', () => {
+    return {
+        useNavigate: () => null,
+    };
+});
+jest.mock('react-redux', () => {
+    return {
+        useDispatch: () => null,
+    };
+});
+
+// Poistaa Switch-komponenttiin liittyvän turhan varoituksen
+jest.mock('react-native/Libraries/Components/Switch/Switch', () => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const mockComponent = require('react-native/jest/mockComponent');
+    return mockComponent('react-native/Libraries/Components/Switch/Switch');
+});
 
 describe('<Settings /> testit', () => {
     it('Renderöityy oikein', () => {
