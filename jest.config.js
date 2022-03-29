@@ -2,7 +2,7 @@
 // Sync object
 // eslint-disable-next-line no-undef
 module.exports = {
-    testEnvironment: "jsdom",
+    testEnvironment: "jsdom", //jsdom
     preset: "jest-expo",
     globals: {
       "ts-jest": {
@@ -31,7 +31,7 @@ module.exports = {
       "tsx"
     ],
     transformIgnorePatterns: [
-      "node_modules/(?!(jest-)?@?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|sentry-expo|native-base)"
+      "node_modules/(?!(jest-)?@?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|sentry-expo|native-base|react-router-native)"
     ],
     coverageReporters: [
       "json-summary",

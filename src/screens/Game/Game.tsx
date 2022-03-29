@@ -12,10 +12,10 @@ import Loading from '../../components/Loading';
 import { RootState } from '../../utils/store';
 import ErrorScreen from '../../components/ErrorScreen';
 
-export default function Game() {
+export default function Game(props: { gameId?: string }) {
     const [selectedRound, setSelectedRound] = useState(0);
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
-    const gameId = gameData.gameId;
+    const gameId = props.gameId || gameData.gameId;
     const { data, loading, error, setScore } = useGame(gameId);
 
     const handleScoreChange = (playerId: string, selectedRound: number, value: number) => {
@@ -34,26 +34,26 @@ export default function Game() {
         return <ClosedGame />;
     }
     // Apumuuttuja jolla todetaan swiippaus vasemmalle
-    let touchPos = [0,0];
+    let touchPos = [0, 0];
     return (
         <>
             <RoundTabs gameData={data} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
             <Container noPadding fullScreen>
                 <View
                     style={{ minHeight: '100%' }}
-                    onTouchStart={(e) => touchPos = [e.nativeEvent.pageX, e.nativeEvent.pageY] }
+                    onTouchStart={(e) => touchPos = [e.nativeEvent.pageX, e.nativeEvent.pageY]}
                     onTouchEnd={(e) => {
                         // 70 % ruudun leveydesä
-                        const width70 = Dimensions.get('screen').width*0.7;
+                        const width70 = Dimensions.get('screen').width * 0.7;
                         // Jos kosketus on Y-suunnassa yli 30 -> return
-                        if (Math.abs( e.nativeEvent.pageY - touchPos[1] ) >= 50) return;
+                        if (Math.abs(e.nativeEvent.pageY - touchPos[1]) >= 50) return;
 
                         const movement = e.nativeEvent.pageX - touchPos[0];
                         // Jos liike X-suunnassa on vähemmän kuin 70% leveydestä
-                        if (Math.abs( movement ) < width70) return;
+                        if (Math.abs(movement) < width70) return;
 
-                        if ( movement > 0 && selectedRound > 0) setSelectedRound((v) => v - 1);
-                        else if (movement < 0 && selectedRound < data.holes-1 ) setSelectedRound((v) => v + 1);
+                        if (movement > 0 && selectedRound > 0) setSelectedRound((v) => v - 1);
+                        else if (movement < 0 && selectedRound < data.holes - 1) setSelectedRound((v) => v + 1);
                     }}
                 >
                     <View
@@ -86,10 +86,10 @@ const ClosedGame = () => {
         dispatch(unloadGame());
     };
     return (
-        <View style={peliStyles.gameover}>
+        <Container style={peliStyles.gameover}>
             <Title style={peliStyles.gameoverText}>Game over!</Title>
             <Button onPress={handleButtonClick}>Start a new game</Button>
-        </View>
+        </Container>
     );
 };
 const peliStyles = StyleSheet.create({
@@ -97,7 +97,6 @@ const peliStyles = StyleSheet.create({
         padding: 10,
     },
     gameover: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
 

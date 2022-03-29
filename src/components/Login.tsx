@@ -21,7 +21,7 @@ const Login = ({ login }: {login: (s1: string, s2: string) => Promise<void> }) =
             <Title>Login</Title>
             <TextInput testID='user' label="Username" mode='outlined' autoComplete={false} value={username} onChangeText={(v) => setUsername(v)}/>
             <TextInput testID='password' secureTextEntry label="Password" mode='outlined' autoComplete={false} value={password} onChangeText={(v) => setPassword(v)}/>
-            <Button onPress={handleLogin} style={tyyli.nappi} mode='contained'>Login</Button>
+            <Button onPress={handleLogin} style={tyyli.nappi} mode='contained' testID='LoginButton'>Login</Button>
         </Container>
     );
 };
