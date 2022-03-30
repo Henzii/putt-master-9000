@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text } from "react-native";
-import { Button, Chip, Headline, Subheading, Title, useTheme } from 'react-native-paper';
+import { Button, Chip, Headline, Title, useTheme } from 'react-native-paper';
 import { Course, Layout } from '../../hooks/useCourses';
 import useMe, { User } from '../../hooks/useMe';
 import FriendsList from '../../components/FriendsList';
 import SelectCourses from '../../components/SelectCourse';
 import Container from '../../components/ThemedComponents/Container';
-import SplitContainer from '../../components/ThemedComponents/SplitContainer';
 import Loading from '../../components/Loading';
-import ErrorScreen from '../../components/ErrorScreen';
 
 export type NewGameData = {
     course: Course | null,
@@ -39,11 +37,8 @@ const CreateGame = (props: CreateGameProps) => {
             });
         }
     }, [me.me]);
-    if (me.loading) {
-        return <Loading />;
-    }
     if (me.error || !me.me) {
-        return <ErrorScreen errorMessage='Cannot get current user?'/>;
+        return <Loading loadingText='Loading user...' />;
     }
     const handleSelectCourse = (layout: Layout, course: Course) => {
         setNewGameData({
@@ -106,7 +101,7 @@ const CreateGame = (props: CreateGameProps) => {
             </Button>
             <Title style={tyyli.title}>Players</Title>
             <>
-                {newGameData.players.map((player, i) => {
+                {newGameData.players.map((player) => {
                     return <Chip
                                 style={tyyli.chip}
                                 key={player.id}

@@ -18,7 +18,7 @@ const Summary = () => {
     }
     const sortedScorecards = [...data.scorecards].sort((a, b) => (a.total || 0) - (b.total || 0));
     const tableHeaders = [...data.pars.map((p, i) => i + 1), 'Total', '+/-', 'Hc', 'bHc', 'hcTot', 'Hc+/-'];
-    const leveydet = [...data.pars.map(() => 29), 50, 50, 50, 50, 50, 50];
+    const leveydet = [...data.pars.map(() => 31), 50, 50, 50, 50, 50, 50];
     const nimetJaSijoitukset = sortedScorecards.reduce((p:Array<Array<string>>, c, i) => {
         p.push([(i+1)+'.', c.user.name]);
         return p;
@@ -65,7 +65,7 @@ const SinglePlayerDataRow = ({ scorecard, pars }: { scorecard: Scorecard, pars: 
             data={scorecard.scores[i] || ' '}
             textStyle={tyylit.text}
             style={[tyylit.scoreBall, tyylit.scoreCell, pickColor(p, scorecard.scores[i])]}
-            width={27}
+            width={29}
         />);
     });
     return (
