@@ -77,7 +77,7 @@ const Settings = () => {
             <Divider />
             <Title>Delete account</Title>
             <Paragraph>
-                To delete your account, hold down the &apos;delete&apos; button for five seconds.
+                To delete your account, hold down the delete button for five seconds.
             </Paragraph>
             <TouchableRipple onPress={() => null} delayLongPress={4000} onLongPress={confirmDelete} style={tyyli.deleteContainer} >
                 <Text style={tyyli.delete}>Delete</Text>

@@ -8,7 +8,8 @@ type ContainerProps = {
     style?: { [key: string]: string | number},
     fullWidth?: boolean
     noPadding?: boolean
-    withScrollView?: boolean
+    withScrollView?: boolean,
+    fullHeight?: boolean,
 }
 
 const Container = (props: ContainerProps) => {
@@ -16,6 +17,7 @@ const Container = (props: ContainerProps) => {
     const tyyli = [
         props.fullScreen && tyylit.fullScreen,
         props.fullWidth && tyylit.fullWidth,
+        props.fullHeight && tyylit.fullHeight,
         !props.noFlex && { flex: 1 },
         {
             padding: (props.noPadding) ? 0: 20,
@@ -40,6 +42,9 @@ const Container = (props: ContainerProps) => {
 const tyylit = StyleSheet.create({
     fullWidth: {
         width: '100%',
+    },
+    fullHeight: {
+        minHeight: '100%'
     },
     fullScreen: {
         width: '100%',

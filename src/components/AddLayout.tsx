@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, Text } from "react-native";
-import { Button, Caption, Divider, Headline, TextInput, Title } from "react-native-paper";
+import { Button, Caption, Headline, IconButton, TextInput, Title } from "react-native-paper";
 import { NewLayout } from '../hooks/useCourses';
+import Container from './ThemedComponents/Container';
+import Divider from './ThemedComponents/Divider';
 
 const AddLayout = ({ onCancel, onAdd }: AddLayoutProps) => {
     const [holes, setHoles] = useState<number>();
@@ -42,17 +44,17 @@ const AddLayout = ({ onCancel, onAdd }: AddLayoutProps) => {
         if (onAdd) onAdd(newLayout);
     };
     return (
-        <ScrollView style={tyyli.main} contentContainerStyle={{ paddingBottom: 20, }}>
+        <ScrollView contentContainerStyle={{ paddingBottom: 40, }} style={tyyli.main}>
             <Headline>Add layout</Headline>
             <Caption>Layout name</Caption>
-            <TextInput autoComplete={false} value={name} onChangeText={(value) => setName(value)}/>
+            <TextInput autoComplete={false} value={name} onChangeText={(value) => setName(value)} />
             <Caption>Number of holes</Caption>
             <TextInput autoComplete={false} keyboardType='numeric' value={(holes || '') + ''} onChangeText={handleHolesChange} />
             <Divider />
             <Title>Pars</Title>
-            <HolesPars pars={pars} onParChange={handleParChange}/>
+            <HolesPars pars={pars} onParChange={handleParChange} />
             <Text>
-                {holes || 0} Holes, par {pars.reduce((p,c) => p+c,0)}
+                {holes || 0} Holes, par {pars.reduce((p, c) => p + c, 0)}
             </Text>
             <View style={tyyli.buttonsContainer}>
                 <Button onPress={handleAdd} icon="check" color='green' mode='contained'>Add</Button>
@@ -66,17 +68,38 @@ const HolesPars = ({ onParChange, pars }: { pars: number[], onParChange: (hole: 
     const returni = [];
     for (let i = 0; i < pars.length; i++) {
         if (pars[i] === undefined) continue;
-        returni.push(<TextInput
-            key={`HolesParsKey${i}`}
-            style={tyyli.singlePar}
-            onChangeText={(value) => onParChange(i, value)}
-            mode='outlined'
-            label={`Hole ${i+1}`}
-            value={pars[i] > 0 ? pars[i]+'' : ''}
-            dense
-            autoComplete={false}
-            keyboardType='numeric'
-        />);
+        returni.push(
+            <View style={tyyli.parInput} key={`HolesParsKey${i}`}>
+                <TextInput
+                    style={tyyli.singlePar}
+                    onChangeText={(value) => onParChange(i, value)}
+                    mode='outlined'
+                    label={`Hole ${i + 1}`}
+                    value={pars[i] > 0 ? pars[i] + '' : ''}
+                    dense
+                    autoComplete={false}
+                    keyboardType='numeric'
+                />
+                <IconButton
+                    style={tyyli.parInputButtons}
+                    icon="minus"
+                    color="red"
+                    onPress={() => {
+                        if (pars[i] > 1) {
+                            onParChange(i, pars[i] - 1);
+                        }
+                    }}
+                />
+                <IconButton
+                    icon="plus"
+                    style={tyyli.parInputButtons}
+                    color='green'
+                    onPress={() => {
+                        onParChange(i, pars[i] + 1);
+                    }}
+                />
+            </View>
+        );
     }
     return (
         <View style={tyyli.parList}>
@@ -86,14 +109,22 @@ const HolesPars = ({ onParChange, pars }: { pars: number[], onParChange: (hole: 
 };
 
 const tyyli = StyleSheet.create({
+    parInput: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
     main: {
-        backgroundColor: '#fff',
+        backgroundColor: '#fafafa',
         height: '90%',
         width: '90%',
-        padding: 20,
+        padding: 30,
+    },
+    parInputButtons: {
+        margin: 0,
     },
     singlePar: {
-        maxWidth: 100,
+        width: 100,
         margin: 10,
     },
     parList: {
