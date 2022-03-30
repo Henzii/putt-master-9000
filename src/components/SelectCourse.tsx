@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import { Button, Modal, Searchbar, Portal, List, Title, Paragraph } from "react-native-paper";
+import { Button, Modal, Searchbar, Portal, List, Title } from "react-native-paper";
 import useCourses, { Coordinates, Course, Layout, NewLayout } from "../hooks/useCourses";
 import useLiveData from '../hooks/useLiveData';
 import useTextInput from "../hooks/useTextInput";
@@ -9,7 +9,6 @@ import ErrorScreen from "./ErrorScreen";
 import Loading from "./Loading";
 import SelectLayout from "./SelectLayout";
 import Container from "./ThemedComponents/Container";
-import SplitContainer from "./ThemedComponents/SplitContainer";
 
 type SelectCoursesProps = {
     onSelect?: (layout: Layout, course: Course) => void,
@@ -45,7 +44,7 @@ const SelectCourses = ({ onSelect, title, showTraffic=true, showDistance=true }:
         <ErrorScreen errorMessage={error.message} />
     );
     if (!courses) return (
-        <Loading />
+        <Loading loadingText="Loading courses..." />
     );
     return (
         <Container noPadding>
