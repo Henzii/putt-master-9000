@@ -12,6 +12,7 @@ import { GET_ME_WITH_FRIENDS } from '../graphql/queries';
 
 type FriendListProps = {
     onClick?: (id: number | string, name?: string) => void,
+    hideRemoveButton?: boolean,
 }
 
 const FriendsList = (props: FriendListProps) => {
@@ -53,7 +54,12 @@ const FriendsList = (props: FriendListProps) => {
                 style={tyyli.lista}
                 data={me?.friends}
                 renderItem={({ item }) => (
-                    <SingleFriend onClick={props.onClick} onDelete={handleKillFriend} friend={item} />
+                    <SingleFriend
+                        onClick={props.onClick}
+                        onDelete={handleKillFriend}
+                        friend={item}
+                        showRemoveButton={!props.hideRemoveButton}
+                    />
                 )}
                 ItemSeparatorComponent={Separaattori}
             />
@@ -62,7 +68,13 @@ const FriendsList = (props: FriendListProps) => {
     );
 };
 
-const SingleFriend = ({ friend, onClick, onDelete }: { friend: User, onClick?: (id: number | string, name?: string) => void, onDelete?: (id: string, name?: string) => void }) => {
+type SingleFriendProps = {
+    friend: User,
+    onClick?: (id: number | string, name?: string) => void,
+    onDelete?: (id: number | string, name?: string) => void,
+    showRemoveButton?: boolean,
+}
+const SingleFriend = ({ friend, onClick, onDelete, showRemoveButton=true }: SingleFriendProps) => {
     const handleFriendClick = () => {
         if (onClick) onClick(friend.id, friend.name);
     };
@@ -73,7 +85,7 @@ const SingleFriend = ({ friend, onClick, onDelete }: { friend: User, onClick?: (
         <Pressable onPress={handleFriendClick}>
             <View style={tyyli.singleFriend}>
                 <Subheading>{friend.name}</Subheading>
-                <Button onPress={handleDelete}>Remove</Button>
+                {showRemoveButton && <Button onPress={handleDelete}>Remove</Button>}
             </View>
         </Pressable>
     );

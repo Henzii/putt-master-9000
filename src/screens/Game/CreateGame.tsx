@@ -76,13 +76,13 @@ const CreateGame = (props: CreateGameProps) => {
     };
 
     if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} title="New game" />;
-    if (addFriend) return <FriendsList onClick={handleAddFriend} />;
+    if (addFriend) return <FriendsList onClick={handleAddFriend} hideRemoveButton />;
 
     // Luodaan tyyli, parametrinä teeman väritys
     const tyyli = createStyle(colors);
 
     return (
-        <Container withScrollView>
+        <Container withScrollView noFlex fullHeight>
             <Headline>New Game</Headline>
             <Title style={tyyli.title}>Course</Title>
             <View style={tyyli.courseContainer}>
@@ -118,7 +118,14 @@ const CreateGame = (props: CreateGameProps) => {
             </>
             <Button style={tyyli.button} compact mode='outlined' onPress={() => setAddFriend(true)}>Add player</Button>
             <View style={tyyli.bottomButtons}>
-                <Button color='green' mode='contained' onPress={handleCreate}>Create</Button>
+                <Button
+                    color='green'
+                    mode='contained'
+                    onPress={handleCreate}
+                    disabled={(!newGameData.course || !newGameData.layout || newGameData.players.length < 1)}
+                >
+                    Create
+                </Button>
                 <Button color='red' mode='contained' onPress={props.onCancel}>Cancel</Button>
             </View>
         </Container>
@@ -154,6 +161,7 @@ const createStyle = (colors?: ReactNativePaper.ThemeColors) => StyleSheet.create
     button: {
         maxWidth: 150,
         marginTop: 15,
+        borderRadius: 8,
     },
     bottomButtons: {
         display: 'flex',
