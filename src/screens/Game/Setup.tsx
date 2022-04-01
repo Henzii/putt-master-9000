@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Alert, StyleSheet, Text } from "react-native";
-import { Button, Caption, Headline, Paragraph, Subheading } from 'react-native-paper';
+import React from 'react';
+import { Alert, StyleSheet } from "react-native";
+import { Button, Headline, Paragraph, Subheading } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../utils/store';
 import { gameData, unloadGame } from '../../reducers/gameDataReducer';
@@ -13,7 +13,7 @@ import Loading from '../../components/Loading';
 import { useMutation } from 'react-apollo';
 import { ABANDON_GAME } from '../../graphql/mutation';
 import { GET_OLD_GAMES } from '../../graphql/queries';
-import { format, fromUnixTime, formatDistanceStrict, differenceInMinutes } from 'date-fns';
+import { format, fromUnixTime, differenceInMinutes } from 'date-fns';
 
 const Setup = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
@@ -21,7 +21,6 @@ const Setup = () => {
     const navi = useNavigate();
     const gameHook = useGame(gameData.gameId);
     const [abandonGameMutation] = useMutation(ABANDON_GAME, { refetchQueries: [{ query: GET_OLD_GAMES }] });
-    const [showDatePicker, setShowDatePicker] = useState(false);
     const game = gameHook.data;
     const handleGameEnd = async () => {
         Alert.alert(

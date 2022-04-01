@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from 'react-apollo';
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text } from "react-native";
 import { Button, Subheading, TextInput, Title } from 'react-native-paper';
 import { CREATE_USER } from '../graphql/mutation';
 import AsyncStorage from '@react-native-async-storage/async-storage';

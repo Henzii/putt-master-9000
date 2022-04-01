@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { Button, Caption, Headline, Subheading, Switch, TextInput, Title } from "react-native-paper";
-import { useDispatch } from "react-redux";
+import { Button, Caption, Headline, Subheading, Switch, TextInput } from "react-native-paper";
 import { Coordinates } from "../hooks/useCourses";
-import useGPS, { GPShookReturn, Location } from "../hooks/useGPS";
-import { addNotification } from "../reducers/notificationReducer";
+import useGPS from "../hooks/useGPS";
 import Loading from "./Loading";
 import Divider from "./ThemedComponents/Divider";
 

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, Text } from "react-native";
 import { Button, Caption, Headline, IconButton, TextInput, Title } from "react-native-paper";
 import { NewLayout } from '../hooks/useCourses';
-import Container from './ThemedComponents/Container';
 import Divider from './ThemedComponents/Divider';
 
 const AddLayout = ({ onCancel, onAdd }: AddLayoutProps) => {
