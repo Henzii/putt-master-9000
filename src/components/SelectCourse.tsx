@@ -74,7 +74,11 @@ const SelectCourses = ({ onSelect, title, showTraffic=true, showDistance=true }:
                 data={courses}
                 keyExtractor={(item) => item.id as string}
                 ItemSeparatorComponent={Separaattori}
-                ListFooterComponent={(loading) ? <Loading noFullScreen loadingText="" /> : <Text>The end is here</Text>}
+                ListFooterComponent={
+                    (loading)
+                        ? <Loading noFullScreen loadingText="" />
+                        : <Text style={{ color: 'rgba(0,0,0,0.2)'}}>    No more... No más...</Text>
+                }
                 onEndReached={fetchMore}
                 onEndReachedThreshold={0.1}
                 renderItem={({ item }) => (
@@ -123,10 +127,10 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expan
             </View>
         );
     };
-    let description = course.layouts.length + ' layout' + (course.layouts.length > 1 ? 's' : '');
+    let description = course.layouts.length + ' layout' + (course.layouts.length !== 1 ? 's' : '');
     // Jos rata on avattu & liveDataa tarjolla, lisätään se descriptioniin
     if (expanded === course.id && liveData) {
-        description = description.concat(`\nCurrently ${liveData.live} players (today's total: ${liveData.today})`);
+        description = description.concat(`\n${liveData.live} / ${liveData.today}`);
     }
     return (
         <View style={tyyli.container}>

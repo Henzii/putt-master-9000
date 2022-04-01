@@ -27,19 +27,19 @@ const wrappedGame = () => {
 };
 
 describe('<Game /> testit', () => {
-    it('Alussa loading... teksti', async () => {
-        const { getByTestId } = render(wrappedGame());
-        expect(getByTestId('progress')).toBeDefined();
-    });
-    it('Radan nimi ja pelaajat löytyvät', async () => {
-        const { getByTestId, getByText } = render(wrappedGame());
+    it('Renderöityy oikein', async () => {
+        const { getByText, getByTestId} = render(wrappedGame());
+
+        // Alussa loading-rinkula
+        expect(getByText('Loading...')).toBeDefined();
+
         await waitFor(() => {
 
             // Radan nimi löytyy...
             expect(getByTestId('GameRata').children).toContain(gameMocks.mockedGame.course);
-
-            // Molemmat pelaajat löytyy
+            // Pelaajan nimi löytyy...
             expect(getByText(gameMocks.mockedGame.scorecards[0].user.name)).not.toBeNull();
+
         });
     });
 });

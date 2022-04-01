@@ -7,6 +7,9 @@ import { RootState } from '../../utils/store';
 import Container from '../../components/ThemedComponents/Container';
 import { Table, Row, Cell, TableWrapper, Rows } from 'react-native-table-component';
 import Loading from '../../components/Loading';
+import { Headline, Subheading } from 'react-native-paper';
+import SplitContainer from '../../components/ThemedComponents/SplitContainer';
+import { format, fromUnixTime } from 'date-fns';
 
 const Summary = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
@@ -19,30 +22,41 @@ const Summary = () => {
     const sortedScorecards = [...data.scorecards].sort((a, b) => (a.total || 0) - (b.total || 0));
     const tableHeaders = [...data.pars.map((p, i) => i + 1), 'Total', '+/-', 'Hc', 'bHc', 'hcTot', 'Hc+/-'];
     const leveydet = [...data.pars.map(() => 31), 50, 50, 50, 50, 50, 50];
-    const nimetJaSijoitukset = sortedScorecards.reduce((p:Array<Array<string>>, c, i) => {
-        p.push([(i+1)+'.', c.user.name]);
+    const nimetJaSijoitukset = sortedScorecards.reduce((p: Array<Array<string>>, c, i) => {
+        p.push([(i + 1) + '.', c.user.name]);
         return p;
     }, []);
+    const startTime = fromUnixTime(data.startTime / 1000);
+    const formattedStartTime = format(startTime, 'dd.MM.yyyy HH:ii');
     return (
-        <Container noPadding style={{ flexDirection: 'row' }}>
-            <View style={{ width: 110 }}>
-                <Table>
-                    <Row data={['#', 'Player']} widthArr={[30, 80]} style={[tyylit.header]} textStyle={tyylit.headerText} />
-                    <Rows data={nimetJaSijoitukset} widthArr={[30,80]} textStyle={[tyylit.text, tyylit.scoreCell]} style={[tyylit.rivi]}  />
-                </Table>
+        <>
+            <View style={tyylit.topInfo}>
+                <Headline >{data.course}</Headline>
+                <SplitContainer>
+                    <Subheading>{data.layout}</Subheading>
+                    <Subheading>{formattedStartTime}</Subheading>
+                </SplitContainer>
             </View>
-            <ScrollView horizontal>
-                <Table>
-                    <Row data={tableHeaders} style={tyylit.header} textStyle={[tyylit.headerText]} widthArr={leveydet} />
-                    {sortedScorecards.map((sc) => (
-                        <SinglePlayerDataRow
-                            key={sc.user.id + 'scData'}
-                            pars={data.pars}
-                            scorecard={sc} />)
-                    )}
-                </Table>
-            </ScrollView>
-        </Container>
+            <Container noPadding style={{ flexDirection: 'row' }}>
+                <View style={{ width: 110 }}>
+                    <Table>
+                        <Row data={['#', 'Player']} widthArr={[30, 80]} style={[tyylit.header]} textStyle={tyylit.headerText} />
+                        <Rows data={nimetJaSijoitukset} widthArr={[30, 80]} textStyle={[tyylit.text, tyylit.scoreCell]} style={[tyylit.rivi]} />
+                    </Table>
+                </View>
+                <ScrollView horizontal>
+                    <Table>
+                        <Row data={tableHeaders} style={tyylit.header} textStyle={[tyylit.headerText]} widthArr={leveydet} />
+                        {sortedScorecards.map((sc) => (
+                            <SinglePlayerDataRow
+                                key={sc.user.id + 'scData'}
+                                pars={data.pars}
+                                scorecard={sc} />)
+                        )}
+                    </Table>
+                </ScrollView>
+            </Container>
+        </>
     );
 };
 const SinglePlayerDataRow = ({ scorecard, pars }: { scorecard: Scorecard, pars: number[] }) => {
@@ -81,6 +95,14 @@ const SinglePlayerDataRow = ({ scorecard, pars }: { scorecard: Scorecard, pars: 
     );
 };
 const tyylit = StyleSheet.create({
+    topInfo: {
+        padding: 5,
+        paddingRight: 7,
+        borderBottomWidth: 1,
+        borderColor: 'darkgreen',
+        backgroundColor: '#efffef',
+        marginTop: 0,
+    },
     scoreCell: {
         borderRadius: 30,
         //marginTop: 2,

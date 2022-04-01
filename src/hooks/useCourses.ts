@@ -18,7 +18,7 @@ const useCourses = (showDistance = true) => {
                 limit: 9,
                 offset: 0,
                 search: searchString,
-                coordinates: [0, 0]
+                coordinates: (showDistance && gps.ready) ? [gps.lon, gps.lat] : [0, 0]
             },
             fetchPolicy: 'cache-and-network'
         }
