@@ -7,7 +7,7 @@ import store from '../utils/store';
 describe('<Login />>', () => {
     it('Login lomake toimii oikein', () => {
         const loginFunction = jest.fn(() => Promise.resolve());
-        const { getByText, getByTestId } = render(
+        const { getByTestId } = render(
             <ReduxProvider store={store}>
                 <Login login={loginFunction} />
             </ReduxProvider>

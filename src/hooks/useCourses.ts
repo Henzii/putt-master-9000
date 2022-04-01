@@ -1,5 +1,6 @@
+/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
-import { useQuery, useMutation, useApolloClient } from "react-apollo";
+import { useQuery, useMutation } from "react-apollo";
 
 import { ADD_COURSE, ADD_LAYOUT } from "../graphql/mutation";
 import { GET_COURSES } from "../graphql/queries";
@@ -18,7 +19,7 @@ const useCourses = (showDistance = true) => {
                 limit: 9,
                 offset: 0,
                 search: searchString,
-                coordinates: [0, 0]
+                coordinates: (showDistance && gps.ready) ? [gps.lon, gps.lat] : [0, 0]
             },
             fetchPolicy: 'cache-and-network'
         }

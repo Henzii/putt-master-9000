@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Alert, StyleSheet, Text } from "react-native";
+import React from 'react';
+import { Alert, StyleSheet } from "react-native";
 import { Button, Headline, Paragraph, Subheading } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../utils/store';
@@ -13,8 +13,7 @@ import Loading from '../../components/Loading';
 import { useMutation } from 'react-apollo';
 import { ABANDON_GAME } from '../../graphql/mutation';
 import { GET_OLD_GAMES } from '../../graphql/queries';
-import { format, fromUnixTime } from 'date-fns';
-import SplitContainer from '../../components/ThemedComponents/SplitContainer';
+import { format, fromUnixTime, differenceInMinutes } from 'date-fns';
 
 const Setup = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
@@ -22,7 +21,6 @@ const Setup = () => {
     const navi = useNavigate();
     const gameHook = useGame(gameData.gameId);
     const [abandonGameMutation] = useMutation(ABANDON_GAME, { refetchQueries: [{ query: GET_OLD_GAMES }] });
-    const [showDatePicker, setShowDatePicker] = useState(false);
     const game = gameHook.data;
     const handleGameEnd = async () => {
         Alert.alert(
@@ -79,8 +77,12 @@ const Setup = () => {
     if (!game) {
         return (<Loading />);
     }
-    const date = fromUnixTime(game.startTime / 1000);
-    const formattedDate = format(date, 'dd.MM.yyyy HH:ii');
+    const startDate = fromUnixTime(game.startTime / 1000);
+    const endDate = (game.endTime ? fromUnixTime(game.endTime / 1000) : undefined);
+
+    const startDateFormatted = format(startDate, 'dd.MM.yyyy HH:ii');
+    const endDateFormatted = (endDate ? format(endDate, 'dd.MM.yyyy HH:ii') : '?');
+    const duration = differenceInMinutes(endDate || new Date(), startDate);
     return (
         <Container>
             <Headline>Setup</Headline>
@@ -95,10 +97,10 @@ const Setup = () => {
             >End game
             </Button>
             <Divider />
-            <Subheading>Date</Subheading>
-            <Paragraph>
-                {formattedDate}
-            </Paragraph>
+            <Subheading>Times &amp; Dates</Subheading>
+            <Paragraph>Started          {startDateFormatted}</Paragraph>
+            <Paragraph>Ended            {endDateFormatted}</Paragraph>
+            <Paragraph>Duration        {duration} min</Paragraph>
             <Divider />
             <Paragraph>
                 Return to main menu
@@ -136,3 +138,4 @@ const tyyli = StyleSheet.create({
     }
 });
 export default Setup;
+

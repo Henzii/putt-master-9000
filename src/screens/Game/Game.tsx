@@ -28,7 +28,7 @@ export default function Game(props: { gameId?: string }) {
     };
     if (!data && loading) return <Loading />;
     if (!data || error) {
-        return <ErrorScreen errorMessage='Error just happened!' />;
+        return <ErrorScreen errorMessage={`Error just happened!`} />;
     }
     if (!data.isOpen) {
         return <ClosedGame />;

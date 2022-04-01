@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { Game } from '../hooks/useGame';
 import { theme } from '../utils/theme';
 
 export default function RoundTabs({ gameData, selectedRound, setSelectedRound }: RoundTabsProps) {
     const tabsList: JSX.Element[] = [];
-
+    const scrollRef = useRef<ScrollView>(null);
+    // Kun rata vaihtuu, scrollataan rata esille
+    useEffect(() => {
+        scrollRef.current?.scrollTo({
+            x: (selectedRound > 4 ? (selectedRound-2)*50 : 0),
+            animated: true
+        });
+    }, [selectedRound]);
     for (let i = 0; i < gameData.holes; i++) {
 
         // Monenko pelaajan tuloksia kyseiseltä väylältä on kirjattuna
@@ -20,7 +27,6 @@ export default function RoundTabs({ gameData, selectedRound, setSelectedRound }:
         if (i>0 && scoresEnteredForRound > 0 && !tabsList[i-1].props.finished) {
             tabsList[i-1] = <SingleTab key={'singleTab'+(i-1)} {...tabsList[i-1].props} skipped={true} />;
         }
-
         tabsList.push(
             <SingleTab
                 key={'singleTab' + i}
@@ -39,6 +45,7 @@ export default function RoundTabs({ gameData, selectedRound, setSelectedRound }:
                 horizontal
                 contentContainerStyle={tabsStyle.root}
                 showsHorizontalScrollIndicator={false}
+                ref={scrollRef}
             >
                 {tabsList}
             </ScrollView>

@@ -23,6 +23,7 @@ import { addNotification } from '../reducers/notificationReducer';
 export default function App() {
     const navi = useNavigate();
     const dispatch = useDispatch();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const notificListener = useRef<any>();
 
     useEffect(() => {

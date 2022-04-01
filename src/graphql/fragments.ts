@@ -12,6 +12,7 @@ export const CORE_GAME_INFO = gql`
     fragment CoreGameInfo on Game {
         date
         startTime
+        endTime
         course
         layout
         id

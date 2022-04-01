@@ -8,7 +8,8 @@ export const mockedGame: Game = {
     holes: 5,
     pars: [3,3,3,2,2],
     date: "1.1.2020 09:00",
-    startTime: 0,
+    startTime: 100,
+    endTime: 0,
     par: 13,
     isOpen: true,
     scorecards: [

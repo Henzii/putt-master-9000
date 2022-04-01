@@ -106,10 +106,10 @@ const tyyli = StyleSheet.create({
     },
     scoreButtonPending: {
         borderColor: 'orange',
-        backgroundColor: 'darkgreen',
+        backgroundColor: 'white',
     },
     scoreButtonSelected: {
-        backgroundColor: 'salmon',
+        backgroundColor: '#8ecf8a',
         borderColor: 'green'
     },
     content: {
