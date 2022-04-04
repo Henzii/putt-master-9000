@@ -13,7 +13,7 @@ import Loading from '../../components/Loading';
 import { useMutation } from 'react-apollo';
 import { ABANDON_GAME } from '../../graphql/mutation';
 import { GET_OLD_GAMES } from '../../graphql/queries';
-import { format, fromUnixTime, differenceInMinutes } from 'date-fns';
+import { format, fromUnixTime, differenceInMinutes, minutesToHours} from 'date-fns';
 
 const Setup = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
@@ -80,9 +80,12 @@ const Setup = () => {
     const startDate = fromUnixTime(game.startTime / 1000);
     const endDate = (game.endTime ? fromUnixTime(game.endTime / 1000) : undefined);
 
-    const startDateFormatted = format(startDate, 'dd.MM.yyyy HH:ii');
-    const endDateFormatted = (endDate ? format(endDate, 'dd.MM.yyyy HH:ii') : '?');
+    const startDateFormatted = format(startDate, 'dd.MM.yyyy HH:mm');
+    const endDateFormatted = (endDate ? format(endDate, 'dd.MM.yyyy HH:mm') : '?');
     const duration = differenceInMinutes(endDate || new Date(), startDate);
+    const durationString = (duration > 60)
+        ? `${minutesToHours(duration)} h ${duration % 60} min`
+        : `${duration} min`;
     return (
         <Container>
             <Headline>Setup</Headline>
@@ -100,7 +103,7 @@ const Setup = () => {
             <Subheading>Times &amp; Dates</Subheading>
             <Paragraph>Started          {startDateFormatted}</Paragraph>
             <Paragraph>Ended            {endDateFormatted}</Paragraph>
-            <Paragraph>Duration        {duration} min</Paragraph>
+            <Paragraph>Duration        {durationString}</Paragraph>
             <Divider />
             <Paragraph>
                 Return to main menu

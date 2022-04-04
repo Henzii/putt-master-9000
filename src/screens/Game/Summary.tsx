@@ -27,7 +27,7 @@ const Summary = () => {
         return p;
     }, []);
     const startTime = fromUnixTime(data.startTime / 1000);
-    const formattedStartTime = format(startTime, 'dd.MM.yyyy HH:ii');
+    const formattedStartTime = format(startTime, 'dd.MM.yyyy HH:mm');
     return (
         <>
             <View style={tyylit.topInfo}>
