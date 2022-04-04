@@ -1,7 +1,7 @@
 import { useMutation } from 'react-apollo';
 import React, { useState } from 'react';
 import { Alert, FlatList, Pressable, StyleSheet, View } from "react-native";
-import { Button, Headline, Modal, Portal, Subheading } from 'react-native-paper';
+import { Button, Headline, IconButton, Modal, Portal, Subheading } from 'react-native-paper';
 import { REMOVE_FRIEND } from '../graphql/mutation';
 import useMe, { User } from '../hooks/useMe';
 import AddFriend from './AddFriend';
@@ -39,7 +39,7 @@ const FriendsList = (props: FriendListProps) => {
         return <ErrorScreen errorMessage={error.message} />;
     }
     return (
-        <Container noPadding>
+        <Container noPadding style={{ paddingBottom: 20 }}>
             <Portal>
                 <Modal
                     visible={addFriendModal}
@@ -62,8 +62,9 @@ const FriendsList = (props: FriendListProps) => {
                     />
                 )}
                 ItemSeparatorComponent={Separaattori}
+                ListFooterComponent={Separaattori}
             />
-            <Button onPress={() => setAddFriendModal(true)}>Add friend</Button>
+            <Button mode="outlined" icon="plus" style={{ marginHorizontal: '20%' }} onPress={() => setAddFriendModal(true)}>Add friend</Button>
         </Container>
     );
 };
@@ -85,7 +86,7 @@ const SingleFriend = ({ friend, onClick, onDelete, showRemoveButton=true }: Sing
         <Pressable onPress={handleFriendClick}>
             <View style={tyyli.singleFriend}>
                 <Subheading>{friend.name}</Subheading>
-                {showRemoveButton && <Button onPress={handleDelete}>Remove</Button>}
+                {showRemoveButton && <IconButton color="rgb(223,50,50)" icon="trash-can" onPress={handleDelete} />}
             </View>
         </Pressable>
     );
@@ -114,11 +115,11 @@ const tyyli = StyleSheet.create({
     },
     lista: {
         borderTopWidth: 1,
-        borderBottomWidth: 1,
         borderColor: 'lightgray',
         marginTop: 10,
     },
     otsikko: {
+        padding: 10,
         textAlign: 'center',
     }
 });
