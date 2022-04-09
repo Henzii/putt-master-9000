@@ -25,9 +25,11 @@ const Settings = () => {
         AsyncStorage.getItem('hideBeers').then(res => {
             if (res === 'false') {
                 setHideBeers(false);
-            } else if (res === 'true') {
+            } else {
                 setHideBeers(true);
             }
+        }).catch(() => {
+            setHideBeers(true);
         });
     }, []);
 
