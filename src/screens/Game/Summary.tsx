@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useSelector } from 'react-redux';
 import useGame, { Scorecard } from '../../hooks/useGame';
@@ -10,24 +10,40 @@ import Loading from '../../components/Loading';
 import { Headline, Subheading } from 'react-native-paper';
 import SplitContainer from '../../components/ThemedComponents/SplitContainer';
 import { format, fromUnixTime } from 'date-fns';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Summary = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const { data, ready } = useGame(gameData.gameId);
+    const [hideBeers, setHideBeers] = useState(true);
+    useEffect(() => {
+        AsyncStorage.getItem('hideBeers').then((res) => {
+            if (res === 'false') {
+                setHideBeers(false);
+            }
+        });
+    }, []);
+
     if (!ready || !data) {
         return (
             <Loading />
         );
     }
     const sortedScorecards = [...data.scorecards].sort((a, b) => (a.total || 0) - (b.total || 0));
-    const tableHeaders = [...data.pars.map((p, i) => i + 1), 'Total', '+/-', 'Hc', 'bHc', 'hcTot', 'Hc+/-'];
-    const leveydet = [...data.pars.map(() => 31), 50, 50, 50, 50, 50, 50];
+    const tableHeaders = [...data.pars.map((p, i) => i + 1), 'Total', '+/-', 'Hc', 'hcTot', 'Hc+/-'];
+    const leveydet = [...data.pars.map(() => 31), 50, 50, 50, 50, 50];
     const nimetJaSijoitukset = sortedScorecards.reduce((p: Array<Array<string>>, c, i) => {
         p.push([(i + 1) + '.', c.user.name]);
         return p;
     }, []);
     const startTime = fromUnixTime(data.startTime / 1000);
     const formattedStartTime = format(startTime, 'dd.MM.yyyy HH:mm');
+
+    // Lisätään tarvittaessa otsikoihin bHc
+    if (!hideBeers) {
+        tableHeaders.splice( tableHeaders.length-2, 0, 'bHc');
+        leveydet.push(50);
+    }
     return (
         <>
             <View style={tyylit.topInfo}>
@@ -51,6 +67,7 @@ const Summary = () => {
                             <SinglePlayerDataRow
                                 key={sc.user.id + 'scData'}
                                 pars={data.pars}
+                                hideBeers={hideBeers}
                                 scorecard={sc} />)
                         )}
                     </Table>
@@ -59,7 +76,7 @@ const Summary = () => {
         </>
     );
 };
-const SinglePlayerDataRow = ({ scorecard, pars }: { scorecard: Scorecard, pars: number[] }) => {
+const SinglePlayerDataRow = ({ scorecard, pars, hideBeers=true }: { scorecard: Scorecard, pars: number[], hideBeers?: boolean }) => {
     const pickColor = (par: number, score: number) => {
         switch (par - score) {
             case 0:
@@ -82,15 +99,16 @@ const SinglePlayerDataRow = ({ scorecard, pars }: { scorecard: Scorecard, pars: 
             width={29}
         />);
     });
+    const bHc = hideBeers ? 0 : scorecard.beers / 2;
     return (
         <TableWrapper style={tyylit.rivi}>
             {dataCells}
             <Cell data={scorecard.total} width={50} textStyle={tyylit.text} />
             <Cell data={scorecard.plusminus} width={50} textStyle={tyylit.text} />
             <Cell data={scorecard.hc} width={50} textStyle={tyylit.text} />
-            <Cell data={scorecard.beers / 2} width={50} textStyle={tyylit.text} />
-            <Cell data={((scorecard.total || 0) - scorecard.hc - scorecard.beers / 2)} width={50} textStyle={tyylit.text} />
-            <Cell data={(scorecard.plusminus || 0) - scorecard.hc - scorecard.beers / 2} width={50} textStyle={tyylit.text} />
+            {!hideBeers ? <Cell data={bHc} width={50} textStyle={tyylit.text} /> : <></>}
+            <Cell data={((scorecard.total || 0) - scorecard.hc - bHc)} width={50} textStyle={tyylit.text} />
+            <Cell data={(scorecard.plusminus || 0) - scorecard.hc - bHc} width={50} textStyle={tyylit.text} />
         </TableWrapper>
     );
 };

@@ -12,7 +12,7 @@ import LineChart from './LineChart';
 
 const Stats = () => {
     const [selectedCourse, setSelectedCourse] = useState<{ course: Course, layout: Layout } | null>(null);
-    const [loadStats, { data, loading, error }] = useLazyQuery(GET_STATS);
+    const [loadStats, { data, loading, error }] = useLazyQuery(GET_STATS, { fetchPolicy: 'cache-and-network' });
     useEffect(() => {
         if (selectedCourse) {
             loadStats({ variables: { course: selectedCourse.course.name, layout: selectedCourse.layout.name } });
@@ -31,9 +31,10 @@ const Stats = () => {
     if (loading || !data) {
         return <Loading />;
     }
+    const scoresToDisplay = data.getHc[0].scores;
     return (
         <>
-            <Container>
+            <Container withScrollView>
                 <Title>Stats</Title>
                 {
                     (!data.getHc || data.getHc.length === 0)
@@ -41,15 +42,15 @@ const Stats = () => {
                         : <>
                             <Paragraph>
                                 Course: {selectedCourse?.course.name + ' / ' + selectedCourse?.layout.name}
-                                <Button onPress={() => setSelectedCourse(null)}>Change</Button>
                             </Paragraph>
                             <Text>Games: {data.getHc[0].games}</Text>
                             <Text>Hc: {data.getHc[0].hc}</Text>
                             <Text>Scores: {data.getHc[0].scores.map((n: number) => n - (selectedCourse?.layout.par || 0)).join(', ')} </Text>
                         </>
                 }
+                <Button onPress={() => setSelectedCourse(null)}>Change course</Button>
+                <LineChart par={selectedCourse.layout.par} data={scoresToDisplay} />
             </Container>
-            <LineChart />
         </>
     );
 };

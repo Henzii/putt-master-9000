@@ -14,6 +14,7 @@ import CreateGame, { NewGameData } from './CreateGame';
 import Game from './Game';
 import Setup from './Setup';
 import Summary from './Summary';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function GameContainer() {
     /*
@@ -27,15 +28,25 @@ export default function GameContainer() {
     const client = useApolloClient();
 
     const [navIndex, setNavIndex] = useState(0);
-    const [navRoutes] = useState([
+    const [navRoutes, setNavRoutes] = useState([
         { key: 'gameRoute', title: 'Scorecard', icon: 'counter' },
         { key: 'summaryRoute', title: 'Summary', icon: 'format-list-numbered' },
-        { key: 'beerRoute', title: 'Beers', icon: 'beer-outline' },
+//      { key: 'beerRoute', title: 'Beers', icon: 'beer-outline' },
         { key: 'setupRoute', title: 'Setup', icon: 'cog-outline' },
     ]);
     useEffect(() => {
         // Listeneri joka kuuntelee sovelluksen tilaa
         AppState.addEventListener('change', _handleAppStateChange);
+
+        // Haetaan asyncstoragesta tieto näytetäänkö beers-välilehti ja tarvittaessa lisätään navroute
+        AsyncStorage.getItem('hideBeers').then((res) => {
+            if (res === 'false') {
+                const copyOfNavRoutes = [...navRoutes];
+                copyOfNavRoutes.splice(2, 0, { key: 'beerRoute', title: 'Beers', icon: 'beer-outline' });
+                setNavRoutes(copyOfNavRoutes);
+            }
+        });
+
         return () => AppState.removeEventListener('change', _handleAppStateChange);
     }, []);
     /*
