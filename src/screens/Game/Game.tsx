@@ -12,10 +12,10 @@ import Loading from '../../components/Loading';
 import { RootState } from '../../utils/store';
 import ErrorScreen from '../../components/ErrorScreen';
 
-export default function Game(props: { gameId?: string }) {
+export default function Game() {
     const [selectedRound, setSelectedRound] = useState(0);
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
-    const gameId = props.gameId || gameData.gameId;
+    const gameId = gameData.gameId;
     const { data, loading, error, setScore } = useGame(gameId);
 
     const handleScoreChange = (playerId: string, selectedRound: number, value: number) => {
