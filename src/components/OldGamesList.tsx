@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { useQuery } from 'react-apollo';
 import { FlatList, Pressable, StyleSheet, View } from "react-native";
-import { Caption, Chip, Paragraph, Subheading, Title, useTheme } from 'react-native-paper';
+import { Button, Caption, Chip, Paragraph, Searchbar, Subheading, Title, useTheme } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-native';
 import { GET_OLD_GAMES } from '../graphql/queries';
@@ -10,9 +10,19 @@ import { newGame } from '../reducers/gameDataReducer';
 import Loading from './Loading';
 import Container from './ThemedComponents/Container';
 import { format, fromUnixTime } from 'date-fns';
+import useTextInput from '../hooks/useTextInput';
 
 const OldGamesList = () => {
     const { data, loading } = useQuery<{ getGames: Game[] }>(GET_OLD_GAMES, { fetchPolicy: 'cache-and-network' });
+
+    const [showSearchBar, setShowSearchBar] = useState(false);
+    const [filterText, setFilterText] = useState('');
+    const filter = useTextInput({ defaultValue: '', callBackDelay: 500 }, (value) => {
+        setFilterText(value);
+    });
+    const filteredGames = useCallback((games: Game[]) => {
+        return games.filter(g => g.course.toLowerCase().includes(filterText.toLowerCase()));
+    }, [filterText]);
     const dispatch = useDispatch();
     const navi = useNavigate();
     const handleGameActivation = (gameId: string) => {
@@ -24,17 +34,20 @@ const OldGamesList = () => {
             <Loading />
         );
     }
-
     return (
         <Container noPadding>
             <Container noFlex>
-                <Title>Old games</Title>
+                <Title>Games</Title>
                 <Paragraph>
-                    Tap game to activate it
+                    You have played {data.getGames?.length} rounds
                 </Paragraph>
+                <Button mode='outlined' onPress={() => setShowSearchBar((p) => !p)}>Filter</Button>
+                <>
+                    {showSearchBar && <Searchbar {...filter} autoComplete={false} />}
+                </>
             </Container>
             <FlatList
-                data={data.getGames}
+                data={filteredGames(data.getGames)}
                 renderItem={({ item }) => <SingleGame game={item} onClick={handleGameActivation} />}
                 ItemSeparatorComponent={Separator}
             />

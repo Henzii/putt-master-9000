@@ -38,19 +38,19 @@ export default function Game() {
     return (
         <>
             <RoundTabs gameData={data} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
-            <Container noPadding fullScreen>
+            <Container noPadding>
                 <View
                     style={{ minHeight: '100%' }}
                     onTouchStart={(e) => touchPos = [e.nativeEvent.pageX, e.nativeEvent.pageY]}
                     onTouchEnd={(e) => {
-                        // 70 % ruudun leveydesä
-                        const width70 = Dimensions.get('screen').width * 0.7;
+                        // 50 % ruudun leveydesä
+                        const width50 = Dimensions.get('screen').width * 0.5;
                         // Jos kosketus on Y-suunnassa yli 30 -> return
                         if (Math.abs(e.nativeEvent.pageY - touchPos[1]) >= 50) return;
 
                         const movement = e.nativeEvent.pageX - touchPos[0];
                         // Jos liike X-suunnassa on vähemmän kuin 70% leveydestä
-                        if (Math.abs(movement) < width70) return;
+                        if (Math.abs(movement) < width50) return;
 
                         if (movement > 0 && selectedRound > 0) setSelectedRound((v) => v - 1);
                         else if (movement < 0 && selectedRound < data.holes - 1) setSelectedRound((v) => v + 1);
@@ -65,6 +65,7 @@ export default function Game() {
                     <FlatList
                         data={data.scorecards}
                         keyExtractor={(item) => item.user.id as string}
+                        ListFooterComponent={<View style={{ height: 100 }} />}
                         renderItem={({ item }) => (
                             <Player
                                 player={item}

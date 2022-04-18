@@ -87,7 +87,7 @@ const Setup = () => {
         ? `${minutesToHours(duration)} h ${duration % 60} min`
         : `${duration} min`;
     return (
-        <Container>
+        <Container withScrollView>
             <Headline>Setup</Headline>
             <Paragraph>
                 Stop drinking and close the game.
