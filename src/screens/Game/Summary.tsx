@@ -53,7 +53,7 @@ const Summary = () => {
                     <Subheading>{formattedStartTime}</Subheading>
                 </SplitContainer>
             </View>
-            <Container noPadding style={{ flexDirection: 'row' }}>
+            <Container noPadding style={{ flexDirection: 'row' }} noFlex withScrollView>
                 <View style={{ width: 110 }}>
                     <Table>
                         <Row data={['#', 'Player']} widthArr={[30, 80]} style={[tyylit.header]} textStyle={tyylit.headerText} />
@@ -72,6 +72,7 @@ const Summary = () => {
                         )}
                     </Table>
                 </ScrollView>
+                <View style={{ height: 100}} />
             </Container>
         </>
     );

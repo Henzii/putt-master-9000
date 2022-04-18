@@ -18,7 +18,7 @@ const Container = (props: ContainerProps) => {
         props.fullScreen && tyylit.fullScreen,
         props.fullWidth && tyylit.fullWidth,
         props.fullHeight && tyylit.fullHeight,
-        !props.noFlex && { flex: 1 },
+        (!props.noFlex && !props.withScrollView) && { flex: 1 },
         {
             padding: (props.noPadding) ? 0: 20,
             backgroundColor: '#fafafa'
