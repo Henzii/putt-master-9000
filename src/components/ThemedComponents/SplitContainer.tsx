@@ -2,7 +2,8 @@ import React from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
 
 type SplitContainerProps = {
-    children: React.ReactElement[] | null | React.ReactElement,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    children: React.ReactElement[] | null | React.ReactElement | any,
     left?: boolean,
     bottonMargin?: boolean,
     spaceAround?: boolean,
