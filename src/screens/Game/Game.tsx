@@ -11,6 +11,7 @@ import { gameData, unloadGame } from '../../reducers/gameDataReducer';
 import Loading from '../../components/Loading';
 import { RootState } from '../../utils/store';
 import ErrorScreen from '../../components/ErrorScreen';
+import { useCallback } from 'react';
 
 export default function Game() {
     const [selectedRound, setSelectedRound] = useState(0);
@@ -26,6 +27,18 @@ export default function Game() {
             value,
         });
     };
+    const findThrowingOrder = useCallback(() => {
+        // Kopioidaan tuloskortit
+        const cards = [...data?.scorecards || []];
+        for (let i = 1; i < selectedRound; i++) {
+            cards.sort((a, b) => (a.scores[i] || 99) - (b.scores[i] || 99));
+        }
+        return cards.reduce((p,c,i) => {
+            p[c.user.id] = (i+1);
+            return p;
+        }, ({} as { [key: string]: number }));
+    }, [selectedRound]);
+
     if (!data && loading) return <Loading />;
     if (!data || error) {
         return <ErrorScreen errorMessage={`Error just happened!`} />;
@@ -35,6 +48,7 @@ export default function Game() {
     }
     // Apumuuttuja jolla todetaan swiippaus vasemmalle
     let touchPos = [0, 0];
+    const throwingOrder = findThrowingOrder();
     return (
         <>
             <RoundTabs gameData={data} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
@@ -71,6 +85,7 @@ export default function Game() {
                                 player={item}
                                 selectedRound={selectedRound}
                                 setScore={handleScoreChange}
+                                order={throwingOrder[item.user.id]}
                             />
                         )}
                     />

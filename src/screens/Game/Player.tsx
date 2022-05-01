@@ -7,6 +7,7 @@ type PlayerArgs = {
     player: Scorecard,
     selectedRound: number,
     setScore: (playerId: string, selectedRound: number, value: number) => void,
+    order?: number
 }
 /**
  *  ### Pejaala
@@ -16,7 +17,7 @@ type PlayerArgs = {
  *  @param selectedRound Valittu kierros
  *  @param setScore callback tuloksen asettamiselle. Saa parateriksi tuloksen
  */
-export default function Player({ player, selectedRound, setScore }: PlayerArgs): JSX.Element {
+export default function Player({ player, selectedRound, setScore, order }: PlayerArgs): JSX.Element {
     const [pendingButton, setPendingButton] = useState<number | undefined>();
     const listRef = useRef<FlatList>(null);
     const napitData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -34,9 +35,10 @@ export default function Player({ player, selectedRound, setScore }: PlayerArgs):
         setPendingButton(score);
     };
     return (
-        <Card style={tyyli.main}>
+        <Card style={[tyyli.main, (order === 1 && tyyli.hasBox)]}>
             <Card.Title
                 title={player.user.name}
+                right={() => <Text style={tyyli.throwingOrderText}>{order}</Text>}
             />
             <Card.Content style={tyyli.content}>
                 <View style={tyyli.contentLeft}>
@@ -103,6 +105,13 @@ const tyyli = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 10,
         borderRadius: 7,
+    },
+    throwingOrderText: {
+        fontSize: 12,
+        opacity: 0.6,
+    },
+    hasBox: {
+        backgroundColor: '#FFFFE5',
     },
     scoreButtonPending: {
         borderColor: 'orange',

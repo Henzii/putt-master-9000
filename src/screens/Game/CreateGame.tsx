@@ -48,15 +48,18 @@ const CreateGame = (props: CreateGameProps) => {
         });
         setSelectCourse(false);
     };
-    const handleAddFriend = (id: string | number, name?: string) => {
+    const handleAddFriend = (friends: { name: string, id: string | number}[]) => {
 
+        const filterDuplicates = (friends: { name: string, id: string | number}[]) => {
+            return friends.filter(f => {
+                return newGameData.players.find(p => p.id === f.id) ? false : true;
+            });
+        };
         // Jos pelaa ei ole listalla, lisätään se...
-        if (!newGameData.players.find(p => p.id === id)) {
             setNewGameData({
                 ...newGameData,
-                players: newGameData.players.concat({ id, name: name || 'unknown' })
+            players: newGameData.players.concat(filterDuplicates(friends))
             });
-        }
         setAddFriend(false);
     };
     const handleRemoveFriend = (id: string | number) => {
@@ -111,7 +114,7 @@ const CreateGame = (props: CreateGameProps) => {
                             >{player.name}</Chip>;
                 })}
             </>
-            <Button style={tyyli.button} compact mode='outlined' onPress={() => setAddFriend(true)}>Add player</Button>
+            <Button style={tyyli.button} compact mode='outlined' onPress={() => setAddFriend(true)}>Select players</Button>
             <View style={tyyli.bottomButtons}>
                 <Button
                     color='green'
