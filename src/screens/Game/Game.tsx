@@ -77,9 +77,10 @@ export default function Game() {
                         <Text testID="GameLayout" style={peliStyles.layout}>{data.layout}</Text>
                     </View>
                     <FlatList
+                        style={{ flex: 1 }}
                         data={data.scorecards}
                         keyExtractor={(item) => item.user.id as string}
-                        ListFooterComponent={<View style={{ height: 100 }} />}
+                        ListFooterComponent={<View style={{ height: 70 }} />}
                         renderItem={({ item }) => (
                             <Player
                                 player={item}
