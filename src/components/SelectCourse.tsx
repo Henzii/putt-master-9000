@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import { Button, Modal, Searchbar, Portal, List, Title } from "react-native-paper";
+import { Button, Modal, Searchbar, Portal, List, Headline, useTheme } from "react-native-paper";
 import useCourses, { Coordinates, Course, Layout, NewLayout } from "../hooks/useCourses";
 import useLiveData from '../hooks/useLiveData';
 import useTextInput from "../hooks/useTextInput";
@@ -23,6 +23,8 @@ const SelectCourses = ({ onSelect, title, showTraffic=true, showDistance=true }:
     const liveData = useLiveData(showTraffic);
     const searchInput = useTextInput({ defaultValue: '', callBackDelay: 500 }, restOfUseCourses.setSearchString);
     const [expandedCourse, setExpandedCourse] = useState<null | Course['id']>(null);
+    const { colors } = useTheme();
+
     const handleAddLayout = (courseId: number | string, layout: NewLayout) => {
         addLayout(courseId, layout);
     };
@@ -60,7 +62,9 @@ const SelectCourses = ({ onSelect, title, showTraffic=true, showDistance=true }:
                     />}
                 </Modal>
             </Portal>
-            {title ? <Title style={{ textAlign: 'center' }}>{title}</Title> : null}
+            {title ? <Headline style={{ padding: 10, backgroundColor: colors.surface }}>
+                        {(expandedCourse ? 'Select layout' : title)}
+                    </Headline> : null}
             {displaySearchBar ? <Searchbar
                 autoComplete={false}
                 {...searchInput}

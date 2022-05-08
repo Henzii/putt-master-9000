@@ -73,7 +73,7 @@ const CreateGame = (props: CreateGameProps) => {
         if (props.onCreate) props.onCreate(newGameData);
     };
 
-    if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} title="New game" />;
+    if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} title="Select course" />;
     if (addFriend) return <FriendsList onClick={handleAddFriend} hideRemoveButton multiSelect />;
 
     // Luodaan tyyli, parametrinä teeman väritys
