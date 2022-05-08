@@ -30,7 +30,7 @@ export default function Game() {
     const findThrowingOrder = useCallback(() => {
         // Kopioidaan tuloskortit
         const cards = [...data?.scorecards || []];
-        for (let i = 1; i < selectedRound; i++) {
+        for (let i = 0; i < selectedRound; i++) {
             cards.sort((a, b) => (a.scores[i] || 99) - (b.scores[i] || 99));
         }
         return cards.reduce((p,c,i) => {
