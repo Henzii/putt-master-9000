@@ -21,7 +21,7 @@ const Beers = () => {
     const gameId = gameData.gameId;
     const { data, setBeers, loading, error } = useGame(gameId);
     const [poem, setPoem] = useState({ poem: '', author: '' });
-    const [converterOpen, setConverterOpen] = useState(true);
+    const [converterOpen, setConverterOpen] = useState(false);
 
     useEffect(() => {
         const randomi = Math.floor(Math.random() * beerPoems.poems.length);
@@ -46,6 +46,14 @@ const Beers = () => {
                     onDismiss={() => setConverterOpen(false)}
                 >
                     <Container noFlex style={{ marginHorizontal: 20 }}>
+                        <AlcConverter />
+                        <Button
+                            mode="contained"
+                            style={{ marginTop: 20 }}
+                            onPress={() => setConverterOpen(false)}
+                        >
+                            Close
+                        </Button>
                         <Button
                             style={{ right: -37, top: -15, zIndex: 999, position: 'absolute' }}
                             labelStyle={{ fontSize: 33 }}
@@ -54,7 +62,7 @@ const Beers = () => {
                         >
                             &nbsp;
                         </Button>
-                        <AlcConverter />
+
                     </Container>
                 </Modal>
             </Portal>

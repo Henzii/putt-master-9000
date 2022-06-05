@@ -23,43 +23,45 @@ function DrinkInput({ drinkName, handleChange, testID }: DrinkInputProps) {
 }
 type Drink = 'long' | 'wine' | 'strong' | 'normal' | 'longstrong'
 
-export default function AlcConverter() {
-    const [drinks, setDrinks] = useState({
-        strong: {
-            count: 0,
-            multiplier: 1.25,
-        },
-        longstrong: {
-            count: 0,
-            multiplier: 1.9,
-        },
-        wine: { // dl
-            count: 0,
-            multiplier: 0.9,
-        },
-        long: {
-            count: 0,
-            multiplier: 1.5151,
-        },
-        normal: {
-            count: 0,
-            multiplier: 1,
-        }
+export const defaultValues = {
+    strong: {
+        count: 0,
+        multiplier: 1.25,
+    },
+    longstrong: {
+        count: 0,
+        multiplier: 1.9,
+    },
+    wine: {
+        count: 0,   // dl
+        multiplier: 0.9,
+    },
+    long: {
+        count: 0,
+        multiplier: 1.5151,
+    },
+    normal: {
+        count: 0,
+        multiplier: 1,
+    }
+};
 
-    });
+export default function AlcConverter() {
+    const [drinks, setDrinks] = useState(defaultValues);
     const beers = useMemo(() => {
-        return Object.values(drinks).reduce((prev: number, curr) => {
+        const sum = Object.values(drinks).reduce((prev: number, curr) => {
             return prev + (curr.count * curr.multiplier);
         }, 0);
+        return Math.round(sum*100)/100;
     }, [drinks]);
     const handleChange = (drink: Drink, val: string) => {
         const valInt = Number.parseInt(val) || 0;
         if (isNaN(valInt)) return;
-        setDrinks({ ...drinks, [drink]: {...drinks[drink], count: valInt} });
+        setDrinks({ ...drinks, [drink]: { ...drinks[drink], count: valInt } });
     };
     return (
         <Container noPadding withScrollView>
-            <Headline>Calculator</Headline>
+            <Headline>Beerculator</Headline>
             <View style={styles.row}>
                 <Text style={styles.text}>Long (0,5l)</Text>
                 <DrinkInput drinkName="long" handleChange={handleChange} testID="long" />
