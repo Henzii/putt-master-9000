@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Headline, Paragraph, TextInput } from "react-native-paper";
+import { Button, Headline, Modal, Paragraph, Portal, TextInput } from "react-native-paper";
 import Container from "../../components/ThemedComponents/Container";
 import useGame, { Scorecard } from '../../hooks/useGame';
 import useTextInput from '../../hooks/useTextInput';
@@ -11,6 +11,8 @@ import ErrorScreen from '../../components/ErrorScreen';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utils/store';
 import { gameData } from '../../reducers/gameDataReducer';
+import AlcConverter from '../../components/AlcConverter';
+import Divider from '../../components/ThemedComponents/Divider';
 
 const Beers = () => {
 
@@ -19,13 +21,14 @@ const Beers = () => {
     const gameId = gameData.gameId;
     const { data, setBeers, loading, error } = useGame(gameId);
     const [poem, setPoem] = useState({ poem: '', author: '' });
+    const [converterOpen, setConverterOpen] = useState(false);
+
     useEffect(() => {
         const randomi = Math.floor(Math.random() * beerPoems.poems.length);
         const poem = beerPoems.poems[randomi].text;
         const author = beerPoems.poems[randomi].author;
         setPoem({ poem, author });
     }, []);
-
     const handleBeersChange = (playerId: string, beers: string) => {
         const beersInt = Number.parseInt(beers);
         setBeers(playerId, beersInt);
@@ -37,10 +40,38 @@ const Beers = () => {
     }
     return (
         <Container withScrollView>
+            <Portal>
+                <Modal
+                    visible={converterOpen}
+                    onDismiss={() => setConverterOpen(false)}
+                >
+                    <Container noFlex style={{ marginHorizontal: 20 }}>
+                        <AlcConverter />
+                        <Button
+                            mode="contained"
+                            style={{ marginTop: 20 }}
+                            onPress={() => setConverterOpen(false)}
+                        >
+                            Close
+                        </Button>
+                        <Button
+                            style={{ right: -37, top: -15, zIndex: 999, position: 'absolute' }}
+                            labelStyle={{ fontSize: 33 }}
+                            icon="close-circle"
+                            onPress={() => setConverterOpen(false)}
+                        >
+                            &nbsp;
+                        </Button>
+
+                    </Container>
+                </Modal>
+            </Portal>
             <Headline>Beers</Headline>
             <View style={tyylit.inputContainer}>
                 {data.scorecards.map(sc => <SingleJuoppo disabled={!data.isOpen} sc={sc} key={sc.user.id} onChange={handleBeersChange} />)}
             </View>
+            <Button mode='outlined' onPress={() => setConverterOpen(true)}>Beer calculator</Button>
+            <Divider />
             <Paragraph style={{ fontStyle: 'italic' }}>
                 {poem.poem}
             </Paragraph>

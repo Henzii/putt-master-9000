@@ -1,21 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useSelector } from 'react-redux';
 import useGame, { Scorecard } from '../../hooks/useGame';
 import { gameData } from '../../reducers/gameDataReducer';
 import { RootState } from '../../utils/store';
-import Container from '../../components/ThemedComponents/Container';
 import { Table, Row, Cell, TableWrapper, Rows } from 'react-native-table-component';
 import Loading from '../../components/Loading';
-import { Headline, Subheading } from 'react-native-paper';
+import { Button, Headline, Subheading } from 'react-native-paper';
 import SplitContainer from '../../components/ThemedComponents/SplitContainer';
 import { format, fromUnixTime } from 'date-fns';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { captureRef } from 'react-native-view-shot';
+import * as Sharing from 'expo-sharing';
 
 const Summary = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const { data, ready } = useGame(gameData.gameId);
     const [hideBeers, setHideBeers] = useState(true);
+    const [captureScreen, setCaptureScreen] = useState(false);
+
+    const viewRef = useRef<View>(null);
     useEffect(() => {
         AsyncStorage.getItem('hideBeers').then((res) => {
             if (res === 'false') {
@@ -23,12 +28,27 @@ const Summary = () => {
             }
         });
     }, []);
-
+    useEffect(() => {
+        if (captureScreen) {
+            handleShareScorecard();
+            setCaptureScreen(false);
+        }
+    }, [captureScreen]);
     if (!ready || !data) {
         return (
             <Loading />
         );
     }
+    const handleShareScorecard = async () => {
+        try {
+            if (!viewRef.current) return;
+            const uri = await captureRef(viewRef);
+            Sharing.shareAsync(uri);
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.log('error', e);
+        }
+    };
     const sortedScorecards = [...data.scorecards].sort((a, b) => (a.total || 0) - (b.total || 0));
     const tableHeaders = [...data.pars.map((p, i) => i + 1), 'Total', '+/-', 'Hc', 'hcTot', 'Hc+/-'];
     const leveydet = [...data.pars.map(() => 31), 50, 50, 50, 50, 50];
@@ -41,43 +61,51 @@ const Summary = () => {
 
     // Lisätään tarvittaessa otsikoihin bHc
     if (!hideBeers) {
-        tableHeaders.splice( tableHeaders.length-2, 0, 'bHc');
+        tableHeaders.splice(tableHeaders.length - 2, 0, 'bHc');
         leveydet.push(50);
     }
     return (
-        <>
-            <View style={tyylit.topInfo}>
-                <Headline >{data.course}</Headline>
-                <SplitContainer>
-                    <Subheading>{data.layout}</Subheading>
-                    <Subheading>{formattedStartTime}</Subheading>
-                </SplitContainer>
-            </View>
-            <Container noPadding style={{ flexDirection: 'row' }} noFlex withScrollView>
-                <View style={{ width: 110 }}>
-                    <Table>
-                        <Row data={['#', 'Player']} widthArr={[30, 80]} style={[tyylit.header]} textStyle={tyylit.headerText} />
-                        <Rows data={nimetJaSijoitukset} widthArr={[30, 80]} textStyle={[tyylit.text, tyylit.scoreCell]} style={[tyylit.rivi]} />
-                    </Table>
+        <ScrollView horizontal={(captureScreen ? true : false )}>
+            <View ref={viewRef} style={[tyylit.main, (captureScreen ? { height: ((data.scorecards.length+1) * 70) } : null)]}>
+                <View style={tyylit.topInfo}>
+                    <Headline >{data.course}</Headline>
+                    <SplitContainer>
+                        <Subheading>{data.layout}</Subheading>
+                        <Subheading>{formattedStartTime}</Subheading>
+                    </SplitContainer>
                 </View>
-                <ScrollView horizontal>
-                    <Table>
-                        <Row data={tableHeaders} style={tyylit.header} textStyle={[tyylit.headerText]} widthArr={leveydet} />
-                        {sortedScorecards.map((sc) => (
-                            <SinglePlayerDataRow
-                                key={sc.user.id + 'scData'}
-                                pars={data.pars}
-                                hideBeers={hideBeers}
-                                scorecard={sc} />)
-                        )}
-                    </Table>
+                <ScrollView contentContainerStyle={tyylit.dataTable}>
+                    <View style={{ width: 110 }}>
+                        <Table>
+                            <Row data={['#', 'Player']} widthArr={[30, 80]} style={[tyylit.header]} textStyle={tyylit.headerText} />
+                            <Rows data={nimetJaSijoitukset} widthArr={[30, 80]} textStyle={[tyylit.text, tyylit.scoreCell]} style={[tyylit.rivi]} />
+                        </Table>
+                    </View>
+                    <ScrollView horizontal>
+                        <Table>
+                            <Row data={tableHeaders} style={tyylit.header} textStyle={[tyylit.headerText]} widthArr={leveydet} />
+                            {sortedScorecards.map((sc) => (
+                                <SinglePlayerDataRow
+                                    key={sc.user.id + 'scData'}
+                                    pars={data.pars}
+                                    hideBeers={hideBeers}
+                                    scorecard={sc} />)
+                            )}
+                        </Table>
+                    </ScrollView>
                 </ScrollView>
-                <View style={{ height: 100}} />
-            </Container>
-        </>
+                {!captureScreen &&
+                    <>
+                        <Button icon="share-variant" onPress={() => setCaptureScreen(true)}>Share screenshot</Button>
+                        <Button icon="web" disabled>Share link</Button>
+                    </>
+                }
+            </View>
+            <View style={{ height: 100 }} />
+        </ScrollView>
     );
 };
-const SinglePlayerDataRow = ({ scorecard, pars, hideBeers=true }: { scorecard: Scorecard, pars: number[], hideBeers?: boolean }) => {
+const SinglePlayerDataRow = ({ scorecard, pars, hideBeers = true }: { scorecard: Scorecard, pars: number[], hideBeers?: boolean }) => {
     const pickColor = (par: number, score: number) => {
         switch (par - score) {
             case 0:
@@ -114,6 +142,16 @@ const SinglePlayerDataRow = ({ scorecard, pars, hideBeers=true }: { scorecard: S
     );
 };
 const tyylit = StyleSheet.create({
+    main: {
+        backgroundColor: 'white',
+        flex: 1,
+    },
+    dataTable: {
+        flexDirection: 'row',
+        padding: 0,
+        flex: 0,
+        marginBottom: 20,
+    },
     topInfo: {
         padding: 5,
         paddingRight: 7,
