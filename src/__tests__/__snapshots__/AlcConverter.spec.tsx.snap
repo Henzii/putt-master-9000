@@ -9,7 +9,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
       undefined,
       false,
       Object {
-        "backgroundColor": "#fafafa",
+        "backgroundColor": "#f6f6f6",
         "padding": 0,
       },
       undefined,

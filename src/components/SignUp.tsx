@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useMutation } from 'react-apollo';
 import { Alert, StyleSheet, Text } from "react-native";
-import { Button, Subheading, TextInput, Title } from 'react-native-paper';
+import { Button, Paragraph, Subheading, TextInput, Title } from 'react-native-paper';
 import { CREATE_USER } from '../graphql/mutation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../reducers/notificationReducer';
-import { useNavigate } from 'react-router-native';
+import { useNavigate, useParams } from 'react-router-native';
 import Container from './ThemedComponents/Container';
 
 const SignUp = () => {
@@ -19,6 +19,7 @@ const SignUp = () => {
     const [createUserMutation] = useMutation(CREATE_USER);
     const dispatch = useDispatch();
     const navi = useNavigate();
+    const params = useParams();
 
     const handleSignUp = async () => {
         if (userData.name.length < 4) {
@@ -41,8 +42,15 @@ const SignUp = () => {
                     email: userData.email
                 }
             });
-            await AsyncStorage.setItem('token', token.data?.createUser);
-            navi("/");
+            // Jos parametrinä on createFriend eli luodaan kaverille tms., ei kirjauduta sillä sisään
+            // uudelleenohjaus 'back'
+            if (params.param === 'createFriend') {
+                dispatch(addNotification(`Account created for ${userData.name}.".`, 'success'));
+                navi(-1);
+            } else {
+                await AsyncStorage.setItem('token', token.data?.createUser);
+                navi("/");
+            }
 
         } catch (e) {
             dispatch(addNotification('Error when creating user! ' + (e as Error).message));
@@ -50,7 +58,17 @@ const SignUp = () => {
     };
     return (
         <Container withScrollView style={tyyli.main}>
-            <Title>Signup</Title>
+            <Title>Signup{(params.param === 'createFriend' ? ' a friend' : '')}</Title>
+            {(params.param === 'createFriend') &&
+            <>
+                <Paragraph>
+                    You are creating an account for a friend. Instead of creating accounts for everyone, you should force
+                    your friends to use Fudisc.
+                </Paragraph>
+                <Paragraph>
+                    After signing up a friend, you still need to add him/her/it as your friend.
+                </Paragraph>
+            </>}
             <Subheading style={tyyli.subheading}>Username</Subheading>
             <TextInput value={userData.name} autoComplete={false} mode='outlined' label="Username" onChangeText={(value) => setUserData({ ...userData, name: value })} />
             <Subheading style={tyyli.subheading}>Password</Subheading>

@@ -16,7 +16,7 @@ type SelectCoursesProps = {
     showDistance?: boolean,
     showTraffic?: boolean,
 }
-const SelectCourses = ({ onSelect, title, showTraffic=true, showDistance=true }: SelectCoursesProps) => {
+const SelectCourses = ({ onSelect, title, showTraffic = true, showDistance = true }: SelectCoursesProps) => {
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
     const { courses, loading, addLayout, addCourse, fetchMore, error, ...restOfUseCourses } = useCourses(showDistance);
@@ -63,8 +63,8 @@ const SelectCourses = ({ onSelect, title, showTraffic=true, showDistance=true }:
                 </Modal>
             </Portal>
             {title ? <Headline style={{ padding: 10, backgroundColor: colors.surface }}>
-                        {(expandedCourse ? 'Select layout' : title)}
-                    </Headline> : null}
+                {(expandedCourse ? 'Select layout' : title)}
+            </Headline> : null}
             {displaySearchBar ? <Searchbar
                 autoComplete={false}
                 {...searchInput}
@@ -81,7 +81,7 @@ const SelectCourses = ({ onSelect, title, showTraffic=true, showDistance=true }:
                 ListFooterComponent={
                     (loading)
                         ? <Loading noFullScreen loadingText="" />
-                        : <Text style={{ color: 'rgba(0,0,0,0.2)'}}>    No more... No más...</Text>
+                        : <Text style={{ color: 'rgba(0,0,0,0.2)' }}>    No more... No más...</Text>
                 }
                 onEndReached={fetchMore}
                 onEndReachedThreshold={0.1}
@@ -113,6 +113,7 @@ type SingleCourseProps = {
 }
 
 const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expanded, showDistance = true, liveData }: SingleCourseProps) => {
+    const { colors } = useTheme();
     const handleCourseClick = () => {
         if (!onCourseClick) return;
         if (expanded === course.id) onCourseClick(null);
@@ -137,9 +138,9 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expan
         description = description.concat(`\n${liveData.live} / ${liveData.today}`);
     }
     return (
-        <View style={tyyli.container}>
+        <View style={[tyyli.container, { backgroundColor: colors.surface }]}>
             <List.Accordion
-                style={tyyli.container}
+                style={[tyyli.container, { backgroundColor: colors.surface }]}
                 title={course.name}
                 titleStyle={titleStyles}
                 description={description}
@@ -181,13 +182,12 @@ const LiveDataIcon = ({ live }: { live: { today: number, live: number } }) => {
 const tyyli = StyleSheet.create({
     container: {
         padding: 5,
-        backgroundColor: '#fafafa'
     },
     title: {
-        fontSize: 18,
+        fontSize: 19,
     },
     notOpened: {
-        opacity: 0.3,
+        opacity: 0.25,
     },
     opened: {
         fontSize: 20,
@@ -205,7 +205,7 @@ const tyyli = StyleSheet.create({
     },
     separaattori: {
         height: 1,
-        backgroundColor: 'rgba(0,0,0,0.1)'
+        backgroundColor: 'rgba(0,0,0,0.2)'
     }
 });
 export default SelectCourses;

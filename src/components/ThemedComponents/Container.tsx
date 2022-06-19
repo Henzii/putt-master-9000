@@ -1,8 +1,11 @@
 import React from 'react';
 import { Dimensions, StyleSheet, View, ScrollView } from 'react-native';
-//import { useTheme } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
+
+type ContainerChild = React.ReactElement | null | false | Element | undefined;
+
 type ContainerProps = {
-    children: React.ReactElement | null | (React.ReactElement | null)[],
+    children: (ContainerChild | ContainerChild[]),
     fullScreen?: boolean,
     noFlex?: boolean,
     style?: { [key: string]: string | number},
@@ -13,7 +16,7 @@ type ContainerProps = {
 }
 
 const Container = (props: ContainerProps) => {
-//    const { colors } = useTheme();
+    const { colors } = useTheme();
     const tyyli = [
         props.fullScreen && tyylit.fullScreen,
         props.fullWidth && tyylit.fullWidth,
@@ -21,7 +24,7 @@ const Container = (props: ContainerProps) => {
         (!props.noFlex && !props.withScrollView) && { flex: 1 },
         {
             padding: (props.noPadding) ? 0: 20,
-            backgroundColor: '#fafafa'
+            backgroundColor: colors.background,
         },
         props.style,
     ];
