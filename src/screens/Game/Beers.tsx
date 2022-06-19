@@ -82,7 +82,9 @@ const Beers = () => {
         </Container>
     );
 };
-const Beer = () => <Ionicons name="beer-outline" size={24} color="black" style={{ paddingBottom: 5 }} />;
+const Beer = ({margin}: {margin?: number}) => (
+    <Ionicons name="beer-outline" size={24} color="black" style={{ paddingBottom: 5, margin: margin || 0 }}  />
+);
 const SingleJuoppo = ({ sc, onChange, disabled }: { sc: Scorecard, onChange: (playerId: string, beers: string) => void, disabled: boolean }) => {
     const beerInput = useTextInput({
         numeric: true,
@@ -90,8 +92,9 @@ const SingleJuoppo = ({ sc, onChange, disabled }: { sc: Scorecard, onChange: (pl
         callBackDelay: 1000,
     }, (value) => onChange(sc.user.id as string, value));
     const beerIcons = [];
+    const margin = (sc.beers > 8) ? Math.floor((sc.beers-8) * -0.65) : 0;
     for (let i = 0; i < sc.beers; i++) {
-        beerIcons.push(<Beer key={sc.user.id + 'beer' + i} />);
+        beerIcons.push(<Beer margin={margin} key={sc.user.id + 'beer' + i} />);
     }
     return (
         <View style={tyylit.inputWithBeers}>

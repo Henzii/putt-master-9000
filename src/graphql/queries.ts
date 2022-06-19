@@ -66,8 +66,8 @@ ${CORE_SCORECARD_INFO}
 `;
 export const GET_OLD_GAMES = gql`
 ${CORE_GAME_INFO}
-  query {
-    getGames {
+  query ($onlyOpenGames: Boolean) {
+    getGames (onlyOpenGames: $onlyOpenGames) {
       ...CoreGameInfo
       myScorecard {
         total
@@ -75,7 +75,6 @@ ${CORE_GAME_INFO}
     }
   }
 `;
-
 export const GET_STATS = gql`
   query ($course: String!, $layout: String!){
     getHc (course: $course, layout: $layout) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, Share as NativeShare } from "react-native";
 import { useSelector } from 'react-redux';
 import useGame, { Scorecard } from '../../hooks/useGame';
 import { gameData } from '../../reducers/gameDataReducer';
@@ -49,6 +49,22 @@ const Summary = () => {
             console.log('error', e);
         }
     };
+    const handleShareScorecardLink = () => {
+        try {
+            NativeShare.share({
+                message: `FuDisc link: https://fudisc.henzi.fi/live/${data.id} - Link is available for 24 hours.`,
+                title: 'FuDisc'
+            });
+            if (process.env.NODE_ENV === 'development') {
+                // eslint-disable-next-line no-console
+                console.log(`https://fudisc.henzi.fi/live/${data.id}`);
+            }
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.log('Error', e);
+        }
+    };
+
     const sortedScorecards = [...data.scorecards].sort((a, b) => (a.total || 0) - (b.total || 0));
     const tableHeaders = [...data.pars.map((p, i) => i + 1), 'Total', '+/-', 'Hc', 'hcTot', 'Hc+/-'];
     const leveydet = [...data.pars.map(() => 31), 50, 50, 50, 50, 50];
@@ -66,7 +82,7 @@ const Summary = () => {
     }
     return (
         <ScrollView horizontal={(captureScreen ? true : false )}>
-            <View ref={viewRef} style={[tyylit.main, (captureScreen ? { height: ((data.scorecards.length+1) * 70) } : null)]}>
+            <View ref={viewRef} style={[tyylit.main, (captureScreen ? { height: (120 + data.scorecards.length*45) } : null)]}>
                 <View style={tyylit.topInfo}>
                     <Headline >{data.course}</Headline>
                     <SplitContainer>
@@ -96,8 +112,8 @@ const Summary = () => {
                 </ScrollView>
                 {!captureScreen &&
                     <>
-                        <Button icon="share-variant" onPress={() => setCaptureScreen(true)}>Share screenshot</Button>
-                        <Button icon="web" disabled>Share link</Button>
+                        <Button icon="share-variant" onPress={() => setCaptureScreen(true)}>Share image</Button>
+                        <Button icon="web" onPress={handleShareScorecardLink}>Share link</Button>
                     </>
                 }
             </View>

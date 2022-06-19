@@ -1,6 +1,7 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
-import { Button, useTheme } from 'react-native-paper';
+/* eslint-disable @typescript-eslint/no-var-requires */
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, Image, ImageSourcePropType } from "react-native";
+import { Button, Paragraph, Title } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-native';
 import useMe from '../../hooks/useMe';
@@ -9,14 +10,27 @@ import Loading from '../../components/Loading';
 import Login from '../../components/Login';
 import Container from '../../components/ThemedComponents/Container';
 import ErrorScreen from '../../components/ErrorScreen';
+import { useLazyQuery, useQuery } from 'react-apollo';
+import { GET_GAME, GET_OLD_GAMES } from '../../graphql/queries';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const master = require('../../../assets/master2.png');
+const pilli = require('../../../assets/icons/pilli.png');
+const maali = require('../../../assets/icons/maali.png');
+const courses = require('../../../assets/icons/courses.png');
+const friends = require('../../../assets/icons/friends.png');
+const stats = require('../../../assets/icons/stats.png');
+const settings = require('../../../assets/icons/settings.png');
 
 const Frontpage = () => {
     const { me, logged, logout, login, loading, error } = useMe();
     const gameData = useSelector((state: RootState) => state.gameData);
-
+    const [getGame, data] = useLazyQuery(GET_GAME);
+    const openGames = useQuery(GET_OLD_GAMES, { variables: { onlyOpenGames: true }, fetchPolicy: 'cache-and-network' });
+    useEffect(() => {
+        if (gameData?.gameId) {
+            getGame({ variables: { gameId: gameData.gameId } });
+        }
+    }, [gameData]);
     if (loading) {
         return (
             <Loading loadingText='Connecting to server...' />
@@ -27,17 +41,28 @@ const Frontpage = () => {
             <ErrorScreen errorMessage={error?.message} />
         );
     }
+
+    const openGamesCount = openGames.data?.getGames?.length || 0;
+    let oldGamesText = `Browse old and open games.`;
+    if (openGamesCount > 0) {
+        oldGamesText += (openGamesCount === 1)
+            ? `\nYou have one open game at ${openGames.data.getGames[0].course}`
+            : `\nYou have ${openGamesCount} open games!`;
+    }
     return (
         <Container noFlex withScrollView style={{ alignItems: 'center' }}>
             <Image source={master} resizeMode='stretch' style={tyyli.kuva} />
             {(logged) ?
                 <>
-                    <NaviButton to="/game" text={gameData?.gameId ? 'Continue game' : 'New game' } />
-                    <NaviButton to="/games" text="Old games" />
-                    <NaviButton to="/courses" text="Courses" />
-                    <NaviButton to="/friends" text="Friends" />
-                    <NaviButton to="/stats" text="Stats" />
-                    <NaviButton to="/settings" text="Settings" />
+                    {data?.data?.getGame?.course
+                        ? <NaviCard title='Continue Game' text={`Continue game at ${data.data.getGame.course}`} to="/game" icon={pilli} />
+                        : <NaviCard title='New Game' text="Create a new game!" to="/game" icon={pilli} />
+                    }
+                    <NaviCard title="Old games" text={oldGamesText} to="/games" icon={maali} />
+                    <NaviCard title="Courses" to="/courses" text="Add/browse/search courses." icon={courses} />
+                    <NaviCard title="Friends" to="/friends" text="Find, add, kill friends. Or create one. <3" icon={friends} />
+                    <NaviCard title="Stats" to="/stats" text="Check your stats, find your handicap. GRAPHS!" icon={stats} />
+                    <NaviCard title="Settings" to="/settings" text="Set your settings, end prohibition, change password etc." icon={settings} />
                     <Text>Logged in as {me?.name}</Text>
                     <Button onPress={logout}>Logout</Button>
                 </>
@@ -51,21 +76,57 @@ const Frontpage = () => {
     );
 };
 
-const NaviButton = ({ text, to }: { text: string, to: string }) => {
-    const { colors } = useTheme();
+const NaviCard = ({ title, text, to, icon }: { title: string, text: string, to: string, icon?: ImageSourcePropType }) => {
+    const [pressed, setPressed] = useState(false);
     return (
-        <Link to={to} underlayColor="none">
-            <View style={[tyyli.root, { backgroundColor: colors.background }]}>
-                <Text style={{ textAlign: 'center', fontSize: 18, }}>{text}</Text>
+        <Link to={to} underlayColor="none" onPressIn={() => setPressed(true)} onPressOut={() => setPressed(false)}>
+            <View style={[tyyli.naviCard, (pressed && tyyli.naviCardPressed)]}>
+                <View style={tyyli.naviIconContainer}>
+                    {icon && <Image style={tyyli.naviIcon} source={icon} />}
+                </View>
+                <View style={tyyli.naviText}>
+                    <Title style={{ color: '#205542' }}>{title}</Title>
+                    <Paragraph>{text}</Paragraph>
+                </View>
             </View>
         </Link>
-
     );
 };
 const tyyli = StyleSheet.create({
+    boldText: {
+        fontWeight: 'bold',
+    },
+    naviIconContainer: {
+        width: '20%'
+    },
+    naviIcon: {
+        width: 50,
+        height: 50,
+    },
+    naviText: {
+        width: '75%'
+    },
+    naviCardPressed: {
+        backgroundColor: '#efefef',
+        elevation: 5,
+    },
+    naviCard: {
+        width: Dimensions.get('window').width * 0.95,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        minHeight: 100,
+        backgroundColor: '#ffffff',
+        borderColor: 'lightgray',
+        borderRadius: 5,
+        borderWidth: 1,
+        padding: 10,
+        elevation: 2,
+        marginBottom: 10,
+    },
     kuva: {
-        width: 250,
-        height: 250
+        width: 220,
+        height: 220,
     },
     root: {
         borderWidth: 1,
