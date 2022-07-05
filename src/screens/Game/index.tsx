@@ -21,7 +21,7 @@ export default function GameContainer() {
         HOOKS
     */
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
-    const [createGameMutation] = useMutation(CREATE_GAME, { refetchQueries: [{ query: GET_OLD_GAMES }] });
+    const [createGameMutation, { loading }] = useMutation(CREATE_GAME, { refetchQueries: [{ query: GET_OLD_GAMES }] });
     const [addPlayersMutation] = useMutation(ADD_PLAYERS_TO_GAME);
     const dispatch = useDispatch();
     const navi = useNavigate();
@@ -76,7 +76,7 @@ export default function GameContainer() {
     };
     // Jos peliä ei ole ladattu -> createGame, tai jos erroreita tai loading tms...
     if (!gameData?.gameId) {
-        return <CreateGame onCreate={handleCreateGame} onCancel={() => navi(-1)} />;
+        return <CreateGame onCreate={handleCreateGame} onCancel={() => navi(-1)} loading={loading} />;
     }
 
     // Alanaville:

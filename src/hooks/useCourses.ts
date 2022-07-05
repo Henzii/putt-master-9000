@@ -8,8 +8,8 @@ import useGPS from './useGPS';
 
 const useCourses = (showDistance = true) => {
 
-    const [addLayoutMutation] = useMutation(ADD_LAYOUT);
-    const [addCourseMutation] = useMutation(ADD_COURSE);
+    const [addLayoutMutation, { loading: loadingAddLayout }] = useMutation(ADD_LAYOUT);
+    const [addCourseMutation, { loading: loadingAddCourse }] = useMutation(ADD_COURSE);
     const [searchString, setSearchString] = useState('');
     const gps = useGPS();
     const { data, loading, error, fetchMore, refetch } = useQuery<RawCourseData>(
@@ -52,6 +52,7 @@ const useCourses = (showDistance = true) => {
         }
     };
     const addLayout = async (courseId: number | string, layout: NewLayout) => {
+        if (loadingAddLayout) return;
         try {
             await addLayoutMutation({ variables: { courseId, layout } });
         } catch (e) {
@@ -59,6 +60,7 @@ const useCourses = (showDistance = true) => {
         }
     };
     const addCourse = async (newCourseName: string, coordinates: Coordinates) => {
+        if (loadingAddCourse) return;
         try {
             await addCourseMutation({ variables: { name: newCourseName, coordinates } });
             refetch({ limit: 1, offset: 0, search: newCourseName });
@@ -67,7 +69,9 @@ const useCourses = (showDistance = true) => {
         }
     };
     return { courses: data?.getCourses?.courses || undefined,
-        loading, error, addLayout, addCourse, fetchMore: handleFetchMore, setSearchString, searchString, gpsAvailable: gps.ready && showDistance };
+        error, addLayout, addCourse, fetchMore: handleFetchMore, setSearchString,
+        searchString, gpsAvailable: gps.ready && showDistance, loading: (loadingAddCourse || loadingAddLayout || loading)
+    };
 };
 export type Course = {
     name: string,

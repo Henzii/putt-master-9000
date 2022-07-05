@@ -59,6 +59,7 @@ const SelectCourses = ({ onSelect, title, showTraffic = true, showDistance = tru
                     {displayAddCourse && <AddCourse
                         onCancel={() => setDisplayAddCourse(false)}
                         onAdd={handleAddCourse}
+                        loading={loading}
                     />}
                 </Modal>
             </Portal>
@@ -109,7 +110,7 @@ type SingleCourseProps = {
     onCourseClick?: (courseId: Course['id'] | null) => void,
     expanded: Course['id'] | null,
     showDistance?: boolean,
-    liveData?: { live: number, today: number }
+    liveData?: { live: number, today: number },
 }
 
 const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expanded, showDistance = true, liveData }: SingleCourseProps) => {
