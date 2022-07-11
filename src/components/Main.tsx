@@ -10,7 +10,7 @@ import Frontpage from '../screens/Frontpage';
 import SelectCourses from './SelectCourse';
 import FriendsList from './FriendsList';
 import Notifications from './Notifications';
-import OldGamesList from './OldGamesList';
+import OldGames from '../screens/OldGames';
 import SignUp from './SignUp';
 import Settings from '../screens/Settings';
 import Stats from '../screens/Stats';
@@ -57,7 +57,7 @@ export default function App() {
                 <Route path="/signUp/:param" element={<SignUp />} />
                 <Route path="/signUp" element={<SignUp />} />
                 <Route path="/game" element={<Game />} />
-                <Route path="/games" element={<OldGamesList />} />
+                <Route path="/games" element={<OldGames />} />
                 <Route path="/courses" element={<SelectCourses />} />
                 <Route path="/friends" element={<FriendsList />} />
                 <Route path="/settings" element={<Settings />} />

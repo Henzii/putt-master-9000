@@ -27,7 +27,7 @@ export default function GameContainer() {
     const navi = useNavigate();
     const client = useApolloClient();
 
-    const [navIndex, setNavIndex] = useState(0);
+    const [navIndex, setNavIndex] = useState(gameData?.gameOpen === false ? 1 : 0);
     const [navRoutes, setNavRoutes] = useState([
         { key: 'gameRoute', title: 'Scorecard', icon: 'counter' },
         { key: 'summaryRoute', title: 'Summary', icon: 'format-list-numbered' },
