@@ -3,7 +3,7 @@ import { HttpLink, ApolloClient, InMemoryCache } from 'apollo-boost';
 import { setContext } from 'apollo-link-context';
 
 
-const API_URL = (process.env.NODE_ENV === 'development')
+const API_URL = (process.env.NODE_ENV !== 'development')
     ? 'https://puttmaster.herokuapp.com/graphql'
     : 'http://192.168.1.6:8080/graphql';
 
