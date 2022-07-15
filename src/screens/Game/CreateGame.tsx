@@ -16,6 +16,7 @@ export type NewGameData = {
 type CreateGameProps = {
     onCreate?: (data: NewGameData) => void,
     onCancel?: () => void,
+    loading?: boolean,
 }
 
 const CreateGame = (props: CreateGameProps) => {
@@ -120,7 +121,8 @@ const CreateGame = (props: CreateGameProps) => {
                     color='green'
                     mode='contained'
                     onPress={handleCreate}
-                    disabled={(!newGameData.course || !newGameData.layout || newGameData.players.length < 1)}
+                    disabled={(!newGameData.course || !newGameData.layout || newGameData.players.length < 1 || props.loading)}
+                    loading={props.loading}
                 >
                     Create
                 </Button>

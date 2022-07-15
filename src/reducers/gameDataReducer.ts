@@ -8,11 +8,12 @@ const reducer = (state:gameData | null = null, action: gameDataReducerAction) =>
             return state;
     }
 };
-export const newGame = (newGameId: string): newGameAction => {
+export const newGame = (newGameId: string, gameOpen?: boolean): newGameAction => {
     return {
         type: 'NEW_GAME',
         data: {
             gameId: newGameId,
+            gameOpen: gameOpen,
         }
     };
 };
@@ -33,5 +34,6 @@ type gameDataReducerAction = newGameAction | unloadGameAction
 
 export type gameData = {
     gameId: string,
+    gameOpen: boolean | undefined
 }
 export default reducer;

@@ -6,7 +6,7 @@ import useGPS from "../hooks/useGPS";
 import Loading from "./Loading";
 import Divider from "./ThemedComponents/Divider";
 
-const AddCourse = ({ onCancel, onAdd }: AddCourseProps) => {
+const AddCourse = ({ onCancel, onAdd, loading=false }: AddCourseProps) => {
     const [newName, setNewName] = useState('');
     const [lat, setLat] = useState<string | undefined>();
     const [lon, setLon] = useState<string | undefined>();
@@ -43,7 +43,7 @@ const AddCourse = ({ onCancel, onAdd }: AddCourseProps) => {
             {gps.error && <Caption style={{ color: 'red' }}>{gps.error} Set coordinates manually</Caption>}
             <Divider />
             <View style={[tyyli.split, { margin: 20 }]}>
-                <Button icon="check" onPress={handleAddCourse} mode="contained" color='green'>Add</Button>
+                <Button icon="check" onPress={handleAddCourse} mode="contained" color='green' loading={loading} disabled={loading}>Add</Button>
                 <Button icon="cancel" onPress={onCancel} mode="contained" color='red'>Cancel</Button>
             </View>
 
@@ -107,6 +107,7 @@ const tyyli = StyleSheet.create({
 type AddCourseProps = {
     onCancel?: () => void,
     onAdd?: (name: string, coordinates: Coordinates) => void,
+    loading?: boolean,
 }
 
 export default AddCourse;

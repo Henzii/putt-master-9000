@@ -72,6 +72,14 @@ ${CORE_GAME_INFO}
       myScorecard {
         total
       }
+      scorecards {
+        total
+        plusminus
+        user {
+          id
+          name
+        }
+      }
     }
   }
 `;

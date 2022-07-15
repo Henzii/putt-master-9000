@@ -9,6 +9,7 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
     const handleAddLayout = (layout: NewLayout) => {
         if (onAddLayout) onAddLayout(course.id, layout);
         setAddLayoutModal(false);
+
     };
     const handleLayoutSelect = (layout: Layout) => {
         if (onSelect) onSelect(layout, course);
