@@ -10,7 +10,8 @@ type ContainerProps = {
     noFlex?: boolean,
     style?: { [key: string]: string | number},
     fullWidth?: boolean
-    noPadding?: boolean
+    noPadding?: boolean,
+    verticalPadding?: boolean,
     withScrollView?: boolean,
     fullHeight?: boolean,
 }
@@ -23,9 +24,10 @@ const Container = (props: ContainerProps) => {
         props.fullHeight && tyylit.fullHeight,
         (!props.noFlex && !props.withScrollView) && { flex: 1 },
         {
-            padding: (props.noPadding) ? 0: 20,
+            padding: (props.noPadding && !props.verticalPadding) ? 0: 20,
             backgroundColor: colors.background,
         },
+        props.verticalPadding && tyylit.verticalPadding,
         props.style,
     ];
     if (props.withScrollView) {
@@ -45,6 +47,9 @@ const Container = (props: ContainerProps) => {
 const tyylit = StyleSheet.create({
     fullWidth: {
         width: '100%',
+    },
+    verticalPadding: {
+        paddingVertical: 7,
     },
     fullHeight: {
         minHeight: '100%'

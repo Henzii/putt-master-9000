@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, Image, ImageSourcePropType } from "react-native";
 import { Button, Paragraph, Title } from 'react-native-paper';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-native';
+import { Link, useNavigate } from 'react-router-native';
 import useMe from '../../hooks/useMe';
 import { RootState } from '../../utils/store';
 import Loading from '../../components/Loading';
@@ -12,6 +12,7 @@ import Container from '../../components/ThemedComponents/Container';
 import ErrorScreen from '../../components/ErrorScreen';
 import { useLazyQuery, useQuery } from 'react-apollo';
 import { GET_GAME, GET_OLD_GAMES } from '../../graphql/queries';
+import firstTimeLaunched from '../../utils/firstTimeLaunched';
 
 const master = require('../../../assets/master2.png');
 const pilli = require('../../../assets/icons/pilli.png');
@@ -26,11 +27,20 @@ const Frontpage = () => {
     const gameData = useSelector((state: RootState) => state.gameData);
     const [getGame, data] = useLazyQuery(GET_GAME);
     const openGames = useQuery(GET_OLD_GAMES, { variables: { onlyOpenGames: true }, fetchPolicy: 'cache-and-network' });
+    const navi = useNavigate();
+
     useEffect(() => {
         if (gameData?.gameId) {
             getGame({ variables: { gameId: gameData.gameId } });
         }
     }, [gameData]);
+    useEffect(() => {
+        (async function IIFE() {
+            if (!logged && !loading && await firstTimeLaunched()) {
+                navi('/firstTime');
+            }
+        })();
+    }, [loading]);
     if (loading) {
         return (
             <Loading loadingText='Connecting to server...' />
@@ -70,6 +80,11 @@ const Frontpage = () => {
                 <>
                     <Login login={login} />
                     <Link to="/signUp"><Button>Sign up!</Button></Link>
+                    {process.env.NODE_ENV === 'development' && (
+                        <>
+                            <Link to="/firstTime"><Button>FirstTime</Button></Link>
+                        </>
+                    )}
                 </>
             }
         </Container>
