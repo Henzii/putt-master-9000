@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, Text } from "react-native";
 import { Button, Caption, Headline, IconButton, TextInput, Title } from "react-native-paper";
-import { NewLayout } from '../hooks/useCourses';
+import { Layout, NewLayout } from '../hooks/useCourses';
 import Divider from './ThemedComponents/Divider';
 
-const AddLayout = ({ onCancel, onAdd }: AddLayoutProps) => {
-    const [holes, setHoles] = useState<number>();
-    const [pars, setPars] = useState<number[]>([]);
-    const [name, setName] = useState('');
+const AddLayout = ({ onCancel, onAdd, layout }: AddLayoutProps) => {
+    const [holes, setHoles] = useState<number | undefined>(layout?.holes);
+    const [pars, setPars] = useState<number[]>(layout?.pars || []);
+    const [name, setName] = useState(layout?.name || '');
 
     const handleHolesChange = (value: string) => {
         const holesInt = Number.parseInt(value);
@@ -39,12 +39,14 @@ const AddLayout = ({ onCancel, onAdd }: AddLayoutProps) => {
             name,
             pars,
             holes: holes || 0,
+
         };
+        if (layout) newLayout.id = layout.id;
         if (onAdd) onAdd(newLayout);
     };
     return (
         <ScrollView contentContainerStyle={{ paddingBottom: 40, }} style={tyyli.main}>
-            <Headline>Add layout</Headline>
+            <Headline>{layout ? 'Edit' : 'Add'} layout</Headline>
             <Caption>Layout name</Caption>
             <TextInput autoComplete={false} value={name} onChangeText={(value) => setName(value)} />
             <Caption>Number of holes</Caption>
@@ -56,7 +58,7 @@ const AddLayout = ({ onCancel, onAdd }: AddLayoutProps) => {
                 {holes || 0} Holes, par {pars.reduce((p, c) => p + c, 0)}
             </Text>
             <View style={tyyli.buttonsContainer}>
-                <Button onPress={handleAdd} icon="check" color='green' mode='contained'>Add</Button>
+                <Button onPress={handleAdd} icon="check" color='green' mode='contained'>{layout ? 'Save' : 'Add'}</Button>
                 <Button onPress={handleCancel} icon="cancel" color='red' mode='contained'>Cancel</Button>
             </View>
         </ScrollView>
@@ -139,6 +141,7 @@ const tyyli = StyleSheet.create({
 type AddLayoutProps = {
     onCancel?: () => void,
     onAdd?: (layout: NewLayout) => void,
+    layout?: Layout,
 }
 
 export default AddLayout;

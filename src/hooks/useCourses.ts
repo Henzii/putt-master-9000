@@ -1,9 +1,11 @@
 /* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 import { useQuery, useMutation } from "react-apollo";
+import { useDispatch } from 'react-redux';
 
 import { ADD_COURSE, ADD_LAYOUT } from "../graphql/mutation";
 import { GET_COURSES } from "../graphql/queries";
+import { addNotification } from '../reducers/notificationReducer';
 import useGPS from './useGPS';
 
 const useCourses = (showDistance = true) => {
@@ -11,6 +13,7 @@ const useCourses = (showDistance = true) => {
     const [addLayoutMutation, { loading: loadingAddLayout }] = useMutation(ADD_LAYOUT);
     const [addCourseMutation, { loading: loadingAddCourse }] = useMutation(ADD_COURSE);
     const [searchString, setSearchString] = useState('');
+    const dispatch = useDispatch();
     const gps = useGPS();
     const { data, loading, error, fetchMore, refetch } = useQuery<RawCourseData>(
         GET_COURSES,
@@ -55,8 +58,10 @@ const useCourses = (showDistance = true) => {
         if (loadingAddLayout) return;
         try {
             await addLayoutMutation({ variables: { courseId, layout } });
+            dispatch(addNotification(`Layout ${layout.id ? 'updated' : 'created'}`, 'success'));
         } catch (e) {
-            console.log('ERROR', e);
+            const message = (e as unknown as {message: string}).message.split(': ')[1];
+            dispatch(addNotification(message, 'alert'));
         }
     };
     const addCourse = async (newCourseName: string, coordinates: Coordinates) => {
@@ -100,5 +105,5 @@ export type RawCourseData = {
         hasMore: boolean,
     }
 }
-export type NewLayout = Omit<Layout, "id" | "par">
+export type NewLayout = Pick<Partial<Layout>, "id"> & Omit<Layout, "par" | "id">
 export default useCourses;
