@@ -19,6 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { addNotificationReceivedListener, removeNotificationSubscription } from 'expo-notifications';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../reducers/notificationReducer';
+import FirstTime from '../screens/Frontpage/FirstTime';
 
 export default function App() {
     const navi = useNavigate();
@@ -62,6 +63,7 @@ export default function App() {
                 <Route path="/friends" element={<FriendsList />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/stats" element={<Stats />} />
+                <Route path="/firstTime" element={<FirstTime />} />
                 <Route path="/" element={<Frontpage />} />
             </Routes>
             <StatusBar style="auto" />

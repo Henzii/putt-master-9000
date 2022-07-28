@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, ListRenderItemInfo, StyleSheet, Pressable } from "react-native";
-import { Button, Modal, Portal, Subheading, useTheme } from 'react-native-paper';
+import { Button, Menu, Modal, Portal, Subheading, useTheme } from 'react-native-paper';
 import { Course, Layout, NewLayout } from "../hooks/useCourses";
 import AddLayout from "./AddLayout";
 
 const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
-    const [ addLayoutModal, setAddLayoutModal ] = useState(false);
+    const [addLayoutModal, setAddLayoutModal] = useState(false);
+    const [editedLayout, setEditedLayout] = useState<Layout>();
     const handleAddLayout = (layout: NewLayout) => {
         if (onAddLayout) onAddLayout(course.id, layout);
         setAddLayoutModal(false);
@@ -13,6 +14,10 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
     };
     const handleLayoutSelect = (layout: Layout) => {
         if (onSelect) onSelect(layout, course);
+    };
+    const handleEditLaytou = (layout: Layout) => {
+        setEditedLayout(layout);
+        setAddLayoutModal(true);
     };
     return (
         <View style={tyyli.main}>
@@ -22,37 +27,60 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
                     onDismiss={() => setAddLayoutModal(false)}
                     contentContainerStyle={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                 >
-                    <AddLayout onCancel={() => setAddLayoutModal(false) } onAdd={handleAddLayout}/>
+                    <AddLayout
+                        onCancel={() => setAddLayoutModal(false)}
+                        onAdd={handleAddLayout}
+                        layout={editedLayout}
+                    />
                 </Modal>
             </Portal>
             <Button icon="plus-thick" onPress={() => setAddLayoutModal(true)}>Add layout</Button>
             <FlatList
                 data={course.layouts}
                 renderItem={({ item }: ListRenderItemInfo<Layout>) => (
-                    <LayoutElement key={item.id} layout={item} onSelect={handleLayoutSelect} />
+                    <LayoutElement key={item.id} layout={item} onSelect={handleLayoutSelect} onEdit={handleEditLaytou} />
                 )}
                 ItemSeparatorComponent={SeparatorComponent}
             />
         </View>
     );
 };
-
-const LayoutElement = ({ layout, onSelect }: { layout: Layout, onSelect?: (layout: Layout) => void }) => {
+type LayoutElementProps = {
+    layout: Layout,
+    onSelect?: (layout: Layout) => void,
+    onEdit?: (layout: Layout) => void,
+}
+const LayoutElement = ({ layout, onSelect, onEdit }: LayoutElementProps) => {
     const { colors } = useTheme();
+    const [showMenu, setShowMenu] = useState(false);
     const handleClick = () => {
         if (onSelect) onSelect(layout);
     };
+    const handleLongPress = () => {
+        setShowMenu(true);
+    };
+    const handleEditPress = () => {
+        if (onEdit) onEdit(layout);
+        setShowMenu(false);
+    };
     return (
-        <Pressable onPress={handleClick}>
-            <View style={[tyyli.item, { backgroundColor: colors.surface }]}>
-                <View style={tyyli.itemSplit}>
-                    <Subheading>{layout.name}</Subheading>
-                    <Subheading>Par {layout.par}</Subheading>
-                </View>
-                <Text style={tyyli.pars}>
-                    {layout.pars.join(' ')}
-                </Text>
-            </View>
+        <Pressable onPress={handleClick} onLongPress={handleLongPress}>
+            <Menu visible={showMenu} onDismiss={() => setShowMenu(false)}
+                anchor={
+                    <View style={[tyyli.item, { backgroundColor: colors.surface }]}>
+                        <View style={tyyli.itemSplit}>
+                            <Subheading>{layout.name}</Subheading>
+                            <Subheading>Par {layout.par}</Subheading>
+                        </View>
+                        <Text style={tyyli.pars}>
+                            {layout.pars.join(' ')}
+                        </Text>
+                    </View>
+
+                }
+            >
+                <Menu.Item title="Edit" onPress={handleEditPress} />
+            </Menu>
         </Pressable>
     );
 };

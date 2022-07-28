@@ -72,8 +72,8 @@ export const CREATE_USER = gql`
     }
 `;
 export const CLOSE_GAME = gql`
-    mutation($gameId: ID!) {
-        closeGame(gameId: $gameId) {
+    mutation($gameId: ID!, $reopen: Boolean) {
+        closeGame(gameId: $gameId, reopen: $reopen) {
             isOpen
         }
     }
