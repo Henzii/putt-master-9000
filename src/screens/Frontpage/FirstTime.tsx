@@ -91,7 +91,7 @@ export default function FirstTime() {
             <Button mode="text" onPress={() => navi('/')} >Already have an account?</Button>
             <Title>Username</Title>
             <Paragraph>
-                Pick an unique username. Other players can find you with this. Also use this name to login
+                Pick a unique username. Other players can find you with this. Also use this name to login
                 if you ever need to.
             </Paragraph>
             <TextInput

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Alert, StyleSheet, View } from "react-native";
-import { Button, List, Paragraph, TextInput, Title, Menu } from 'react-native-paper';
+import React from 'react';
+import { Alert, StyleSheet } from "react-native";
+import { Button, Paragraph, Title } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../utils/store';
 import { gameData, unloadGame } from '../../reducers/gameDataReducer';
@@ -13,9 +13,8 @@ import Loading from '../../components/Loading';
 import { useMutation } from 'react-apollo';
 import { ABANDON_GAME } from '../../graphql/mutation';
 import { GET_OLD_GAMES } from '../../graphql/queries';
-import { format, fromUnixTime, differenceInMinutes, minutesToHours } from 'date-fns';
+import { format, fromUnixTime, differenceInMinutes, minutesToHours, differenceInDays } from 'date-fns';
 import Spacer from '../../components/ThemedComponents/Spacer';
-import SplitContainer from '../../components/ThemedComponents/SplitContainer';
 
 const Setup = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
@@ -24,8 +23,6 @@ const Setup = () => {
     const gameHook = useGame(gameData.gameId);
     const [abandonGameMutation] = useMutation(ABANDON_GAME, { refetchQueries: [{ query: GET_OLD_GAMES }] });
 
-    const [selectHoleMenuVisible, setSelectHoleMenuVisible] = useState(false);
-    const [selectedHole, setSelectedHole] = useState<number | undefined>();
     const game = gameHook.data;
     const handleGameEnd = async () => {
         Alert.alert(
@@ -63,12 +60,8 @@ const Setup = () => {
         navi('/');
         dispatch(unloadGame());
     };
-    const handleSelectHole = (hole: number) => {
-        setSelectedHole(hole);
-        setSelectHoleMenuVisible(false);
-    };
-    const handleChangePar = () => {
-        return null;
+    const handleReopen = async () => {
+        await gameHook.closeGame(true);
     };
     const verifyAbandonGame = () => {
         Alert.alert(
@@ -91,7 +84,6 @@ const Setup = () => {
     }
     const startDate = fromUnixTime(game.startTime / 1000);
     const endDate = (game.endTime ? fromUnixTime(game.endTime / 1000) : undefined);
-
     const startDateFormatted = format(startDate, 'dd.MM.yyyy HH:mm');
     const endDateFormatted = (endDate ? format(endDate, 'dd.MM.yyyy HH:mm') : '?');
     const duration = differenceInMinutes(endDate || new Date(), startDate);
@@ -103,24 +95,36 @@ const Setup = () => {
             <Container verticalPadding>
                 <Title>Info</Title>
                 <Paragraph>Started          {startDateFormatted}</Paragraph>
-                <Paragraph>Ended            {endDateFormatted}</Paragraph>
+                <Paragraph>Closed           {endDateFormatted}</Paragraph>
                 <Paragraph>Duration        {durationString}</Paragraph>
             </Container>
             <Divider />
-            <Container verticalPadding>
-                <Title>End game</Title>
-                <Paragraph>
-                    Stop drinking and close the game.
-                </Paragraph>
-                <Spacer />
-                <Button
-                    mode='contained'
-                    style={tyyli.nappi}
-                    onPress={handleGameEnd}
-                    disabled={!game.isOpen}
-                >End game
-                </Button>
-            </Container>
+            {game.isOpen && (
+                <Container verticalPadding>
+                    <Title>End game</Title>
+                    <Paragraph>
+                        Stop drinking and close the game.
+                    </Paragraph>
+                    <Spacer />
+                    <Button
+                        mode='contained'
+                        style={tyyli.nappi}
+                        onPress={handleGameEnd}
+                        disabled={!game.isOpen}
+                    >End game
+                    </Button>
+                </Container>
+            )}
+            {!game.isOpen && differenceInDays(new Date(), endDate || new Date()) < 30 &&  (
+                <Container verticalPadding>
+                    <Title>Reopen</Title>
+                    <Paragraph>
+                        Reopen the game. Other players will be notified of your cheating attempt.
+                    </Paragraph>
+                    <Spacer />
+                    <Button mode="contained" color="orange" style={tyyli.nappi} onPress={handleReopen}>Reopen</Button>
+                </Container>
+            )}
             <Divider />
             <Container verticalPadding>
                 <Title>Main menu</Title>
@@ -135,63 +139,13 @@ const Setup = () => {
                 >Quit</Button>
             </Container>
             <Divider />
-            <List.Accordion
-                title="Change PAR"
-            >
-                <Container verticalPadding>
-                    <Paragraph>
-                        Change hole&apos;s par-value. Applies only to this game.
-                    </Paragraph>
-                    <Spacer />
-                    <SplitContainer spaceAround style={{ alignContent: 'center' }}>
-                        <Menu
-                            visible={selectHoleMenuVisible}
-                            onDismiss={() => setSelectHoleMenuVisible(false)}
-                            anchor={
-                                <Button
-                                    onPress={() => setSelectHoleMenuVisible(true)}
-                                    mode={selectedHole === undefined ? 'outlined' : 'contained'}
-                                >
-                                    {selectedHole === undefined ? 'Select hole' : `Hole ${selectedHole + 1}`}
-                                </Button>
-                            }
-                        >
-                            {game.pars.map((par, i) => (
-                                <Menu.Item
-                                    key={`${par}-${i}`}
-                                    title={`Hole ${i + 1}, par ${par}`}
-                                    onPress={() => handleSelectHole(i)}
-                                />
-                            ))}
-                        </Menu>
-                        {selectedHole !== undefined && (
-                            <>
-                                <View>
-                                    <TextInput
-                                        keyboardType='numeric'
-                                        defaultValue={game.pars[selectedHole].toString()}
-                                        autoComplete={false}
-                                        label="Par"
-                                        mode="outlined"
-                                        style={tyyli.input} dense
-                                    />
-                                </View>
-                                <Button color="green" mode="contained" disabled={!game.isOpen} onPress={handleChangePar}>Save</Button>
-                            </>
-                        )}
-                    </SplitContainer>
-                </Container>
-            </List.Accordion>
-            <Divider />
-            <List.Accordion title="Discard game">
-                <Container verticalPadding>
-                    <Paragraph>
-                        If the game is finished, only your scorecard will be burned in hell.
-                    </Paragraph>
-                    <Spacer />
-                    <Button style={tyyli.nappi} mode='contained' color='red' onPress={verifyAbandonGame}>Discard game</Button>
-                </Container>
-            </List.Accordion>
+            <Container verticalPadding>
+                <Paragraph>
+                    If the game is finished, only your scorecard will be burned in hell.
+                </Paragraph>
+                <Spacer />
+                <Button style={tyyli.nappi} mode='contained' color='red' onPress={verifyAbandonGame}>Discard game</Button>
+            </Container>
             <Divider />
             <Paragraph style={{ color: 'gray' }}>
                 Game ID: {gameData.gameId}

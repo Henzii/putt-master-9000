@@ -35,9 +35,9 @@ const useGame = (gameId: string) => {
     const setScore = async (args: SetScoreArgs) => {
         await setScoreMutation({ variables: args });
     };
-    const closeGame = async () => {
+    const closeGame = async (reopen?: boolean) => {
         try {
-            await closeGameMutation({ variables: { gameId }});
+            await closeGameMutation({ variables: { gameId, reopen }});
             return true;
         } catch (e) {
             return false;
