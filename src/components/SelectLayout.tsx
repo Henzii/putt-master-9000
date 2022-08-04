@@ -49,7 +49,7 @@ type LayoutElementProps = {
     layout: Layout,
     onSelect?: (layout: Layout) => void,
     onEdit?: (layout: Layout) => void,
-    canEditCourse: boolean,
+    canEditCourse?: boolean,
 }
 const LayoutElement = ({ layout, onSelect, onEdit, canEditCourse }: LayoutElementProps) => {
     const { colors } = useTheme();

@@ -82,7 +82,7 @@ export type Course = {
     name: string,
     layouts: Layout[]
     id: string | number,
-    canEdit: boolean,
+    canEdit?: boolean,
     distance: {
         meters: number,
         string: string,
@@ -98,7 +98,7 @@ export type Layout = {
     par: number,
     holes: number,
     id: string | number,
-    canEdit: boolean,
+    canEdit?: boolean,
 }
 export type RawCourseData = {
     getCourses: {
