@@ -10,6 +10,7 @@ query ($limit: Int!, $offset: Int!, $search: String, $coordinates: [Float]) {
     courses {
       name
       id
+      canEdit
       distance {
         meters
         string
@@ -20,6 +21,7 @@ query ($limit: Int!, $offset: Int!, $search: String, $coordinates: [Float]) {
         par
         pars
         holes
+        canEdit
       }
     }
   }

@@ -114,17 +114,11 @@ type SingleCourseProps = {
 }
 
 const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expanded, showDistance = true, liveData }: SingleCourseProps) => {
-    const { colors } = useTheme();
     const handleCourseClick = () => {
         if (!onCourseClick) return;
         if (expanded === course.id) onCourseClick(null);
         else onCourseClick(course.id);
     };
-    const titleStyles = [
-        tyyli.title,
-        (expanded === course.id && tyyli.opened),
-        (expanded !== null && expanded !== course.id && tyyli.notOpened),
-    ];
     const InfoIcons = () => {
         return (
             <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -134,20 +128,26 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expan
         );
     };
     let description = course.layouts.length + ' layout' + (course.layouts.length !== 1 ? 's' : '');
+    const selected = expanded === course.id;
     // Jos rata on avattu & liveDataa tarjolla, lisätään se descriptioniin
-    if (expanded === course.id && liveData) {
+    if (selected && liveData) {
         description = description.concat(`\n${liveData.live} / ${liveData.today}`);
     }
     return (
-        <View style={[tyyli.container, { backgroundColor: colors.surface }]}>
+        <View style={[
+            tyyli.container,
+            (expanded !== null && !selected) && { opacity: 0.2 },
+            course.canEdit && tyyli.owned,
+            selected && { elevation: 4 },
+        ]}>
             <List.Accordion
-                style={[tyyli.container, { backgroundColor: colors.surface }]}
+                style={[tyyli.accordion]}
                 title={course.name}
-                titleStyle={titleStyles}
+                titleStyle={[tyyli.title, selected && tyyli.opened]}
                 description={description}
                 descriptionNumberOfLines={3}
                 right={InfoIcons}
-                descriptionStyle={[titleStyles, { fontSize: 14 }]}
+                descriptionStyle={[tyyli.title, { fontSize: 14 }]}
                 testID='SingleCourse'
                 onPress={handleCourseClick}
                 expanded={expanded === course.id}
@@ -183,6 +183,17 @@ const LiveDataIcon = ({ live }: { live: { today: number, live: number } }) => {
 const tyyli = StyleSheet.create({
     container: {
         padding: 5,
+        marginHorizontal: 6,
+        backgroundColor: '#fefefe',
+        elevation: 1,
+        borderRadius: 3,
+    },
+    accordion: {
+        backgroundColor: '#fff'
+    },
+    owned: {
+        borderWidth: 1,
+        borderColor: 'rgba(0,255,0,0.2)',
     },
     title: {
         fontSize: 19,
@@ -205,8 +216,7 @@ const tyyli = StyleSheet.create({
         padding: 10,
     },
     separaattori: {
-        height: 1,
-        backgroundColor: 'rgba(0,0,0,0.2)'
+        height: 3,
     }
 });
 export default SelectCourses;
