@@ -391,11 +391,15 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
             style={
               Array [
                 Object {
+                  "backgroundColor": "#fefefe",
+                  "borderRadius": 3,
+                  "elevation": 1,
+                  "marginHorizontal": 6,
                   "padding": 5,
                 },
-                Object {
-                  "backgroundColor": "#ffffff",
-                },
+                false,
+                undefined,
+                false,
               ]
             }
           >
@@ -434,10 +438,7 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
                         },
                         Array [
                           Object {
-                            "padding": 5,
-                          },
-                          Object {
-                            "backgroundColor": "#ffffff",
+                            "backgroundColor": "#fff",
                           },
                         ],
                       ],
@@ -492,7 +493,6 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
                                   "fontSize": 19,
                                 },
                                 false,
-                                false,
                               ],
                             ],
                           ]
@@ -521,13 +521,9 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
                                 "color": "rgba(0, 0, 0, 0.54)",
                               },
                               Array [
-                                Array [
-                                  Object {
-                                    "fontSize": 19,
-                                  },
-                                  false,
-                                  false,
-                                ],
+                                Object {
+                                  "fontSize": 19,
+                                },
                                 Object {
                                   "fontSize": 14,
                                 },
@@ -613,8 +609,7 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
           <View
             style={
               Object {
-                "backgroundColor": "rgba(0,0,0,0.2)",
-                "height": 1,
+                "height": 3,
               }
             }
           />
@@ -627,11 +622,15 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
             style={
               Array [
                 Object {
+                  "backgroundColor": "#fefefe",
+                  "borderRadius": 3,
+                  "elevation": 1,
+                  "marginHorizontal": 6,
                   "padding": 5,
                 },
-                Object {
-                  "backgroundColor": "#ffffff",
-                },
+                false,
+                undefined,
+                false,
               ]
             }
           >
@@ -670,10 +669,7 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
                         },
                         Array [
                           Object {
-                            "padding": 5,
-                          },
-                          Object {
-                            "backgroundColor": "#ffffff",
+                            "backgroundColor": "#fff",
                           },
                         ],
                       ],
@@ -728,7 +724,6 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
                                   "fontSize": 19,
                                 },
                                 false,
-                                false,
                               ],
                             ],
                           ]
@@ -757,13 +752,9 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
                                 "color": "rgba(0, 0, 0, 0.54)",
                               },
                               Array [
-                                Array [
-                                  Object {
-                                    "fontSize": 19,
-                                  },
-                                  false,
-                                  false,
-                                ],
+                                Object {
+                                  "fontSize": 19,
+                                },
                                 Object {
                                   "fontSize": 14,
                                 },
