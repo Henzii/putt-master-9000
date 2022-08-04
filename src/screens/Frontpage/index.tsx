@@ -52,11 +52,11 @@ const Frontpage = () => {
         );
     }
 
-    const openGamesCount = openGames.data?.getGames?.length || 0;
+    const openGamesCount = openGames.data?.getGames?.games?.length || 0;
     let oldGamesText = `Browse old and open games.`;
     if (openGamesCount > 0) {
         oldGamesText += (openGamesCount === 1)
-            ? `\nYou have one open game at ${openGames.data.getGames[0].course}`
+            ? `\nYou have one open game at ${openGames.data.getGames.games[0].course}`
             : `\nYou have ${openGamesCount} open games!`;
     }
     return (

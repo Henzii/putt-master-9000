@@ -10,6 +10,7 @@ query ($limit: Int!, $offset: Int!, $search: String, $coordinates: [Float]) {
     courses {
       name
       id
+      canEdit
       distance {
         meters
         string
@@ -20,6 +21,7 @@ query ($limit: Int!, $offset: Int!, $search: String, $coordinates: [Float]) {
         par
         pars
         holes
+        canEdit
       }
     }
   }
@@ -66,18 +68,23 @@ ${CORE_SCORECARD_INFO}
 `;
 export const GET_OLD_GAMES = gql`
 ${CORE_GAME_INFO}
-  query ($onlyOpenGames: Boolean) {
-    getGames (onlyOpenGames: $onlyOpenGames) {
-      ...CoreGameInfo
-      myScorecard {
-        total
-      }
-      scorecards {
-        total
-        plusminus
-        user {
-          id
-          name
+  query ($onlyOpenGames: Boolean, $limit: Int, $offset: Int, $search: String) {
+    getGames (onlyOpenGames: $onlyOpenGames, limit: $limit, offset: $offset, search: $search) {
+      hasMore
+      nextOffset
+      count
+      games {
+        ...CoreGameInfo
+        myScorecard {
+          total
+        }
+        scorecards {
+          total
+          plusminus
+          user {
+            id
+            name
+          }
         }
       }
     }

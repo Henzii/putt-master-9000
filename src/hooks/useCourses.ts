@@ -29,7 +29,7 @@ const useCourses = (showDistance = true) => {
     );
     useEffect(() => {
         // Kun GPS-paikannus on saatu, haetaan data uudestaan gepsi koordinaattien kera
-        if (gps.ready && refetch && showDistance) {
+        if (gps.ready && showDistance) {
             //console.log('Ready', gps.lon, gps.lat);
             refetch({ coordinates: [ gps.lon, gps.lat ]});
         }
@@ -82,6 +82,7 @@ export type Course = {
     name: string,
     layouts: Layout[]
     id: string | number,
+    canEdit?: boolean,
     distance: {
         meters: number,
         string: string,
@@ -96,7 +97,8 @@ export type Layout = {
     pars: number[],
     par: number,
     holes: number,
-    id: string | number
+    id: string | number,
+    canEdit?: boolean,
 }
 export type RawCourseData = {
     getCourses: {

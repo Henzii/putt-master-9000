@@ -38,7 +38,7 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
             <FlatList
                 data={course.layouts}
                 renderItem={({ item }: ListRenderItemInfo<Layout>) => (
-                    <LayoutElement key={item.id} layout={item} onSelect={handleLayoutSelect} onEdit={handleEditLaytou} />
+                    <LayoutElement key={item.id} layout={item} onSelect={handleLayoutSelect} onEdit={handleEditLaytou} canEditCourse={course.canEdit} />
                 )}
                 ItemSeparatorComponent={SeparatorComponent}
             />
@@ -49,25 +49,31 @@ type LayoutElementProps = {
     layout: Layout,
     onSelect?: (layout: Layout) => void,
     onEdit?: (layout: Layout) => void,
+    canEditCourse?: boolean,
 }
-const LayoutElement = ({ layout, onSelect, onEdit }: LayoutElementProps) => {
+const LayoutElement = ({ layout, onSelect, onEdit, canEditCourse }: LayoutElementProps) => {
     const { colors } = useTheme();
     const [showMenu, setShowMenu] = useState(false);
     const handleClick = () => {
         if (onSelect) onSelect(layout);
     };
     const handleLongPress = () => {
-        setShowMenu(true);
+        if (layout.canEdit || canEditCourse) setShowMenu(true);
     };
     const handleEditPress = () => {
         if (onEdit) onEdit(layout);
         setShowMenu(false);
     };
+    const laytoutStyles = [
+        tyyli.item,
+        { backgroundColor: colors.surface },
+        (layout.canEdit || canEditCourse) && tyyli.owned
+    ];
     return (
         <Pressable onPress={handleClick} onLongPress={handleLongPress}>
             <Menu visible={showMenu} onDismiss={() => setShowMenu(false)}
                 anchor={
-                    <View style={[tyyli.item, { backgroundColor: colors.surface }]}>
+                    <View style={laytoutStyles}>
                         <View style={tyyli.itemSplit}>
                             <Subheading>{layout.name}</Subheading>
                             <Subheading>Par {layout.par}</Subheading>
@@ -94,12 +100,18 @@ const tyyli = StyleSheet.create({
         width: '100%',
         marginBottom: 10,
     },
+    owned: {
+        borderWidth: 1,
+        borderColor: 'rgba(0,255,0,0.2)',
+    },
     item: {
         paddingLeft: 20,
         paddingRight: 20,
         paddingTop: 10,
         paddingBottom: 10,
         minHeight: 20,
+        borderRadius: 5,
+        elevation: 1,
     },
     itemSplit: {
         display: 'flex',
