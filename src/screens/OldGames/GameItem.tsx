@@ -3,17 +3,15 @@ import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Caption, Chip, Subheading, Title } from "react-native-paper";
 import { Game } from "../../hooks/useGame";
-import useMe from "../../hooks/useMe";
 
 interface GameItemProps {
     onClick: (gameid: string, gameOpen?: boolean) => void,
-    game: Game
+    game: Game,
+    myId: string,
 }
 
 export default function GameItem(props: GameItemProps) {
-    const { onClick, game } = props;
-    const {me} = useMe();
-    if (!me) return null;
+    const { onClick, game, myId } = props;
     const handleGameClick = () => {
         if (onClick) onClick(game.id, game.isOpen);
     };
@@ -26,7 +24,7 @@ export default function GameItem(props: GameItemProps) {
                     <Subheading style={tyyli.layoutName}>{game.layout}</Subheading>
                     <View style={{ marginTop: 25, display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
                         {!game.isOpen && game.scorecards
-                            .filter(sc => sc.user.id !== me.id)
+                            .filter(sc => sc.user.id !== myId)
                             .map(sc => {
                                 return (
                                     <Chip textStyle={tyyli.avatarText} style={tyyli.avatar} icon="account" key={sc.user.id}>{sc.user.name} ({sc.plusminus})</Chip>
