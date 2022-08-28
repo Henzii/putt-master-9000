@@ -15,6 +15,7 @@ import { ABANDON_GAME } from '../../graphql/mutation';
 import { GET_OLD_GAMES } from '../../graphql/queries';
 import { format, fromUnixTime, differenceInMinutes, minutesToHours, differenceInDays } from 'date-fns';
 import Spacer from '../../components/ThemedComponents/Spacer';
+import LocalSettings from '../../components/LocalSettings';
 
 const Setup = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
@@ -100,32 +101,37 @@ const Setup = () => {
             </Container>
             <Divider />
             {game.isOpen && (
-                <Container verticalPadding>
-                    <Title>End game</Title>
-                    <Paragraph>
-                        Stop drinking and close the game.
-                    </Paragraph>
-                    <Spacer />
-                    <Button
-                        mode='contained'
-                        style={tyyli.nappi}
-                        onPress={handleGameEnd}
-                        disabled={!game.isOpen}
-                    >End game
-                    </Button>
-                </Container>
+                <>
+                    <Container verticalPadding>
+                        <Title>End game</Title>
+                        <Paragraph>
+                            Stop drinking and close the game.
+                        </Paragraph>
+                        <Spacer />
+                        <Button
+                            mode='contained'
+                            style={tyyli.nappi}
+                            onPress={handleGameEnd}
+                            disabled={!game.isOpen}
+                        >End game
+                        </Button>
+                    </Container>
+                    <Divider />
+                </>
             )}
             {!game.isOpen && differenceInDays(new Date(), endDate || new Date()) < 30 &&  (
-                <Container verticalPadding>
-                    <Title>Reopen</Title>
-                    <Paragraph>
-                        Reopen the game. Other players will be notified of your cheating attempt.
-                    </Paragraph>
-                    <Spacer />
-                    <Button mode="contained" color="orange" style={tyyli.nappi} onPress={handleReopen}>Reopen</Button>
-                </Container>
+                <>
+                    <Container verticalPadding>
+                        <Title>Reopen</Title>
+                        <Paragraph>
+                            Reopen the game. Other players will be notified of your cheating attempt.
+                        </Paragraph>
+                        <Spacer />
+                        <Button mode="contained" color="orange" style={tyyli.nappi} onPress={handleReopen}>Reopen</Button>
+                    </Container>
+                    <Divider />
+                </>
             )}
-            <Divider />
             <Container verticalPadding>
                 <Title>Main menu</Title>
                 <Paragraph>
@@ -138,6 +144,8 @@ const Setup = () => {
                     style={tyyli.nappi}
                 >Quit</Button>
             </Container>
+            <Divider />
+            <LocalSettings />
             <Divider />
             <Container verticalPadding>
                 <Paragraph>
