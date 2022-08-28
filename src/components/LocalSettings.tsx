@@ -1,30 +1,46 @@
 import React from "react";
-import { Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { Switch } from "react-native-paper";
-import useLocalSettings from "../hooks/useLocalSettings";
-import Container from "./ThemedComponents/Container";
+import useLocalSettings, { SettingName } from "../hooks/useLocalSettings";
 import SplitContainer from "./ThemedComponents/SplitContainer";
 
 export default function LocalSettings() {
     const settings = useLocalSettings();
     return (
-        <Container>
-            <SingleSwitch text="Sort summary by HC" onPress={settings.toggle} getValue={settings.getBoolValue} name="sortHC" />
-            <SingleSwitch text="Sort scorecards by box order" onPress={settings.toggle} getValue={settings.getBoolValue} name="sortBox" />
-            <SingleSwitch text="Go to first incomplete scorecard tab on load" onPress={settings.toggle} getValue={settings.getBoolValue} name="autoAdvance" />
-            <SingleSwitch text="Prohibition" onPress={settings.toggle} getValue={settings.getBoolValue} name="prohibition" />
-        </Container>
+        <>
+            <SingleSwitch text="Sort summary by HC" onPress={settings.toggle} getValue={settings.getBoolValue} name="SortHC" />
+            <SingleSwitch text="Sort scorecards by box order" onPress={settings.toggle} getValue={settings.getBoolValue} name="SortBox" />
+            <SingleSwitch text="Auto select first unfinished hole" onPress={settings.toggle} getValue={settings.getBoolValue} name="AutoAdvance" />
+            <SingleSwitch text="Prohibition" onPress={settings.toggle} getValue={settings.getBoolValue} name="Prohibition" noBorder />
+        </>
     );
 }
-
-const SingleSwitch = ({text, onPress, getValue, name} : {text: string, getValue: (name: string) => boolean, onPress: (name: string) => void, name: string}) => {
+type SingleSwitchProps = {
+    text: string,
+    onPress: (name: SettingName) => void,
+    getValue: (name: SettingName) => boolean,
+    name: SettingName,
+    noBorder?: boolean,
+}
+const SingleSwitch = ({text, onPress, getValue, name, noBorder = false}: SingleSwitchProps ) => {
     const handleChange = () => {
         onPress(name);
     };
     return (
-         <SplitContainer onPress={handleChange}>
+         <SplitContainer onPress={handleChange} style={[tyyli.single, !noBorder && tyyli.withBorder]}>
             <Text>{text}</Text>
             <Switch value={getValue(name)} onValueChange={handleChange} />
         </SplitContainer>
     );
 };
+
+const tyyli = StyleSheet.create({
+    single: {
+        paddingHorizontal: 15,
+        paddingVertical: 12,
+    },
+    withBorder: {
+        borderBottomWidth: 0.5,
+        borderBottomColor: 'rgba(0,0,0,0.3)'
+    }
+});

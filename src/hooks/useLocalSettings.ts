@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+export type SettingName = 'SortHC' | 'SortBox' | 'Prohibition' | 'AutoAdvance'
+
 export default function useLocalSettings() {
     const [settingsData, setSettingsData] = useState<Record<string, string | boolean>>({});
     useEffect(() => {
@@ -18,7 +20,7 @@ export default function useLocalSettings() {
         setSettingsData(newData);
         AsyncStorage.setItem('localSettings', JSON.stringify(newData));
     };
-    const toggle = (name: string) => {
+    const toggle = (name: SettingName) => {
         if (!settingsData[name]) {
             handleChangeData({[name]:true});
         } else if (typeof settingsData[name] === "boolean") {
@@ -26,10 +28,10 @@ export default function useLocalSettings() {
         }
         return;
     };
-    const getValue = (name: string) => {
+    const getValue = (name: SettingName) => {
         return settingsData[name] ?? '';
     };
-    const getBoolValue = (name: string) => {
+    const getBoolValue = (name: SettingName) => {
         return !!settingsData[name];
     };
     return {

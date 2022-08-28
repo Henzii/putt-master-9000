@@ -1,13 +1,15 @@
 import React from 'react';
 import { View, StyleSheet, ViewStyle, Pressable } from 'react-native';
 
+type VS = ViewStyle | false
+
 type SplitContainerProps = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     children: React.ReactElement[] | null | React.ReactElement | any,
     left?: boolean,
     bottonMargin?: boolean,
     spaceAround?: boolean,
-    style?: ViewStyle,
+    style?: VS | VS[]
     onPress?: () => void
 }
 const SplitContainer = ({children, ...props} : SplitContainerProps) => {
