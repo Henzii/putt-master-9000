@@ -9,6 +9,7 @@ import Main from './src/components/Main';
 import { theme } from './src/utils/theme';
 import store from './src/utils/store';
 import { client } from './src/graphql/apolloClient';
+import LocalSettingsProvider from './src/components/LocalSettingsProvider';
 
 export default function App() {
 
@@ -17,7 +18,9 @@ export default function App() {
       <ApolloProvider client={client}>
         <NativeRouter>
           <PaperProvider theme={theme}>
-            <Main />
+            <LocalSettingsProvider>
+              <Main />
+            </LocalSettingsProvider>
           </PaperProvider>
         </NativeRouter>
       </ApolloProvider>

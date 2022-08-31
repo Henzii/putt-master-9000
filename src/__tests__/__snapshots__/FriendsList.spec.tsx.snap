@@ -69,301 +69,316 @@ Array [
         Friends
       </Text>
       <View
-        style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "display": "flex",
-              "flexDirection": "row",
-              "justifyContent": "space-between",
-              "width": "100%",
-            },
-            undefined,
-            undefined,
-            Object {
-              "justifyContent": "space-around",
-            },
-            null,
-          ]
-        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
       >
         <View
           style={
-            Object {
-              "backgroundColor": "transparent",
-              "borderColor": "transparent",
-              "borderRadius": 4,
-              "borderStyle": "solid",
-              "borderWidth": 0,
-              "elevation": 0,
-              "minWidth": 64,
-            }
+            Array [
+              Object {
+                "alignItems": "center",
+                "display": "flex",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "width": "100%",
+              },
+              undefined,
+              undefined,
+              Object {
+                "justifyContent": "space-around",
+              },
+              null,
+            ]
           }
         >
           <View
-            accessibilityRole="button"
-            accessibilityState={
-              Object {
-                "disabled": undefined,
-              }
-            }
-            accessible={true}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
-                  "overflow": "hidden",
-                },
-                Object {
-                  "borderRadius": 4,
-                },
-              ]
+              Object {
+                "backgroundColor": "transparent",
+                "borderColor": "transparent",
+                "borderRadius": 4,
+                "borderStyle": "solid",
+                "borderWidth": 0,
+                "elevation": 0,
+                "minWidth": 64,
+              }
             }
           >
             <View
+              accessibilityRole="button"
+              accessibilityState={
+                Object {
+                  "disabled": undefined,
+                }
+              }
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
                 Array [
                   Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
+                    "overflow": "hidden",
                   },
-                  undefined,
+                  Object {
+                    "borderRadius": 4,
+                  },
                 ]
               }
             >
               <View
                 style={
-                  Object {
-                    "marginLeft": 12,
-                    "marginRight": -4,
-                  }
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    },
+                    undefined,
+                  ]
                 }
               >
+                <View
+                  style={
+                    Object {
+                      "marginLeft": 12,
+                      "marginRight": -4,
+                    }
+                  }
+                >
+                  <Text
+                    accessibilityElementsHidden={true}
+                    allowFontScaling={false}
+                    importantForAccessibility="no-hide-descendants"
+                    pointerEvents="none"
+                    selectable={false}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#6200ee",
+                          "fontSize": 16,
+                        },
+                        Array [
+                          Object {
+                            "lineHeight": 16,
+                            "transform": Array [
+                              Object {
+                                "scaleX": 1,
+                              },
+                            ],
+                          },
+                          Object {
+                            "backgroundColor": "transparent",
+                          },
+                        ],
+                        Object {
+                          "fontFamily": "material-community",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    󰐕
+                  </Text>
+                </View>
                 <Text
-                  accessibilityElementsHidden={true}
-                  allowFontScaling={false}
-                  importantForAccessibility="no-hide-descendants"
-                  pointerEvents="none"
+                  numberOfLines={1}
                   selectable={false}
                   style={
                     Array [
                       Object {
-                        "color": "#6200ee",
-                        "fontSize": 16,
+                        "color": "#000000",
+                        "fontFamily": "System",
+                        "fontWeight": "400",
+                      },
+                      Object {
+                        "textAlign": "left",
                       },
                       Array [
                         Object {
-                          "lineHeight": 16,
-                          "transform": Array [
-                            Object {
-                              "scaleX": 1,
-                            },
-                          ],
+                          "letterSpacing": 1,
+                          "marginHorizontal": 16,
+                          "marginVertical": 9,
+                          "textAlign": "center",
+                        },
+                        undefined,
+                        Object {
+                          "textTransform": "uppercase",
                         },
                         Object {
-                          "backgroundColor": "transparent",
+                          "color": "#6200ee",
+                          "fontFamily": "System",
+                          "fontWeight": "500",
                         },
+                        Object {
+                          "fontFamily": "System",
+                          "fontWeight": "500",
+                        },
+                        undefined,
                       ],
-                      Object {
-                        "fontFamily": "material-community",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
                     ]
                   }
                 >
-                  󰐕
+                  Add friend
                 </Text>
               </View>
-              <Text
-                numberOfLines={1}
-                selectable={false}
-                style={
-                  Array [
-                    Object {
-                      "color": "#000000",
-                      "fontFamily": "System",
-                      "fontWeight": "400",
-                    },
-                    Object {
-                      "textAlign": "left",
-                    },
-                    Array [
-                      Object {
-                        "letterSpacing": 1,
-                        "marginHorizontal": 16,
-                        "marginVertical": 9,
-                        "textAlign": "center",
-                      },
-                      undefined,
-                      Object {
-                        "textTransform": "uppercase",
-                      },
-                      Object {
-                        "color": "#6200ee",
-                        "fontFamily": "System",
-                        "fontWeight": "500",
-                      },
-                      Object {
-                        "fontFamily": "System",
-                        "fontWeight": "500",
-                      },
-                      undefined,
-                    ],
-                  ]
-                }
-              >
-                Add friend
-              </Text>
             </View>
           </View>
-        </View>
-        <View
-          style={
-            Object {
-              "backgroundColor": "transparent",
-              "borderColor": "transparent",
-              "borderRadius": 4,
-              "borderStyle": "solid",
-              "borderWidth": 0,
-              "elevation": 0,
-              "minWidth": 64,
-            }
-          }
-        >
           <View
-            accessibilityRole="button"
-            accessibilityState={
-              Object {
-                "disabled": undefined,
-              }
-            }
-            accessible={true}
-            focusable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
-              Array [
-                Object {
-                  "overflow": "hidden",
-                },
-                Object {
-                  "borderRadius": 4,
-                },
-              ]
+              Object {
+                "backgroundColor": "transparent",
+                "borderColor": "transparent",
+                "borderRadius": 4,
+                "borderStyle": "solid",
+                "borderWidth": 0,
+                "elevation": 0,
+                "minWidth": 64,
+              }
             }
           >
             <View
+              accessibilityRole="button"
+              accessibilityState={
+                Object {
+                  "disabled": undefined,
+                }
+              }
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
                 Array [
                   Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                    "justifyContent": "center",
+                    "overflow": "hidden",
                   },
-                  undefined,
+                  Object {
+                    "borderRadius": 4,
+                  },
                 ]
               }
             >
               <View
                 style={
-                  Object {
-                    "marginLeft": 12,
-                    "marginRight": -4,
-                  }
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    },
+                    undefined,
+                  ]
                 }
               >
+                <View
+                  style={
+                    Object {
+                      "marginLeft": 12,
+                      "marginRight": -4,
+                    }
+                  }
+                >
+                  <Text
+                    accessibilityElementsHidden={true}
+                    allowFontScaling={false}
+                    importantForAccessibility="no-hide-descendants"
+                    pointerEvents="none"
+                    selectable={false}
+                    style={
+                      Array [
+                        Object {
+                          "color": "#6200ee",
+                          "fontSize": 16,
+                        },
+                        Array [
+                          Object {
+                            "lineHeight": 16,
+                            "transform": Array [
+                              Object {
+                                "scaleX": 1,
+                              },
+                            ],
+                          },
+                          Object {
+                            "backgroundColor": "transparent",
+                          },
+                        ],
+                        Object {
+                          "fontFamily": "material-community",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    󰐕
+                  </Text>
+                </View>
                 <Text
-                  accessibilityElementsHidden={true}
-                  allowFontScaling={false}
-                  importantForAccessibility="no-hide-descendants"
-                  pointerEvents="none"
+                  numberOfLines={1}
                   selectable={false}
                   style={
                     Array [
                       Object {
-                        "color": "#6200ee",
-                        "fontSize": 16,
+                        "color": "#000000",
+                        "fontFamily": "System",
+                        "fontWeight": "400",
+                      },
+                      Object {
+                        "textAlign": "left",
                       },
                       Array [
                         Object {
-                          "lineHeight": 16,
-                          "transform": Array [
-                            Object {
-                              "scaleX": 1,
-                            },
-                          ],
+                          "letterSpacing": 1,
+                          "marginHorizontal": 16,
+                          "marginVertical": 9,
+                          "textAlign": "center",
+                        },
+                        undefined,
+                        Object {
+                          "textTransform": "uppercase",
                         },
                         Object {
-                          "backgroundColor": "transparent",
+                          "color": "#6200ee",
+                          "fontFamily": "System",
+                          "fontWeight": "500",
                         },
+                        Object {
+                          "fontFamily": "System",
+                          "fontWeight": "500",
+                        },
+                        undefined,
                       ],
-                      Object {
-                        "fontFamily": "material-community",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
                     ]
                   }
                 >
-                  󰐕
+                  Create friend
                 </Text>
               </View>
-              <Text
-                numberOfLines={1}
-                selectable={false}
-                style={
-                  Array [
-                    Object {
-                      "color": "#000000",
-                      "fontFamily": "System",
-                      "fontWeight": "400",
-                    },
-                    Object {
-                      "textAlign": "left",
-                    },
-                    Array [
-                      Object {
-                        "letterSpacing": 1,
-                        "marginHorizontal": 16,
-                        "marginVertical": 9,
-                        "textAlign": "center",
-                      },
-                      undefined,
-                      Object {
-                        "textTransform": "uppercase",
-                      },
-                      Object {
-                        "color": "#6200ee",
-                        "fontFamily": "System",
-                        "fontWeight": "500",
-                      },
-                      Object {
-                        "fontFamily": "System",
-                        "fontWeight": "500",
-                      },
-                      undefined,
-                    ],
-                  ]
-                }
-              >
-                Create friend
-              </Text>
             </View>
           </View>
         </View>

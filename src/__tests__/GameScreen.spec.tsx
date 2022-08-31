@@ -6,6 +6,7 @@ import { MockedProvider } from '@apollo/react-testing';
 //import { Provider } from 'react-native-paper';
 import * as gameMocks from './mocks/gameMocks';
 import { InMemoryCache } from 'apollo-boost';
+import LocalSettingsProvider from '../components/LocalSettingsProvider';
 
 const wrappedGame = () => {
     return (
@@ -17,7 +18,9 @@ const wrappedGame = () => {
                 })
             }
         >
-            <Game />
+            <LocalSettingsProvider>
+                <Game />
+            </LocalSettingsProvider>
         </MockedProvider>
     );
 };
@@ -30,10 +33,9 @@ jest.mock('react-redux', () => {
         }
     };
 });
-
 describe('<Game /> testit', () => {
     it('Renderöityy oikein', async () => {
-        const { getByText, getByTestId } = render(wrappedGame());
+        const { getByText, getByTestId, toJSON } = render(wrappedGame());
 
         // Alussa loading-rinkula
         expect(getByText('Loading...')).toBeDefined();
@@ -46,5 +48,6 @@ describe('<Game /> testit', () => {
             expect(getByText(gameMocks.mockedGame.scorecards[0].user.name)).not.toBeNull();
 
         });
+        expect(toJSON()).toMatchSnapshot();
     });
 });

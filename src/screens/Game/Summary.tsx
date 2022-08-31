@@ -13,12 +13,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
+import { useSettings } from '../../components/LocalSettingsProvider';
 
 const Summary = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const { data, ready } = useGame(gameData.gameId);
     const [hideBeers, setHideBeers] = useState(true);
     const [captureScreen, setCaptureScreen] = useState(false);
+    const settings = useSettings();
 
     const viewRef = useRef<View>(null);
     useEffect(() => {
@@ -65,7 +67,13 @@ const Summary = () => {
         }
     };
 
-    const sortedScorecards = [...data.scorecards].sort((a, b) => (a.total || 0) - (b.total || 0));
+    const sortedScorecards = [...data.scorecards].sort((a, b) => {
+        if (!a.total || !b.total) return 0;
+        if (settings.getBoolValue('SortHC')) {
+            return (a.total-a.hc) - (b.total - b.hc);
+        }
+        return (a.total || 0) - (b.total || 0);
+    });
     const tableHeaders = [...data.pars.map((p, i) => i + 1), 'Total', '+/-', 'Hc', 'hcTot', 'Hc+/-'];
     const leveydet = [...data.pars.map(() => 31), 50, 50, 50, 50, 50];
     const nimetJaSijoitukset = sortedScorecards.reduce((p: Array<Array<string>>, c, i) => {

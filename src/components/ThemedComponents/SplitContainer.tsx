@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, ViewStyle } from 'react-native';
+import { View, StyleSheet, ViewStyle, Pressable } from 'react-native';
+
+type VS = ViewStyle | false
 
 type SplitContainerProps = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -7,7 +9,8 @@ type SplitContainerProps = {
     left?: boolean,
     bottonMargin?: boolean,
     spaceAround?: boolean,
-    style?: ViewStyle,
+    style?: VS | VS[]
+    onPress?: () => void
 }
 const SplitContainer = ({children, ...props} : SplitContainerProps) => {
     const style = [
@@ -18,9 +21,11 @@ const SplitContainer = ({children, ...props} : SplitContainerProps) => {
         props.style || null,
     ];
     return (
-        <View style={style}>
-            {children}
-        </View>
+        <Pressable onPress={props.onPress}>
+            <View style={style}>
+                {children}
+            </View>
+        </Pressable>
     );
 };
 const tyylit = StyleSheet.create({

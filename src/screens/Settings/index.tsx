@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Paragraph, Switch, Title, TouchableRipple } from 'react-native-paper';
 import Container from '../../components/ThemedComponents/Container';
@@ -11,39 +11,15 @@ import { useNavigate } from 'react-router-native';
 import ChangePassword from './ChangePassword';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../../reducers/notificationReducer';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Settings = () => {
     const { me, updateSettings, logout } = useMe();
     const navi = useNavigate();
     const [deleteAccountMutation] = useMutation(DELETE_ACCOUNT);
-    const [hideBeers, setHideBeers] = useState<boolean>();
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        // Haetaan asyncstoragesta tieto piilotetaanko kaljat
-        AsyncStorage.getItem('hideBeers').then(res => {
-            if (res === 'false') {
-                setHideBeers(false);
-            } else {
-                setHideBeers(true);
-            }
-        }).catch(() => {
-            setHideBeers(true);
-        });
-    }, []);
 
     const handleBlockFriendsChange = () => {
         updateSettings({ blockFriendRequests: !me?.blockFriendRequests });
-    };
-    const handleHideBeersChange = () => {
-        const newBooleanString = (!hideBeers).toString();
-        AsyncStorage.setItem('hideBeers', newBooleanString).then(() => {
-            setHideBeers(!hideBeers);
-        }).catch(() => {
-            // eslint-disable-next-line no-console
-            console.log('Asyncstorage error!');
-        });
     };
     const handleDeleteAccount = async () => {
         // Poistetaan tunnukset
@@ -94,19 +70,6 @@ const Settings = () => {
                         />
                     </View>
                 </Pressable>
-            </View>
-            <Divider />
-            <View style={tyyli.section}>
-                <Title>Prohibition</Title>
-                <View style={tyyli.split}>
-                    <Paragraph>
-                        Hide beers and bHc
-                    </Paragraph>
-                    {hideBeers !== undefined && <Switch
-                        value={hideBeers}
-                        onValueChange={handleHideBeersChange}
-                    />}
-                </View>
             </View>
             <Divider />
             <View style={tyyli.section}>

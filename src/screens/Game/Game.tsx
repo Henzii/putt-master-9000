@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, StyleSheet, FlatList, AppState } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import Player from './Player';
 import { Dimensions } from 'react-native';
 import RoundTabs from '../../components/RoundTabs';
@@ -12,12 +12,14 @@ import Loading from '../../components/Loading';
 import { RootState } from '../../utils/store';
 import ErrorScreen from '../../components/ErrorScreen';
 import { useCallback } from 'react';
+import { useSettings } from '../../components/LocalSettingsProvider';
 
 export default function Game() {
     const [selectedRound, setSelectedRound] = useState(0);
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const gameId = gameData.gameId;
     const { data, loading, error, setScore } = useGame(gameId);
+    const localSettings = useSettings();
 
     const handleScoreChange = (playerId: string, selectedRound: number, value: number) => {
         setScore({
@@ -27,6 +29,33 @@ export default function Game() {
             value,
         });
     };
+    const goToFirstIncompleteHole = () => {
+        if (!data?.scorecards) return;
+        for (let i = 0; i < (data?.holes || 0); i++) {
+            const finished = data?.scorecards.reduce((p, c) => {
+                if (isNaN(c.scores[i])) return p;
+                return p+1;
+            }, 0);
+            if (finished < data?.scorecards.length) {
+                setSelectedRound(i);
+                break;
+            }
+        }
+    };
+    const handleAppStateChange = (nextAppState: string) => {
+        if (nextAppState === 'active') {
+            goToFirstIncompleteHole();
+        }
+    };
+    useEffect(() => {
+        if (localSettings?.getBoolValue('AutoAdvance')) {
+            AppState.addEventListener('change', handleAppStateChange);
+        }
+        return () => AppState.removeEventListener('change', handleAppStateChange);
+    }, [localSettings]);
+    useEffect(() => {
+        goToFirstIncompleteHole();
+    }, []);
     const findThrowingOrder = useCallback(() => {
         // Kopioidaan tuloskortit
         const cards = [...data?.scorecards || []];
@@ -39,6 +68,7 @@ export default function Game() {
         }, ({} as { [key: string]: number }));
     }, [selectedRound]);
 
+
     if (!data && loading) return <Loading />;
     if (!data || error) {
         return <ErrorScreen errorMessage={`Error just happened!`} />;
@@ -49,6 +79,10 @@ export default function Game() {
     // Apumuuttuja jolla todetaan swiippaus vasemmalle
     let touchPos = [0, 0];
     const throwingOrder = findThrowingOrder();
+    // TODO: useCallback tms.
+    if (localSettings.getBoolValue('SortBox')) {
+        data.scorecards.sort((a,b) => throwingOrder[a.user.id] - throwingOrder[b.user.id]);
+    }
     return (
         <>
             <RoundTabs gameData={data} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
