@@ -1,11 +1,12 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 import { Switch } from "react-native-paper";
-import useLocalSettings, { SettingName } from "../hooks/useLocalSettings";
+import type { SettingName } from "../hooks/useLocalSettings";
+import { useSettings } from "./LocalSettingsProvider";
 import SplitContainer from "./ThemedComponents/SplitContainer";
 
 export default function LocalSettings() {
-    const settings = useLocalSettings();
+    const settings = useSettings();
     return (
         <>
             <SingleSwitch text="Sort summary by HC" onPress={settings.toggle} getValue={settings.getBoolValue} name="SortHC" />

@@ -14,7 +14,7 @@ import CreateGame, { NewGameData } from './CreateGame';
 import Game from './Game';
 import Setup from './Setup';
 import Summary from './Summary';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSettings } from '../../components/LocalSettingsProvider';
 
 export default function GameContainer() {
     /*
@@ -28,6 +28,7 @@ export default function GameContainer() {
     const client = useApolloClient();
 
     const [navIndex, setNavIndex] = useState(gameData?.gameOpen === false ? 1 : 0);
+    const settings = useSettings();
     const [navRoutes, setNavRoutes] = useState([
         { key: 'gameRoute', title: 'Scorecard', icon: 'counter' },
         { key: 'summaryRoute', title: 'Summary', icon: 'format-list-numbered' },
@@ -35,18 +36,20 @@ export default function GameContainer() {
         { key: 'setupRoute', title: 'Setup', icon: 'cog-outline' },
     ]);
     useEffect(() => {
+        const hasBeerRoute = !!navRoutes.find(r => r.key === 'beerRoute');
+        const copyOfNavRoutes = [...navRoutes];
+        if (!settings.getBoolValue('Prohibition') && !hasBeerRoute) {
+            copyOfNavRoutes.splice(2, 0, { key: 'beerRoute', title: 'Beers', icon: 'beer-outline' });
+            setNavRoutes(copyOfNavRoutes);
+            setNavIndex(3);
+        } else if (settings.getBoolValue('Prohibition') && hasBeerRoute) {
+            setNavRoutes(copyOfNavRoutes.filter(route => route.key !== 'beerRoute'));
+            setNavIndex(2);
+        }
+    }, [settings]);
+    useEffect(() => {
         // Listeneri joka kuuntelee sovelluksen tilaa
         AppState.addEventListener('change', _handleAppStateChange);
-
-        // Haetaan asyncstoragesta tieto näytetäänkö beers-välilehti ja tarvittaessa lisätään navroute
-        AsyncStorage.getItem('hideBeers').then((res) => {
-            if (res === 'false') {
-                const copyOfNavRoutes = [...navRoutes];
-                copyOfNavRoutes.splice(2, 0, { key: 'beerRoute', title: 'Beers', icon: 'beer-outline' });
-                setNavRoutes(copyOfNavRoutes);
-            }
-        });
-
         return () => AppState.removeEventListener('change', _handleAppStateChange);
     }, []);
     /*
@@ -90,7 +93,10 @@ export default function GameContainer() {
         <BottomNavigation
             shifting={false}
             style={{ width: '100%' }}
-            navigationState={{ index: navIndex, routes: navRoutes }}
+            navigationState={{
+                index: navIndex,
+                routes: navRoutes,
+            }}
             onIndexChange={setNavIndex}
             renderScene={naviScenes}
         />
