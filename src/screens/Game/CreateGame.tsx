@@ -7,6 +7,7 @@ import FriendsList from '../../components/FriendsList';
 import SelectCourses from '../../components/SelectCourse';
 import Container from '../../components/ThemedComponents/Container';
 import Loading from '../../components/Loading';
+import { useBackButton } from '../../components/BackButtonProvider';
 
 export type NewGameData = {
     course: Course | null,
@@ -26,6 +27,7 @@ const CreateGame = (props: CreateGameProps) => {
     const [addFriend, setAddFriend] = useState(false);
     const { colors } = useTheme();
     const me = useMe();
+    const backButton = useBackButton();
 
     useEffect(() => {   // Kirjautuneet tiedot playerlistiin mounttauksen yhteydessä
         if (me.me) {
@@ -73,7 +75,14 @@ const CreateGame = (props: CreateGameProps) => {
     const handleCreate = () => {
         if (props.onCreate) props.onCreate(newGameData);
     };
-
+    const handleShowFriendsList = () => {
+        backButton.setCallBack(() => setAddFriend(false));
+        setAddFriend(true);
+    };
+    const handleSetSelectCourse = () => {
+        backButton.setCallBack(() => setSelectCourse(false));
+        setSelectCourse(true);
+    };
     if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} title="Select course" />;
     if (addFriend) return <FriendsList onClick={handleAddFriend} hideRemoveButton multiSelect />;
 
@@ -100,7 +109,7 @@ const CreateGame = (props: CreateGameProps) => {
                 <Text style={tyyli.courseText}>Par</Text>
                 <Text style={tyyli.courseText}>{newGameData.layout?.par || '-'}</Text>
             </View>
-            <Button style={tyyli.button} onPress={() => setSelectCourse(true)} compact mode={newGameData.course ? 'outlined' : 'contained'}>
+            <Button style={tyyli.button} onPress={handleSetSelectCourse} compact mode={newGameData.course ? 'outlined' : 'contained'}>
                 {newGameData.course ? 'Change course' : 'Select course'}
             </Button>
             <Title style={tyyli.title}>Players</Title>
@@ -115,7 +124,7 @@ const CreateGame = (props: CreateGameProps) => {
                             >{player.name}</Chip>;
                 })}
             </>
-            <Button style={tyyli.button} compact mode='outlined' onPress={() => setAddFriend(true)}>Select players</Button>
+            <Button style={tyyli.button} compact mode='outlined' onPress={handleShowFriendsList}>Select players</Button>
             <View style={tyyli.bottomButtons}>
                 <Button
                     color='green'

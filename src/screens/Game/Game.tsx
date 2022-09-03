@@ -32,13 +32,11 @@ export default function Game() {
     const goToFirstIncompleteHole = () => {
         if (!data?.scorecards) return;
         for (let i = 0; i < (data?.holes || 0); i++) {
-            const finished = data?.scorecards.reduce((p, c) => {
-                if (isNaN(c.scores[i])) return p;
-                return p+1;
-            }, 0);
-            if (finished < data?.scorecards.length) {
-                setSelectedRound(i);
-                break;
+            for (const card of data.scorecards) {
+                if (isNaN(card.scores[i])) {
+                    setSelectedRound(i);
+                    return;
+                }
             }
         }
     };
@@ -47,15 +45,18 @@ export default function Game() {
             goToFirstIncompleteHole();
         }
     };
+
     useEffect(() => {
         if (localSettings?.getBoolValue('AutoAdvance')) {
             AppState.addEventListener('change', handleAppStateChange);
         }
-        return () => AppState.removeEventListener('change', handleAppStateChange);
-    }, [localSettings]);
+        return () =>  AppState.removeEventListener('change', handleAppStateChange);
+    }, [localSettings, data]);
+
     useEffect(() => {
         goToFirstIncompleteHole();
     }, []);
+
     const findThrowingOrder = useCallback(() => {
         // Kopioidaan tuloskortit
         const cards = [...data?.scorecards || []];

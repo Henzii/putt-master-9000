@@ -10,12 +10,10 @@ import useGPS from './useGPS';
 
 const useCourses = (showDistance = true) => {
 
-    const [addLayoutMutation, { loading: loadingAddLayout }] = useMutation(ADD_LAYOUT);
-    const [addCourseMutation, { loading: loadingAddCourse }] = useMutation(ADD_COURSE);
     const [searchString, setSearchString] = useState('');
     const dispatch = useDispatch();
     const gps = useGPS();
-    const { data, loading, error, fetchMore, refetch } = useQuery<RawCourseData>(
+    const { data, loading, error, fetchMore, refetch, variables } = useQuery<RawCourseData>(
         GET_COURSES,
         {
             variables: {
@@ -27,6 +25,12 @@ const useCourses = (showDistance = true) => {
             fetchPolicy: 'cache-and-network'
         }
     );
+    const [addLayoutMutation, { loading: loadingAddLayout }] = useMutation(ADD_LAYOUT,
+        {
+            refetchQueries: [ { query: GET_COURSES, variables: variables } ]
+    });
+    const [addCourseMutation, { loading: loadingAddCourse }] = useMutation(ADD_COURSE);
+
     useEffect(() => {
         // Kun GPS-paikannus on saatu, haetaan data uudestaan gepsi koordinaattien kera
         if (gps.ready && showDistance) {

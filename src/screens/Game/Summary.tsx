@@ -9,7 +9,6 @@ import Loading from '../../components/Loading';
 import { Button, Headline, Subheading } from 'react-native-paper';
 import SplitContainer from '../../components/ThemedComponents/SplitContainer';
 import { format, fromUnixTime } from 'date-fns';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
@@ -18,18 +17,11 @@ import { useSettings } from '../../components/LocalSettingsProvider';
 const Summary = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const { data, ready } = useGame(gameData.gameId);
-    const [hideBeers, setHideBeers] = useState(true);
     const [captureScreen, setCaptureScreen] = useState(false);
     const settings = useSettings();
 
     const viewRef = useRef<View>(null);
-    useEffect(() => {
-        AsyncStorage.getItem('hideBeers').then((res) => {
-            if (res === 'false') {
-                setHideBeers(false);
-            }
-        });
-    }, []);
+
     useEffect(() => {
         if (captureScreen) {
             handleShareScorecard();
@@ -82,7 +74,7 @@ const Summary = () => {
     }, []);
     const startTime = fromUnixTime(data.startTime / 1000);
     const formattedStartTime = format(startTime, 'dd.MM.yyyy HH:mm');
-
+    const hideBeers = settings.getBoolValue('Prohibition');
     // Lisätään tarvittaessa otsikoihin bHc
     if (!hideBeers) {
         tableHeaders.splice(tableHeaders.length - 2, 0, 'bHc');

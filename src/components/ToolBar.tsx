@@ -2,16 +2,17 @@
 import React from 'react';
 import { StyleSheet, } from 'react-native';
 import { Appbar } from 'react-native-paper';
-import { useLocation, useNavigate } from 'react-router-native';
+import { useLocation } from 'react-router-native';
+import { useBackButton } from './BackButtonProvider';
 export default function ToolBar() {
-    const navi = useNavigate();
     const loca = useLocation();
+    const backButton = useBackButton();
     const onMainScreen = loca.pathname === '/';
     return (
         <Appbar style={tyyli.top}>
             <Appbar.Action
                 icon={!onMainScreen ? 'arrow-left' : ''}
-                onPress={!onMainScreen ? () => navi(-1) : undefined}/>
+                onPress={!onMainScreen ? backButton.goBack : undefined}/>
             <Appbar.Content title="FuDisc" />
         </Appbar>
     );
