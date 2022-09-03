@@ -10,19 +10,22 @@ import { theme } from './src/utils/theme';
 import store from './src/utils/store';
 import { client } from './src/graphql/apolloClient';
 import LocalSettingsProvider from './src/components/LocalSettingsProvider';
+import BackButtonProvider from './src/components/BackButtonProvider';
 
 export default function App() {
 
   return (
     <ReduxProvider store={store}>
       <ApolloProvider client={client}>
-        <NativeRouter>
-          <PaperProvider theme={theme}>
-            <LocalSettingsProvider>
-              <Main />
-            </LocalSettingsProvider>
-          </PaperProvider>
-        </NativeRouter>
+          <NativeRouter>
+            <BackButtonProvider>
+              <PaperProvider theme={theme}>
+                <LocalSettingsProvider>
+                  <Main />
+                </LocalSettingsProvider>
+              </PaperProvider>
+            </BackButtonProvider>
+          </NativeRouter>
       </ApolloProvider>
     </ReduxProvider>
 

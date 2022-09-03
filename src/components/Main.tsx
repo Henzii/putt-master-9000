@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { BackHandler } from 'react-native';
 import ToolBar from './ToolBar';
 
-import { Routes, Route, useNavigate } from 'react-router-native';
+import { Routes, Route } from 'react-router-native';
 
 import Game from '../screens/Game';
 import Frontpage from '../screens/Frontpage';
@@ -20,16 +20,17 @@ import { addNotificationReceivedListener, removeNotificationSubscription } from 
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../reducers/notificationReducer';
 import FirstTime from '../screens/Frontpage/FirstTime';
+import { useBackButton } from './BackButtonProvider';
 
 export default function App() {
-    const navi = useNavigate();
     const dispatch = useDispatch();
+    const backButton = useBackButton();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const notificListener = useRef<any>();
 
     useEffect(() => {
         const handleBack = () => {
-            navi(-1);
+            backButton.goBack();
             return true;
         };
         // Haetaan push notifikaatioiden token ja tallennetaan se asyncstorageen
