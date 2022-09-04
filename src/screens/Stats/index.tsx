@@ -10,9 +10,11 @@ import { Course, Layout } from '../../hooks/useCourses';
 import ErrorScreen from '../../components/ErrorScreen';
 import LineChart from './LineChart';
 import InfoCard from '../../components/InfoCard';
+import SplitContainer from '../../components/ThemedComponents/SplitContainer';
 
 const Stats = () => {
     const [selectedCourse, setSelectedCourse] = useState<{ course: Course, layout: Layout } | null>(null);
+    const [showSelectCourse, setShowSelectCourse] = useState(false);
     const [loadStats, { data, loading, error }] = useLazyQuery(GET_STATS, { fetchPolicy: 'cache-and-network' });
     useEffect(() => {
         if (selectedCourse) {
@@ -22,25 +24,29 @@ const Stats = () => {
 
     const handleCourseSelect = (layout: Layout, course: Course) => {
         setSelectedCourse({ course, layout });
+        setShowSelectCourse(false);
     };
     if (error) {
         <ErrorScreen errorMessage={error.message} />;
     }
-    if (!selectedCourse) {
-        return <SelectCourses onSelect={handleCourseSelect} title="Show stats from" showTraffic={false} />;
+    if (showSelectCourse) {
+        return <SelectCourses onSelect={handleCourseSelect} showTraffic={false} />;
     }
-    if (loading || !data || !data?.getHc) {
+    if ((loading || !data || !data?.getHc) && selectedCourse) {
         return <Loading />;
     }
-    const scores = data.getHc[0].scores.map((score: number) => score - selectedCourse.layout.par || 0);
+    const scores = selectedCourse ? data.getHc[0].scores.map((score: number) => score - selectedCourse.layout.par || 0) : 0;
     const scoresToDisplay = scores;
     return (
         <>
+            <SplitContainer spaceAround>
+                <Button onPress={() => setShowSelectCourse(true)}>Change course</Button>
+            </SplitContainer>
             <Container withScrollView>
                 <Headline>Stats</Headline>
                 {
-                    (!data.getHc || data.getHc.length === 0)
-                        ? <Text>No data</Text>
+                    (!data?.getHc || data?.getHc.length === 0)
+                        ? <Text>No data{!selectedCourse ? ', select course' : ''}</Text>
                         : <>
                             <Title>
                                 {selectedCourse?.course.name + ' / ' + selectedCourse?.layout.name}
@@ -59,10 +65,9 @@ const Stats = () => {
                                 }/>
                                 <InfoCard title="HC" text={data.getHc[0].hc} />
                             </View>
+                            <LineChart par={0} data={scoresToDisplay} />
                         </>
                 }
-                <Button onPress={() => setSelectedCourse(null)}>Change course</Button>
-                <LineChart par={0} data={scoresToDisplay} />
             </Container>
         </>
     );

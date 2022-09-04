@@ -21,6 +21,7 @@ const courses = require('../../../assets/icons/courses.png');
 const friends = require('../../../assets/icons/friends.png');
 const stats = require('../../../assets/icons/stats.png');
 const settings = require('../../../assets/icons/settings.png');
+const resume = require('../../../assets/icons/continue.png');
 
 const Frontpage = () => {
     const { me, logged, logout, login, loading, error } = useMe();
@@ -64,10 +65,10 @@ const Frontpage = () => {
             <Image source={master} resizeMode='stretch' style={tyyli.kuva} />
             {(logged) ?
                 <>
-                    {data?.data?.getGame?.course
-                        ? <NaviCard title='Continue Game' text={`Continue game at ${data.data.getGame.course}`} to="/game" icon={pilli} />
-                        : <NaviCard title='New Game' text="Create a new game!" to="/game" icon={pilli} />
+                    {data?.data?.getGame?.course &&
+                       <NaviCard title='Continue Game' text={`Continue game at ${data.data.getGame.course}`} to="/game" icon={resume} />
                     }
+                    <NaviCard title='New Game' text="Create a new game!" to="/game?force" icon={pilli} />
                     <NaviCard title="Old games" text={oldGamesText} to="/games" icon={maali} />
                     <NaviCard title="Courses" to="/courses" text="Add/browse/search courses." icon={courses} />
                     <NaviCard title="Friends" to="/friends" text="Find, add, kill friends. Or create one. <3" icon={friends} />

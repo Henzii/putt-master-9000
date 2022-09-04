@@ -3,10 +3,10 @@ import { useMutation, useApolloClient } from 'react-apollo';
 import { BottomNavigation } from 'react-native-paper';
 import { AppState } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-native';
+import { useLocation, useNavigate } from 'react-router-native';
 import { ADD_PLAYERS_TO_GAME, CREATE_GAME } from '../../graphql/mutation';
 import { GET_OLD_GAMES } from '../../graphql/queries';
-import { gameData, newGame } from '../../reducers/gameDataReducer';
+import { gameData, newGame, unloadGame } from '../../reducers/gameDataReducer';
 import { addNotification } from '../../reducers/notificationReducer';
 import { RootState } from '../../utils/store';
 import Beers from './Beers';
@@ -25,6 +25,7 @@ export default function GameContainer() {
     const [addPlayersMutation] = useMutation(ADD_PLAYERS_TO_GAME);
     const dispatch = useDispatch();
     const navi = useNavigate();
+    const location = useLocation();
     const client = useApolloClient();
 
     const [navIndex, setNavIndex] = useState(gameData?.gameOpen === false ? 1 : 0);
@@ -35,6 +36,11 @@ export default function GameContainer() {
 //      { key: 'beerRoute', title: 'Beers', icon: 'beer-outline' },
         { key: 'setupRoute', title: 'Setup', icon: 'cog-outline' },
     ]);
+    useEffect(() => {
+        if (location.search === '?force' && gameData?.gameId) {
+            dispatch(unloadGame());
+        }
+    }, []);
     useEffect(() => {
         const hasBeerRoute = !!navRoutes.find(r => r.key === 'beerRoute');
         const copyOfNavRoutes = [...navRoutes];
