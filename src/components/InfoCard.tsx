@@ -24,7 +24,7 @@ const createTyyli = (theme: ReactNativePaper.Theme) => StyleSheet.create({
     card: {
         alignSelf: 'flex-start',
         display: 'flex',
-        paddingHorizontal: 20,
+        paddingHorizontal: 15,
         margin: 7,
         paddingVertical: 5,
         backgroundColor: theme.colors.surface,
@@ -32,8 +32,9 @@ const createTyyli = (theme: ReactNativePaper.Theme) => StyleSheet.create({
         elevation: 2,
     },
     title: {
+        fontSize: 16,
     },
     content: {
-        fontSize: 16,
+        fontSize: 14,
     }
 });
