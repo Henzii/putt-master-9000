@@ -21,6 +21,7 @@ import { useDispatch } from 'react-redux';
 import { addNotification } from '../reducers/notificationReducer';
 import FirstTime from '../screens/Frontpage/FirstTime';
 import { useBackButton } from './BackButtonProvider';
+import DevPage from './DevPage';
 
 export default function App() {
     const dispatch = useDispatch();
@@ -65,6 +66,7 @@ export default function App() {
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/stats" element={<Stats />} />
                 <Route path="/firstTime" element={<FirstTime />} />
+                <Route path="/development" element={<DevPage />} />
                 <Route path="/" element={<Frontpage />} />
             </Routes>
             <StatusBar style="auto" />
