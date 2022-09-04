@@ -6,8 +6,8 @@ const PRODUCTION_URI = 'https://puttmaster.herokuapp.com/graphql';
 const PREVIEW_URI = 'https://fudisc-dev.herokuapp.com/graphql';
 const DEVELOPMENT_URI = 'http://192.168.1.12:8080/graphql';
 
-const getAPIUrl = () => {
-    const localMode = process.env.NODE_ENV;
+export const getAPIUrl = async () => {
+    const localMode = await AsyncStorage.getItem('apiEnv') || process.env.NODE_ENV;
     if (localMode === 'preview') {
         return PREVIEW_URI;
     }
@@ -17,10 +17,11 @@ const getAPIUrl = () => {
     return DEVELOPMENT_URI;
 };
 
-const httpLink = new HttpLink({ uri: getAPIUrl() });
+const httpLink = new HttpLink();
 
 const authLink = setContext( async (root: unknown, { headers }) => {
     const token = await AsyncStorage.getItem('token');
+    const uri = await getAPIUrl();
     return {
         headers: {
             ...headers,
@@ -28,7 +29,7 @@ const authLink = setContext( async (root: unknown, { headers }) => {
                 ? `bearer ${token}`
                 : ''
         },
-        uri: getAPIUrl()
+        uri: uri
     };
 });
 
