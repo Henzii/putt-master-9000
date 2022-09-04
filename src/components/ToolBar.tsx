@@ -1,15 +1,20 @@
 
 import React, { useState, useRef } from 'react';
 import { StyleSheet, } from 'react-native';
+import { useAsyncStorage } from '@react-native-async-storage/async-storage';
+
 import { Appbar } from 'react-native-paper';
 import { useLocation, useNavigate } from 'react-router-native';
 import { useBackButton } from './BackButtonProvider';
 export default function ToolBar() {
     const [counter, setCounter] = useState(0);
+    const [color, setColor] = useState<string | false>(false);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
     const loca = useLocation();
     const navi = useNavigate();
     const backButton = useBackButton();
+    const storage = useAsyncStorage('apiEnv');
+    storage.getItem().then(col => setColor(col as string));
     const onMainScreen = loca.pathname === '/';
     const handleTitlePress = () => {
         setCounter(v => v+1);
@@ -22,16 +27,14 @@ export default function ToolBar() {
         } else {
             timerRef.current = setTimeout(() => {
                 setCounter(0);
-            }, 200);
+            }, 400);
         }
     };
-    const toolBarColor = process.env.NODE_ENV === 'preview'
-        ? {backgroundColor: '#ff5555'}
-        : process.env.NODE_ENV === 'development'
-            ? {backgroundColor: '#5555ff'}
-            : false;
+    const toolBarColor = {
+        backgroundColor: color === 'preview' ? '#ff3333' : '#3333ff'
+    };
     return (
-        <Appbar style={[tyyli.top, toolBarColor]}>
+        <Appbar style={[tyyli.top, color !== 'production' && toolBarColor]}>
             <Appbar.Action
                 icon={!onMainScreen ? 'arrow-left' : ''}
                 onPress={!onMainScreen ? backButton.goBack : undefined}/>

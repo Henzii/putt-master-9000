@@ -9,13 +9,18 @@ import { addNotification } from "../reducers/notificationReducer";
 import { useDispatch } from "react-redux";
 
 export default function DevPage() {
-    const [env, setEnv] = useState(process.env.NODE_ENV);
+    const [env, setEnvState] = useState<string | undefined>();
     useEffect(() => {
-        if (env !== process.env.NODE_ENV) {
-            process.env.NODE_ENV = env;
-        }
-    }, [env]);
+        (async function IIFE () {
+            const env = await AsyncStorage.getItem('apiEnv') || process.env.NODE_ENV as string;
+            setEnvState(env);
+        })();
+    }, []);
     const dispatch = useDispatch();
+    const setEnv = (env: string) => {
+        AsyncStorage.setItem('apiEnv', env);
+        setEnvState(env);
+    };
     return (
         <Container withScrollView>
             <Headline>DevPage</Headline>
@@ -52,7 +57,7 @@ export default function DevPage() {
             }} mode="contained">Clear</Button>
             <Spacer />
             <Subheading>Notifikaatiotesti</Subheading>
-            <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap' }}>
                 <Button onPress={() => dispatch(addNotification('Testiviesti', 'info'))}>Info</Button>
                 <Button onPress={() => dispatch(addNotification('Testiviesti', 'alert'))}>Alert</Button>
                 <Button onPress={() => dispatch(addNotification('Testiviesti', 'success'))}>Success</Button>
