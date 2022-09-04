@@ -82,6 +82,7 @@ export default function GameContainer() {
         });
         dispatch(newGame(newGameId));
         dispatch(addNotification('New game created!', 'success'));
+        setNavIndex(0);
     };
     // Jos peliä ei ole ladattu -> createGame, tai jos erroreita tai loading tms...
     if (!gameData?.gameId) {

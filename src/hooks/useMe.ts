@@ -31,6 +31,8 @@ const useMe = (getFriends = false) => {
     useEffect(() => {
         if (data?.getMe && !loggedIn) {
             setLoggedIn(true);
+        } else if (!data?.getMe && loggedIn && !loading) {
+            setLoggedIn(false);
         }
     }, [data]);
     const login = async (username: string, password: string) => {
