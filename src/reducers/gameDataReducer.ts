@@ -8,7 +8,7 @@ const reducer = (state:gameData | null = null, action: gameDataReducerAction) =>
             return state;
     }
 };
-export const newGame = (newGameId: string, gameOpen?: boolean): newGameAction => {
+export const newGame = (newGameId: string, gameOpen=true): newGameAction => {
     return {
         type: 'NEW_GAME',
         data: {
