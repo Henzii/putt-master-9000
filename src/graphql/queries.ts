@@ -1,7 +1,25 @@
 import gql from "graphql-tag";
 import { CORE_USER_INFO, CORE_GAME_INFO, CORE_SCORECARD_INFO } from "./fragments";
 
-
+export const GET_LAYOUT_STATS = gql`
+query($layoutId: ID!, $playersIds: [ID!]) {
+  getLayoutStats(layoutId: $layoutId, playersIds: $playersIds) {
+    games
+    playerId
+    holes {
+      index
+      count
+      best
+      average
+      eagle
+      par
+      birdie
+      bogey
+      doubleBogey
+    }
+  }
+}
+`;
 export const GET_COURSES = gql`
 query ($limit: Int!, $offset: Int!, $search: String, $coordinates: [Float]) {
   getCourses (limit: $limit, offset: $offset, search: $search, coordinates: $coordinates) {
