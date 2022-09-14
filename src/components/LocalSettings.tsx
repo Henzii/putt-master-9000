@@ -12,6 +12,7 @@ export default function LocalSettings() {
             <SingleSwitch text="Sort summary by HC" onPress={settings.toggle} getValue={settings.getBoolValue} name="SortHC" />
             <SingleSwitch text="Sort scorecards by box order" onPress={settings.toggle} getValue={settings.getBoolValue} name="SortBox" />
             <SingleSwitch text="Auto select first unfinished hole" onPress={settings.toggle} getValue={settings.getBoolValue} name="AutoAdvance" />
+            <SingleSwitch text="Hide stats from scorecards" onPress={settings.toggle} getValue={settings.getBoolValue} name="HideStatsBars" />
             <SingleSwitch text="Prohibition" onPress={settings.toggle} getValue={settings.getBoolValue} name="Prohibition" noBorder />
         </>
     );
