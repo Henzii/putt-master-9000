@@ -14,7 +14,7 @@ export default function ToolBar() {
     const navi = useNavigate();
     const backButton = useBackButton();
     const storage = useAsyncStorage('apiEnv');
-    storage.getItem().then(col => setColor(col as string));
+    storage.getItem().then(col => setColor(col as string)).catch(() => setColor(process.env.NODE_ENV as string));
     const onMainScreen = loca.pathname === '/';
     const handleTitlePress = () => {
         setCounter(v => v+1);
@@ -34,7 +34,7 @@ export default function ToolBar() {
         backgroundColor: color === 'preview' ? '#ff3333' : '#3333ff'
     };
     return (
-        <Appbar style={[tyyli.top, color !== 'production' && toolBarColor]}>
+        <Appbar style={[tyyli.top, (color !== 'production' && !!color) && toolBarColor]}>
             <Appbar.Action
                 icon={!onMainScreen ? 'arrow-left' : ''}
                 onPress={!onMainScreen ? backButton.goBack : undefined}/>

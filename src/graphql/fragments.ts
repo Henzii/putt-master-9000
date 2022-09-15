@@ -20,6 +20,7 @@ export const CORE_GAME_INFO = gql`
         pars
         isOpen
         holes
+        layout_id
     }
 `;
 

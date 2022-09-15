@@ -13,6 +13,7 @@ import { RootState } from '../../utils/store';
 import ErrorScreen from '../../components/ErrorScreen';
 import { useCallback } from 'react';
 import { useSettings } from '../../components/LocalSettingsProvider';
+import useStats from '../../hooks/useStats';
 
 export default function Game() {
     const [selectedRound, setSelectedRound] = useState(0);
@@ -20,7 +21,7 @@ export default function Game() {
     const gameId = gameData.gameId;
     const { data, loading, error, setScore } = useGame(gameId);
     const localSettings = useSettings();
-
+    const stats = useStats(data?.layout_id, data?.scorecards?.map(sc => sc.user.id as string) || []);
     const handleScoreChange = (playerId: string, selectedRound: number, value: number) => {
         setScore({
             gameId,
@@ -116,9 +117,11 @@ export default function Game() {
                         data={data.scorecards}
                         keyExtractor={(item) => item.user.id as string}
                         ListFooterComponent={<View style={{ height: 70 }} />}
+                        ItemSeparatorComponent={SeparatorComp}
                         renderItem={({ item }) => (
                             <Player
                                 player={item}
+                                stats={stats}
                                 selectedRound={selectedRound}
                                 setScore={handleScoreChange}
                                 order={throwingOrder[item.user.id]}
@@ -130,6 +133,9 @@ export default function Game() {
         </>
     );
 }
+const SeparatorComp = () => {
+    return <View style={{ height: 6 }} />;
+};
 const ClosedGame = () => {
     const dispatch = useDispatch();
 

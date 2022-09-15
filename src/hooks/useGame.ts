@@ -71,6 +71,7 @@ export type Game = {
     isOpen: boolean,
     scorecards: Scorecard[],
     myScorecard: Scorecard,
+    layout_id: string,
 }
 export type Scorecard = {
     scores: number[],

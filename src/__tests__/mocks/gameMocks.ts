@@ -5,6 +5,7 @@ export const mockedGame: Game = {
     id: 'mockedGame1',
     course: "MockedCourse1",
     layout: "MockedLayout1",
+    layout_id: "mockedLayout1",
     holes: 5,
     pars: [3,3,3,2,2],
     date: "1.1.2020 09:00",
