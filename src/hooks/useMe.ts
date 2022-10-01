@@ -48,8 +48,12 @@ const useMe = (getFriends = false) => {
         await client.clearStore();
         setLoggedIn(false);
     };
-    const updateSettings = async (newSettings: (Pick<User, 'blockFriendRequests'> | { password: string }) ) => {
-        await updateSettingsMutation({ variables: newSettings });
+    const updateSettings = async (newSettings: (Pick<User, 'blockFriendRequests' | 'blockStatsSharing'> | { password: string }) ) => {
+        try {
+            await updateSettingsMutation({ variables: newSettings });
+        } catch(e) {
+            return false;
+        }
     };
     return { me: data?.getMe ?? null, logged: loggedIn, login, logout, loading, error, updateSettings };
 };
@@ -61,6 +65,7 @@ export type User = {
     email: string | null,
     friends?: User[],
     blockFriendRequests?: boolean,
+    blockStatsSharing?: boolean,
 }
 type RawUser = {
     getMe: User,

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
-import { Paragraph, Switch, Title, TouchableRipple } from 'react-native-paper';
+import { Alert, StyleSheet, Text, View } from 'react-native';
+import { Paragraph, Title, TouchableRipple } from 'react-native-paper';
 import Container from '../../components/ThemedComponents/Container';
 import Divider from '../../components/ThemedComponents/Divider';
 import appInfo from '../../../app.json';
@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-native';
 import ChangePassword from './ChangePassword';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../../reducers/notificationReducer';
+import { SingleSwitch } from '../../components/LocalSettings';
 
 const Settings = () => {
     const { me, updateSettings, logout } = useMe();
@@ -20,6 +21,9 @@ const Settings = () => {
 
     const handleBlockFriendsChange = () => {
         updateSettings({ blockFriendRequests: !me?.blockFriendRequests });
+    };
+    const handleBlockStatsSharingChange = () => {
+        updateSettings({ blockStatsSharing: !me?.blockStatsSharing });
     };
     const handleDeleteAccount = async () => {
         // Poistetaan tunnukset
@@ -55,22 +59,10 @@ const Settings = () => {
     };
     return (
         <Container noPadding withScrollView noFlex>
-            <View style={tyyli.section}>
-                <Title style={{ marginTop: 10 }}>Friends</Title>
-                <Paragraph>
-                    Block other users from adding you as a friend.
-                </Paragraph>
-                <Pressable onPress={handleBlockFriendsChange} testID='blockFriendRequests'>
-                    <View style={tyyli.split}>
-                        <Text>{me?.blockFriendRequests ? '(ง •̀_•́)ง BLOCK!' : '(っ◕‿◕)っ  (•_• )'}</Text>
-                        <Switch
-                            testID='blockFriendRequestsSwitch'
-                            value={me?.blockFriendRequests}
-                            onValueChange={handleBlockFriendsChange}
-                        />
-                    </View>
-                </Pressable>
-            </View>
+            <Title style={{ marginTop: 10, marginLeft: 15 }}>Friends</Title>
+
+            <SingleSwitch onPress={handleBlockFriendsChange} value={me?.blockFriendRequests} text="Block other users from adding you as a friend" />
+            <SingleSwitch onPress={handleBlockStatsSharingChange} value={me?.blockStatsSharing} text="Block friends from seeing my stats" noBorder />
             <Divider />
             <View style={tyyli.section}>
                 <ChangePassword onPasswordChange={handlePasswordChange} />

@@ -109,8 +109,8 @@ ${CORE_GAME_INFO}
   }
 `;
 export const GET_STATS = gql`
-  query ($course: String!, $layout: String!){
-    getHc (course: $course, layout: $layout) {
+  query ($course: String!, $layout: String!, $userIds: [String]){
+    getHc (course: $course, layout: $layout, userIds: $userIds) {
       games
       id
       scores
