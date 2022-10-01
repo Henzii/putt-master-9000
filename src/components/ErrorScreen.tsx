@@ -1,5 +1,6 @@
 import React from 'react';
 import { Paragraph, Title } from 'react-native-paper';
+import { Text } from 'react-native';
 import { Link } from 'react-router-native';
 import Container from './ThemedComponents/Container';
 
@@ -14,7 +15,7 @@ const ErrorScreen = ({ errorMessage}: { errorMessage: string }) => {
                 {errorMessage}
             </Paragraph>
             <Paragraph>
-                <Link to="/">Back to frontpage</Link>
+                <Link to="/"><Text>Back to frontpage</Text></Link>
             </Paragraph>
         </Container>
     );

@@ -18,7 +18,7 @@ type FriendListProps = {
     hideRemoveButton?: boolean,
     multiSelect?: boolean
 }
-type Friend = {
+export type Friend = {
     id: number | string,
     name: string,
 }
@@ -29,7 +29,12 @@ const FriendsList = (props: FriendListProps) => {
     const [selectedFriends, setSelectedFriends] = useState<Friend[]>([]);
     const navi = useNavigate();
     const handleFriendClick = (friend: Friend) => {
-        if (!selectedFriends.find(f => f.id === friend.id)) {
+        if (!props.multiSelect) {
+            if (props.onClick) {
+                props.onClick([friend]);
+            }
+        }
+        else if (!selectedFriends.find(f => f.id === friend.id)) {
             setSelectedFriends(selectedFriends.concat(friend));
         } else {
             setSelectedFriends(selectedFriends.filter(f => f.id !== friend.id));
