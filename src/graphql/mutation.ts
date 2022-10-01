@@ -89,9 +89,10 @@ export const SET_BEERS = gql`
     }
 `;
 export const UPDATE_MY_SETTINGS = gql`
-    mutation($blockFriendRequests: Boolean, $password: String) {
-        changeSettings(blockFriendRequests: $blockFriendRequests, password: $password) {
+    mutation($blockFriendRequests: Boolean, $password: String, $blockStatsSharing: Boolean) {
+        changeSettings(blockFriendRequests: $blockFriendRequests, password: $password, blockStatsSharing: $blockStatsSharing) {
             blockFriendRequests
+            blockStatsSharing
         }
     }
 `;

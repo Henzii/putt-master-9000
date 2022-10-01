@@ -4,7 +4,7 @@ import { Title, useTheme} from 'react-native-paper';
 
 type InfoCardProps = {
     title?: string,
-    text: string,
+    text: string | number,
 }
 
 export default function InfoCard(props: InfoCardProps) {

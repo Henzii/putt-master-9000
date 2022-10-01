@@ -5,6 +5,7 @@ export const CORE_USER_INFO = gql`
         id
         name
         blockFriendRequests
+        blockStatsSharing
     }
 `;
 
