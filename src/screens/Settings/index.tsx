@@ -61,7 +61,7 @@ const Settings = () => {
         <Container noPadding withScrollView noFlex>
             <Title style={{ marginTop: 10, marginLeft: 15 }}>Friends</Title>
 
-            <SingleSwitch onPress={handleBlockFriendsChange} value={me?.blockFriendRequests} text="Block other users from adding you as a friend" />
+            <SingleSwitch testID="blockFriendRequestsSwitch" onPress={handleBlockFriendsChange} value={me?.blockFriendRequests} text="Block other users from adding you as a friend" />
             <SingleSwitch onPress={handleBlockStatsSharingChange} value={me?.blockStatsSharing} text="Block friends from seeing my stats" noBorder />
             <Divider />
             <View style={tyyli.section}>

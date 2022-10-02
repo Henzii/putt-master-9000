@@ -23,15 +23,16 @@ type SingleSwitchProps = {
     value?: boolean,
     name?: SettingName,
     noBorder?: boolean,
+    testID?: string,
 }
-export const SingleSwitch = ({text, onPress, value=false, name, noBorder = false}: SingleSwitchProps ) => {
+export const SingleSwitch = ({text, onPress, value=false, name, noBorder = false, testID}: SingleSwitchProps ) => {
     const handleChange = () => {
         onPress(name);
     };
     return (
          <SplitContainer onPress={handleChange} style={[tyyli.single, !noBorder && tyyli.withBorder]}>
             <Text>{text}</Text>
-            <Switch value={value} onValueChange={handleChange} />
+            <Switch value={value} onValueChange={handleChange} testID={testID} />
         </SplitContainer>
     );
 };
