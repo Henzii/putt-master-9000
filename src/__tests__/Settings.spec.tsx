@@ -49,14 +49,13 @@ describe('<Settings /> testit', () => {
     it('Kaveripyyntöjen blokkaus', async () => {
         const { getByTestId } = render(wrappedSettings());
         const kytkin = getByTestId('blockFriendRequestsSwitch');
-        const nappi = getByTestId('blockFriendRequests');
         // Kytkin löytyy ja on false
         await waitFor(() => {
             expect(kytkin).toBeDefined();
             expect(kytkin.props.value).toBeFalsy();
         });
         // Klikataan kytkintä
-        fireEvent.press(nappi);
+        fireEvent.press(kytkin.parent ?? kytkin);
         // Kytkimestä tuli totta
         await waitFor(() => {
             expect(kytkin.props.value).toBeTruthy();

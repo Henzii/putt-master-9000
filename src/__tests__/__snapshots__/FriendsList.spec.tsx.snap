@@ -390,11 +390,13 @@ Array [
           Array [
             Object {
               "blockFriendRequests": false,
+              "blockStatsSharing": false,
               "id": "userid2",
               "name": "TestUser2",
             },
             Object {
               "blockFriendRequests": false,
+              "blockStatsSharing": false,
               "id": "userid3",
               "name": "TestUser3",
             },
