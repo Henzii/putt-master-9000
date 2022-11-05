@@ -16,8 +16,9 @@ export default function ToolBar() {
     const storage = useAsyncStorage('apiEnv');
     storage.getItem().then(col => setColor(col as string)).catch(() => setColor(process.env.NODE_ENV as string));
     const onMainScreen = loca.pathname === '/';
+
     const handleTitlePress = () => {
-        setCounter(v => v+1);
+        setCounter(v => (v+1));
         if (timerRef.current) {
             clearTimeout(timerRef.current);
         }
@@ -27,7 +28,7 @@ export default function ToolBar() {
         } else {
             timerRef.current = setTimeout(() => {
                 setCounter(0);
-            }, 400);
+            }, 1000);
         }
     };
     const toolBarColor = {
