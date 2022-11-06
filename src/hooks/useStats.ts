@@ -4,7 +4,6 @@ import { useLazyQuery } from 'react-apollo';
 import { GET_LAYOUT_STATS } from '../graphql/queries';
 
 export default function useStats(layoutId: string | undefined, playersIds: string[], fetchPolicy?: WatchQueryFetchPolicy): StatsHook {
-
     const [getStats, { data, loading, error }] = useLazyQuery<RawStats>(GET_LAYOUT_STATS, { fetchPolicy: fetchPolicy || 'cache-first'});
     useEffect(() => {
         if (layoutId && playersIds?.length > 0) {
@@ -21,7 +20,9 @@ export default function useStats(layoutId: string | undefined, playersIds: strin
      **/
     const getStatsForHole = (playerId: string, holeIndex: number): SingleStats | undefined => {
         const card = data?.getLayoutStats?.find(card => card.playerId === playerId);
-        if (!card) return;
+        if (!card) {
+            return;
+        }
         return card.holes.find(hole => hole.index === holeIndex);
     };
     return {

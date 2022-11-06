@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useQuery } from "react-apollo";
 import { View } from "react-native";
 import { Headline, Title } from "react-native-paper";
 import ErrorScreen from "../../components/ErrorScreen";
-import { Friend } from "../../components/FriendsList";
 import InfoCard from "../../components/InfoCard";
 import Loading from "../../components/Loading";
 import RoundTabs from "../../components/RoundTabs";
@@ -12,7 +11,7 @@ import Divider from "../../components/ThemedComponents/Divider";
 import Spacer from "../../components/ThemedComponents/Spacer";
 import { GET_STATS } from "../../graphql/queries";
 import { Course, Layout } from "../../hooks/useCourses";
-import useMe from "../../hooks/useMe";
+import { User } from "../../hooks/useMe";
 import useStats from "../../hooks/useStats";
 import LineChart from "./LineChart";
 
@@ -21,22 +20,26 @@ type StatsViewProps = {
         course: Course,
         layout: Layout
     },
-    selectedFriend?: Friend
+    selectedUser: User
 
 }
-export default function StatsView({ selectedCourse, selectedFriend }: StatsViewProps) {
-    const { me } = useMe();
-    const userId = (selectedFriend?.id || me?.id || '') as string;
+export default function StatsView({ selectedCourse, selectedUser }: StatsViewProps) {
     const [selectedHole, setSelectedHole] = useState(0);
+    const stats = useStats(selectedCourse.layout.id as string, [selectedUser.id as string], 'cache-and-network');
     const { data, loading, error } = useQuery(GET_STATS, {
         variables: {
             course: selectedCourse.course.name,
             layout: selectedCourse.layout.name,
-            userIds: [userId],
+            userIds: [selectedUser.id],
         }
     });
-    const stats = useStats(selectedCourse.layout.id as string, [userId], 'cache-and-network');
-    if (loading || !data?.getHc || !me) {
+
+    const getStatsForHole = useCallback(() => {
+        return stats.getStatsForHole(selectedUser.id as string, selectedHole);
+    }, [stats, selectedUser]);
+    const statsForHole = getStatsForHole();
+
+    if (loading || !data?.getHc) {
         return <Loading />;
     }
     if (error) {
@@ -44,11 +47,10 @@ export default function StatsView({ selectedCourse, selectedFriend }: StatsViewP
     }
     const scores = selectedCourse ? data?.getHc[0]?.scores.map((score: number) => score - selectedCourse.layout.par || 0) : 0;
     const scoresToDisplay = scores;
-    const statsForHole = stats.getStatsForHole(userId as string, selectedHole);
     return (
         <Container withScrollView noPadding>
             <Container>
-                <Headline>{selectedFriend ? `${selectedFriend.name}'s` : 'My'} stats</Headline>
+                <Headline>{`${selectedUser.name}'s`} stats</Headline>
                 <Title>
                     {selectedCourse?.course.name + ' / ' + selectedCourse?.layout.name}
                 </Title>

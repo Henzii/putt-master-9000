@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HttpLink, ApolloClient, InMemoryCache } from 'apollo-boost';
 import { setContext } from 'apollo-link-context';
 
-const PRODUCTION_URI = 'https://puttmaster.herokuapp.com/graphql';
+const PRODUCTION_URI = 'https://fudisc-server.henzi.fi';
 const PREVIEW_URI = 'https://fudisc-dev.herokuapp.com/graphql';
 const DEVELOPMENT_URI = 'http://192.168.1.5:8080/graphql';
 
