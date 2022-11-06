@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useRef } from 'react';
-import { BackHandler } from 'react-native';
+import { Alert, BackHandler } from 'react-native';
 import ToolBar from './ToolBar';
 
 import { Routes, Route } from 'react-router-native';
@@ -22,12 +22,24 @@ import { addNotification } from '../reducers/notificationReducer';
 import FirstTime from '../screens/Frontpage/FirstTime';
 import { useBackButton } from './BackButtonProvider';
 import DevPage from './DevPage';
+import { useQuery } from 'react-apollo';
+import { HANDSHAKE } from '../graphql/queries';
+import appInfo from '../../app.json';
 
 export default function App() {
     const dispatch = useDispatch();
     const backButton = useBackButton();
+    const {data, loading} = useQuery(HANDSHAKE);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const notificListener = useRef<any>();
+
+    useEffect(() => {
+        if (!loading && data?.handShake?.latestVersion) {
+            if (data?.handShake?.latestVersion > appInfo.expo.android.versionCode) {
+                Alert.alert("New version available", "You don't have the latest version of FuDisc installed!\n\nConsider updating...");
+            }
+        }
+    }, [data, loading]);
 
     useEffect(() => {
         const handleBack = () => {

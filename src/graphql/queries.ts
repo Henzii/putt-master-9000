@@ -130,3 +130,11 @@ export const SEARCH_USER = gql`
     }
   }
 `;
+
+export const HANDSHAKE = gql`
+  query {
+    handShake {
+      latestVersion
+    }
+  }
+`;

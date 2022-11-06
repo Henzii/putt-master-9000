@@ -7,15 +7,21 @@ import SplitContainer from "./ThemedComponents/SplitContainer";
 import { View } from "react-native";
 import { addNotification } from "../reducers/notificationReducer";
 import { useDispatch } from "react-redux";
+import { getAPIUrl } from "../graphql/apolloClient";
 
 export default function DevPage() {
     const [env, setEnvState] = useState<string | undefined>();
+    const [api, setApi] = useState('');
     useEffect(() => {
         (async function IIFE () {
             const env = await AsyncStorage.getItem('apiEnv') || process.env.NODE_ENV as string;
             setEnvState(env);
         })();
     }, []);
+    useEffect(() => {
+        getAPIUrl().then(setApi);
+    }, [env]);
+
     const dispatch = useDispatch();
     const setEnv = (env: string) => {
         AsyncStorage.setItem('apiEnv', env);
@@ -39,6 +45,8 @@ export default function DevPage() {
             <SplitContainer>
                 <Caption>Production</Caption><Switch value={env === 'production'} onChange={() => setEnv('production')} />
             </SplitContainer>
+            <Spacer />
+            <Caption>API: {api}</Caption>
             <Spacer />
             <Subheading>Poista firstTime flag</Subheading>
             <Paragraph>
