@@ -5,6 +5,7 @@ import useCourses, { Coordinates, Course, Layout, NewLayout } from "../hooks/use
 import useLiveData from '../hooks/useLiveData';
 import useTextInput from "../hooks/useTextInput";
 import AddCourse from "./AddCourse";
+import CoursesMap from "./CoursesMap";
 import ErrorScreen from "./ErrorScreen";
 import Loading from "./Loading";
 import SelectLayout from "./SelectLayout";
@@ -19,7 +20,8 @@ type SelectCoursesProps = {
 const SelectCourses = ({ onSelect, title, showTraffic = true, showDistance = true }: SelectCoursesProps) => {
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
-    const { courses, loading, addLayout, addCourse, fetchMore, error, ...restOfUseCourses } = useCourses(showDistance);
+    const [displayMap, setDisplayMap] = useState(false);
+    const { courses, loading, addLayout, addCourse, fetchMore, error, gpsAvailable, ...restOfUseCourses } = useCourses(showDistance);
     const liveData = useLiveData(showTraffic);
     const searchInput = useTextInput({ defaultValue: '', callBackDelay: 500 }, restOfUseCourses.setSearchString);
     const [expandedCourse, setExpandedCourse] = useState<null | Course['id']>(null);
@@ -42,6 +44,15 @@ const SelectCourses = ({ onSelect, title, showTraffic = true, showDistance = tru
         const disp = !displaySearchBar;
         setDisplaySearchBar(disp);
     };
+    const handleDistanceChnage = (dist: string) => {
+        const distInt = Number.parseInt(dist);
+        if (isNaN(distInt)) return;
+        restOfUseCourses.setSearchLimits({
+            limit: 500,
+            offset: 0,
+            maxDistance: distInt*1000
+        });
+    };
     if (error) return (
         <ErrorScreen errorMessage={error.message} />
     );
@@ -51,6 +62,17 @@ const SelectCourses = ({ onSelect, title, showTraffic = true, showDistance = tru
     return (
         <Container noPadding>
             <Portal>
+                <Modal
+                    visible={displayMap}
+                    onDismiss={() => setDisplayMap(false)}
+                >
+                    <CoursesMap
+                        gps={restOfUseCourses.gps}
+                        courses={courses}
+                        onClose={() => setDisplayMap(false)}
+                        onDistanceChange={handleDistanceChnage}
+                    />
+                </Modal>
                 <Modal
                     visible={displayAddCourse}
                     onDismiss={() => setDisplayAddCourse(false)}
@@ -74,6 +96,7 @@ const SelectCourses = ({ onSelect, title, showTraffic = true, showDistance = tru
             <View style={tyyli.topButtons}>
                 <Button icon="plus-thick" onPress={() => setDisplayAddCourse(true)} testID="AddCourseButton">Add Course</Button>
                 <Button icon="magnify" onPress={handleClickSearch}>Search</Button>
+                <Button disabled={!gpsAvailable} icon="map" onPress={() => setDisplayMap(true)}>Map</Button>
             </View>
             <FlatList
                 data={courses}
@@ -82,7 +105,22 @@ const SelectCourses = ({ onSelect, title, showTraffic = true, showDistance = tru
                 ListFooterComponent={
                     (loading)
                         ? <Loading noFullScreen loadingText="" />
-                        : <Text style={{ color: 'rgba(0,0,0,0.2)' }}>    No more... No más...</Text>
+                    : (restOfUseCourses.restricted)
+                        ? (
+                            <View style={{ alignItems: 'center'}}>
+                                <Text>Search results restricted by Map view</Text>
+                                <Button
+                                    onPress={() => {
+                                        restOfUseCourses.setSearchLimits({
+                                            limit: 500,
+                                            offset: 0,
+                                            maxDistance: undefined
+                                        });
+                                    }}
+                                >Clear restrictions</Button>
+                            </View>
+                        )
+                    : <Text style={{ color: 'rgba(0,0,0,0.2)' }}>    No more... No más...</Text>
                 }
                 onEndReached={fetchMore}
                 onEndReachedThreshold={0.1}
@@ -94,7 +132,7 @@ const SelectCourses = ({ onSelect, title, showTraffic = true, showDistance = tru
                         onLayoutClick={handleClickLayout}
                         onCourseClick={handleClickCourse}
                         expanded={expandedCourse}
-                        showDistance={restOfUseCourses.gpsAvailable}
+                        showDistance={gpsAvailable}
                     />)
                 }
             />
