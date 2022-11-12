@@ -7,7 +7,7 @@ type SelectButtonProps = {
     onPress?: (name: string) => void,
     name: string,
     style?: ViewStyle,
-    children: unknown
+    children: React.ReactNode
 }
 const SelectButton = ({selected, onPress, name, style, children }: SelectButtonProps) => {
     const handlePress = () => {
