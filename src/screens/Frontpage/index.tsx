@@ -44,7 +44,7 @@ const Frontpage = () => {
     }, [loading]);
     if (loading) {
         return (
-            <Loading loadingText='Connecting to server...' />
+            <Loading loadingText='Connecting to server...' showTexts />
         );
     }
     if (error) {

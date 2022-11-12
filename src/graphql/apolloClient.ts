@@ -4,7 +4,7 @@ import { setContext } from 'apollo-link-context';
 
 const PRODUCTION_URI = 'https://fudisc-server.henzi.fi';
 const PREVIEW_URI = 'https://fudisc-dev.herokuapp.com/graphql';
-const DEVELOPMENT_URI = 'http://192.168.1.5:8080/graphql';
+const DEVELOPMENT_URI = 'http://192.168.1.9:8080/graphql';
 
 export const getAPIUrl = async () => {
     const localMode = await AsyncStorage.getItem('apiEnv') || process.env.NODE_ENV;

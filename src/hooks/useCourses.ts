@@ -6,19 +6,22 @@ import { useDispatch } from 'react-redux';
 import { ADD_COURSE, ADD_LAYOUT } from "../graphql/mutation";
 import { GET_COURSES } from "../graphql/queries";
 import { addNotification } from '../reducers/notificationReducer';
-import useGPS from './useGPS';
+import useGPS, { GPShookReturn } from './useGPS';
 
 const useCourses = (showDistance = true) => {
 
     const [searchString, setSearchString] = useState('');
+    const [searchLimits, setSearchLimits] = useState<SearchLimits>({
+        limit: 9,
+        offset: 0,
+    });
     const dispatch = useDispatch();
     const gps = useGPS();
     const { data, loading, error, fetchMore, refetch, variables } = useQuery<RawCourseData>(
         GET_COURSES,
         {
             variables: {
-                limit: 9,
-                offset: 0,
+                ...searchLimits,
                 search: searchString,
                 coordinates: (showDistance && gps.ready) ? [gps.lon, gps.lat] : [0, 0]
             },
@@ -78,8 +81,9 @@ const useCourses = (showDistance = true) => {
         }
     };
     return { courses: data?.getCourses?.courses || undefined,
-        error, addLayout, addCourse, fetchMore: handleFetchMore, setSearchString,
-        searchString, gpsAvailable: gps.ready && showDistance, loading: (loadingAddCourse || loadingAddLayout || loading)
+        error, addLayout, addCourse, fetchMore: handleFetchMore, setSearchString, setSearchLimits,
+        searchString, gpsAvailable: gps.ready && showDistance, loading: (loadingAddCourse || loadingAddLayout || loading),
+        gps, restricted: !!searchLimits.maxDistance
     };
 };
 export type Course = {
@@ -91,6 +95,10 @@ export type Course = {
         meters: number,
         string: string,
     }
+    location: {
+        coordinates: number[]
+    },
+    gps: GPShookReturn
 }
 export type Coordinates = {
     lat: number,
@@ -112,4 +120,10 @@ export type RawCourseData = {
     }
 }
 export type NewLayout = Pick<Partial<Layout>, "id"> & Omit<Layout, "par" | "id">
+
+type SearchLimits = {
+    limit: number,
+    offset: number,
+    maxDistance?: number
+}
 export default useCourses;
