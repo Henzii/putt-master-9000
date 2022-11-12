@@ -8,7 +8,10 @@
     "eject": "expo eject",
     "expo": "expo",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "eas:build": "eas build -p android --non-interactive",
+    "eas:submit": "eas submit -p android --latest",
+    "eas:deploy": "npm run eas:build&&npm run eas:submit"
   },
   "dependencies": {
     "@apollo/client": "^3.5.8",
@@ -39,7 +42,8 @@
     "react-redux": "^7.2.6",
     "react-router-native": "^6.1.1",
     "redux": "^4.1.2",
-    "username-generator": "^1.1.0"
+    "username-generator": "^1.1.0",
+    "react-native-maps": "0.28.1"
   },
   "devDependencies": {
     "@apollo/react-testing": "^3.1.4",
