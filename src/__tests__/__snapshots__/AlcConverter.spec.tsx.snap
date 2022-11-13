@@ -115,16 +115,15 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
             }
           >
             <TextInput
-              allowFontScaling={true}
-              autoComplete='off'
+              autoComplete="off"
               editable={true}
               keyboardType="numeric"
+              maxFontSizeMultiplier={1.5}
               multiline={false}
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
               placeholderTextColor="rgba(0, 0, 0, 0.54)"
-              rejectResponderTermination={true}
               selectionColor="#6200ee"
               style={
                 Array [
@@ -145,6 +144,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
                     "color": "#000000",
                     "fontFamily": "System",
                     "fontSize": 16,
+                    "fontVariant": undefined,
                     "fontWeight": undefined,
                     "textAlign": "left",
                     "textAlignVertical": "center",
@@ -223,16 +223,15 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
             }
           >
             <TextInput
-              allowFontScaling={true}
-              autoComplete='off'
+              autoComplete="off"
               editable={true}
               keyboardType="numeric"
+              maxFontSizeMultiplier={1.5}
               multiline={false}
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
               placeholderTextColor="rgba(0, 0, 0, 0.54)"
-              rejectResponderTermination={true}
               selectionColor="#6200ee"
               style={
                 Array [
@@ -253,6 +252,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
                     "color": "#000000",
                     "fontFamily": "System",
                     "fontSize": 16,
+                    "fontVariant": undefined,
                     "fontWeight": undefined,
                     "textAlign": "left",
                     "textAlignVertical": "center",
@@ -331,16 +331,15 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
             }
           >
             <TextInput
-              allowFontScaling={true}
-              autoComplete='off'
+              autoComplete="off"
               editable={true}
               keyboardType="numeric"
+              maxFontSizeMultiplier={1.5}
               multiline={false}
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
               placeholderTextColor="rgba(0, 0, 0, 0.54)"
-              rejectResponderTermination={true}
               selectionColor="#6200ee"
               style={
                 Array [
@@ -361,6 +360,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
                     "color": "#000000",
                     "fontFamily": "System",
                     "fontSize": 16,
+                    "fontVariant": undefined,
                     "fontWeight": undefined,
                     "textAlign": "left",
                     "textAlignVertical": "center",
@@ -439,16 +439,15 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
             }
           >
             <TextInput
-              allowFontScaling={true}
-              autoComplete='off'
+              autoComplete="off"
               editable={true}
               keyboardType="numeric"
+              maxFontSizeMultiplier={1.5}
               multiline={false}
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
               placeholderTextColor="rgba(0, 0, 0, 0.54)"
-              rejectResponderTermination={true}
               selectionColor="#6200ee"
               style={
                 Array [
@@ -469,6 +468,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
                     "color": "#000000",
                     "fontFamily": "System",
                     "fontSize": 16,
+                    "fontVariant": undefined,
                     "fontWeight": undefined,
                     "textAlign": "left",
                     "textAlignVertical": "center",
@@ -547,16 +547,15 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
             }
           >
             <TextInput
-              allowFontScaling={true}
-              autoComplete='off'
+              autoComplete="off"
               editable={true}
               keyboardType="numeric"
+              maxFontSizeMultiplier={1.5}
               multiline={false}
               onBlur={[Function]}
               onChangeText={[Function]}
               onFocus={[Function]}
               placeholderTextColor="rgba(0, 0, 0, 0.54)"
-              rejectResponderTermination={true}
               selectionColor="#6200ee"
               style={
                 Array [
@@ -577,6 +576,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
                     "color": "#000000",
                     "fontFamily": "System",
                     "fontSize": 16,
+                    "fontVariant": undefined,
                     "fontWeight": undefined,
                     "textAlign": "left",
                     "textAlignVertical": "center",

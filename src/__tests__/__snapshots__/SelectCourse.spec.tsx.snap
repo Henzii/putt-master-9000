@@ -39,6 +39,7 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
       }
     >
       <View
+        collapsable={false}
         style={
           Object {
             "backgroundColor": "transparent",
@@ -48,6 +49,13 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
             "borderWidth": 0,
             "elevation": 0,
             "minWidth": 64,
+            "shadowColor": "#000000",
+            "shadowOffset": Object {
+              "height": 0,
+              "width": 0,
+            },
+            "shadowOpacity": 0,
+            "shadowRadius": 0,
           }
         }
       >
@@ -55,7 +63,7 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
           accessibilityRole="button"
           accessibilityState={
             Object {
-              "disabled": undefined,
+              "disabled": false,
             }
           }
           accessible={true}
@@ -145,6 +153,7 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
         </View>
       </View>
       <View
+        collapsable={false}
         style={
           Object {
             "backgroundColor": "transparent",
@@ -154,6 +163,13 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
             "borderWidth": 0,
             "elevation": 0,
             "minWidth": 64,
+            "shadowColor": "#000000",
+            "shadowOffset": Object {
+              "height": 0,
+              "width": 0,
+            },
+            "shadowOpacity": 0,
+            "shadowRadius": 0,
           }
         }
       >
@@ -161,7 +177,7 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
           accessibilityRole="button"
           accessibilityState={
             Object {
-              "disabled": undefined,
+              "disabled": false,
             }
           }
           accessible={true}
@@ -250,6 +266,7 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
         </View>
       </View>
       <View
+        collapsable={false}
         style={
           Object {
             "backgroundColor": "transparent",
@@ -259,6 +276,13 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
             "borderWidth": 0,
             "elevation": 0,
             "minWidth": 64,
+            "shadowColor": "#000000",
+            "shadowOffset": Object {
+              "height": 0,
+              "width": 0,
+            },
+            "shadowOpacity": 0,
+            "shadowRadius": 0,
           }
         }
       >
@@ -464,17 +488,14 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
           },
         ]
       }
-      disableVirtualization={false}
       getItem={[Function]}
       getItemCount={[Function]}
-      horizontal={false}
-      initialNumToRender={10}
       keyExtractor={[Function]}
-      maxToRenderPerBatch={10}
       onContentSizeChange={[Function]}
       onEndReached={[Function]}
       onEndReachedThreshold={0.1}
       onLayout={[Function]}
+      onMomentumScrollBegin={[Function]}
       onMomentumScrollEnd={[Function]}
       onScroll={[Function]}
       onScrollBeginDrag={[Function]}
@@ -483,9 +504,7 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
       renderItem={[Function]}
       scrollEventThrottle={50}
       stickyHeaderIndices={Array []}
-      updateCellsBatchingPeriod={50}
       viewabilityConfigCallbackPairs={Array []}
-      windowSize={21}
     >
       <View>
         <View
@@ -520,6 +539,7 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
                   accessibilityRole="button"
                   accessibilityState={
                     Object {
+                      "disabled": false,
                       "expanded": false,
                     }
                   }
@@ -751,6 +771,7 @@ exports[`<SelectCourse /> testit Renderöityy oikein... 1`] = `
                   accessibilityRole="button"
                   accessibilityState={
                     Object {
+                      "disabled": false,
                       "expanded": false,
                     }
                   }

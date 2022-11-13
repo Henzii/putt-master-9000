@@ -102,6 +102,7 @@ Array [
           }
         >
           <View
+            collapsable={false}
             style={
               Object {
                 "backgroundColor": "transparent",
@@ -111,6 +112,13 @@ Array [
                 "borderWidth": 0,
                 "elevation": 0,
                 "minWidth": 64,
+                "shadowColor": "#000000",
+                "shadowOffset": Object {
+                  "height": 0,
+                  "width": 0,
+                },
+                "shadowOpacity": 0,
+                "shadowRadius": 0,
               }
             }
           >
@@ -118,7 +126,7 @@ Array [
               accessibilityRole="button"
               accessibilityState={
                 Object {
-                  "disabled": undefined,
+                  "disabled": false,
                 }
               }
               accessible={true}
@@ -242,6 +250,7 @@ Array [
             </View>
           </View>
           <View
+            collapsable={false}
             style={
               Object {
                 "backgroundColor": "transparent",
@@ -251,6 +260,13 @@ Array [
                 "borderWidth": 0,
                 "elevation": 0,
                 "minWidth": 64,
+                "shadowColor": "#000000",
+                "shadowOffset": Object {
+                  "height": 0,
+                  "width": 0,
+                },
+                "shadowOpacity": 0,
+                "shadowRadius": 0,
               }
             }
           >
@@ -258,7 +274,7 @@ Array [
               accessibilityRole="button"
               accessibilityState={
                 Object {
-                  "disabled": undefined,
+                  "disabled": false,
                 }
               }
               accessible={true}
@@ -402,16 +418,12 @@ Array [
             },
           ]
         }
-        disableVirtualization={false}
         getItem={[Function]}
         getItemCount={[Function]}
-        horizontal={false}
-        initialNumToRender={10}
         keyExtractor={[Function]}
-        maxToRenderPerBatch={10}
         onContentSizeChange={[Function]}
-        onEndReachedThreshold={2}
         onLayout={[Function]}
+        onMomentumScrollBegin={[Function]}
         onMomentumScrollEnd={[Function]}
         onScroll={[Function]}
         onScrollBeginDrag={[Function]}
@@ -427,9 +439,7 @@ Array [
             "marginTop": 10,
           }
         }
-        updateCellsBatchingPeriod={50}
         viewabilityConfigCallbackPairs={Array []}
-        windowSize={21}
       >
         <View>
           <View
@@ -517,7 +527,7 @@ Array [
                   accessibilityRole="button"
                   accessibilityState={
                     Object {
-                      "disabled": undefined,
+                      "disabled": false,
                     }
                   }
                   accessible={true}
@@ -696,7 +706,7 @@ Array [
                   accessibilityRole="button"
                   accessibilityState={
                     Object {
-                      "disabled": undefined,
+                      "disabled": false,
                     }
                   }
                   accessible={true}

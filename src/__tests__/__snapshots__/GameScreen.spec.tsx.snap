@@ -346,16 +346,12 @@ Array [
             },
           ]
         }
-        disableVirtualization={false}
         getItem={[Function]}
         getItemCount={[Function]}
-        horizontal={false}
-        initialNumToRender={10}
         keyExtractor={[Function]}
-        maxToRenderPerBatch={10}
         onContentSizeChange={[Function]}
-        onEndReachedThreshold={2}
         onLayout={[Function]}
+        onMomentumScrollBegin={[Function]}
         onMomentumScrollEnd={[Function]}
         onScroll={[Function]}
         onScrollBeginDrag={[Function]}
@@ -369,9 +365,7 @@ Array [
             "flex": 1,
           }
         }
-        updateCellsBatchingPeriod={50}
         viewabilityConfigCallbackPairs={Array []}
-        windowSize={21}
       >
         <View>
           <View
@@ -379,6 +373,7 @@ Array [
             style={null}
           >
             <View
+              collapsable={false}
               onLayout={[Function]}
               style={
                 Object {
@@ -401,6 +396,11 @@ Array [
               }
             >
               <View
+                accessibilityState={
+                  Object {
+                    "disabled": true,
+                  }
+                }
                 accessible={true}
                 focusable={false}
                 onClick={[Function]}
@@ -541,18 +541,16 @@ Array [
                           9,
                         ]
                       }
-                      disableVirtualization={false}
                       getItem={[Function]}
                       getItemCount={[Function]}
                       horizontal={true}
-                      initialNumToRender={10}
                       initialScrollIndex={0}
                       keyExtractor={[Function]}
-                      maxToRenderPerBatch={10}
                       onContentSizeChange={[Function]}
                       onEndReached={[Function]}
                       onEndReachedThreshold={0.1}
                       onLayout={[Function]}
+                      onMomentumScrollBegin={[Function]}
                       onMomentumScrollEnd={[Function]}
                       onScroll={[Function]}
                       onScrollBeginDrag={[Function]}
@@ -561,9 +559,7 @@ Array [
                       renderItem={[Function]}
                       scrollEventThrottle={50}
                       stickyHeaderIndices={Array []}
-                      updateCellsBatchingPeriod={50}
                       viewabilityConfigCallbackPairs={Array []}
-                      windowSize={21}
                     >
                       <View>
                         <View
