@@ -48,9 +48,9 @@ const AddLayout = ({ onCancel, onAdd, layout }: AddLayoutProps) => {
         <ScrollView contentContainerStyle={{ paddingBottom: 40, }} style={tyyli.main}>
             <Headline>{layout ? 'Edit' : 'Add'} layout</Headline>
             <Caption>Layout name</Caption>
-            <TextInput autoComplete={false} value={name} onChangeText={(value) => setName(value)} />
+            <TextInput autoComplete='off' value={name} onChangeText={(value) => setName(value)} />
             <Caption>Number of holes</Caption>
-            <TextInput autoComplete={false} keyboardType='numeric' value={(holes || '') + ''} onChangeText={handleHolesChange} />
+            <TextInput autoComplete='off' keyboardType='numeric' value={(holes || '') + ''} onChangeText={handleHolesChange} />
             <Divider />
             <Title>Pars</Title>
             <HolesPars pars={pars} onParChange={handleParChange} />
@@ -78,7 +78,7 @@ const HolesPars = ({ onParChange, pars }: { pars: number[], onParChange: (hole: 
                     label={`Hole ${i + 1}`}
                     value={pars[i] > 0 ? pars[i] + '' : ''}
                     dense
-                    autoComplete={false}
+                    autoComplete='off'
                     keyboardType='numeric'
                 />
                 <IconButton

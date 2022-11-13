@@ -39,7 +39,7 @@ const AddFriend = ({ onCancel }: AddFriendProps) => {
             <Headline>Add friend</Headline>
             <Caption>Who&apos;s your daddy?</Caption>
             <TextInput
-                autoComplete={false}
+                autoComplete='off'
                 {...searchTextInput}
                 onChangeText={(value) => {
                     searchTextInput.onChangeText(value);

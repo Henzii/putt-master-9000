@@ -70,13 +70,13 @@ const SignUp = () => {
                 </Paragraph>
             </>}
             <Subheading style={tyyli.subheading}>Username</Subheading>
-            <TextInput value={userData.name} autoComplete={false} mode='outlined' label="Username" onChangeText={(value) => setUserData({ ...userData, name: value })} />
+            <TextInput value={userData.name} autoComplete='off' mode='outlined' label="Username" onChangeText={(value) => setUserData({ ...userData, name: value })} />
             <Subheading style={tyyli.subheading}>Password</Subheading>
-            <TextInput value={userData.password} autoComplete={false} mode='outlined' label="Password" secureTextEntry onChangeText={(val) => setUserData({ ...userData, password: val })} />
-            <TextInput value={userData.password2} autoComplete={false} mode='outlined' label="Confirm password" secureTextEntry onChangeText={(val) => setUserData({ ...userData, password2: val })} />
+            <TextInput value={userData.password} autoComplete='off' mode='outlined' label="Password" secureTextEntry onChangeText={(val) => setUserData({ ...userData, password: val })} />
+            <TextInput value={userData.password2} autoComplete='off' mode='outlined' label="Confirm password" secureTextEntry onChangeText={(val) => setUserData({ ...userData, password2: val })} />
             <Subheading style={tyyli.subheading}>Email</Subheading>
             <Text>Optional</Text>
-            <TextInput value={userData.email} autoComplete={false} mode='outlined' label="Email" onChangeText={(val) => setUserData({ ...userData, email: val })} />
+            <TextInput value={userData.email} autoComplete='off' mode='outlined' label="Email" onChangeText={(val) => setUserData({ ...userData, email: val })} />
             <Button style={tyyli.nappi} onPress={handleSignUp} mode='contained'>Sign up!</Button>
         </Container>
     );

@@ -101,7 +101,7 @@ const SingleJuoppo = ({ sc, onChange, disabled }: { sc: Scorecard, onChange: (pl
             <TextInput
                 label={sc.user.name}
                 {...beerInput}
-                autoComplete={false}
+                autoComplete='off'
                 mode='outlined'
                 dense
                 disabled={disabled}

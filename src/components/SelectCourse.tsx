@@ -89,7 +89,7 @@ const SelectCourses = ({ onSelect, title, showTraffic = true, showDistance = tru
                 {(expandedCourse ? 'Select layout' : title)}
             </Headline> : null}
             {displaySearchBar ? <Searchbar
-                autoComplete={false}
+                autoComplete='off'
                 {...searchInput}
                 autoFocus
             /> : null}

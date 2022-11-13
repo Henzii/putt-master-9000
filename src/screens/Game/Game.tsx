@@ -49,9 +49,9 @@ export default function Game() {
 
     useEffect(() => {
         if (localSettings?.getBoolValue('AutoAdvance')) {
-            AppState.addEventListener('change', handleAppStateChange);
+            const sub = AppState.addEventListener('change', handleAppStateChange);
+            return () => sub.remove();
         }
-        return () =>  AppState.removeEventListener('change', handleAppStateChange);
     }, [localSettings, data]);
 
     useEffect(() => {
