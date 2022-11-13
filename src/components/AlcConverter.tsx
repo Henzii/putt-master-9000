@@ -13,7 +13,7 @@ function DrinkInput({ drinkName, handleChange, testID }: DrinkInputProps) {
         <TextInput
             testID={testID}
             style={styles.input}
-            autoComplete={false}
+            autoComplete='off'
             mode="outlined"
             dense
             onChangeText={(val) => handleChange(drinkName as Drink, val)}

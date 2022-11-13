@@ -96,7 +96,7 @@ export default function FirstTime() {
             </Paragraph>
             <TextInput
                 label={`Username${errors.userName ? ` - ${errors.userName}` : ''}`}
-                autoComplete={false}
+                autoComplete='off'
                 mode="outlined"
                 onBlur={handleValidateUsername}
                 error={'userName' in errors}
@@ -111,7 +111,7 @@ export default function FirstTime() {
             </Paragraph>
             <TextInput
                 label={`Password${errors.password1 ? ` - ${errors.password1}` : ''}`}
-                autoComplete={false}
+                autoComplete='off'
                 mode="outlined"
                 error={'password1' in errors}
                 onBlur={validateForm}
@@ -122,7 +122,7 @@ export default function FirstTime() {
             <Spacer size={3} />
             <TextInput
                 label={`Verify password${errors.password2 ? ` - ${errors.password2}` : ''}`}
-                autoComplete={false}
+                autoComplete='off'
                 onBlur={validateForm}
                 error={'password2' in errors}
                 mode="outlined"
@@ -136,7 +136,7 @@ export default function FirstTime() {
             </Paragraph>
             <TextInput
                 label="Email"
-                autoComplete={false}
+                autoComplete='off'
                 mode="outlined"
                 dense
                 value={email}

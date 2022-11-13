@@ -78,7 +78,7 @@ const OldGames = () => {
                 </Paragraph>
                 <Button mode='outlined' onPress={() => setShowSearchBar((p) => !p)}>Filter</Button>
                 <>
-                    {showSearchBar && <Searchbar {...filter} autoComplete={false} autoFocus />}
+                    {showSearchBar && <Searchbar {...filter} autoComplete='off' autoFocus />}
                 </>
             </Container>
             <FlatList

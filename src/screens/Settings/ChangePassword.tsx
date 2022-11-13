@@ -22,7 +22,7 @@ const ChangePassword = ({ onPasswordChange }: ChangePasswordProps) => {
         <>
             <Title>Change password</Title>
             <TextInput
-                autoComplete={false}
+                autoComplete='off'
                 mode='outlined'
                 secureTextEntry
                 label="New password"
@@ -32,7 +32,7 @@ const ChangePassword = ({ onPasswordChange }: ChangePasswordProps) => {
                 onChangeText={(v) => setNewPassword(v)}
             />
             <TextInput
-                autoComplete={false}
+                autoComplete='off'
                 mode='outlined'
                 secureTextEntry
                 label="Confirm password"

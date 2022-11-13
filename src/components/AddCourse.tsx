@@ -28,7 +28,7 @@ const AddCourse = ({ onCancel, onAdd, loading=false }: AddCourseProps) => {
         <View style={tyyli.root}>
             <Headline testID="AddCourseTitle">Add Course</Headline>
             <Subheading>Name</Subheading>
-            <TextInput value={newName} autoComplete={false} mode="outlined" label="Course name" onChangeText={(value) => setNewName(value)} />
+            <TextInput value={newName} autoComplete='off' mode="outlined" label="Course name" onChangeText={(value) => setNewName(value)} />
             <Divider />
             {gps.loading
                 ? <Loading loadingText="Waiting for GPS..." noFullScreen />
@@ -68,7 +68,7 @@ const LocationForm = ({ latitude, longitude, accuracy, setLat, setLon }: {
                 <TextInput
                     value={latitude?.toString()}
                     disabled={!manualCoordinates}
-                    autoComplete={false}
+                    autoComplete='off'
                     label="Lat"
                     mode="outlined"
                     style={{ minWidth: 120 }}
@@ -78,7 +78,7 @@ const LocationForm = ({ latitude, longitude, accuracy, setLat, setLon }: {
                 <TextInput
                     value={longitude?.toString()}
                     disabled={!manualCoordinates}
-                    autoComplete={false}
+                    autoComplete='off'
                     label="Long"
                     mode="outlined"
                     style={{ minWidth: 120 }}

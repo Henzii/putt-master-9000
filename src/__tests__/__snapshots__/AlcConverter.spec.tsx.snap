@@ -116,7 +116,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
           >
             <TextInput
               allowFontScaling={true}
-              autoComplete={false}
+              autoComplete='off'
               editable={true}
               keyboardType="numeric"
               multiline={false}
@@ -224,7 +224,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
           >
             <TextInput
               allowFontScaling={true}
-              autoComplete={false}
+              autoComplete='off'
               editable={true}
               keyboardType="numeric"
               multiline={false}
@@ -332,7 +332,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
           >
             <TextInput
               allowFontScaling={true}
-              autoComplete={false}
+              autoComplete='off'
               editable={true}
               keyboardType="numeric"
               multiline={false}
@@ -440,7 +440,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
           >
             <TextInput
               allowFontScaling={true}
-              autoComplete={false}
+              autoComplete='off'
               editable={true}
               keyboardType="numeric"
               multiline={false}
@@ -548,7 +548,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
           >
             <TextInput
               allowFontScaling={true}
-              autoComplete={false}
+              autoComplete='off'
               editable={true}
               keyboardType="numeric"
               multiline={false}
