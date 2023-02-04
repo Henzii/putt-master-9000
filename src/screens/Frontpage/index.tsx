@@ -43,7 +43,7 @@ const Frontpage = () => {
             }
         })();
     }, [loading]);
-    if (loading) {
+    if (loading && !me) {
         return (
             <Loading loadingText='Connecting to server...' showTexts />
         );
