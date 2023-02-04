@@ -10,6 +10,7 @@ import Frontpage from '../screens/Frontpage';
 import SelectCourses from './SelectCourse';
 import FriendsList from './FriendsList';
 import Notifications from './Notifications';
+import Achievements from '../screens/Achievements';
 import OldGames from '../screens/OldGames';
 import SignUp from './SignUp';
 import Settings from '../screens/Settings';
@@ -79,6 +80,7 @@ export default function App() {
                 <Route path="/stats" element={<Stats />} />
                 <Route path="/firstTime" element={<FirstTime />} />
                 <Route path="/development" element={<DevPage />} />
+                <Route path="/achievements" element={<Achievements />} />
                 <Route path="/" element={<Frontpage />} />
             </Routes>
             <StatusBar style="auto" />

@@ -3,6 +3,7 @@ import { useMutation, useQuery } from 'react-apollo';
 import { LOGIN, UPDATE_MY_SETTINGS } from '../graphql/mutation';
 import { GET_ME, GET_ME_WITH_FRIENDS } from '../graphql/queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Game } from './useGame';
 
 const useMe = (getFriends = false) => {
 
@@ -66,6 +67,13 @@ export type User = {
     friends?: User[],
     blockFriendRequests?: boolean,
     blockStatsSharing?: boolean,
+    achievements: Achievement[]
+}
+
+export type Achievement = {
+    id: string,
+    layout_id: string,
+    game: Game
 }
 type RawUser = {
     getMe: User,

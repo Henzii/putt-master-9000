@@ -141,3 +141,19 @@ export const HANDSHAKE = gql`
     }
   }
 `;
+
+export const GET_ACHIEVEMENTS = gql`
+  query {
+    getMe {
+      id
+      achievements {
+        id
+        game {
+          course
+          layout
+          startTime
+        }
+      }
+    }
+  }
+`;

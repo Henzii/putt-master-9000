@@ -22,6 +22,7 @@ const friends = require('../../../assets/icons/friends.png');
 const stats = require('../../../assets/icons/stats.png');
 const settings = require('../../../assets/icons/settings.png');
 const resume = require('../../../assets/icons/continue.png');
+const achievement = require('../../../assets/icons/achievement.png');
 
 const Frontpage = () => {
     const { me, logged, logout, login, loading, error } = useMe();
@@ -73,6 +74,7 @@ const Frontpage = () => {
                     <NaviCard title="Courses" to="/courses" text="Add/browse/search courses." icon={courses} />
                     <NaviCard title="Friends" to="/friends" text="Find, add, kill friends. Or create one. <3" icon={friends} />
                     <NaviCard title="Stats" to="/stats" text="Check your stats, find your handicap. GRAPHS!" icon={stats} />
+                    <NaviCard title="Achievements" to="/achievements" text="View your achievements" icon={achievement} />
                     <NaviCard title="Settings" to="/settings" text="Set your settings, end prohibition, change password etc." icon={settings} />
                     <Text>Logged in as {me?.name}</Text>
                     <Button onPress={logout}>Logout</Button>
