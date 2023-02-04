@@ -5,6 +5,7 @@ export default [
         email: '',
         blockFriendRequests: false,
         blockStatsSharing: false,
+        achievements: [],
         friends: [
             {
                 name: 'TestUser2',
@@ -12,6 +13,7 @@ export default [
                 email: '',
                 blockFriendRequests: false,
                 blockStatsSharing: false,
+                achievements: [],
             },
             {
                 name: 'TestUser3',
@@ -19,6 +21,7 @@ export default [
                 email: '',
                 blockFriendRequests: false,
                 blockStatsSharing: false,
+                achievements: [],
             }
         ]
     },
@@ -28,6 +31,7 @@ export default [
         email: '',
         blockFriendRequests: false,
         blockStatsSharing: false,
+        achievements: [],
         friends: [
             {
                 name: 'TestUser1',
@@ -35,6 +39,7 @@ export default [
                 email: '',
                 blockFriendRequests: false,
                 blockStatsSharing: false,
+                achievements: [],
             },
             {
                 name: 'TestUser3',
@@ -42,6 +47,7 @@ export default [
                 email: '',
                 blockFriendRequests: false,
                 blockStatsSharing: false,
+                achievements: [],
             }
         ]
     },
@@ -51,6 +57,7 @@ export default [
         email: '',
         blockFriendRequests: false,
         blockStatsSharing: false,
+        achievements: [],
         friends: [
             {
                 name: 'TestUser1',
@@ -58,6 +65,7 @@ export default [
                 email: '',
                 blockFriendRequests: false,
                 blockStatsSharing: false,
+                achievements: [],
             },
             {
                 name: 'TestUser2',
@@ -65,6 +73,7 @@ export default [
                 email: '',
                 blockFriendRequests: false,
                 blockStatsSharing: false,
+                achievements: [],
             }
         ]
     }

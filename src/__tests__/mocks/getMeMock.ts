@@ -15,6 +15,7 @@ export const mockedMe: User = {
             email: '',
             blockFriendRequests: false,
             blockStatsSharing: false,
+            achievements: []
         },
         {
             name: 'TestUser3',
@@ -22,8 +23,10 @@ export const mockedMe: User = {
             email: '',
             blockFriendRequests: false,
             blockStatsSharing: false,
+            achievements: []
         }
-    ]
+    ],
+    achievements: []
 };
 
 export const getMeMock = {
