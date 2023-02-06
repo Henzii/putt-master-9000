@@ -2,16 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, Image, ImageSourcePropType } from "react-native";
 import { Button, Paragraph, Title } from 'react-native-paper';
-import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-native';
 import useMe from '../../hooks/useMe';
-import { RootState } from '../../utils/store';
 import Loading from '../../components/Loading';
 import Login from '../../components/Login';
 import Container from '../../components/ThemedComponents/Container';
 import ErrorScreen from '../../components/ErrorScreen';
-import { useLazyQuery, useQuery } from '@apollo/client';
-import { GET_GAME, GET_OLD_GAMES } from '../../graphql/queries';
+import { useQuery } from '@apollo/client';
+import { GET_OLD_GAMES } from '../../graphql/queries';
 import firstTimeLaunched from '../../utils/firstTimeLaunched';
 
 const master = require('../../../assets/master2.png');
@@ -26,16 +24,9 @@ const achievement = require('../../../assets/icons/achievement.png');
 
 const Frontpage = () => {
     const { me, logged, logout, login, loading, error } = useMe();
-    const gameData = useSelector((state: RootState) => state.gameData);
-    const [getGame, data] = useLazyQuery(GET_GAME);
     const openGames = useQuery(GET_OLD_GAMES, { variables: { onlyOpenGames: true }, fetchPolicy: 'cache-and-network' });
     const navi = useNavigate();
 
-    useEffect(() => {
-        if (gameData?.gameId) {
-            getGame({ variables: { gameId: gameData.gameId } });
-        }
-    }, [gameData]);
     useEffect(() => {
         (async function IIFE() {
             if (!logged && !loading && await firstTimeLaunched()) {
@@ -66,8 +57,13 @@ const Frontpage = () => {
             <Image source={master} resizeMode='stretch' style={tyyli.kuva} />
             {(logged) ?
                 <>
-                    {data?.data?.getGame?.course &&
-                       <NaviCard title='Continue Game' text={`Continue game at ${data.data.getGame.course}`} to="/game" icon={resume} />
+                    {openGames?.data?.getGames?.games?.length === 1 &&
+                        <NaviCard
+                            title='Continue Game'
+                            text={`Continue game at ${openGames.data.getGames.games[0].course}`}
+                            to={`/game/${openGames.data.getGames.games[0].id}`}
+                            icon={resume}
+                        />
                     }
                     <NaviCard title='New Game' text="Create a new game!" to="/game?force" icon={pilli} />
                     <NaviCard title="Old games" text={oldGamesText} to="/games" icon={maali} />

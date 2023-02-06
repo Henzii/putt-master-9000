@@ -3,7 +3,7 @@ import { useMutation, useApolloClient } from '@apollo/client';
 import { BottomNavigation } from 'react-native-paper';
 import { AppState } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-native';
+import { useLocation, useNavigate, useParams } from 'react-router-native';
 import { ADD_PLAYERS_TO_GAME, CREATE_GAME } from '../../graphql/mutation';
 import { GET_OLD_GAMES } from '../../graphql/queries';
 import { gameData, newGame, unloadGame } from '../../reducers/gameDataReducer';
@@ -27,6 +27,7 @@ export default function GameContainer() {
     const navi = useNavigate();
     const location = useLocation();
     const client = useApolloClient();
+    const params = useParams();
 
     const [navIndex, setNavIndex] = useState(gameData?.gameOpen === false ? 1 : 0);
     const settings = useSettings();
@@ -39,6 +40,8 @@ export default function GameContainer() {
     useEffect(() => {
         if (location.search === '?force' && gameData?.gameId) {
             dispatch(unloadGame());
+        } else if (params?.gameId && (params?.gameId !== gameData?.gameId)) {
+            dispatch(newGame(params.gameId));
         }
     }, []);
     useEffect(() => {
@@ -55,8 +58,8 @@ export default function GameContainer() {
     }, [settings]);
     useEffect(() => {
         // Listeneri joka kuuntelee sovelluksen tilaa
-        AppState.addEventListener('change', _handleAppStateChange);
-        return () => AppState.removeEventListener('change', _handleAppStateChange);
+        const listener = AppState.addEventListener('change', _handleAppStateChange);
+        return () => listener.remove();
     }, []);
     /*
         ******************

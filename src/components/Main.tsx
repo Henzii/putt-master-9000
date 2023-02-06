@@ -70,9 +70,8 @@ export default function App() {
             <Notifications />
             <ToolBar />
             <Routes>
-                <Route path="/signUp/:param" element={<SignUp />} />
-                <Route path="/signUp" element={<SignUp />} />
-                <Route path="/game" element={<Game />} />
+                <Route path="/signUp/:param?" element={<SignUp />} />
+                <Route path="/game/:gameId?" element={<Game />} />
                 <Route path="/games" element={<OldGames />} />
                 <Route path="/courses" element={<SelectCourses />} />
                 <Route path="/friends" element={<FriendsList />} />
