@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { FlatList, StyleSheet, View } from "react-native";
 import { Button, Paragraph, Searchbar, Title } from 'react-native-paper';
 import { useDispatch } from 'react-redux';

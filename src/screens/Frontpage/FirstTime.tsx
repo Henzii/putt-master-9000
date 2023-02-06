@@ -5,7 +5,7 @@ import UsernameGenerator from 'username-generator';
 import Spacer from '../../components/ThemedComponents/Spacer';
 import genPassword from '../../utils/passwordGenerator';
 import { useNavigate } from 'react-router-native';
-import { useLazyQuery, useMutation } from 'react-apollo';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import { CREATE_USER } from '../../graphql/mutation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SEARCH_USER } from '../../graphql/queries';

@@ -23,7 +23,7 @@ import { addNotification } from '../reducers/notificationReducer';
 import FirstTime from '../screens/Frontpage/FirstTime';
 import { useBackButton } from './BackButtonProvider';
 import DevPage from './DevPage';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { HANDSHAKE } from '../graphql/queries';
 import appInfo from '../../app.json';
 

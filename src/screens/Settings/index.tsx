@@ -5,7 +5,7 @@ import Container from '../../components/ThemedComponents/Container';
 import Divider from '../../components/ThemedComponents/Divider';
 import appInfo from '../../../app.json';
 import useMe from '../../hooks/useMe';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { DELETE_ACCOUNT } from '../../graphql/mutation';
 import { useNavigate } from 'react-router-native';
 import ChangePassword from './ChangePassword';
@@ -18,7 +18,6 @@ const Settings = () => {
     const navi = useNavigate();
     const [deleteAccountMutation] = useMutation(DELETE_ACCOUNT);
     const dispatch = useDispatch();
-
     const handleBlockFriendsChange = () => {
         updateSettings({ blockFriendRequests: !me?.blockFriendRequests });
     };

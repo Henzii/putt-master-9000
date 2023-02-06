@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useMutation, useApolloClient } from 'react-apollo';
+import { useMutation, useApolloClient } from '@apollo/client';
 import { BottomNavigation } from 'react-native-paper';
 import { AppState } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';

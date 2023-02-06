@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { useEffect, useState } from 'react';
-import { useQuery, useMutation } from "react-apollo";
+import { useQuery, useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 
 import { ADD_COURSE, ADD_LAYOUT } from "../graphql/mutation";

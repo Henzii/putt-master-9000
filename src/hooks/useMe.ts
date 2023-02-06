@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useMutation, useQuery } from 'react-apollo';
+import { useMutation, useQuery } from '@apollo/client';
 import { LOGIN, UPDATE_MY_SETTINGS } from '../graphql/mutation';
 import { GET_ME, GET_ME_WITH_FRIENDS } from '../graphql/queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';

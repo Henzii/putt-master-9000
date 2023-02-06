@@ -5,17 +5,13 @@ import { MockedProvider } from '@apollo/react-testing';
 import Settings from '../screens/Settings';
 import { getMeMock, updateMySettingsMock } from './mocks/getMeMock';
 import { Provider } from 'react-native-paper';
-import { InMemoryCache } from 'apollo-boost';
+import { InMemoryCache } from '@apollo/client';
+
+const cache = new InMemoryCache({ addTypename: true});
 
 const wrappedSettings = () => (
     <Provider>
-        <MockedProvider mocks={[getMeMock, updateMySettingsMock]} addTypename={true}
-            cache={
-                new InMemoryCache({
-                    addTypename: false,
-                    fragmentMatcher: { match: () => true },
-                })
-            }>
+        <MockedProvider mocks={[getMeMock, updateMySettingsMock]} addTypename={true} cache={cache}>
             <Settings />
         </MockedProvider>
     </Provider>

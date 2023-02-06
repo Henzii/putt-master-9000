@@ -10,7 +10,7 @@ import Loading from '../../components/Loading';
 import Login from '../../components/Login';
 import Container from '../../components/ThemedComponents/Container';
 import ErrorScreen from '../../components/ErrorScreen';
-import { useLazyQuery, useQuery } from 'react-apollo';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { GET_GAME, GET_OLD_GAMES } from '../../graphql/queries';
 import firstTimeLaunched from '../../utils/firstTimeLaunched';
 

@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-apollo";
+import { useMutation, useQuery } from '@apollo/client';
 import { LogBox } from "react-native";
 import { SET_SCORE, CLOSE_GAME, SET_BEERS } from "../graphql/mutation";
 import { GET_GAME } from "../graphql/queries";

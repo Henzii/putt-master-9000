@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { View } from 'react-native';
 import { Headline } from "react-native-paper";
 import ErrorScreen from '../../components/ErrorScreen';

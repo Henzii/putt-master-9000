@@ -1,4 +1,4 @@
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import React, { useState } from 'react';
 import { Alert, FlatList, Pressable, StyleSheet, View } from "react-native";
 import { Button, Checkbox, Headline, IconButton, Modal, Portal, Subheading, useTheme } from 'react-native-paper';

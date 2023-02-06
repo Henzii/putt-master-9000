@@ -1,5 +1,6 @@
 export default [
     {
+        __typename: 'User',
         name: 'TestUser1',
         id: 'userid1',
         email: '',
@@ -8,6 +9,7 @@ export default [
         achievements: [],
         friends: [
             {
+                __typename: 'User',
                 name: 'TestUser2',
                 id: 'userid2',
                 email: '',
@@ -16,6 +18,7 @@ export default [
                 achievements: [],
             },
             {
+                __typename: 'User',
                 name: 'TestUser3',
                 id: 'userid3',
                 email: '',
@@ -26,6 +29,7 @@ export default [
         ]
     },
     {
+        __typename: 'User',
         name: 'TestUser1',
         id: 'userid2',
         email: '',
@@ -34,6 +38,7 @@ export default [
         achievements: [],
         friends: [
             {
+                __typename: 'User',
                 name: 'TestUser1',
                 id: 'userid1',
                 email: '',
@@ -42,6 +47,7 @@ export default [
                 achievements: [],
             },
             {
+                __typename: 'User',
                 name: 'TestUser3',
                 id: 'userid3',
                 email: '',
@@ -52,6 +58,7 @@ export default [
         ]
     },
     {
+        __typename: 'User',
         name: 'TestUser3',
         id: 'userid3',
         email: '',
@@ -60,6 +67,7 @@ export default [
         achievements: [],
         friends: [
             {
+                __typename: 'User',
                 name: 'TestUser1',
                 id: 'userid1',
                 email: '',
@@ -68,6 +76,7 @@ export default [
                 achievements: [],
             },
             {
+                __typename: 'User',
                 name: 'TestUser2',
                 id: 'userid2',
                 email: '',
