@@ -5,18 +5,14 @@ import Game from '../screens/Game/Game';
 import { MockedProvider } from '@apollo/react-testing';
 //import { Provider } from 'react-native-paper';
 import * as gameMocks from './mocks/gameMocks';
-import { InMemoryCache } from 'apollo-boost';
+import { InMemoryCache } from '@apollo/client';
 import LocalSettingsProvider from '../components/LocalSettingsProvider';
 
 const wrappedGame = () => {
     return (
-        <MockedProvider mocks={[gameMocks.mockedQuery]} addTypename={true}
-            cache={
-                new InMemoryCache({
-                    addTypename: false,
-                    fragmentMatcher: { match: () => true },
-                })
-            }
+        <MockedProvider
+            mocks={[gameMocks.mockedQuery]}
+            addTypename={false}
         >
             <LocalSettingsProvider>
                 <Game />
@@ -30,18 +26,18 @@ jest.mock('react-redux', () => {
             return {
                 gameId: gameMocks.mockedGame.id
             };
-        }
+        },
+        useDispatch: () => null
     };
 });
 describe('<Game /> testit', () => {
     it('Renderöityy oikein', async () => {
-        const { getByText, getByTestId, toJSON } = render(wrappedGame());
+        const { getByText, getByTestId, toJSON, debug } = render(wrappedGame());
 
         // Alussa loading-rinkula
         expect(getByText('Loading...')).toBeDefined();
 
         await waitFor(() => {
-
             // Radan nimi löytyy...
             expect(getByTestId('GameRata').children).toContain(gameMocks.mockedGame.course);
             // Pelaajan nimi löytyy...

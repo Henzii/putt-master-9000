@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from "react-native";
 import { Button, Caption, Headline, Menu, TextInput } from 'react-native-paper';
-import { useMutation } from 'react-apollo';
+import { useMutation, useLazyQuery } from '@apollo/client';
 import { ADD_FRIEND } from '../graphql/mutation';
 import { GET_ME_WITH_FRIENDS, SEARCH_USER } from '../graphql/queries';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../reducers/notificationReducer';
 import Container from './ThemedComponents/Container';
-import { useLazyQuery } from 'react-apollo';
 import useTextInput from '../hooks/useTextInput';
 import Loading from './Loading';
 

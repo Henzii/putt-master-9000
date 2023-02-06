@@ -1,7 +1,15 @@
 import { GET_GAME } from "../../graphql/queries";
-import { Game } from "../../hooks/useGame";
+import { Game, Scorecard } from "../../hooks/useGame";
 
-export const mockedGame: Game = {
+type MockedGame = Game & {
+    __typename: string
+    scorecards: (Scorecard & {
+        __typename: string
+    })[]
+}
+
+export const mockedGame: MockedGame = {
+    __typename: 'Game',
     id: 'mockedGame1',
     course: "MockedCourse1",
     layout: "MockedLayout1",
@@ -15,12 +23,14 @@ export const mockedGame: Game = {
     isOpen: true,
     scorecards: [
         {
+            __typename: 'Scorecard',
             scores: [3,3,3,3,3],
             beers: 0,
             user: {
                 id: 'MockedUserId1',
                 name: 'MockerUser1',
                 email: '',
+                achievements: [],
             },
             hc: 0,
             plusminus: 2,
@@ -34,6 +44,7 @@ export const mockedGame: Game = {
             id: 'MockedUserId1',
             name: 'MockerUser1',
             email: '',
+            achievements: [],
         },
         hc: 0,
         plusminus: 2,
@@ -50,7 +61,7 @@ export const mockedQuery = {
     },
     result: {
         data: {
-            getGame: mockedGame,
+            getGame: mockedGame
         }
     }
 };

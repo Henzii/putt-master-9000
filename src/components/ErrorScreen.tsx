@@ -1,10 +1,11 @@
 import React from 'react';
-import { Paragraph, Title } from 'react-native-paper';
-import { Text } from 'react-native';
-import { Link } from 'react-router-native';
+import { Button, Paragraph, Title } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import { useNavigate } from 'react-router-native';
 import Container from './ThemedComponents/Container';
 
 const ErrorScreen = ({ errorMessage}: { errorMessage: string }) => {
+    const navi = useNavigate();
     return (
         <Container fullWidth>
             <Paragraph style={{ textAlign: 'center', fontSize: 30, padding: 30, fontWeight: 'bold' }}>
@@ -14,11 +15,17 @@ const ErrorScreen = ({ errorMessage}: { errorMessage: string }) => {
             <Paragraph>
                 {errorMessage}
             </Paragraph>
-            <Paragraph>
-                <Link to="/"><Text>Back to frontpage</Text></Link>
+            <Paragraph style={styles.button}>
+                <Button onPress={() => navi('/')}>Back to frontpage</Button>
             </Paragraph>
         </Container>
     );
 };
+
+const styles = StyleSheet.create({
+    button: {
+        marginTop: 20
+    }
+});
 
 export default ErrorScreen;

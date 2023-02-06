@@ -2,7 +2,10 @@ import { UPDATE_MY_SETTINGS } from "../../graphql/mutation";
 import { GET_ME, GET_ME_WITH_FRIENDS } from "../../graphql/queries";
 import { User } from "../../hooks/useMe";
 
-export const mockedMe: User = {
+type MockedUser = User & {__typename: string}
+
+export const mockedMe: MockedUser = {
+    __typename: 'User',
     name: 'Mock',
     id: 'id123',
     email: '',
@@ -15,6 +18,7 @@ export const mockedMe: User = {
             email: '',
             blockFriendRequests: false,
             blockStatsSharing: false,
+            achievements: []
         },
         {
             name: 'TestUser3',
@@ -22,8 +26,10 @@ export const mockedMe: User = {
             email: '',
             blockFriendRequests: false,
             blockStatsSharing: false,
+            achievements: []
         }
-    ]
+    ],
+    achievements: []
 };
 
 export const getMeMock = {
@@ -56,7 +62,9 @@ export const updateMySettingsMock = {
     result: {
         data: {
             changeSettings: {
-                blockFriendRequests: true
+                blockFriendRequests: true,
+                blockStatsSharing: false,
+                __typename: 'User'
             }
         }
     }

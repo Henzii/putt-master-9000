@@ -1,6 +1,6 @@
-import { ApolloError, WatchQueryFetchPolicy } from 'apollo-boost';
+import { WatchQueryFetchPolicy } from '@apollo/client';
 import { useEffect } from 'react';
-import { useLazyQuery } from 'react-apollo';
+import { useLazyQuery } from '@apollo/client';
 import { GET_LAYOUT_STATS } from '../graphql/queries';
 
 export default function useStats(layoutId: string | undefined, playersIds: string[], fetchPolicy?: WatchQueryFetchPolicy): StatsHook {
@@ -34,7 +34,7 @@ export default function useStats(layoutId: string | undefined, playersIds: strin
 
 export interface StatsHook {
     loading?: boolean,
-    error?: ApolloError,
+    error?: unknown,
     getStatsForHole: (playerId: string, holeIndex: number) => SingleStats | undefined
 }
 

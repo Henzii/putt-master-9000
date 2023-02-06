@@ -69,8 +69,6 @@ ${CORE_USER_INFO}
 `;
 
 export const GET_GAME = gql`
-${CORE_GAME_INFO}
-${CORE_SCORECARD_INFO}
   query($gameId: ID!) {
     getGame(gameId: $gameId) {
       ...CoreGameInfo
@@ -86,6 +84,8 @@ ${CORE_SCORECARD_INFO}
       }
     }
 }
+${CORE_GAME_INFO}
+${CORE_SCORECARD_INFO}
 `;
 export const GET_OLD_GAMES = gql`
 ${CORE_GAME_INFO}
@@ -138,6 +138,22 @@ export const HANDSHAKE = gql`
   query {
     handShake {
       latestVersion
+    }
+  }
+`;
+
+export const GET_ACHIEVEMENTS = gql`
+  query {
+    getMe {
+      id
+      achievements {
+        id
+        game {
+          course
+          layout
+          startTime
+        }
+      }
     }
   }
 `;

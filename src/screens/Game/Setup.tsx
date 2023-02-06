@@ -10,7 +10,7 @@ import useGame from '../../hooks/useGame';
 import { addNotification } from '../../reducers/notificationReducer';
 import { useNavigate } from 'react-router-native';
 import Loading from '../../components/Loading';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { ABANDON_GAME } from '../../graphql/mutation';
 import { GET_OLD_GAMES } from '../../graphql/queries';
 import { format, fromUnixTime, differenceInMinutes, minutesToHours, differenceInDays } from 'date-fns';

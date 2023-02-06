@@ -10,6 +10,7 @@ import Frontpage from '../screens/Frontpage';
 import SelectCourses from './SelectCourse';
 import FriendsList from './FriendsList';
 import Notifications from './Notifications';
+import Achievements from '../screens/Achievements';
 import OldGames from '../screens/OldGames';
 import SignUp from './SignUp';
 import Settings from '../screens/Settings';
@@ -22,7 +23,7 @@ import { addNotification } from '../reducers/notificationReducer';
 import FirstTime from '../screens/Frontpage/FirstTime';
 import { useBackButton } from './BackButtonProvider';
 import DevPage from './DevPage';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { HANDSHAKE } from '../graphql/queries';
 import appInfo from '../../app.json';
 
@@ -69,9 +70,8 @@ export default function App() {
             <Notifications />
             <ToolBar />
             <Routes>
-                <Route path="/signUp/:param" element={<SignUp />} />
-                <Route path="/signUp" element={<SignUp />} />
-                <Route path="/game" element={<Game />} />
+                <Route path="/signUp/:param?" element={<SignUp />} />
+                <Route path="/game/:gameId?" element={<Game />} />
                 <Route path="/games" element={<OldGames />} />
                 <Route path="/courses" element={<SelectCourses />} />
                 <Route path="/friends" element={<FriendsList />} />
@@ -79,6 +79,7 @@ export default function App() {
                 <Route path="/stats" element={<Stats />} />
                 <Route path="/firstTime" element={<FirstTime />} />
                 <Route path="/development" element={<DevPage />} />
+                <Route path="/achievements" element={<Achievements />} />
                 <Route path="/" element={<Frontpage />} />
             </Routes>
             <StatusBar style="auto" />

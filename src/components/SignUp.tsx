@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { Alert, StyleSheet, Text } from "react-native";
 import { Button, Paragraph, Subheading, TextInput, Title } from 'react-native-paper';
 import { CREATE_USER } from '../graphql/mutation';
