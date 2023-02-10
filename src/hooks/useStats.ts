@@ -1,10 +1,15 @@
 import { WatchQueryFetchPolicy } from '@apollo/client';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { GET_LAYOUT_STATS } from '../graphql/queries';
 
-export default function useStats(layoutId: string | undefined, playersIds: string[], fetchPolicy?: WatchQueryFetchPolicy): StatsHook {
-    const [getStats, { data, loading, error }] = useLazyQuery<RawStats>(GET_LAYOUT_STATS, { fetchPolicy: fetchPolicy || 'cache-first'});
+export default function useStats(
+    layoutId: string | undefined,
+    playersIds: string[],
+    fetchPolicy?: WatchQueryFetchPolicy,
+    altDeps?: unknown,
+): StatsHook {
+    const [getStats, { data, error, loading }] = useLazyQuery<RawStats>(GET_LAYOUT_STATS);
     useEffect(() => {
         if (layoutId && playersIds?.length > 0) {
             getStats({
@@ -12,9 +17,11 @@ export default function useStats(layoutId: string | undefined, playersIds: strin
                     layoutId,
                     playersIds,
                 },
+                fetchPolicy: fetchPolicy || 'cache-first'
             });
         }
-    }, [layoutId]);
+    }, [layoutId, altDeps]);
+
     /**
      * @param holeIndex 0 = first hole ;)
      **/
@@ -25,10 +32,23 @@ export default function useStats(layoutId: string | undefined, playersIds: strin
         }
         return card.holes.find(hole => hole.index === holeIndex);
     };
+
+    const getBest = (playerId: string | number) => {
+        const card = data?.getLayoutStats?.find(card => card.playerId === playerId);
+        return card?.best;
+    };
+
+    const getHc = (playerId: string | number) => {
+        const card = data?.getLayoutStats?.find(card => card.playerId === playerId);
+        return card?.hc;
+    };
+
     return {
-        loading,
+        getStatsForHole,
+        getBest,
+        getHc,
         error,
-        getStatsForHole
+        loading
     };
 }
 
@@ -36,6 +56,8 @@ export interface StatsHook {
     loading?: boolean,
     error?: unknown,
     getStatsForHole: (playerId: string, holeIndex: number) => SingleStats | undefined
+    getBest: (playerId: string | number) => number | undefined,
+    getHc: (playerId: string | number) => number | undefined,
 }
 
 interface RawStats {
@@ -56,4 +78,6 @@ export type StatsCard = {
     games: number
     playerId: string
     holes: SingleStats[]
+    best: number
+    hc: number
 }

@@ -6,6 +6,8 @@ query($layoutId: ID!, $playersIds: [ID!]) {
   getLayoutStats(layoutId: $layoutId, playersIds: $playersIds) {
     games
     playerId
+    best
+    hc
     holes {
       index
       count
