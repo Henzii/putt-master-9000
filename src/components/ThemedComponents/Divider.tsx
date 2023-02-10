@@ -2,19 +2,22 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Divider as PaperDivider, useTheme} from 'react-native-paper';
 
-const Divider = () => {
+const Divider = ({margin=13}: {margin?: number}) => {
     const { colors } = useTheme();
+    const tyyli = styles(colors, margin);
     return (
-        <PaperDivider style={[tyyli.root, { backgroundColor: colors.primary, opacity: 0.7 }]} />
+        <PaperDivider style={tyyli.root} />
     );
 };
 
-const tyyli = StyleSheet.create({
+const styles = (colors: ReactNativePaper.ThemeColors, margin: number) => StyleSheet.create({
     root: {
-        marginTop: 13,
-        marginBottom: 13,
+        marginTop: margin,
+        marginBottom: margin,
         height: 1,
-        width: '100%',
+        borderTopWidth: 1,
+        borderColor: colors.primary,
+        opacity: 0.5
     }
 });
 
