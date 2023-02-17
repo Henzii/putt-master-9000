@@ -11,6 +11,7 @@ import store from './src/utils/store';
 import { client } from './src/graphql/apolloClient';
 import LocalSettingsProvider from './src/components/LocalSettingsProvider';
 import BackButtonProvider from './src/components/BackButtonProvider';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function App() {
 
@@ -21,7 +22,9 @@ export default function App() {
           <BackButtonProvider>
             <PaperProvider theme={theme}>
               <LocalSettingsProvider>
-                <Main />
+                <SafeAreaProvider>
+                  <Main />
+                </SafeAreaProvider>
               </LocalSettingsProvider>
             </PaperProvider>
           </BackButtonProvider>
