@@ -14,6 +14,9 @@ import { Course, Layout } from "../../hooks/useCourses";
 import { User } from "../../hooks/useMe";
 import useStats from "../../hooks/useStats";
 import LineChart from "./LineChart";
+import SelectButtonGroup from "../../components/SelectButtonGroup";
+import SelectButton from "../../components/SelectButton";
+import BarChart from "./BarChart";
 
 type StatsViewProps = {
     selectedCourse: {
@@ -25,7 +28,8 @@ type StatsViewProps = {
 }
 export default function StatsView({ selectedCourse, selectedUser }: StatsViewProps) {
     const [selectedHole, setSelectedHole] = useState(0);
-    const stats = useStats(selectedCourse.layout.id as string, [selectedUser.id as string], 'cache-and-network');
+    const [chartScoresCount, setChartScoresCount] = useState('All');
+    const stats = useStats(selectedCourse.layout.id as string, [selectedUser.id as string], 'cache-and-network', selectedUser.id);
     const { data, loading, error } = useQuery(GET_STATS, {
         variables: {
             course: selectedCourse.course.name,
@@ -33,6 +37,10 @@ export default function StatsView({ selectedCourse, selectedUser }: StatsViewPro
             userIds: [selectedUser.id],
         }
     });
+    const scores = selectedCourse ? data?.getHc[0]?.scores.map((score: number) => score - selectedCourse.layout.par || 0) : 0;
+
+    const scoresCount = Number.parseInt(chartScoresCount);
+    const scoresToDisplay = isNaN(scoresCount) ? scores : scores.slice(-scoresCount);
 
     const getStatsForHole = useCallback(() => {
         return stats.getStatsForHole(selectedUser.id as string, selectedHole);
@@ -45,8 +53,6 @@ export default function StatsView({ selectedCourse, selectedUser }: StatsViewPro
     if (error) {
         return <ErrorScreen errorMessage="Error just happened" />;
     }
-    const scores = selectedCourse ? data?.getHc[0]?.scores.map((score: number) => score - selectedCourse.layout.par || 0) : 0;
-    const scoresToDisplay = scores;
     return (
         <Container withScrollView noPadding>
             <Container>
@@ -68,11 +74,20 @@ export default function StatsView({ selectedCourse, selectedUser }: StatsViewPro
                     } />
                     <InfoCard title="HC" text={data.getHc[0].hc} />
                 </View>
-                <LineChart par={0} data={scoresToDisplay} />
                 <Spacer size={15} />
-                <Divider />
-                <Title>Holes data</Title>
+                <SelectButtonGroup selectedDefault={chartScoresCount} onSelect={setChartScoresCount}>
+                    <SelectButton name="All">All</SelectButton>
+                    <SelectButton name="50">50</SelectButton>
+                    <SelectButton name="10">10</SelectButton>
+                </SelectButtonGroup>
             </Container>
+            <LineChart par={0} data={scoresToDisplay} />
+            <Spacer size={15} />
+            <Divider />
+            <Title>Holes data</Title>
+
+            <BarChart stats={stats.getHolesStats(selectedUser.id as string)} holes={selectedCourse.layout.holes} />
+            <Spacer size={15} />
             <RoundTabs
                 selectedRound={selectedHole}
                 setSelectedRound={setSelectedHole}

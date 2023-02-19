@@ -1,5 +1,5 @@
 import { WatchQueryFetchPolicy } from '@apollo/client';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { GET_LAYOUT_STATS } from '../graphql/queries';
 
@@ -43,12 +43,18 @@ export default function useStats(
         return card?.hc;
     };
 
+    const getHolesStats = (playerId: string | number) => {
+        const card = data?.getLayoutStats?.find(card => card.playerId === playerId);
+        return card?.holes;
+    };
+
     return {
+        getHolesStats,
         getStatsForHole,
         getBest,
         getHc,
         error,
-        loading
+        loading,
     };
 }
 
@@ -56,6 +62,7 @@ export interface StatsHook {
     loading?: boolean,
     error?: unknown,
     getStatsForHole: (playerId: string, holeIndex: number) => SingleStats | undefined
+    getHolesStats: (playerId: string) => SingleStats[] | undefined
     getBest: (playerId: string | number) => number | undefined,
     getHc: (playerId: string | number) => number | undefined,
 }

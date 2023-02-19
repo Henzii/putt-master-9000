@@ -44,7 +44,7 @@ const LineChart = ({ data, par }: LineChartProps) => {
                 ],
             }}
             height={220}
-            width={Dimensions.get('screen').width*0.9}
+            width={Dimensions.get('screen').width}
             yAxisInterval={2} // optional, defaults to 1
             chartConfig={{
                 backgroundGradientTo: colors.accent,
@@ -53,9 +53,6 @@ const LineChart = ({ data, par }: LineChartProps) => {
                 decimalPlaces: 0, // optional, defaults to 2dp
                 color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                 labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                style: {
-                    borderRadius: 7
-                },
                 propsForDots: {
                     r: "2",
                     strokeWidth: "4",
@@ -64,8 +61,10 @@ const LineChart = ({ data, par }: LineChartProps) => {
             }}
             bezier
             style={{
-                marginVertical: 8,
-                borderRadius: 7,
+                marginVertical: 0,
+                marginTop: -20,
+                paddingTop: 30,
+                paddingRight: 37,
             }}
         />);
 };
