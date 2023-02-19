@@ -5,10 +5,11 @@ import { useTheme } from 'react-native-paper';
 type SelectButtonGroupProps = {
     children: JSX.Element[],
     onSelect?: (name: string) => void,
+    selectedDefault?: string
 }
 
-const SelectButtonGroup = ({children, onSelect}: SelectButtonGroupProps) => {
-    const [selected, setSelected] = useState('');
+const SelectButtonGroup = ({children, onSelect, selectedDefault}: SelectButtonGroupProps) => {
+    const [selected, setSelected] = useState(selectedDefault ?? '');
     const handleButtonClick = (name: string) => {
         setSelected(name);
         onSelect?.(name);

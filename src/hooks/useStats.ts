@@ -1,5 +1,5 @@
 import { WatchQueryFetchPolicy } from '@apollo/client';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { GET_LAYOUT_STATS } from '../graphql/queries';
 

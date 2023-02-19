@@ -54,7 +54,7 @@ const LineChart = ({ data, par }: LineChartProps) => {
                 color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                 labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                 style: {
-                    borderRadius: 7
+                    borderRadius: 7,
                 },
                 propsForDots: {
                     r: "2",
@@ -64,7 +64,10 @@ const LineChart = ({ data, par }: LineChartProps) => {
             }}
             bezier
             style={{
-                marginVertical: 8,
+                marginVertical: 0,
+                marginTop: -20,
+                paddingTop: 30,
+                paddingRight: 37,
                 borderRadius: 7,
             }}
         />);

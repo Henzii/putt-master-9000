@@ -5,7 +5,6 @@ import Game from '../screens/Game/Game';
 import { MockedProvider } from '@apollo/react-testing';
 //import { Provider } from 'react-native-paper';
 import * as gameMocks from './mocks/gameMocks';
-import { InMemoryCache } from '@apollo/client';
 import LocalSettingsProvider from '../components/LocalSettingsProvider';
 
 const wrappedGame = () => {
@@ -32,7 +31,7 @@ jest.mock('react-redux', () => {
 });
 describe('<Game /> testit', () => {
     it('Renderöityy oikein', async () => {
-        const { getByText, getByTestId, toJSON, debug } = render(wrappedGame());
+        const { getByText, getByTestId, toJSON } = render(wrappedGame());
 
         // Alussa loading-rinkula
         expect(getByText('Loading...')).toBeDefined();
