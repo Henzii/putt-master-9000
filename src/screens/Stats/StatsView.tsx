@@ -16,6 +16,7 @@ import useStats from "../../hooks/useStats";
 import LineChart from "./LineChart";
 import SelectButtonGroup from "../../components/SelectButtonGroup";
 import SelectButton from "../../components/SelectButton";
+import BarChart from "./BarChart";
 
 type StatsViewProps = {
     selectedCourse: {
@@ -79,11 +80,14 @@ export default function StatsView({ selectedCourse, selectedUser }: StatsViewPro
                     <SelectButton name="50">50</SelectButton>
                     <SelectButton name="10">10</SelectButton>
                 </SelectButtonGroup>
-                <LineChart par={0} data={scoresToDisplay} />
-                <Spacer size={15} />
-                <Divider />
-                <Title>Holes data</Title>
             </Container>
+            <LineChart par={0} data={scoresToDisplay} />
+            <Spacer size={15} />
+            <Divider />
+            <Title>Holes data</Title>
+
+            <BarChart stats={stats.getHolesStats(selectedUser.id as string)} holes={selectedCourse.layout.holes} />
+            <Spacer size={15} />
             <RoundTabs
                 selectedRound={selectedHole}
                 setSelectedRound={setSelectedHole}
