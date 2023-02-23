@@ -84,7 +84,7 @@ export default function StatsView({ selectedCourse, selectedUser }: StatsViewPro
             <LineChart par={0} data={scoresToDisplay} />
             <Spacer size={15} />
             <Divider />
-            <Title>Holes data</Title>
+            <Title style={{paddingLeft: 20}}> Holes data</Title>
 
             <BarChart stats={stats.getHolesStats(selectedUser.id as string)} holes={selectedCourse.layout.holes} />
             <Spacer size={15} />

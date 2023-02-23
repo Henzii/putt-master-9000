@@ -30,9 +30,9 @@ const barColors = [
 ];
 
 const calcChartWidth = (holes: number) => {
-    const width = holes * 45;
-    if (width < Dimensions.get('screen').width) return Dimensions.get('screen').width + LEFT_MARGIN;
-    return width;
+    const singleBarWidth = Dimensions.get('screen').width / holes;
+    if (singleBarWidth > 30) return Dimensions.get('screen').width + LEFT_MARGIN;
+    return 45 * holes + LEFT_MARGIN;
 };
 
 const BarChart = ({stats, holes}: {stats: SingleStats[] | undefined, holes: number}) => {
