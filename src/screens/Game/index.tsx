@@ -13,7 +13,7 @@ import Beers from './Beers';
 import CreateGame, { NewGameData } from './CreateGame';
 import Game from './Game';
 import Setup from './Setup';
-import Summary from './Summary';
+import Summary from './Summary/Summary';
 import { useSettings } from '../../components/LocalSettingsProvider';
 
 export default function GameContainer() {

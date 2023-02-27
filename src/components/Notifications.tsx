@@ -40,7 +40,6 @@ const tyyli = StyleSheet.create({
         fontWeight: 'bold',
     },
     main: {
-        opacity: 0.9,
         borderWidth: 1,
         borderRadius: 10,
     },
