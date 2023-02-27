@@ -43,6 +43,15 @@ const useGame = (gameId: string) => {
             return false;
         }
     };
+    const isFinished = () => {
+        if (!data?.getGame) return false;
+        for (let i = 0; i < data?.getGame.pars.length; i++) {
+            for (const scorecard of data.getGame.scorecards) {
+                if (scorecard.scores[i] === undefined) return false;
+            }
+        }
+        return true;
+    };
     /* TODO
     const updateScorecardsCache = (scorecards: Scorecard[]) => {
     };
@@ -55,6 +64,7 @@ const useGame = (gameId: string) => {
         setScore,
         closeGame,
         setBeers,
+        isFinished
     };
 };
 

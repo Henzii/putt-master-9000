@@ -1,11 +1,13 @@
 
 import { DefaultTheme } from "react-native-paper";
 export const scoreColors = {
+    alba: '#ffcf40',
     eagle: 'rgb(255,207,64)',
-    birdie: '#aadaf2',
+    birdie: '#9adaff',
     par: '#a5d4c3',
     bogey: '#fce79a',
-    doubleBogey: '#fcbc9a'
+    doubleBogey: '#fcbc9a',
+    other: '#ff7f7f',
 };
 export const theme = {
     ...DefaultTheme,
