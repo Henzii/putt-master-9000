@@ -32,7 +32,11 @@ export default function useStats(
         }
         return card.holes.find(hole => hole.index === holeIndex);
     };
-
+    const getField = (playerId: string | number, field: keyof StatsCard) => {
+        const card = data?.getLayoutStats?.find(card => card.playerId === playerId);
+        if (!card) return;
+        return card[field];
+    };
     const getBest = (playerId: string | number) => {
         const card = data?.getLayoutStats?.find(card => card.playerId === playerId);
         return card?.best;
@@ -53,6 +57,7 @@ export default function useStats(
         getStatsForHole,
         getBest,
         getHc,
+        getField,
         error,
         loading,
     };
@@ -65,6 +70,7 @@ export interface StatsHook {
     getHolesStats: (playerId: string) => SingleStats[] | undefined
     getBest: (playerId: string | number) => number | undefined,
     getHc: (playerId: string | number) => number | undefined,
+    getField: (playerId: string | number, filed: keyof StatsCard) => number | string | undefined | SingleStats[]
 }
 
 interface RawStats {
