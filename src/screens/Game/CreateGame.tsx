@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Pressable } from "react-native";
-import { Button, Chip, Headline, Title, useTheme } from 'react-native-paper';
+import { Button, Headline} from 'react-native-paper';
 import { Course, Layout } from '../../hooks/useCourses';
 import useMe, { User } from '../../hooks/useMe';
 import FriendsList from '../../components/FriendsList';
@@ -29,10 +29,9 @@ const CreateGame = (props: CreateGameProps) => {
 
     const [selectCourse, setSelectCourse] = useState(false);
     const [addFriend, setAddFriend] = useState(false);
-    const { colors } = useTheme();
     const me = useMe();
     const backButton = useBackButton();
-    const {getHc, getBest, loading} = useStats(
+    const {getHc, getBest, getField, loading} = useStats(
         (newGameData.layout?.id as string | undefined),
         (newGameData.players.map(player => player.id) as string[]),
         'network-only',
@@ -96,8 +95,7 @@ const CreateGame = (props: CreateGameProps) => {
     if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} title="Select course" />;
     if (addFriend) return <FriendsList onClick={handleAddFriend} hideRemoveButton multiSelect />;
 
-    // Luodaan tyyli, parametrinä teeman väritys
-    const tyyli = createStyle(colors);
+    const tyyli = createStyle();
     const {course, layout} = newGameData;
     return (
         <Container withScrollView noFlex fullHeight>
@@ -131,6 +129,7 @@ const CreateGame = (props: CreateGameProps) => {
             <Spacer />
             <View style={tableStyle.playersTable}>
                 <Text style={tableStyle.headerName}>Name</Text>
+                <Text style={tableStyle.headerRest}>Games</Text>
                 <Text style={tableStyle.headerRest}>Best</Text>
                 <Text style={tableStyle.headerRest}>HC</Text>
                 <Text style={{flex: 1}}></Text>
@@ -142,6 +141,7 @@ const CreateGame = (props: CreateGameProps) => {
                         key={player.id}
                         name={player.name}
                         hc={loading ? '...' : getHc(player.id) ?? ''}
+                        games={getField(player.id, 'games') as number}
                         best={layout?.par && best ? best - layout.par : ''}
                         even={index % 2 === 0}
                         onRemove={player.id !== me?.me?.id ? () => handleRemoveFriend(player.id) : null}
@@ -168,14 +168,15 @@ const CreateGame = (props: CreateGameProps) => {
         </Container>
     );
 };
-const TableItem = ({name, best, hc, even, onRemove}: {even: boolean, name: string, best: number | string, hc: number | string, onRemove: (() => void) | null}) => {
+const TableItem = ({name, games, best, hc, even, onRemove}: {even: boolean, games: number, name: string, best: number | string, hc: number | string, onRemove: (() => void) | null}) => {
     return (
         <View style={[tableStyle.playersTable, even && tableStyle.background]}>
                 <Text style={tableStyle.listName}>{name}</Text>
+                <Text style={tableStyle.listRest}>{games}</Text>
                 <Text style={tableStyle.listRest}>{best}</Text>
                 <Text style={tableStyle.listRest}>{hc}</Text>
                 <Pressable onPress={onRemove} style={{flex: 1}}>
-                    <Text>X</Text>
+                    <Text>{onRemove ? 'X' : ''}</Text>
                 </Pressable>
         </View>
     );
@@ -191,52 +192,37 @@ const tableStyle = StyleSheet.create({
         justifyContent: 'space-between',
         marginBottom: 8,
         padding: 8,
+        paddingRight: 0,
     },
     headerName: {
         flex: 5,
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: '600',
     },
     headerRest: {
         flex: 2,
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: '600',
         textAlign: 'center',
     },
     listName: {
         flex: 5,
-        fontSize: 16,
+        fontSize: 14,
     },
     listRest: {
         flex: 2,
-        fontSize: 16,
+        fontSize: 14,
         textAlign: 'center',
     }
 });
-const createStyle = (colors?: ReactNativePaper.ThemeColors) => StyleSheet.create({
-    chip: {
-        display: 'flex',
-        backgroundColor: colors?.surface,
-        marginTop: 5,
-        elevation: 2,
-        fontSize: 20,
-        maxWidth: '70%'
-    },
+const createStyle = () => StyleSheet.create({
     courseText: {
         width: '50%',
-        fontSize: 18,
+        fontSize: 16,
     },
     parsText: {
         color: 'gray',
-        fontSize: 16,
-    },
-    title: {
-        marginVertical: 10,
-    },
-    courseTextBig: {
-        width: '50%',
-        fontSize: 16,
-        fontWeight: 'bold',
+        fontSize: 14,
     },
     courseContainer: {
         display: 'flex',
