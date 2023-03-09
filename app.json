@@ -10,7 +10,7 @@
       }
     },
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/newsplash.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
