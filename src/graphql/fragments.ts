@@ -27,6 +27,7 @@ export const CORE_GAME_INFO = gql`
 
 export const CORE_SCORECARD_INFO = gql`
     fragment CoreScorecardInfo on Scorecard {
+        id
         scores
         total
         beers
