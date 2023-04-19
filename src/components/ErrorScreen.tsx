@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import Container from './ThemedComponents/Container';
 
-const ErrorScreen = ({ errorMessage}: { errorMessage: string }) => {
+const ErrorScreen = ({errorMessage}: { errorMessage: string }) => {
     const navi = useNavigate();
     return (
         <Container fullWidth>
