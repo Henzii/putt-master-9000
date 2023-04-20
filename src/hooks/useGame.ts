@@ -3,8 +3,8 @@ import { SET_SCORE, CLOSE_GAME, SET_BEERS } from "../graphql/mutation";
 import { GET_GAME } from "../graphql/queries";
 import { User } from "./useMe";
 
-const useGame = (gameId: string) => {
-    const { data, loading, error } = useQuery<{ getGame: Game }>(
+const useGame = (gameId: string, noSubscription = false) => {
+    const { data, loading, error, refetch } = useQuery<{ getGame: Game }>(
         GET_GAME,
         {
             variables: { gameId },
@@ -23,6 +23,7 @@ const useGame = (gameId: string) => {
     };
     const setScore = async (args: SetScoreArgs) => {
         await setScoreMutation({ variables: args });
+        if (noSubscription) refetch();
     };
     const closeGame = async (reopen?: boolean) => {
         try {
@@ -41,10 +42,7 @@ const useGame = (gameId: string) => {
         }
         return true;
     };
-    /* TODO
-    const updateScorecardsCache = (scorecards: Scorecard[]) => {
-    };
-    */
+
     return {
         data: data?.getGame ?? null,
         ready: (!loading && !error),

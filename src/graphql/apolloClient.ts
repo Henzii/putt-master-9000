@@ -6,10 +6,8 @@ import { createClient } from 'graphql-ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 
 const PRODUCTION_URI = 'https://fudisc-server.henzi.fi';
-const PREVIEW_URI = 'https://fudisc-dev.herokuapp.com/graphql';
+const PREVIEW_URI = 'https://fudisc-server.henzi.fi';
 const DEVELOPMENT_URI = 'http://192.168.1.5:8080/graphql';
-
-const SUB_URL = 'ws://192.168.1.5:8080/graphql';
 
 export const getAPIUrl = async () => {
     const localMode = await AsyncStorage.getItem('apiEnv') || process.env.NODE_ENV;
@@ -25,13 +23,15 @@ export const getAPIUrl = async () => {
 const httpLink = new HttpLink();
 
 const wsLink = new GraphQLWsLink(createClient({
-    url: SUB_URL,
+    url: async () => (await getAPIUrl()).replace(/(http)(s)?:\/\//, "ws$2://"),
+    retryAttempts: 5,
     connectionParams: async () => {
         const token = await AsyncStorage.getItem('token');
         return {
             Authorization: token ? `bearer ${token}` : ''
         };
     },
+
 }));
 
 const authLink = setContext( async (_root: unknown, { headers }) => {
@@ -40,9 +40,7 @@ const authLink = setContext( async (_root: unknown, { headers }) => {
     return {
         headers: {
             ...headers,
-            authorization: (token)
-                ? `bearer ${token}`
-                : ''
+            authorization: token ? `bearer ${token}` : ''
         },
         uri
     };
