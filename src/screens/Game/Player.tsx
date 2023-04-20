@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, FlatList, Pressable, LayoutChangeEvent } from 'react-native';
-import { Card } from 'react-native-paper';
+import { View, Text, StyleSheet, FlatList, Pressable, LayoutChangeEvent, Animated } from 'react-native';
+import { ActivityIndicator, Card } from 'react-native-paper';
 import { useSettings } from '../../components/LocalSettingsProvider';
 import { Scorecard } from '../../hooks/useGame';
 import { StatsHook } from '../../hooks/useStats';
@@ -94,9 +94,9 @@ export default function Player({ player, selectedRound, setScore, order, stats }
 const ScoreButton = ({ onClick, number, selected, pending }: { onClick?: (score: number) => void, number: number, selected: boolean, pending: boolean }) => {
     const bgStyles = [
         tyyli.scoreButton,
-        pending && tyyli.scoreButtonPending,
         selected && tyyli.scoreButtonSelected,
     ];
+    if (pending) return <PendingButton />;
     return (
         <Pressable
             style={bgStyles}
@@ -107,14 +107,45 @@ const ScoreButton = ({ onClick, number, selected, pending }: { onClick?: (score:
     );
 };
 
+const PendingButton = () => {
+    const borderAnim = useRef(new Animated.Value(0)).current;
+    (function startAnim() {
+
+        Animated.timing(borderAnim, {
+            toValue: 1,
+            duration: 500,
+            useNativeDriver: true
+        }).start();
+    })();
+    return (
+        <Animated.View
+            style={[
+                tyyli.scoreButton,
+                tyyli.scoreButtonPending,
+                {
+                    borderRadius: borderAnim.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [7, 30]
+                    }),
+                }
+            ]}
+        >
+            <Text><ActivityIndicator /></Text>
+        </Animated.View>
+    );
+};
+
 const tyyli = StyleSheet.create({
     scoreButton: {
         marginRight: 5,
         borderWidth: 1,
         borderColor: '#000',
         backgroundColor: 'lightgray',
-        paddingHorizontal: 15,
-        paddingVertical: 10,
+        width: 43,
+        height: 43,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         borderRadius: 7,
         elevation: 2,
     },
@@ -126,12 +157,11 @@ const tyyli = StyleSheet.create({
         backgroundColor: '#FFFFE5',
     },
     scoreButtonPending: {
-        borderColor: 'orange',
-        backgroundColor: 'white',
+        borderColor: 'green',
     },
     scoreButtonSelected: {
         backgroundColor: '#8ecf8a',
-        borderColor: 'green'
+        borderColor: 'green',
     },
     content: {
         display: 'flex',
