@@ -82,6 +82,7 @@ export const GET_GAME = gql`
         }
       }
       myScorecard {
+        id
         beers
       }
     }
@@ -102,6 +103,7 @@ ${CORE_GAME_INFO}
           total
         }
         scorecards {
+          id
           total
           plusminus
           user {

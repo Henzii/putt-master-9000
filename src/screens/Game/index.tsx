@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useMutation, useApolloClient } from '@apollo/client';
+import { useMutation, useApolloClient, useSubscription } from '@apollo/client';
 import { BottomNavigation } from 'react-native-paper';
 import { AppState } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-native';
 import { ADD_PLAYERS_TO_GAME, CREATE_GAME } from '../../graphql/mutation';
 import { GET_OLD_GAMES } from '../../graphql/queries';
-import { gameData, newGame, unloadGame } from '../../reducers/gameDataReducer';
+import { gameData, newGame, setNoSubscription, unloadGame } from '../../reducers/gameDataReducer';
 import { addNotification } from '../../reducers/notificationReducer';
 import { RootState } from '../../utils/store';
 import Beers from './Beers';
@@ -15,6 +15,9 @@ import Game from './Game';
 import Setup from './Setup';
 import Summary from './Summary/Summary';
 import { useSettings } from '../../components/LocalSettingsProvider';
+import { GAME_SUBSCRIPTION } from '../../graphql/subscriptions';
+import type { Game as GameType } from '../../hooks/useGame';
+import { updateGame } from '../../utils/gameCahcheUpdates';
 
 export default function GameContainer() {
     /*
@@ -23,6 +26,7 @@ export default function GameContainer() {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const [createGameMutation, { loading }] = useMutation(CREATE_GAME, { refetchQueries: [{ query: GET_OLD_GAMES }] });
     const [addPlayersMutation] = useMutation(ADD_PLAYERS_TO_GAME);
+    const {data: subscriptionData, error: subscriptionError} = useSubscription<{gameUpdated: GameType}>(GAME_SUBSCRIPTION, { variables: { gameId: gameData?.gameId }});
     const dispatch = useDispatch();
     const navi = useNavigate();
     const location = useLocation();
@@ -56,6 +60,16 @@ export default function GameContainer() {
             setNavIndex(2);
         }
     }, [settings]);
+
+    useEffect(() => {
+        if (subscriptionError) {
+            dispatch(addNotification(`Subscription failed. Data may not be up to date. Cause: ${subscriptionError.cause ?? 'unknown'}`, 'alert'));
+            dispatch(setNoSubscription());
+        }
+        if(subscriptionData?.gameUpdated && !subscriptionError) {
+            updateGame(subscriptionData.gameUpdated, client, gameData?.gameId);
+        }
+    }, [subscriptionData, subscriptionError]);
     useEffect(() => {
         // Listeneri joka kuuntelee sovelluksen tilaa
         const listener = AppState.addEventListener('change', _handleAppStateChange);

@@ -19,7 +19,7 @@ export default function Game() {
     const [selectedRound, setSelectedRound] = useState(0);
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const gameId = gameData.gameId;
-    const { data, loading, error, setScore } = useGame(gameId);
+    const { data, loading, error, setScore } = useGame(gameId, gameData.noSubscription);
     const localSettings = useSettings();
     const stats = useStats(data?.layout_id, data?.scorecards?.map(sc => sc.user.id as string) || []);
     const handleScoreChange = (playerId: string, selectedRound: number, value: number) => {

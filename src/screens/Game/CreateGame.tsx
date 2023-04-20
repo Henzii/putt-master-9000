@@ -196,12 +196,12 @@ const tableStyle = StyleSheet.create({
     },
     headerName: {
         flex: 5,
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: '600',
     },
     headerRest: {
         flex: 2,
-        fontSize: 16,
+        fontSize: 12,
         fontWeight: '600',
         textAlign: 'center',
     },
@@ -211,7 +211,7 @@ const tableStyle = StyleSheet.create({
     },
     listRest: {
         flex: 2,
-        fontSize: 14,
+        fontSize: 12,
         textAlign: 'center',
     }
 });

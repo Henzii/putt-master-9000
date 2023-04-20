@@ -1,29 +1,18 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { LogBox } from "react-native";
 import { SET_SCORE, CLOSE_GAME, SET_BEERS } from "../graphql/mutation";
 import { GET_GAME } from "../graphql/queries";
-import { updateScorecard } from "../utils/gameCahcheUpdates";
 import { User } from "./useMe";
 
-LogBox.ignoreLogs(['Setting a timer']);  // Hmm...
-
-const useGame = (gameId: string) => {
-    const { data, loading, error } = useQuery<{ getGame: Game }>(
+const useGame = (gameId: string, noSubscription = false) => {
+    const { data, loading, error, refetch } = useQuery<{ getGame: Game }>(
         GET_GAME,
         {
             variables: { gameId },
             fetchPolicy: 'cache-and-network',
-            pollInterval: (2000*60),      // Pollataan kahden minuutin välein kunnes subscriptionit
         });
     const [closeGameMutation] = useMutation(CLOSE_GAME, { refetchQueries: [{ query: GET_GAME, variables: { gameId } }] });
-    const [setBeersMutation] = useMutation(SET_BEERS, {
-        update: (cache, result) => updateScorecard(cache, gameId, result.data.setBeersDrank)
-    });
-    const [setScoreMutation] = useMutation(SET_SCORE, {
-        refetchQueries: [
-            { query: GET_GAME, variables: { gameId } }
-        ]
-    });
+    const [setBeersMutation] = useMutation(SET_BEERS);
+    const [setScoreMutation] = useMutation(SET_SCORE);
     const setBeers = async (playerId: string | number, beers: number) => {
         try {
             await setBeersMutation({ variables: { gameId, playerId, beers }});
@@ -34,6 +23,7 @@ const useGame = (gameId: string) => {
     };
     const setScore = async (args: SetScoreArgs) => {
         await setScoreMutation({ variables: args });
+        if (noSubscription) refetch();
     };
     const closeGame = async (reopen?: boolean) => {
         try {
@@ -52,10 +42,7 @@ const useGame = (gameId: string) => {
         }
         return true;
     };
-    /* TODO
-    const updateScorecardsCache = (scorecards: Scorecard[]) => {
-    };
-    */
+
     return {
         data: data?.getGame ?? null,
         ready: (!loading && !error),
