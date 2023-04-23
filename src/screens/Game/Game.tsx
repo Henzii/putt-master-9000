@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, FlatList, AppState } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Player from './Player';
 import { Dimensions } from 'react-native';
 import RoundTabs from '../../components/RoundTabs';
-import useGame from '../../hooks/useGame';
+import useGame, { Scorecard } from '../../hooks/useGame';
 import Container from '../../components/ThemedComponents/Container';
 import { Button, Title } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,17 +11,18 @@ import { gameData, unloadGame } from '../../reducers/gameDataReducer';
 import Loading from '../../components/Loading';
 import { RootState } from '../../utils/store';
 import ErrorScreen from '../../components/ErrorScreen';
-import { useCallback } from 'react';
 import { useSettings } from '../../components/LocalSettingsProvider';
 import useStats from '../../hooks/useStats';
 
 export default function Game() {
     const [selectedRound, setSelectedRound] = useState(0);
+    const [scorecards, setScorecards] = useState<Scorecard[]>([]);
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const gameId = gameData.gameId;
     const { data, loading, error, setScore } = useGame(gameId, gameData.noSubscription);
     const localSettings = useSettings();
     const stats = useStats(data?.layout_id, data?.scorecards?.map(sc => sc.user.id as string) || []);
+
     const handleScoreChange = (playerId: string, selectedRound: number, value: number) => {
         setScore({
             gameId,
@@ -29,6 +30,23 @@ export default function Game() {
             hole: selectedRound,
             value,
         });
+    };
+
+    const sortAndSetScorecards = () => {
+        if (!data?.scorecards) return;
+        // Kopioidaan tuloskortit
+        const cards = [...data?.scorecards || []];
+        for (let i = 0; i < selectedRound; i++) {
+            cards.sort((a, b) => (a.scores[i] || 99) - (b.scores[i] || 99));
+        }
+        const throwingOrder = cards.reduce((p,c,i) => {
+            p[c.user.id] = (i+1);
+            return p;
+        }, ({} as { [key: string]: number }));
+
+        const scs = JSON.parse(JSON.stringify(data.scorecards)) as Scorecard[];
+        scs.sort((a,b) => throwingOrder[a.user.id] - throwingOrder[b.user.id]);
+        setScorecards(scs);
     };
     const goToFirstIncompleteHole = () => {
         if (!data?.scorecards) return;
@@ -47,7 +65,19 @@ export default function Game() {
         }
     };
 
+    useLayoutEffect(() => {
+        if(localSettings?.getBoolValue('SortBox')) sortAndSetScorecards();
+    }, [selectedRound]);
+
     useEffect(() => {
+        if (data?.scorecards) {
+            if (localSettings?.getBoolValue('SortBox')) {
+                sortAndSetScorecards();
+            } else {
+                setScorecards(data.scorecards);
+            }
+        }
+
         if (localSettings?.getBoolValue('AutoAdvance')) {
             const sub = AppState.addEventListener('change', handleAppStateChange);
             return () => sub.remove();
@@ -58,19 +88,6 @@ export default function Game() {
         goToFirstIncompleteHole();
     }, []);
 
-    const findThrowingOrder = useCallback(() => {
-        // Kopioidaan tuloskortit
-        const cards = [...data?.scorecards || []];
-        for (let i = 0; i < selectedRound; i++) {
-            cards.sort((a, b) => (a.scores[i] || 99) - (b.scores[i] || 99));
-        }
-        return cards.reduce((p,c,i) => {
-            p[c.user.id] = (i+1);
-            return p;
-        }, ({} as { [key: string]: number }));
-    }, [selectedRound]);
-
-
     if (!data && loading) return <Loading />;
     if (!data || error) {
         return <ErrorScreen errorMessage={`Error just happened!`} />;
@@ -80,11 +97,6 @@ export default function Game() {
     }
     // Apumuuttuja jolla todetaan swiippaus vasemmalle
     let touchPos = [0, 0];
-    const throwingOrder = findThrowingOrder();
-    // TODO: useCallback tms.
-    if (localSettings.getBoolValue('SortBox')) {
-        data.scorecards.sort((a,b) => throwingOrder[a.user.id] - throwingOrder[b.user.id]);
-    }
     return (
         <>
             <RoundTabs gameData={data} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
@@ -114,7 +126,7 @@ export default function Game() {
                     </View>
                     <FlatList
                         style={{ flex: 1 }}
-                        data={data.scorecards}
+                        data={scorecards}
                         keyExtractor={(item) => item.user.id as string}
                         ListFooterComponent={<View style={{ height: 70 }} />}
                         ItemSeparatorComponent={SeparatorComp}
@@ -124,7 +136,6 @@ export default function Game() {
                                 stats={stats}
                                 selectedRound={selectedRound}
                                 setScore={handleScoreChange}
-                                order={throwingOrder[item.user.id]}
                             />
                         )}
                     />

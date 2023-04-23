@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createRef } from 'react';
+import { TextInput } from 'react-native';
 
 type Options = {
     numeric?: boolean
@@ -9,6 +10,7 @@ type HookReturn = {
     value: string,
     onChangeText: (text: string) => void,
     keyboardType: 'numeric' | 'default',
+    ref?: React.RefObject<TextInput>
 }
 /**
 * Palauttaa arrayn ensimmäisessä alkiossa value, onChangeText ja keyboardType
@@ -26,6 +28,7 @@ type HookReturn = {
 const useTextInput = (options: Options, callback?: (value: string) => void): HookReturn => {
     const [value, setValue] = useState(options.defaultValue || '');
     const [timerId, setTimerId] = useState<undefined | NodeJS.Timeout>();
+    const ref = createRef<TextInput>();
     const onChangeText = (text: string) => {
         if (options.numeric) {
             if (!Number.parseInt(text) && text !== '') return;
@@ -43,6 +46,7 @@ const useTextInput = (options: Options, callback?: (value: string) => void): Hoo
     });
     return {
         value,
+        ref,
         onChangeText,
         keyboardType: (options.numeric ? 'numeric' : 'default'),
     };
