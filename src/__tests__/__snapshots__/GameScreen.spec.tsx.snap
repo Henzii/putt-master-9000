@@ -316,66 +316,14 @@ Array [
         </Text>
       </View>
       <RCTScrollView
-        ItemSeparatorComponent={[Function]}
-        ListFooterComponent={
-          <View
-            style={
-              Object {
-                "height": 70,
-              }
-            }
-          />
-        }
-        data={
-          Array [
-            Object {
-              "__typename": "Scorecard",
-              "beers": 0,
-              "hc": 0,
-              "plusminus": 2,
-              "scores": Array [
-                3,
-                3,
-                3,
-                3,
-                3,
-              ],
-              "total": 15,
-              "user": Object {
-                "achievements": Array [],
-                "email": "",
-                "id": "MockedUserId1",
-                "name": "MockerUser1",
-              },
-            },
-          ]
-        }
-        getItem={[Function]}
-        getItemCount={[Function]}
-        keyExtractor={[Function]}
-        onContentSizeChange={[Function]}
-        onLayout={[Function]}
-        onMomentumScrollBegin={[Function]}
-        onMomentumScrollEnd={[Function]}
-        onScroll={[Function]}
-        onScrollBeginDrag={[Function]}
-        onScrollEndDrag={[Function]}
-        removeClippedSubviews={false}
-        renderItem={[Function]}
-        scrollEventThrottle={50}
-        stickyHeaderIndices={Array []}
         style={
           Object {
             "flex": 1,
           }
         }
-        viewabilityConfigCallbackPairs={Array []}
       >
         <View>
-          <View
-            onLayout={[Function]}
-            style={null}
-          >
+          <View>
             <View
               onLayout={[Function]}
               style={
@@ -1024,10 +972,6 @@ Array [
                 </RCTScrollView>
               </View>
             </View>
-          </View>
-          <View
-            onLayout={[Function]}
-          >
             <View
               style={
                 Object {
