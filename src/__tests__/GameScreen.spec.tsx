@@ -43,6 +43,8 @@ describe('<Game /> testit', () => {
             expect(getByText(gameMocks.mockedGame.scorecards[0].user.name)).not.toBeNull();
 
         });
+        // Pikkuruinen odotus jotta animaatiot ehtii animoitua.
+        await new Promise((resolve) => setTimeout(resolve, 500));
         expect(toJSON()).toMatchSnapshot();
     });
 });
