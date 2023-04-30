@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, FlatList, LayoutChangeEvent, Pressable } from 'react-native';
 import { useSettings } from '../../../components/LocalSettingsProvider';
 import { Scorecard } from '../../../hooks/useGame';
-import { StatsHook } from '../../../hooks/useStats';
+import useStats from '../../../hooks/useStats';
 import Statsbar from './Statsbar';
 import SplitContainer from '../../../components/ThemedComponents/SplitContainer';
 import { ActivityIndicator, useTheme } from 'react-native-paper';
@@ -11,8 +11,8 @@ type PlayerArgs = {
     player: Scorecard,
     selectedRound: number,
     setScore: (playerId: string, selectedRound: number, value: number) => void,
-    stats: StatsHook,
-    par: number
+    par: number,
+    layoutId: string
 }
 /**
  *  ### Pejaala
@@ -22,12 +22,14 @@ type PlayerArgs = {
  *  @param selectedRound Valittu kierros
  *  @param setScore callback tuloksen asettamiselle. Saa parateriksi tuloksen
  */
-export default function Player({ player, selectedRound, setScore, stats, par }: PlayerArgs): JSX.Element {
+const Player = React.memo(function Scorecard ({ player, selectedRound, setScore, par, layoutId }: PlayerArgs) {
     const [pendingButton, setPendingButton] = useState<number | undefined>();
     const listRef = useRef<FlatList>(null);
     const [viewWidth, setViewWidth] = useState<number>(0);
     const theme = useTheme();
     const napitData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const stats = useStats(layoutId, [player.user.id as string]);
+
     // Tulosten päivittyessä poistetaan pelaajalta pending
     useEffect(() => {
         if (pendingButton) setPendingButton(undefined);
@@ -81,8 +83,8 @@ export default function Player({ player, selectedRound, setScore, stats, par }: 
         </View>
 
     );
+});
 
-}
 const ScoreButton = ({ onClick, number, selected, pending, par }: { par?: number, onClick?: (score: number) => void, number: number, selected: boolean, pending: boolean }) => {
 
     const bgStyles = [
@@ -171,3 +173,5 @@ const tyyli = StyleSheet.create({
         fontWeight: '600',
     }
 });
+
+export default Player;

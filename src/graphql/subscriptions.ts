@@ -19,6 +19,7 @@ export const GAME_SUBSCRIPTION = gql`
         }
       }
       updatedScorecardPlayerId
+      updaterId
     }
   }
 ${CORE_GAME_INFO}

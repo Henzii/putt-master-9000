@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useMutation, useApolloClient } from '@apollo/client';
 import { BottomNavigation } from 'react-native-paper';
-import { AppState } from 'react-native';
+import { AppState, Platform, Vibration } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-native';
 import { ADD_PLAYERS_TO_GAME, CREATE_GAME } from '../../graphql/mutation';
@@ -16,14 +16,16 @@ import Setup from './Setup';
 import Summary from './Summary/Summary';
 import { useSettings } from '../../components/LocalSettingsProvider';
 import { GAME_SUBSCRIPTION } from '../../graphql/subscriptions';
-import { updateGame, updateScorecard } from '../../utils/gameCahcheUpdates';
+import { updateScorecard } from '../../utils/gameCahcheUpdates';
 import { useSubscription } from '../../hooks/useSubscription';
+import useMe from '../../hooks/useMe';
 
 export default function GameContainer() {
     /*
         HOOKS
     */
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
+    const {me} = useMe();
     const [createGameMutation, { loading }] = useMutation(CREATE_GAME, { refetchQueries: [{ query: GET_OLD_GAMES }] });
     const [addPlayersMutation] = useMutation(ADD_PLAYERS_TO_GAME);
     const dispatch = useDispatch();
@@ -36,8 +38,12 @@ export default function GameContainer() {
             const response = data?.data?.scorecardUpdated;
             if (!response) return;
             updateScorecard(response.game, response.updatedScorecardPlayerId, client);
+            if (response.updaterId !== me?.id && Platform.OS === 'android') {
+                Vibration.vibrate([50, 50]);
+            }
         },
         (error) => {
+            // eslint-disable-next-line no-console
             console.log(error);
             dispatch(setNoSubscription());
             dispatch(addNotification('Subscription failed. The game data is not updated in real time.', "warning"));

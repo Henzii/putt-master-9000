@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList, AppState } from 'react-native';
+import { View, Text, StyleSheet, AppState, ScrollView } from 'react-native';
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import PlayerScorecard from './Scorecard';
 import { Dimensions } from 'react-native';
@@ -12,7 +12,6 @@ import Loading from '../../components/Loading';
 import { RootState } from '../../utils/store';
 import ErrorScreen from '../../components/ErrorScreen';
 import { useSettings } from '../../components/LocalSettingsProvider';
-import useStats from '../../hooks/useStats';
 
 export default function Game() {
     const [selectedRound, setSelectedRound] = useState(0);
@@ -21,15 +20,15 @@ export default function Game() {
     const gameId = gameData.gameId;
     const { data, error, setScore } = useGame(gameId, gameData.noSubscription);
     const localSettings = useSettings();
-    const stats = useStats(data?.layout_id, data?.scorecards?.map(sc => sc.user.id as string) || []);
-    const handleScoreChange = (playerId: string, selectedRound: number, value: number) => {
+
+    const handleScoreChange = useCallback((playerId: string, selectedRound: number, value: number) => {
         setScore({
             gameId,
             playerId,
             hole: selectedRound,
             value,
         });
-    };
+    }, [gameData]);
     const sortAndSetScorecards = useCallback(() => {
         if (!data?.scorecards) return;
         // Kopioidaan tuloskortit
@@ -125,30 +124,26 @@ export default function Game() {
                             {data.layout}, #{selectedRound+1} par {data.pars[selectedRound]}
                         </Text>
                     </View>
-                    <FlatList
-                        style={{ flex: 1 }}
-                        data={scorecards}
-                        keyExtractor={(item) => item.user.id as string}
-                        ListFooterComponent={<View style={{ height: 70 }} />}
-                        ItemSeparatorComponent={SeparatorComp}
-                        renderItem={({ item }) => (
+                    <ScrollView style={{flex: 1}}>
+                        <View>
+                        {scorecards.map(sc => (
                             <PlayerScorecard
-                                player={item}
-                                par={data.pars[selectedRound]}
-                                stats={stats}
+                                player={sc}
                                 selectedRound={selectedRound}
+                                key={sc.user.id}
+                                par={data?.pars[selectedRound]}
                                 setScore={handleScoreChange}
+                                layoutId={data?.layout_id}
                             />
-                        )}
-                    />
+                        ))}
+                        <View style={{ height: 70 }} />
+                        </View>
+                    </ScrollView>
                 </View>
             </Container>
         </>
     );
 }
-const SeparatorComp = () => {
-    return <View style={{ height: 6 }} />;
-};
 const ClosedGame = () => {
     const dispatch = useDispatch();
 
