@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, FlatList, AppState } from 'react-native';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import Player from './Player';
+import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import PlayerScorecard from './Scorecard';
 import { Dimensions } from 'react-native';
 import RoundTabs from '../../components/RoundTabs';
 import useGame, { Scorecard } from '../../hooks/useGame';
@@ -19,10 +19,9 @@ export default function Game() {
     const [scorecards, setScorecards] = useState<Scorecard[]>([]);
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const gameId = gameData.gameId;
-    const { data, loading, error, setScore } = useGame(gameId, gameData.noSubscription);
+    const { data, error, setScore } = useGame(gameId, gameData.noSubscription);
     const localSettings = useSettings();
     const stats = useStats(data?.layout_id, data?.scorecards?.map(sc => sc.user.id as string) || []);
-
     const handleScoreChange = (playerId: string, selectedRound: number, value: number) => {
         setScore({
             gameId,
@@ -31,8 +30,7 @@ export default function Game() {
             value,
         });
     };
-
-    const sortAndSetScorecards = () => {
+    const sortAndSetScorecards = useCallback(() => {
         if (!data?.scorecards) return;
         // Kopioidaan tuloskortit
         const cards = [...data?.scorecards || []];
@@ -47,7 +45,8 @@ export default function Game() {
         const scs = JSON.parse(JSON.stringify(data.scorecards)) as Scorecard[];
         scs.sort((a,b) => throwingOrder[a.user.id] - throwingOrder[b.user.id]);
         setScorecards(scs);
-    };
+    }, [data, selectedRound]);
+
     const goToFirstIncompleteHole = () => {
         if (!data?.scorecards) return;
         for (let i = 0; i < (data?.holes || 0); i++) {
@@ -69,7 +68,7 @@ export default function Game() {
         if(localSettings?.getBoolValue('SortBox')) sortAndSetScorecards();
     }, [selectedRound]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (data?.scorecards) {
             if (localSettings?.getBoolValue('SortBox')) {
                 sortAndSetScorecards();
@@ -88,8 +87,8 @@ export default function Game() {
         goToFirstIncompleteHole();
     }, []);
 
-    if (!data && loading) return <Loading />;
-    if (!data || error) {
+    if (!data) return <Loading />;
+    if (error) {
         return <ErrorScreen errorMessage={`Error just happened!`} />;
     }
     if (!data.isOpen) {
@@ -121,8 +120,10 @@ export default function Game() {
                     <View
                         style={peliStyles.headers}
                     >
-                        <Text testID="GameRata" style={peliStyles.course}>{data.course} #{selectedRound + 1}, par {data.pars[selectedRound]}</Text>
-                        <Text testID="GameLayout" style={peliStyles.layout}>{data.layout}</Text>
+                        <Text numberOfLines={1} testID="GameRata" style={peliStyles.course}>{data.course}</Text>
+                        <Text testID="GameLayout" style={peliStyles.layout}>
+                            {data.layout}, #{selectedRound+1} par {data.pars[selectedRound]}
+                        </Text>
                     </View>
                     <FlatList
                         style={{ flex: 1 }}
@@ -131,8 +132,9 @@ export default function Game() {
                         ListFooterComponent={<View style={{ height: 70 }} />}
                         ItemSeparatorComponent={SeparatorComp}
                         renderItem={({ item }) => (
-                            <Player
+                            <PlayerScorecard
                                 player={item}
+                                par={data.pars[selectedRound]}
                                 stats={stats}
                                 selectedRound={selectedRound}
                                 setScore={handleScoreChange}
@@ -175,8 +177,11 @@ const peliStyles = StyleSheet.create({
         fontSize: 30,
     },
     course: {
-        fontSize: 30,
+        fontSize: 26,
         fontWeight: 'bold',
+    },
+    par: {
+        fontSize: 26
     },
     layout: {
         color: 'gray',

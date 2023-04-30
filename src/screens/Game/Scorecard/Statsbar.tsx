@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from "react-native";
-import { SingleStats } from '../../hooks/useStats';
-import { scoreColors } from '../../utils/theme';
+import { SingleStats } from '../../../hooks/useStats';
+import { scoreColors } from '../../../utils/theme';
 
 const displayStats = [
     'eagle',
@@ -35,7 +35,7 @@ export default function Statsbar({statsCard, viewWidth}: {statsCard?: SingleStat
     };
     return (
         <View style={tyyli.bottomView}>
-            <Text>Best: {statsCard.best}, Avg: {statsCard.average}</Text>
+            <Text style={{paddingLeft: 15}}>Best: {statsCard.best}, Avg: {statsCard.average}</Text>
             <View style={tyyli.main}>
             {createBars()}
             </View>
@@ -53,7 +53,8 @@ const Singlebar = ({width, text, color}: { width: number, text?: string, color?:
 
 const tyyli = StyleSheet.create({
     bottomView: {
-        opacity: 0.6
+        opacity: 0.6,
+        marginTop: -7,
     },
     main: {
         width: '100%',

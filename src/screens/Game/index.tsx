@@ -16,7 +16,7 @@ import Setup from './Setup';
 import Summary from './Summary/Summary';
 import { useSettings } from '../../components/LocalSettingsProvider';
 import { GAME_SUBSCRIPTION } from '../../graphql/subscriptions';
-import { updateGame } from '../../utils/gameCahcheUpdates';
+import { updateGame, updateScorecard } from '../../utils/gameCahcheUpdates';
 import { useSubscription } from '../../hooks/useSubscription';
 
 export default function GameContainer() {
@@ -33,9 +33,12 @@ export default function GameContainer() {
     const params = useParams();
     useSubscription(
         (data) => {
-            updateGame(data?.data?.gameUpdated, client);
+            const response = data?.data?.scorecardUpdated;
+            if (!response) return;
+            updateScorecard(response.game, response.updatedScorecardPlayerId, client);
         },
-        () => {
+        (error) => {
+            console.log(error);
             dispatch(setNoSubscription());
             dispatch(addNotification('Subscription failed. The game data is not updated in real time.', "warning"));
         },

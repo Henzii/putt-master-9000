@@ -156,7 +156,7 @@ const Setup = () => {
             </Container>
             <Divider />
             <Paragraph style={{ color: 'gray' }}>
-                Game ID: {gameData.gameId}
+                Game ID: {gameData.gameId} {gameData.noSubscription && ' / No subscription'}
             </Paragraph>
         </Container>
     );

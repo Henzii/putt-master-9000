@@ -11,19 +11,24 @@ export const useSubscription = (onData: OnDataReceived, onError: OnError, {query
     const resetFailsTimeoutId = useRef<NodeJS.Timeout>();
     const client = useApolloClient();
     useEffect(() => {
-        const observer = client.subscribe({ query, variables });
-        const sub = observer.subscribe(onData, (error) => {
-            if(consecutiveFails.current > 10) {
-                onError?.(error);
-                return;
-            }
+        try {
+            const observer = client.subscribe({ query, variables, fetchPolicy: 'no-cache' });
+            const sub = observer.subscribe(onData, (error) => {
+                if(consecutiveFails.current > 10) {
+                    onError?.(error);
+                    return;
+                }
 
-            if (resetFailsTimeoutId.current) clearTimeout(resetFailsTimeoutId.current);
-            setTimeout(() => setRetryAttempts(v => v + 1), 250);
-            consecutiveFails.current++;
-            resetFailsTimeoutId.current = setTimeout(() => { consecutiveFails.current=0; }, 500);
-        });
-
-        return () => sub.unsubscribe();
+                if (resetFailsTimeoutId.current) clearTimeout(resetFailsTimeoutId.current);
+                setTimeout(() => setRetryAttempts(v => v + 1), 250);
+                consecutiveFails.current++;
+                resetFailsTimeoutId.current = setTimeout(() => { consecutiveFails.current=0; }, 500);
+            });
+            return () => sub.unsubscribe();
+        } catch (e) {
+            onError?.(e);
+            // eslint-disable-next-line no-console
+            console.log(e);
+        }
     }, [retryAttempts]);
 };
