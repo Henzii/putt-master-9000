@@ -25,9 +25,9 @@ const Login = ({ login }: {login: (s1: string, s2: string) => Promise<void> }) =
     return (
         <Container fullWidth>
             <Title>Login</Title>
-            <Input {...username} style={tyyli.nappi} mode='flat' label="Username" onSubmitEditing={() => setFocus(password.ref)} />
-            <Input {...password} style={tyyli.nappi} secureTextEntry label="Password" onSubmitEditing={handleLogin} />
-            <Button onPress={handleLogin} mode="contained" style={tyyli.nappi}>Login</Button>
+            <Input {...username} testID="user" style={tyyli.nappi} mode='flat' label="Username" onSubmitEditing={() => setFocus(password.ref)} />
+            <Input {...password} testID="password" style={tyyli.nappi} secureTextEntry label="Password" onSubmitEditing={handleLogin} />
+            <Button testID="LoginButton" onPress={handleLogin} mode="contained" style={tyyli.nappi}>Login</Button>
         </Container>
     );
 };
