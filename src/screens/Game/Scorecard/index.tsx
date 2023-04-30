@@ -158,11 +158,11 @@ const tyyli = StyleSheet.create({
         elevation: 3,
         width: '96%',
         alignSelf: 'center',
-        marginBottom: 6,
+        marginBottom: 8,
         borderRadius: 4,
     },
     header: {
-        backgroundColor: "#d3e3d3",
+        backgroundColor: "#d8e8d8",
         paddingVertical: 10,
         paddingHorizontal: 15,
         borderTopRightRadius: 4,
