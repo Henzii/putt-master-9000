@@ -1,27 +1,33 @@
-import React, { useState } from 'react';
-import { StyleSheet } from "react-native";
-import { Button, Title, TextInput } from "react-native-paper";
+import React from 'react';
+import { StyleSheet, TextInput } from "react-native";
+import { Button, Title, TextInput as Input } from "react-native-paper";
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../reducers/notificationReducer';
 import Container from './ThemedComponents/Container';
+import useTextInput from '../hooks/useTextInput';
 
 const Login = ({ login }: {login: (s1: string, s2: string) => Promise<void> }) => {
-    const [ username, setUsername] = useState('');
-    const [ password, setPassword] = useState('');
+    const username = useTextInput({});
+    const password = useTextInput({});
     const dispatch = useDispatch();
     const handleLogin = async () => {
-        login(username, password).catch(() => {
+        login(username.value, password.value).catch(() => {
             dispatch(addNotification('Wrong username or password', 'alert'));
-            setPassword('');
+            password.onChangeText('');
         });
 
     };
+    const setFocus = (next?: React.RefObject<TextInput>) => {
+        if (!next) return;
+        next?.current?.focus();
+    };
+
     return (
         <Container fullWidth>
             <Title>Login</Title>
-            <TextInput testID='user' label="Username" mode='outlined' autoComplete='off' value={username} onChangeText={(v) => setUsername(v)}/>
-            <TextInput testID='password' secureTextEntry label="Password" mode='outlined' autoComplete='off' value={password} onChangeText={(v) => setPassword(v)}/>
-            <Button onPress={handleLogin} style={tyyli.nappi} mode='contained' testID='LoginButton'>Login</Button>
+            <Input {...username} testID="user" style={tyyli.nappi} mode='flat' label="Username" onSubmitEditing={() => setFocus(password.ref)} />
+            <Input {...password} testID="password" style={tyyli.nappi} secureTextEntry label="Password" onSubmitEditing={handleLogin} />
+            <Button testID="LoginButton" onPress={handleLogin} mode="contained" style={tyyli.nappi}>Login</Button>
         </Container>
     );
 };

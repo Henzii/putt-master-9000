@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, FlatList, Pressable, LayoutChangeEvent, Animated } from 'react-native';
-import { ActivityIndicator, Card } from 'react-native-paper';
-import { useSettings } from '../../components/LocalSettingsProvider';
-import { Scorecard } from '../../hooks/useGame';
-import { StatsHook } from '../../hooks/useStats';
+import { View, Text, StyleSheet, FlatList, LayoutChangeEvent, Pressable } from 'react-native';
+import { useSettings } from '../../../components/LocalSettingsProvider';
+import { Scorecard } from '../../../hooks/useGame';
+import useStats from '../../../hooks/useStats';
 import Statsbar from './Statsbar';
+import SplitContainer from '../../../components/ThemedComponents/SplitContainer';
+import { ActivityIndicator, useTheme } from 'react-native-paper';
 
 type PlayerArgs = {
     player: Scorecard,
     selectedRound: number,
     setScore: (playerId: string, selectedRound: number, value: number) => void,
-    order?: number,
-    stats: StatsHook
+    par: number,
+    layoutId: string
 }
 /**
  *  ### Pejaala
@@ -21,11 +22,14 @@ type PlayerArgs = {
  *  @param selectedRound Valittu kierros
  *  @param setScore callback tuloksen asettamiselle. Saa parateriksi tuloksen
  */
-export default function Player({ player, selectedRound, setScore, order, stats }: PlayerArgs): JSX.Element {
+const Player = React.memo(function Scorecard ({ player, selectedRound, setScore, par, layoutId }: PlayerArgs) {
     const [pendingButton, setPendingButton] = useState<number | undefined>();
     const listRef = useRef<FlatList>(null);
     const [viewWidth, setViewWidth] = useState<number>(0);
+    const theme = useTheme();
     const napitData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const stats = useStats(layoutId, [player.user.id as string]);
+
     // Tulosten päivittyessä poistetaan pelaajalta pending
     useEffect(() => {
         if (pendingButton) setPendingButton(undefined);
@@ -42,15 +46,17 @@ export default function Player({ player, selectedRound, setScore, order, stats }
     const handleOnLayout = (event: LayoutChangeEvent) => {
         if (!viewWidth) setViewWidth(event.nativeEvent.layout.width);
     };
+
+    const plusMinus = player.plusminus ?? 0;
     return (
-        <Card style={[tyyli.main, (order === 1 && tyyli.hasBox)]} onLayout={handleOnLayout}>
-            <Card.Title
-                style={tyyli.title}
-                title={player.user.name}
-                right={() => <Text style={tyyli.throwingOrderText}>{order}</Text>}
-            />
-            <Card.Content style={tyyli.content}>
-                <View style={tyyli.contentLeft}>
+        <View style={[tyyli.container, {backgroundColor: theme.colors.surface}]} onLayout={handleOnLayout}>
+            <SplitContainer style={tyyli.header}>
+                <Text style={tyyli.title}>{player.user.name}</Text>
+                {!settings.getBoolValue('HidePlusMinus') &&
+                    <Text style={tyyli.plusMinus}>{`${plusMinus > 0 ? '+' : ''}${plusMinus}`}</Text>
+                }
+            </SplitContainer>
+                <View style={tyyli.scoreButtons}>
                     <FlatList
                         ref={listRef}
                         data={napitData}
@@ -58,6 +64,7 @@ export default function Player({ player, selectedRound, setScore, order, stats }
                             return <ScoreButton
                                 number={item}
                                 onClick={handleButtonClick}
+                                par={!player.scores[selectedRound] ? par : undefined}
                                 selected={(player.scores[selectedRound] - 1 === index)}
                                 pending={(pendingButton === item)}
                             />;
@@ -71,67 +78,36 @@ export default function Player({ player, selectedRound, setScore, order, stats }
                         initialScrollIndex={0}
                     />
                 </View>
-                <View style={tyyli.contentRight}>
-                    <Text style={tyyli.crText}>
-                        {((player.plusminus || 0) > 0 ? '+' : '')}
-                        {player.plusminus}
-                    </Text>
-                    {(player.scores[selectedRound] > 5) ?
-                        <Text>&nbsp;
-                            ({player.scores[selectedRound]})
-                        </Text>
-                        : null
-                    }
-                </View>
-            </Card.Content>
             {!settings.getBoolValue('HideStatsBars') &&
-            <Statsbar statsCard={stats.getStatsForHole(player.user.id as string, selectedRound)} viewWidth={viewWidth} />}
-        </Card>
+                <Statsbar statsCard={stats.getStatsForHole(player.user.id as string, selectedRound)} viewWidth={viewWidth} />}
+        </View>
 
     );
+});
 
-}
-const ScoreButton = ({ onClick, number, selected, pending }: { onClick?: (score: number) => void, number: number, selected: boolean, pending: boolean }) => {
+const ScoreButton = ({ onClick, number, selected, pending, par }: { par?: number, onClick?: (score: number) => void, number: number, selected: boolean, pending: boolean }) => {
+
     const bgStyles = [
         tyyli.scoreButton,
+        (par === number) && tyyli.scoreButtonPar,
         selected && tyyli.scoreButtonSelected,
+        pending && tyyli.scoreButtonPending
     ];
-    if (pending) return <PendingButton />;
+    const handleClick = () => {
+        onClick?.(number);
+    };
+
     return (
         <Pressable
             style={bgStyles}
-            onPress={onClick?.bind(this, number)}
+            onPress={handleClick}
         >
-            <Text>{number}</Text>
+            {pending ? (
+                <ActivityIndicator />
+            ) : (
+                <Text style={tyyli.scoreButtonText}>{number}</Text>
+            )}
         </Pressable>
-    );
-};
-
-const PendingButton = () => {
-    const borderAnim = useRef(new Animated.Value(0)).current;
-    (function startAnim() {
-
-        Animated.timing(borderAnim, {
-            toValue: 1,
-            duration: 500,
-            useNativeDriver: true
-        }).start();
-    })();
-    return (
-        <Animated.View
-            style={[
-                tyyli.scoreButton,
-                tyyli.scoreButtonPending,
-                {
-                    borderRadius: borderAnim.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [7, 30]
-                    }),
-                }
-            ]}
-        >
-            <Text><ActivityIndicator /></Text>
-        </Animated.View>
     );
 };
 
@@ -141,8 +117,8 @@ const tyyli = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#000',
         backgroundColor: 'lightgray',
-        width: 43,
-        height: 43,
+        width: 45,
+        height: 45,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -151,45 +127,51 @@ const tyyli = StyleSheet.create({
     },
     throwingOrderText: {
         fontSize: 12,
-        opacity: 0.6,
+        opacity: 0.2,
+        marginTop: -6,
     },
-    hasBox: {
-        backgroundColor: '#FFFFE5',
+    scoreButtons: {
+        paddingVertical: 20,
+        paddingHorizontal: 15,
     },
     scoreButtonPending: {
         borderColor: 'green',
+        backgroundColor: '#D3DFD3'
+    },
+    scoreButtonPar: {
+        backgroundColor: '#D3DFD3',
+    },
+    scoreButtonText: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#4a4a4a'
     },
     scoreButtonSelected: {
         backgroundColor: '#8ecf8a',
         borderColor: 'green',
     },
-    content: {
-        display: 'flex',
-        flexDirection: 'row',
-        padding: 10,
-        justifyContent: 'space-around'
+    plusMinus: {
+        fontSize: 21,
+        fontWeight: 'bold',
     },
-    contentLeft: {
-        flex: 4,
-    },
-    contentRight: {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    crText: {
-        fontSize: 23,
-    },
-    main: {
-        minHeight: 120,
-        elevation: 2,
-        width: '98%',
+    container: {
+        elevation: 3,
+        width: '96%',
         alignSelf: 'center',
-        marginBottom: 1,
+        marginBottom: 6,
+        borderRadius: 4,
+    },
+    header: {
+        backgroundColor: "#d3e3d3",
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderTopRightRadius: 4,
+        borderTopLeftRadius: 4,
     },
     title: {
-        padding: 10,
+        fontSize: 21,
+        fontWeight: '600',
     }
 });
+
+export default Player;

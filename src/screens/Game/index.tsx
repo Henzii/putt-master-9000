@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useMutation, useApolloClient, useSubscription } from '@apollo/client';
+import { useMutation, useApolloClient } from '@apollo/client';
 import { BottomNavigation } from 'react-native-paper';
-import { AppState } from 'react-native';
+import { AppState, Platform, Vibration } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-native';
 import { ADD_PLAYERS_TO_GAME, CREATE_GAME } from '../../graphql/mutation';
@@ -16,23 +16,40 @@ import Setup from './Setup';
 import Summary from './Summary/Summary';
 import { useSettings } from '../../components/LocalSettingsProvider';
 import { GAME_SUBSCRIPTION } from '../../graphql/subscriptions';
-import type { Game as GameType } from '../../hooks/useGame';
-import { updateGame } from '../../utils/gameCahcheUpdates';
+import { updateScorecard } from '../../utils/gameCahcheUpdates';
+import { useSubscription } from '../../hooks/useSubscription';
+import useMe from '../../hooks/useMe';
 
 export default function GameContainer() {
     /*
         HOOKS
     */
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
+    const {me} = useMe();
     const [createGameMutation, { loading }] = useMutation(CREATE_GAME, { refetchQueries: [{ query: GET_OLD_GAMES }] });
     const [addPlayersMutation] = useMutation(ADD_PLAYERS_TO_GAME);
-    const {data: subscriptionData, error: subscriptionError} = useSubscription<{gameUpdated: GameType}>(GAME_SUBSCRIPTION, { variables: { gameId: gameData?.gameId }});
     const dispatch = useDispatch();
     const navi = useNavigate();
     const location = useLocation();
     const client = useApolloClient();
     const params = useParams();
-
+    useSubscription(
+        (data) => {
+            const response = data?.data?.scorecardUpdated;
+            if (!response) return;
+            updateScorecard(response.game, response.updatedScorecardPlayerId, client);
+            if (response.updaterId !== me?.id && Platform.OS === 'android') {
+                Vibration.vibrate([50, 50]);
+            }
+        },
+        (error) => {
+            // eslint-disable-next-line no-console
+            console.log(error);
+            dispatch(setNoSubscription());
+            dispatch(addNotification('Subscription failed. The game data is not updated in real time.', "warning"));
+        },
+        { query: GAME_SUBSCRIPTION, variables: { gameId: gameData?.gameId }}
+    );
     const [navIndex, setNavIndex] = useState(gameData?.gameOpen === false ? 1 : 0);
     const settings = useSettings();
     const [navRoutes, setNavRoutes] = useState([
@@ -61,15 +78,6 @@ export default function GameContainer() {
         }
     }, [settings]);
 
-    useEffect(() => {
-        if (subscriptionError) {
-            dispatch(addNotification(`Subscription failed. Data may not be up to date. Cause: ${subscriptionError.cause ?? 'unknown'}`, 'alert'));
-            dispatch(setNoSubscription());
-        }
-        if(subscriptionData?.gameUpdated && !subscriptionError) {
-            updateGame(subscriptionData.gameUpdated, client, gameData?.gameId);
-        }
-    }, [subscriptionData, subscriptionError]);
     useEffect(() => {
         // Listeneri joka kuuntelee sovelluksen tilaa
         const listener = AppState.addEventListener('change', _handleAppStateChange);

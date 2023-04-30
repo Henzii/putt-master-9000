@@ -22,9 +22,6 @@ export default function useStats(
         }
     }, [layoutId, altDeps]);
 
-    /**
-     * @param holeIndex 0 = first hole ;)
-     **/
     const getStatsForHole = (playerId: string, holeIndex: number): SingleStats | undefined => {
         const card = data?.getLayoutStats?.find(card => card.playerId === playerId);
         if (!card) {
@@ -32,6 +29,7 @@ export default function useStats(
         }
         return card.holes.find(hole => hole.index === holeIndex);
     };
+
     const getField = (playerId: string | number, field: keyof StatsCard) => {
         const card = data?.getLayoutStats?.find(card => card.playerId === playerId);
         if (!card) return;
