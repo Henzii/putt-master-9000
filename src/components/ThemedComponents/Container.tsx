@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions, StyleSheet, View, ScrollView } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
-type ContainerChild = React.ReactElement | null | false | Element | undefined;
+type ContainerChild = React.ReactElement | null | false | Element | undefined | React.ReactNode;
 
 type ContainerProps = {
     children: (ContainerChild | ContainerChild[]),

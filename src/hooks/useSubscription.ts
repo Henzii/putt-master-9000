@@ -1,16 +1,17 @@
 import { DocumentNode, FetchResult, useApolloClient } from "@apollo/client";
 import { useEffect, useState, useRef } from "react";
 
-type Args = { query: DocumentNode, variables: Record<string, string>}
+type Args = { query: DocumentNode, variables: Record<string, string>, dependency: unknown}
 type OnDataReceived = (data: FetchResult) => void
 type OnError = ((error: unknown) => void) | null
 
-export const useSubscription = (onData: OnDataReceived, onError: OnError, {query, variables}: Args) => {
+export const useSubscription = (onData: OnDataReceived, onError: OnError, {query, variables, dependency}: Args) => {
     const [retryAttempts, setRetryAttempts] = useState(0);
     const consecutiveFails = useRef(0);
     const resetFailsTimeoutId = useRef<NodeJS.Timeout>();
     const client = useApolloClient();
     useEffect(() => {
+        if (!dependency) return;
         try {
             const observer = client.subscribe({ query, variables, fetchPolicy: 'no-cache' });
             const sub = observer.subscribe(onData, (error) => {
@@ -30,5 +31,5 @@ export const useSubscription = (onData: OnDataReceived, onError: OnError, {query
             // eslint-disable-next-line no-console
             console.log(e);
         }
-    }, [retryAttempts]);
+    }, [retryAttempts, dependency]);
 };
