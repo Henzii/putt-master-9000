@@ -16,7 +16,7 @@ import Setup from './Setup';
 import Summary from './Summary/Summary';
 import { useSettings } from '../../components/LocalSettingsProvider';
 import { GAME_SUBSCRIPTION } from '../../graphql/subscriptions';
-import { updateScorecard } from '../../utils/gameCahcheUpdates';
+import { updateGame, updateScorecard } from '../../utils/gameCahcheUpdates';
 import { useSubscription } from '../../hooks/useSubscription';
 import useMe from '../../hooks/useMe';
 
@@ -38,9 +38,13 @@ export default function GameContainer() {
         (data) => {
             const response = data?.data?.scorecardUpdated;
             if (!response) return;
-            updateScorecard(response.game, response.updatedScorecardPlayerId, client);
+            if (response.updatedScorecardPlayerId) {
+                updateScorecard(response.game, response.updatedScorecardPlayerId, client);
+            } else {
+                updateGame(response.game, client);
+            }
             if (response.updaterId !== me?.id && Platform.OS === 'android') {
-                Vibration.vibrate([50, 50]);
+                Vibration.vibrate([100, 100]);
             }
         },
         (error) => {
