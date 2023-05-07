@@ -131,7 +131,7 @@ const tyyli = StyleSheet.create({
         marginTop: -6,
     },
     scoreButtons: {
-        paddingVertical: 20,
+        paddingVertical: 10,
         paddingHorizontal: 15,
     },
     scoreButtonPending: {
@@ -139,7 +139,7 @@ const tyyli = StyleSheet.create({
         backgroundColor: '#D3DFD3'
     },
     scoreButtonPar: {
-        backgroundColor: '#D3DFD3',
+        borderWidth: 2,
     },
     scoreButtonText: {
         fontSize: 18,
@@ -163,7 +163,7 @@ const tyyli = StyleSheet.create({
     },
     header: {
         backgroundColor: "#d8e8d8",
-        paddingVertical: 10,
+        paddingVertical: 7,
         paddingHorizontal: 15,
         borderTopRightRadius: 4,
         borderTopLeftRadius: 4,

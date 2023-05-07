@@ -56,6 +56,7 @@ const SelectCourses = ({ onSelect, title, showTraffic = true, showDistance = tru
     if (error) return (
         <ErrorScreen errorMessage={error.message} />
     );
+
     if (!courses) return (
         <Loading loadingText="Loading courses..." />
     );

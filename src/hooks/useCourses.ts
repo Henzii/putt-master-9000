@@ -17,7 +17,7 @@ const useCourses = (showDistance = true) => {
     });
     const dispatch = useDispatch();
     const gps = useGPS();
-    const { data, loading, error, fetchMore, refetch, variables } = useQuery<RawCourseData>(
+    const { data, previousData, loading, error, fetchMore, refetch, variables } = useQuery<RawCourseData>(
         GET_COURSES,
         {
             variables: {
@@ -34,13 +34,6 @@ const useCourses = (showDistance = true) => {
     });
     const [addCourseMutation, { loading: loadingAddCourse }] = useMutation(ADD_COURSE);
 
-    useEffect(() => {
-        // Kun GPS-paikannus on saatu, haetaan data uudestaan gepsi koordinaattien kera
-        if (gps.ready && showDistance) {
-            //console.log('Ready', gps.lon, gps.lat);
-            refetch({ coordinates: [ gps.lon, gps.lat ]});
-        }
-    }, [gps.loading]);
     const handleFetchMore = () => {
         if (data && data.getCourses.hasMore && !loading && fetchMore) {
             try {
@@ -80,7 +73,7 @@ const useCourses = (showDistance = true) => {
             console.log('ERROR', e);
         }
     };
-    return { courses: data?.getCourses?.courses || undefined,
+    return { courses: data?.getCourses?.courses ?? previousData?.getCourses?.courses ?? undefined,
         error, addLayout, addCourse, fetchMore: handleFetchMore, setSearchString, setSearchLimits,
         searchString, gpsAvailable: gps.ready && showDistance, loading: (loadingAddCourse || loadingAddLayout || loading),
         gps, restricted: !!searchLimits.maxDistance

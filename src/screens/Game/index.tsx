@@ -25,6 +25,7 @@ export default function GameContainer() {
         HOOKS
     */
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
+    const {gameId} = gameData ?? {};
     const {me} = useMe();
     const [createGameMutation, { loading }] = useMutation(CREATE_GAME, { refetchQueries: [{ query: GET_OLD_GAMES }] });
     const [addPlayersMutation] = useMutation(ADD_PLAYERS_TO_GAME);
@@ -48,7 +49,7 @@ export default function GameContainer() {
             dispatch(setNoSubscription());
             dispatch(addNotification('Subscription failed. The game data is not updated in real time.', "warning"));
         },
-        { query: GAME_SUBSCRIPTION, variables: { gameId: gameData?.gameId }}
+        { query: GAME_SUBSCRIPTION, variables: { gameId: gameId }, dependency: gameId}
     );
     const [navIndex, setNavIndex] = useState(gameData?.gameOpen === false ? 1 : 0);
     const settings = useSettings();
