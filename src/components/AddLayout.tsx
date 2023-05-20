@@ -7,6 +7,7 @@ import Divider from './ThemedComponents/Divider';
 const AddLayout = ({ onCancel, onAdd, layout }: AddLayoutProps) => {
     const [holes, setHoles] = useState<number | undefined>(layout?.holes);
     const [pars, setPars] = useState<number[]>(layout?.pars || []);
+    const [names, setNames] = useState(layout?.names ?? []);
     const [name, setName] = useState(layout?.name || '');
 
     const handleHolesChange = (value: string) => {
@@ -34,11 +35,17 @@ const AddLayout = ({ onCancel, onAdd, layout }: AddLayoutProps) => {
     const handleCancel = () => {
         if (onCancel) onCancel();
     };
+    const handleNameChange = (hole: number, name: string) => {
+        const namesCopy = [...names];
+        namesCopy[hole] = name;
+        setNames(namesCopy);
+    };
     const handleAdd = () => {
         const newLayout: NewLayout = {
             name,
             pars,
             holes: holes || 0,
+            names,
 
         };
         if (layout) newLayout.id = layout.id;
@@ -52,8 +59,8 @@ const AddLayout = ({ onCancel, onAdd, layout }: AddLayoutProps) => {
             <Caption>Number of holes</Caption>
             <TextInput autoComplete='off' keyboardType='numeric' value={(holes || '') + ''} onChangeText={handleHolesChange} />
             <Divider />
-            <Title>Pars</Title>
-            <HolesPars pars={pars} onParChange={handleParChange} />
+            <Title>Holes</Title>
+            <HolesPars pars={pars} onParChange={handleParChange} onNameChange={handleNameChange} names={names} />
             <Text>
                 {holes || 0} Holes, par {pars.reduce((p, c) => p + c, 0)}
             </Text>
@@ -65,40 +72,59 @@ const AddLayout = ({ onCancel, onAdd, layout }: AddLayoutProps) => {
     );
 };
 
-const HolesPars = ({ onParChange, pars }: { pars: number[], onParChange: (hole: number, par: number | string) => void }) => {
+type HoleParsProps = {
+    onParChange: (hole: number, par: number | string) => void,
+    pars: number[]
+    onNameChange: (hole: number, name: string) => void,
+    names: (string | null)[]
+}
+
+const HolesPars = ({ onParChange, pars, onNameChange, names }: HoleParsProps ) => {
     const returni = [];
     for (let i = 0; i < pars.length; i++) {
         if (pars[i] === undefined) continue;
         returni.push(
-            <View style={tyyli.parInput} key={`HolesParsKey${i}`}>
+            <View key={`HolesParsKey${i}`} style={tyyli.singleHole}>
+                <Text>Hole #{i+1}</Text>
                 <TextInput
-                    style={tyyli.singlePar}
-                    onChangeText={(value) => onParChange(i, value)}
-                    mode='outlined'
-                    label={`Hole ${i + 1}`}
-                    value={pars[i] > 0 ? pars[i] + '' : ''}
+                    value={names?.[i] || ''}
+                    label="Name (optional)"
+                    mode="outlined"
                     dense
-                    autoComplete='off'
-                    keyboardType='numeric'
+                    style={{marginLeft: 10}}
+                    onChangeText={(value) => onNameChange(i, value)}
                 />
-                <IconButton
-                    style={tyyli.parInputButtons}
-                    icon="minus"
-                    color="red"
-                    onPress={() => {
-                        if (pars[i] > 1) {
-                            onParChange(i, pars[i] - 1);
-                        }
-                    }}
-                />
-                <IconButton
-                    icon="plus"
-                    style={tyyli.parInputButtons}
-                    color='green'
-                    onPress={() => {
-                        onParChange(i, pars[i] + 1);
-                    }}
-                />
+                <View style={tyyli.parInput}>
+                    <TextInput
+                        style={tyyli.singlePar}
+                        onChangeText={(value) => onParChange(i, value)}
+                        mode='outlined'
+                        label="Par"
+                        value={pars[i] > 0 ? pars[i] + '' : ''}
+                        dense
+                        autoComplete='off'
+                        keyboardType='numeric'
+                    />
+                    <IconButton
+                        style={tyyli.parInputButtons}
+                        icon="minus"
+                        color="red"
+                        onPress={() => {
+                            if (pars[i] > 1) {
+                                onParChange(i, pars[i] - 1);
+                            }
+                        }}
+                    />
+                    <IconButton
+                        icon="plus"
+                        style={tyyli.parInputButtons}
+                        color='green'
+                        onPress={() => {
+                            onParChange(i, pars[i] + 1);
+                        }}
+                    />
+                </View>
+                <Divider />
             </View>
         );
     }
@@ -110,6 +136,8 @@ const HolesPars = ({ onParChange, pars }: { pars: number[], onParChange: (hole: 
 };
 
 const tyyli = StyleSheet.create({
+    singleHole: {
+    },
     parInput: {
         display: 'flex',
         flexDirection: 'row',

@@ -1,7 +1,9 @@
-import { useMutation, useQuery } from '@apollo/client';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { SET_SCORE, CLOSE_GAME, SET_BEERS } from "../graphql/mutation";
-import { GET_GAME } from "../graphql/queries";
+import { GET_GAME, GET_LAYOUT } from "../graphql/queries";
 import { User } from "./useMe";
+import { useEffect } from 'react';
+import { Layout } from './useCourses';
 
 const useGame = (gameId: string, noSubscription = false) => {
     const { data, loading, error, refetch } = useQuery<{ getGame: Game }>(
@@ -10,9 +12,17 @@ const useGame = (gameId: string, noSubscription = false) => {
             variables: { gameId },
             fetchPolicy: 'cache-and-network',
         });
+    const [getLayoutInfo, { data: layout }] = useLazyQuery<{getLayout: Layout}>(GET_LAYOUT);
     const [closeGameMutation] = useMutation(CLOSE_GAME, { refetchQueries: [{ query: GET_GAME, variables: { gameId } }] });
     const [setBeersMutation] = useMutation(SET_BEERS);
     const [setScoreMutation] = useMutation(SET_SCORE);
+
+    useEffect(() => {
+        if (data?.getGame.layout_id) {
+            getLayoutInfo({ variables: { layoutId: data.getGame.layout_id }, fetchPolicy: 'cache-first' });
+        }
+    }, [data?.getGame.layout_id]);
+
     const setBeers = async (playerId: string | number, beers: number) => {
         try {
             await setBeersMutation({ variables: { gameId, playerId, beers }});
@@ -48,6 +58,7 @@ const useGame = (gameId: string, noSubscription = false) => {
         ready: (!loading && !error),
         error,
         loading,
+        layout: layout?.getLayout ?? null,
         setScore,
         closeGame,
         setBeers,
