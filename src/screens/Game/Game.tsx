@@ -18,9 +18,8 @@ export default function Game() {
     const [scorecards, setScorecards] = useState<Scorecard[]>([]);
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const gameId = gameData.gameId;
-    const { data, error, setScore } = useGame(gameId, gameData.noSubscription);
+    const { data, error, setScore, layout } = useGame(gameId, gameData.noSubscription);
     const localSettings = useSettings();
-
     const handleScoreChange = useCallback((playerId: string, selectedRound: number, value: number) => {
         setScore({
             gameId,
@@ -95,6 +94,9 @@ export default function Game() {
     }
     // Apumuuttuja jolla todetaan swiippaus vasemmalle
     let touchPos = [0, 0];
+
+    const holeName = layout?.names?.[selectedRound] ?? data.course;
+
     return (
         <>
             <RoundTabs gameData={data} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
@@ -119,7 +121,9 @@ export default function Game() {
                     <View
                         style={peliStyles.headers}
                     >
-                        <Text numberOfLines={1} testID="GameRata" style={peliStyles.course}>{data.course}</Text>
+                        <Text numberOfLines={1} style={peliStyles.courseName} testID="GameRata">
+                            {holeName}
+                        </Text>
                         <Text testID="GameLayout" style={peliStyles.layout}>
                             {data.layout}, #{selectedRound+1} par {data.pars[selectedRound]}
                         </Text>
@@ -171,7 +175,7 @@ const peliStyles = StyleSheet.create({
         color: 'gray',
         fontSize: 30,
     },
-    course: {
+    courseName: {
         fontSize: 26,
         fontWeight: 'bold',
     },

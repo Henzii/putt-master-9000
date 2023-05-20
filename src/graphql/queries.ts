@@ -1,6 +1,18 @@
 import gql from "graphql-tag";
 import { CORE_USER_INFO, CORE_GAME_INFO, CORE_SCORECARD_INFO } from "./fragments";
 
+export const GET_LAYOUT = gql`
+  query($layoutId: ID!) {
+    getLayout(layoutId: $layoutId) {
+      name
+      id
+      names
+      holes
+      canEdit
+    }
+  }
+`;
+
 export const GET_LAYOUT_STATS = gql`
 query($layoutId: ID!, $playersIds: [ID!]) {
   getLayoutStats(layoutId: $layoutId, playersIds: $playersIds) {
@@ -45,6 +57,7 @@ query ($limit: Int!, $offset: Int!, $search: String, $coordinates: [Float], $max
         pars
         holes
         canEdit
+        names
       }
     }
   }

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 
@@ -99,6 +99,7 @@ export type Coordinates = {
 }
 export type Layout = {
     name: string,
+    names?: (string | null)[]
     pars: number[],
     par: number,
     holes: number,
