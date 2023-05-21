@@ -95,7 +95,7 @@ export default function Game() {
     // Apumuuttuja jolla todetaan swiippaus vasemmalle
     let touchPos = [0, 0];
 
-    const holeName = layout?.names?.[selectedRound] ?? data.course;
+    const holeName = layout?.names?.[selectedRound];
 
     return (
         <>
@@ -118,14 +118,12 @@ export default function Game() {
                         else if (movement < 0 && selectedRound < data.holes - 1) setSelectedRound((v) => v + 1);
                     }}
                 >
-                    <View
-                        style={peliStyles.headers}
-                    >
+                    <View style={peliStyles.headers}>
                         <Text numberOfLines={1} style={peliStyles.courseName} testID="GameRata">
-                            {holeName}
+                            {holeName ?? data.course}
                         </Text>
                         <Text testID="GameLayout" style={peliStyles.layout}>
-                            {data.layout}, #{selectedRound+1} par {data.pars[selectedRound]}
+                            {holeName && `${data.course} / `} {data.layout}, par {data.pars[selectedRound]}
                         </Text>
                     </View>
                     <ScrollView style={{flex: 1}}>
