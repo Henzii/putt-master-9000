@@ -3,6 +3,7 @@ import { View, Text, FlatList, ListRenderItemInfo, StyleSheet, Pressable } from 
 import { Button, Menu, Modal, Portal, Subheading, useTheme } from 'react-native-paper';
 import { Course, Layout, NewLayout } from "../hooks/useCourses";
 import AddLayout from "./AddLayout";
+import SplitContainer from "./ThemedComponents/SplitContainer";
 
 const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
     const [addLayoutModal, setAddLayoutModal] = useState(false);
@@ -78,9 +79,14 @@ const LayoutElement = ({ layout, onSelect, onEdit, canEditCourse }: LayoutElemen
                             <Subheading>{layout.name}</Subheading>
                             <Subheading>Par {layout.par}</Subheading>
                         </View>
+                        <SplitContainer>
                         <Text style={tyyli.pars}>
                             {layout.pars.join(' ')}
                         </Text>
+                        <Text style={tyyli.pars}>
+                           {layout.holes} holes
+                        </Text>
+                        </SplitContainer>
                     </View>
 
                 }

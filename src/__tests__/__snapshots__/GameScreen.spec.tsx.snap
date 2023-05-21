@@ -352,10 +352,9 @@ Array [
           }
           testID="GameLayout"
         >
+           
           MockedLayout1
-          , #
-          1
-           par 
+          , par 
           3
         </Text>
       </View>

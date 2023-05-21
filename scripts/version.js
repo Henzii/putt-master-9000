@@ -48,8 +48,14 @@ if (process.argv[3] === 'commit') {
     writeAppJson(clonedApp);
     (async function runCommands() {
         await exec('git add app.json');
+        await wait(250);
         await exec('git commit -m "update app.json"', (_err, stdout) => console.log(stdout));
+        await wait(250);
         await exec(`git tag ${updatedVersion}`);
     })();
+}
+
+async function wait(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
 }
 
