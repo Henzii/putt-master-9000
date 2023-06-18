@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useQuery } from "@apollo/client";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { Headline, Title } from "react-native-paper";
 import ErrorScreen from "../../components/ErrorScreen";
 import InfoCard from "../../components/InfoCard";
@@ -32,8 +32,7 @@ export default function StatsView({ selectedCourse, selectedUser }: StatsViewPro
     const stats = useStats(selectedCourse.layout.id as string, [selectedUser.id as string], 'cache-and-network', selectedUser.id);
     const { data, loading, error } = useQuery(GET_STATS, {
         variables: {
-            course: selectedCourse.course.name,
-            layout: selectedCourse.layout.name,
+            layoutId: selectedCourse.layout.id,
             userIds: [selectedUser.id],
         }
     });
@@ -46,12 +45,14 @@ export default function StatsView({ selectedCourse, selectedUser }: StatsViewPro
         return stats.getStatsForHole(selectedUser.id as string, selectedHole);
     }, [stats, selectedUser]);
     const statsForHole = getStatsForHole();
-
     if (loading || !data?.getHc) {
         return <Loading />;
     }
     if (error) {
         return <ErrorScreen errorMessage="Error just happened" />;
+    }
+    if (!data.getHc?.length) {
+        return <View><Text> No data...</Text></View>;
     }
     return (
         <Container withScrollView noPadding>
