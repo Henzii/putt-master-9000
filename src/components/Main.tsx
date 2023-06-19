@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { Alert, BackHandler } from 'react-native';
 import ToolBar from './ToolBar';
 
-import { Routes, Route } from 'react-router-native';
+import { Routes, Route, useNavigate } from 'react-router-native';
 
 import Game from '../screens/Game';
 import Frontpage from '../screens/Frontpage';
@@ -17,7 +17,7 @@ import Settings from '../screens/Settings';
 import Stats from '../screens/Stats';
 import registerForPushNotificationsAsync from '../utils/registerForPushNotifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { addNotificationReceivedListener, removeNotificationSubscription } from 'expo-notifications';
+import { NotificationResponse, addNotificationReceivedListener, addNotificationResponseReceivedListener, removeNotificationSubscription } from 'expo-notifications';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../reducers/notificationReducer';
 import FirstTime from '../screens/Frontpage/FirstTime';
@@ -30,9 +30,12 @@ import appInfo from '../../app.json';
 export default function App() {
     const dispatch = useDispatch();
     const backButton = useBackButton();
+    const navi = useNavigate();
     const {data, loading} = useQuery(HANDSHAKE);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const notificListener = useRef<any>();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const notificationResponseListener = useRef<any>();
 
     useEffect(() => {
         if (!loading && data?.handShake?.latestVersion) {
@@ -41,6 +44,13 @@ export default function App() {
             }
         }
     }, [data, loading]);
+
+    const handleNotificationClicked = (event: NotificationResponse) => {
+        const gameId = event.notification.request.content.data?.gameId;
+        if (gameId) {
+            navi(`/game/${gameId}`);
+        }
+    };
 
     useEffect(() => {
         const handleBack = () => {
@@ -57,11 +67,15 @@ export default function App() {
         notificListener.current = addNotificationReceivedListener(notification => {
             dispatch(addNotification(notification.request.content.body || 'Received an empty notification???', 'info'));
         });
+
+        notificationResponseListener.current = addNotificationResponseReceivedListener(handleNotificationClicked);
+
         // Listeneri kännykän back-napille
         BackHandler.addEventListener('hardwareBackPress', handleBack);
         return () => {
             // Poistetaan listenerit
             removeNotificationSubscription(notificListener.current);
+            removeNotificationSubscription(notificationResponseListener.current);
             BackHandler.removeEventListener('hardwareBackPress', handleBack);
         };
     }, []);
