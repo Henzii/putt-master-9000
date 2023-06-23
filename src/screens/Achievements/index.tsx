@@ -10,7 +10,7 @@ import { User } from '../../hooks/useMe';
 import Badge from './Badge';
 
 const Achievements = () => {
-    const {data, loading, error} = useQuery<{getMe?: User}>(GET_ACHIEVEMENTS, {fetchPolicy: 'cache-and-network'});
+    const {data, loading, error} = useQuery<{getMe?: User}>(GET_ACHIEVEMENTS, {fetchPolicy: 'no-cache'});
     if (loading) {
         return <Loading />;
     }
@@ -19,8 +19,8 @@ const Achievements = () => {
     }
 
     return (
-        <Container withScrollView fullScreen>
-            <Headline>Achievements</Headline>
+        <Container withScrollView fullScreen noPadding>
+            <Headline style={{margin: 20, marginTop: 25, marginBottom: 25}}>Achievements</Headline>
             <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
                 {data.getMe.achievements.map((ach, index) => (
                     <Badge
