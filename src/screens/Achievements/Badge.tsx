@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { Paragraph, Title } from 'react-native-paper';
+import { Title } from 'react-native-paper';
 import BADGES from '../../constants/badges';
 import { parseDate } from '../../utils/dates';
 
@@ -24,7 +24,7 @@ const Badge = ({badgeName, date, course, layout}: Props) => {
             )}
             <View style={{ alignSelf: 'flex-start' }}>
                 <Text style={styles.info}>{parseDate(date, 'dd.MM.yyyy')}</Text>
-                <Text style={styles.info}>{`${course}`}</Text>
+                <Text style={styles.info} numberOfLines={2}>{`${course} / ${layout}`}</Text>
                 <Text style={styles.info}>{badge.text}</Text>
             </View>
         </View>
@@ -41,10 +41,11 @@ const styles = StyleSheet.create({
     },
     container: {
         height: 250,
-        width: 160,
+        width: "45%",
+        maxWidth: 200,
         borderRadius: 20,
         backgroundColor: '#fafafa',
-        margin: 10,
+        margin: 5,
         padding: 10,
         elevation: 5,
         display: 'flex',

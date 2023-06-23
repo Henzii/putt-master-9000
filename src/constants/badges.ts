@@ -15,6 +15,12 @@ export default [
         name: 'winAllHoles',
         title: 'Super winner',
         text: 'Nothing but winning',
+    },
+    {
+        name: '0Pars',
+        title: 'No pars',
+        text: 'Zero pars, try harder!',
+        imageSrc: require('../../assets/achievements/0pars.png')
     }
 
 ];
