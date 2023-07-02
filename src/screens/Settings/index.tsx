@@ -1,10 +1,10 @@
-import React from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
-import { Paragraph, Title, TouchableRipple } from 'react-native-paper';
+import React, { useState } from 'react';
+import { Alert, Linking, StyleSheet, Text, View } from 'react-native';
+import { Button, Paragraph, TextInput, Title, TouchableRipple } from 'react-native-paper';
 import Container from '../../components/ThemedComponents/Container';
 import Divider from '../../components/ThemedComponents/Divider';
 import appInfo from '../../../app.json';
-import useMe from '../../hooks/useMe';
+import useMe, { ACCOUNT_TYPE } from '../../hooks/useMe';
 import { useMutation } from '@apollo/client';
 import { DELETE_ACCOUNT } from '../../graphql/mutation';
 import { useNavigate } from 'react-router-native';
@@ -12,11 +12,13 @@ import ChangePassword from './ChangePassword';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../../reducers/notificationReducer';
 import { SingleSwitch } from '../../components/LocalSettings';
+import Spacer from '../../components/ThemedComponents/Spacer';
 
 const Settings = () => {
     const { me, updateSettings, logout } = useMe();
     const navi = useNavigate();
     const [deleteAccountMutation] = useMutation(DELETE_ACCOUNT);
+    const [groupName, setGroupName] = useState(me?.groupName);
     const dispatch = useDispatch();
     const handleBlockFriendsChange = () => {
         updateSettings({ blockFriendRequests: !me?.blockFriendRequests });
@@ -34,11 +36,18 @@ const Settings = () => {
         }
     };
     const handlePasswordChange = async (newPassword: string) => {
-        try {
-            await updateSettings({ password: newPassword });
+        if (await updateSettings({ password: newPassword })) {
             dispatch(addNotification('Password changed!', 'success'));
-        } catch (e) {
-            dispatch(addNotification(`Password NOT changed, error: ${(e as Error).message}`, 'alert'));
+        } else {
+            dispatch(addNotification('Error! Password not changed! :/', 'alert'));
+        }
+    };
+    const handleSetGroup = async () => {
+        if (!groupName) return;
+        if (!(await updateSettings({ groupName }))) {
+            dispatch(addNotification('Error! Group not set :(', 'alert'));
+        } else {
+            dispatch(addNotification('Group name changed to ' + groupName, 'info'));
         }
     };
     const confirmDelete = () => {
@@ -68,9 +77,35 @@ const Settings = () => {
             </View>
             <Divider />
             <View style={tyyli.section}>
-                <Title>App info</Title>
+                <Title>Group</Title>
+                    <Text>Group name links you and your friends on stats page at</Text>
+                    <Button
+                        mode="text"
+                        style={{color: 'blue'}}
+                        onPress={() => Linking.openURL('https://fudisc.henzi.fi')}
+                    >
+                        https://fudisc.henzi.fi
+                    </Button>
+                <TextInput
+                    label="Group name"
+                    value={groupName}
+                    onChangeText={setGroupName}
+                    mode="outlined"
+                    outlineColor={groupName === me?.groupName ? 'green' : undefined}
+                    dense
+                    right={groupName === me?.groupName ? <TextInput.Icon name="check-circle-outline" color="green" /> : undefined}
+                />
+                <Spacer />
+                <Button onPress={handleSetGroup} mode="contained">Save</Button>
+            </View>
+            <Divider />
+            <View style={tyyli.section}>
+                <Title>Info</Title>
                 <InfoText text1="version" text2={appInfo.expo.version} />
                 <InfoText text1="build" text2={appInfo.expo.android.versionCode.toString()} />
+                {(me?.accountType && me.accountType !== ACCOUNT_TYPE.PLEB) && (
+                    <InfoText text1="account type" text2={me?.accountType ?? 'N/A'} />
+                )}
             </View>
             <Divider />
             <View style={tyyli.section}>
