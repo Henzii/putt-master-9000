@@ -405,14 +405,20 @@ Array [
         data={
           Array [
             Object {
+              "__typename": "User",
+              "accountType": "pleb",
               "blockFriendRequests": false,
               "blockStatsSharing": false,
+              "groupName": "abc",
               "id": "userid2",
               "name": "TestUser2",
             },
             Object {
+              "__typename": "User",
+              "accountType": "pleb",
               "blockFriendRequests": false,
               "blockStatsSharing": false,
+              "groupName": "abc",
               "id": "userid3",
               "name": "TestUser3",
             },

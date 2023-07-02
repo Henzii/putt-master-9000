@@ -10,7 +10,8 @@ type SplitContainerProps = {
     bottonMargin?: boolean,
     spaceAround?: boolean,
     style?: VS | VS[]
-    onPress?: () => void
+    onPress?: () => void,
+    testID?: string
 }
 const SplitContainer = ({children, ...props} : SplitContainerProps) => {
     const style = [
@@ -21,7 +22,7 @@ const SplitContainer = ({children, ...props} : SplitContainerProps) => {
         props.style || null,
     ];
     return (
-        <Pressable onPress={props.onPress}>
+        <Pressable onPress={props.onPress} testID={props.testID}>
             <View style={style}>
                 {children}
             </View>

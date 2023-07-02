@@ -1,5 +1,6 @@
 import { GET_GAME } from "../../graphql/queries";
 import { Game, Scorecard } from "../../hooks/useGame";
+import { ACCOUNT_TYPE } from "../../hooks/useMe";
 
 type MockedGame = Game & {
     __typename: string
@@ -31,6 +32,7 @@ export const mockedGame: MockedGame = {
                 name: 'MockerUser1',
                 email: '',
                 achievements: [],
+                accountType: ACCOUNT_TYPE.PLEB,
             },
             hc: 0,
             plusminus: 2,
@@ -45,6 +47,7 @@ export const mockedGame: MockedGame = {
             name: 'MockerUser1',
             email: '',
             achievements: [],
+            accountType: ACCOUNT_TYPE.PLEB
         },
         hc: 0,
         plusminus: 2,
