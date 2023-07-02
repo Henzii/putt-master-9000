@@ -33,7 +33,10 @@ export default [
         result: {
             data: {
                 changeSettings: {
-                    blockFriendRequests: true
+                    blockFriendRequests: true,
+                    blockStatsSharing: false,
+                    groupName: 'abc',
+                    __typename: 'User'
                 }
             }
         }
