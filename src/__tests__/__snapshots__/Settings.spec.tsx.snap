@@ -907,7 +907,7 @@ exports[`<Settings /> testit Renderöityy oikein 1`] = `
               "borderWidth": 0,
               "color": "blue",
               "elevation": 0,
-              "minWidth": 64,
+              "minWidth": "auto",
               "shadowColor": "#000000",
               "shadowOffset": Object {
                 "height": 0,
@@ -977,10 +977,10 @@ exports[`<Settings /> testit Renderöityy oikein 1`] = `
                         "marginVertical": 9,
                         "textAlign": "center",
                       },
-                      undefined,
                       Object {
-                        "textTransform": "uppercase",
+                        "marginHorizontal": 8,
                       },
+                      false,
                       Object {
                         "color": "#6200ee",
                         "fontFamily": "System",
@@ -1315,20 +1315,20 @@ exports[`<Settings /> testit Renderöityy oikein 1`] = `
           collapsable={false}
           style={
             Object {
-              "backgroundColor": "#6200ee",
+              "backgroundColor": "rgba(0, 0, 0, 0.12)",
               "borderColor": "transparent",
               "borderRadius": 4,
               "borderStyle": "solid",
               "borderWidth": 0,
-              "elevation": 2,
+              "elevation": 0,
               "minWidth": 64,
               "shadowColor": "#000000",
               "shadowOffset": Object {
-                "height": 0.75,
+                "height": 0,
                 "width": 0,
               },
-              "shadowOpacity": 0.24,
-              "shadowRadius": 1.5,
+              "shadowOpacity": 0,
+              "shadowRadius": 0,
             }
           }
         >
@@ -1336,7 +1336,7 @@ exports[`<Settings /> testit Renderöityy oikein 1`] = `
             accessibilityRole="button"
             accessibilityState={
               Object {
-                "disabled": false,
+                "disabled": true,
               }
             }
             accessible={true}
@@ -1396,7 +1396,7 @@ exports[`<Settings /> testit Renderöityy oikein 1`] = `
                         "textTransform": "uppercase",
                       },
                       Object {
-                        "color": "#ffffff",
+                        "color": "rgba(0, 0, 0, 0.32)",
                         "fontFamily": "System",
                         "fontWeight": "500",
                       },

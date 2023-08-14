@@ -29,45 +29,6 @@ Array [
         ]
       }
     >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#000000",
-              "fontFamily": "System",
-              "fontWeight": "400",
-            },
-            Object {
-              "textAlign": "left",
-            },
-            Array [
-              Object {
-                "textAlign": "left",
-              },
-              Object {
-                "color": "rgba(0, 0, 0, 0.87)",
-                "fontFamily": "System",
-                "fontWeight": "400",
-                "writingDirection": "ltr",
-              },
-              Array [
-                Object {
-                  "fontSize": 24,
-                  "letterSpacing": 0,
-                  "lineHeight": 32,
-                  "marginVertical": 2,
-                },
-                Object {
-                  "padding": 10,
-                  "textAlign": "center",
-                },
-              ],
-            ],
-          ]
-        }
-      >
-        Friends
-      </Text>
       <View
         accessible={true}
         collapsable={false}
@@ -400,8 +361,6 @@ Array [
         </View>
       </View>
       <RCTScrollView
-        ItemSeparatorComponent={[Function]}
-        ListFooterComponent={[Function]}
         data={
           Array [
             Object {
@@ -440,8 +399,6 @@ Array [
         stickyHeaderIndices={Array []}
         style={
           Object {
-            "borderColor": "lightgray",
-            "borderTopWidth": 1,
             "marginTop": 10,
           }
         }
@@ -471,10 +428,15 @@ Array [
                   Array [
                     Object {
                       "alignItems": "center",
+                      "borderRadius": 15,
+                      "borderWidth": 1,
                       "display": "flex",
+                      "elevation": 5,
                       "flexDirection": "row",
                       "justifyContent": "space-between",
-                      "padding": 22,
+                      "marginHorizontal": 10,
+                      "marginVertical": 5,
+                      "padding": 8,
                     },
                     Object {
                       "backgroundColor": "#ffffff",
@@ -492,6 +454,60 @@ Array [
                     }
                   }
                 >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#89ab9f",
+                          "borderRadius": 20,
+                          "height": 40,
+                          "width": 40,
+                        },
+                        Object {
+                          "alignItems": "center",
+                          "justifyContent": "center",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      accessibilityElementsHidden={true}
+                      allowFontScaling={false}
+                      importantForAccessibility="no-hide-descendants"
+                      pointerEvents="none"
+                      selectable={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "rgba(0, 0, 0, .54)",
+                            "fontSize": 24,
+                          },
+                          Array [
+                            Object {
+                              "lineHeight": 24,
+                              "transform": Array [
+                                Object {
+                                  "scaleX": 1,
+                                },
+                              ],
+                            },
+                            Object {
+                              "backgroundColor": "transparent",
+                            },
+                          ],
+                          Object {
+                            "fontFamily": "material-community",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      󰀄
+                    </Text>
+                  </View>
                   <Text
                     style={
                       Array [
@@ -503,26 +519,10 @@ Array [
                         Object {
                           "textAlign": "left",
                         },
-                        Array [
-                          Object {
-                            "textAlign": "left",
-                          },
-                          Object {
-                            "color": "rgba(0, 0, 0, 0.87)",
-                            "fontFamily": "System",
-                            "fontWeight": "400",
-                            "writingDirection": "ltr",
-                          },
-                          Array [
-                            Object {
-                              "fontSize": 16,
-                              "letterSpacing": 0.5,
-                              "lineHeight": 24,
-                              "marginVertical": 2,
-                            },
-                            undefined,
-                          ],
-                        ],
+                        Object {
+                          "fontSize": 18,
+                          "marginLeft": 5,
+                        },
                       ]
                     }
                   >
@@ -571,7 +571,9 @@ Array [
                           "width": 36,
                         },
                         undefined,
-                        undefined,
+                        Object {
+                          "backgroundColor": "#f6f6f6",
+                        },
                       ],
                     ]
                   }
@@ -617,15 +619,6 @@ Array [
                 </View>
               </View>
             </View>
-            <View
-              style={
-                Object {
-                  "borderColor": "lightgray",
-                  "borderTopWidth": 1,
-                  "minHeight": 1,
-                }
-              }
-            />
           </View>
           <View
             onLayout={[Function]}
@@ -650,10 +643,15 @@ Array [
                   Array [
                     Object {
                       "alignItems": "center",
+                      "borderRadius": 15,
+                      "borderWidth": 1,
                       "display": "flex",
+                      "elevation": 5,
                       "flexDirection": "row",
                       "justifyContent": "space-between",
-                      "padding": 22,
+                      "marginHorizontal": 10,
+                      "marginVertical": 5,
+                      "padding": 8,
                     },
                     Object {
                       "backgroundColor": "#ffffff",
@@ -671,6 +669,60 @@ Array [
                     }
                   }
                 >
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "#89ab9f",
+                          "borderRadius": 20,
+                          "height": 40,
+                          "width": 40,
+                        },
+                        Object {
+                          "alignItems": "center",
+                          "justifyContent": "center",
+                        },
+                        Object {},
+                      ]
+                    }
+                  >
+                    <Text
+                      accessibilityElementsHidden={true}
+                      allowFontScaling={false}
+                      importantForAccessibility="no-hide-descendants"
+                      pointerEvents="none"
+                      selectable={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "rgba(0, 0, 0, .54)",
+                            "fontSize": 24,
+                          },
+                          Array [
+                            Object {
+                              "lineHeight": 24,
+                              "transform": Array [
+                                Object {
+                                  "scaleX": 1,
+                                },
+                              ],
+                            },
+                            Object {
+                              "backgroundColor": "transparent",
+                            },
+                          ],
+                          Object {
+                            "fontFamily": "material-community",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      󰀄
+                    </Text>
+                  </View>
                   <Text
                     style={
                       Array [
@@ -682,26 +734,10 @@ Array [
                         Object {
                           "textAlign": "left",
                         },
-                        Array [
-                          Object {
-                            "textAlign": "left",
-                          },
-                          Object {
-                            "color": "rgba(0, 0, 0, 0.87)",
-                            "fontFamily": "System",
-                            "fontWeight": "400",
-                            "writingDirection": "ltr",
-                          },
-                          Array [
-                            Object {
-                              "fontSize": 16,
-                              "letterSpacing": 0.5,
-                              "lineHeight": 24,
-                              "marginVertical": 2,
-                            },
-                            undefined,
-                          ],
-                        ],
+                        Object {
+                          "fontSize": 18,
+                          "marginLeft": 5,
+                        },
                       ]
                     }
                   >
@@ -750,7 +786,9 @@ Array [
                           "width": 36,
                         },
                         undefined,
-                        undefined,
+                        Object {
+                          "backgroundColor": "#f6f6f6",
+                        },
                       ],
                     ]
                   }
@@ -796,19 +834,6 @@ Array [
                 </View>
               </View>
             </View>
-          </View>
-          <View
-            onLayout={[Function]}
-          >
-            <View
-              style={
-                Object {
-                  "borderColor": "lightgray",
-                  "borderTopWidth": 1,
-                  "minHeight": 1,
-                }
-              }
-            />
           </View>
         </View>
       </RCTScrollView>
