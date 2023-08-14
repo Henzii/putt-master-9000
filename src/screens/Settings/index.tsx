@@ -43,11 +43,14 @@ const Settings = () => {
         }
     };
     const handleSetGroup = async () => {
-        if (!groupName) return;
-        if (!(await updateSettings({ groupName }))) {
+        if (!(await updateSettings({ groupName: groupName }))) {
             dispatch(addNotification('Error! Group not set :(', 'alert'));
         } else {
-            dispatch(addNotification('Group name changed to ' + groupName, 'info'));
+            if (!groupName) {
+                dispatch(addNotification('Group name cleared', 'warning'));
+            } else {
+                dispatch(addNotification('Group name changed to ' + groupName, 'info'));
+            }
         }
     };
     const confirmDelete = () => {
@@ -65,6 +68,9 @@ const Settings = () => {
             ]
         );
     };
+
+    const isSavedGroupName = me?.groupName === groupName;
+
     return (
         <Container noPadding withScrollView noFlex>
             <Title style={{ marginTop: 10, marginLeft: 15 }}>Friends</Title>
@@ -82,6 +88,8 @@ const Settings = () => {
                     <Button
                         mode="text"
                         style={{color: 'blue'}}
+                        compact
+                        uppercase={false}
                         onPress={() => Linking.openURL('https://fudisc.henzi.fi')}
                     >
                         https://fudisc.henzi.fi
@@ -91,12 +99,12 @@ const Settings = () => {
                     value={groupName}
                     onChangeText={setGroupName}
                     mode="outlined"
-                    outlineColor={groupName === me?.groupName ? 'green' : undefined}
+                    outlineColor={isSavedGroupName ? 'green' : undefined}
                     dense
-                    right={groupName === me?.groupName ? <TextInput.Icon name="check-circle-outline" color="green" /> : undefined}
+                    right={isSavedGroupName && groupName !== '' ? <TextInput.Icon name="check-circle-outline" color="green" /> : undefined}
                 />
                 <Spacer />
-                <Button onPress={handleSetGroup} mode="contained">Save</Button>
+                <Button onPress={handleSetGroup} mode="contained" disabled={isSavedGroupName}>Save</Button>
             </View>
             <Divider />
             <View style={tyyli.section}>
