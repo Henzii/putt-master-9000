@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import React, { useState } from 'react';
 import { Alert, FlatList, Pressable, StyleSheet, View } from "react-native";
-import { Button, Checkbox, Headline, IconButton, Modal, Portal, Subheading, useTheme } from 'react-native-paper';
+import { Avatar, Button, Checkbox, IconButton, Modal, Portal, Text, useTheme } from 'react-native-paper';
 import { REMOVE_FRIEND } from '../graphql/mutation';
 import useMe, { User } from '../hooks/useMe';
 import AddFriend from './AddFriend';
@@ -73,7 +73,6 @@ const FriendsList = (props: FriendListProps) => {
                     <AddFriend onCancel={() => setAddFriendModal(false)} />
                 </Modal>
             </Portal>
-            <Headline style={tyyli.otsikko}>Friends</Headline>
             <SplitContainer spaceAround>
                 <Button icon="plus" onPress={() => setAddFriendModal(true)}>Add friend</Button>
                 {!props.multiSelect && <Button icon="plus" onPress={() => navi("/signUp/createFriend")}>Create friend</Button>}
@@ -91,8 +90,6 @@ const FriendsList = (props: FriendListProps) => {
                         showCheckBox={props.multiSelect}
                     />
                 )}
-                ItemSeparatorComponent={Separaattori}
-                ListFooterComponent={Separaattori}
             />
             {props.multiSelect && <Button style={tyyli.button} mode="contained" onPress={handleOkClick}>OK</Button>}
         </Container>
@@ -119,34 +116,43 @@ const SingleFriend = ({ friend, onClick, onDelete, showRemoveButton = true, show
         <Pressable onPress={handleFriendClick}>
             <View style={[tyyli.singleFriend, { backgroundColor: colors.surface }, (selected && tyyli.selectedBackground)]}>
                 <View style={tyyli.singleFriendName}>
-                    {showCheckBox && <Checkbox status={selected ? 'checked' : 'unchecked'} />}
-                    <Subheading>{friend.name}</Subheading>
+                    <Avatar.Icon icon={selected ? 'account-tie' : 'account'} size={40} style={{backgroundColor: selected ? colors.surface : '#89ab9f'}} />
+                    <Text style={tyyli.singleFriendText}>{friend.name}</Text>
                 </View>
-                {showRemoveButton && <IconButton color="rgb(223,50,50)" icon="trash-can" onPress={handleDelete} />}
+                {showRemoveButton && <IconButton color="rgb(223,50,50)" icon="trash-can" onPress={handleDelete} style={{backgroundColor: colors.background}} />}
+                {showCheckBox && <Checkbox status={selected ? 'checked' : 'unchecked'} />}
             </View>
         </Pressable>
     );
 };
-const Separaattori = () => (<View style={tyyli.separator} />);
 
 const tyyli = StyleSheet.create({
     main: {
         width: '100%',
     },
     selectedBackground: {
-        backgroundColor: '#50857250',
+        backgroundColor: '#89ab9f',
     },
     singleFriendName: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
     },
+    singleFriendText: {
+        fontSize: 18,
+        marginLeft: 5,
+    },
     singleFriend: {
         display: 'flex',
         justifyContent: 'space-between',
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 22,
+        borderRadius: 15,
+        borderWidth: 1,
+        elevation: 5,
+        padding: 8,
+        marginHorizontal: 10,
+        marginVertical: 5,
     },
     button: {
         margin: 10,
@@ -157,8 +163,6 @@ const tyyli = StyleSheet.create({
         borderColor: 'lightgray',
     },
     lista: {
-        borderTopWidth: 1,
-        borderColor: 'lightgray',
         marginTop: 10,
     },
     otsikko: {

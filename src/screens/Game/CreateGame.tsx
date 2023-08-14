@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, Pressable } from "react-native";
-import { Button, Headline} from 'react-native-paper';
+import { StyleSheet, View, Text, ViewStyle, StyleProp } from "react-native";
+import { Button, Headline, IconButton} from 'react-native-paper';
 import { Course, Layout } from '../../hooks/useCourses';
 import useMe, { User } from '../../hooks/useMe';
 import FriendsList from '../../components/FriendsList';
@@ -127,7 +127,7 @@ const CreateGame = (props: CreateGameProps) => {
 
             <NumberedTitle number='2' title='Select Players' />
             <Spacer />
-            <View style={tableStyle.playersTable}>
+            <View style={tableStyle.table}>
                 <Text style={tableStyle.headerName}>Name</Text>
                 <Text style={tableStyle.headerRest}>Games</Text>
                 <Text style={tableStyle.headerRest}>Best</Text>
@@ -145,6 +145,7 @@ const CreateGame = (props: CreateGameProps) => {
                         best={layout?.par && best ? best - layout.par : ''}
                         even={index % 2 === 0}
                         onRemove={player.id !== me?.me?.id ? () => handleRemoveFriend(player.id) : null}
+                        additionalStyle={tableStyle.playersTable}
                     />;
                 })}
             </>
@@ -168,16 +169,25 @@ const CreateGame = (props: CreateGameProps) => {
         </Container>
     );
 };
-const TableItem = ({name, games, best, hc, even, onRemove}: {even: boolean, games: number, name: string, best: number | string, hc: number | string, onRemove: (() => void) | null}) => {
+
+type TableItemProps = {
+    name: string,
+    even: boolean,
+    games: number,
+    best: number | string,
+    hc: number | string,
+    additionalStyle?: StyleProp<ViewStyle>
+    onRemove: (() => void) | null
+}
+
+const TableItem = ({name, games, best, hc, even, onRemove, additionalStyle}: TableItemProps) => {
     return (
-        <View style={[tableStyle.playersTable, even && tableStyle.background]}>
+        <View style={[tableStyle.table, additionalStyle, even && tableStyle.background]}>
                 <Text style={tableStyle.listName}>{name}</Text>
                 <Text style={tableStyle.listRest}>{games}</Text>
                 <Text style={tableStyle.listRest}>{best}</Text>
                 <Text style={tableStyle.listRest}>{hc}</Text>
-                <Pressable onPress={onRemove} style={{flex: 1}}>
-                    <Text>{onRemove ? 'X' : ''}</Text>
-                </Pressable>
+                <IconButton icon="trash-can" color="red" size={15} onPress={onRemove ? onRemove : undefined} style={{margin: 0, padding: 0, marginRight: 12,}} disabled={!onRemove} />
         </View>
     );
 };
@@ -187,6 +197,15 @@ const tableStyle = StyleSheet.create({
         backgroundColor: '#f5f5f5'
     },
     playersTable: {
+        borderWidth: 1,
+        borderColor: "lightgray",
+        borderRadius: 12,
+        elevation: 4,
+        backgroundColor: '#f0f0f0',
+        minHeight: 30,
+        alignItems: 'center',
+    },
+    table: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -207,11 +226,11 @@ const tableStyle = StyleSheet.create({
     },
     listName: {
         flex: 5,
-        fontSize: 14,
+        fontSize: 15,
     },
     listRest: {
         flex: 2,
-        fontSize: 12,
+        fontSize: 13,
         textAlign: 'center',
     }
 });
