@@ -11,6 +11,7 @@ import Container from './ThemedComponents/Container';
 import { GET_ME_WITH_FRIENDS } from '../graphql/queries';
 import SplitContainer from './ThemedComponents/SplitContainer';
 import { useNavigate } from 'react-router-native';
+import { InitialsAndColors, initialsAndColorGenerator } from '../utils/initialsAndColorGenerator';
 
 
 type FriendListProps = {
@@ -62,6 +63,9 @@ const FriendsList = (props: FriendListProps) => {
     if (error) {
         return <ErrorScreen errorMessage={error.message} />;
     }
+
+    const initialsAndColors = initialsAndColorGenerator(me?.friends ?? []);
+
     return (
         <Container noPadding>
             <Portal>
@@ -88,6 +92,7 @@ const FriendsList = (props: FriendListProps) => {
                         selected={selectedFriends.find(f => f.id === item.id) ? true : false}
                         showRemoveButton={!props.hideRemoveButton}
                         showCheckBox={props.multiSelect}
+                        initialsAndColors={initialsAndColors}
                     />
                 )}
             />
@@ -103,8 +108,9 @@ type SingleFriendProps = {
     showRemoveButton?: boolean,
     showCheckBox?: boolean,
     selected?: boolean,
+    initialsAndColors: InitialsAndColors
 }
-const SingleFriend = ({ friend, onClick, onDelete, showRemoveButton = true, showCheckBox = false, selected = false }: SingleFriendProps) => {
+const SingleFriend = ({ friend, onClick, onDelete, showRemoveButton = true, showCheckBox = false, selected = false, initialsAndColors }: SingleFriendProps) => {
     const { colors } = useTheme();
     const handleFriendClick = () => {
         if (onClick) onClick(friend);
@@ -112,11 +118,18 @@ const SingleFriend = ({ friend, onClick, onDelete, showRemoveButton = true, show
     const handleDelete = () => {
         if (onDelete) onDelete(friend.id as string, friend.name);
     };
+    const {label: avatarLabel, color: avatarColor} = initialsAndColors[friend.id];
     return (
         <Pressable onPress={handleFriendClick}>
             <View style={[tyyli.singleFriend, { backgroundColor: colors.surface }, (selected && tyyli.selectedBackground)]}>
                 <View style={tyyli.singleFriendName}>
-                    <Avatar.Icon icon={selected ? 'account-tie' : 'account'} size={40} style={{backgroundColor: selected ? colors.surface : '#89ab9f'}} />
+                    <Avatar.Text
+                        label={avatarLabel}
+                        size={40}
+                        labelStyle={{fontSize: avatarLabel.length > 1 ? 18 : 20}}
+                        style={{backgroundColor: avatarColor}}
+                    />
+                    {/*<Avatar.Icon icon={selected ? 'account-tie' : 'account'} size={40} style={{backgroundColor: selected ? colors.surface : '#89ab9f'}} />*/}
                     <Text style={tyyli.singleFriendText}>{friend.name}</Text>
                 </View>
                 {showRemoveButton && <IconButton color="rgb(223,50,50)" icon="trash-can" onPress={handleDelete} style={{backgroundColor: colors.background}} />}
@@ -140,7 +153,7 @@ const tyyli = StyleSheet.create({
     },
     singleFriendText: {
         fontSize: 18,
-        marginLeft: 5,
+        marginLeft: 8,
     },
     singleFriend: {
         display: 'flex',

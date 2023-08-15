@@ -458,7 +458,7 @@ Array [
                     style={
                       Array [
                         Object {
-                          "backgroundColor": "#89ab9f",
+                          "backgroundColor": "#35848d",
                           "borderRadius": 20,
                           "height": 40,
                           "width": 40,
@@ -472,40 +472,35 @@ Array [
                     }
                   >
                     <Text
-                      accessibilityElementsHidden={true}
-                      allowFontScaling={false}
-                      importantForAccessibility="no-hide-descendants"
-                      pointerEvents="none"
-                      selectable={false}
+                      numberOfLines={1}
                       style={
                         Array [
                           Object {
-                            "color": "rgba(0, 0, 0, .54)",
-                            "fontSize": 24,
+                            "color": "#000000",
+                            "fontFamily": "System",
+                            "fontWeight": "400",
+                          },
+                          Object {
+                            "textAlign": "left",
                           },
                           Array [
                             Object {
-                              "lineHeight": 24,
-                              "transform": Array [
-                                Object {
-                                  "scaleX": 1,
-                                },
-                              ],
+                              "textAlign": "center",
+                              "textAlignVertical": "center",
                             },
                             Object {
-                              "backgroundColor": "transparent",
+                              "color": "#ffffff",
+                              "fontSize": 20,
+                              "lineHeight": 20,
+                            },
+                            Object {
+                              "fontSize": 20,
                             },
                           ],
-                          Object {
-                            "fontFamily": "material-community",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          Object {},
                         ]
                       }
                     >
-                      󰀄
+                      T
                     </Text>
                   </View>
                   <Text
@@ -521,7 +516,7 @@ Array [
                         },
                         Object {
                           "fontSize": 18,
-                          "marginLeft": 5,
+                          "marginLeft": 8,
                         },
                       ]
                     }
@@ -673,7 +668,7 @@ Array [
                     style={
                       Array [
                         Object {
-                          "backgroundColor": "#89ab9f",
+                          "backgroundColor": "#36848d",
                           "borderRadius": 20,
                           "height": 40,
                           "width": 40,
@@ -687,40 +682,35 @@ Array [
                     }
                   >
                     <Text
-                      accessibilityElementsHidden={true}
-                      allowFontScaling={false}
-                      importantForAccessibility="no-hide-descendants"
-                      pointerEvents="none"
-                      selectable={false}
+                      numberOfLines={1}
                       style={
                         Array [
                           Object {
-                            "color": "rgba(0, 0, 0, .54)",
-                            "fontSize": 24,
+                            "color": "#000000",
+                            "fontFamily": "System",
+                            "fontWeight": "400",
+                          },
+                          Object {
+                            "textAlign": "left",
                           },
                           Array [
                             Object {
-                              "lineHeight": 24,
-                              "transform": Array [
-                                Object {
-                                  "scaleX": 1,
-                                },
-                              ],
+                              "textAlign": "center",
+                              "textAlignVertical": "center",
                             },
                             Object {
-                              "backgroundColor": "transparent",
+                              "color": "#ffffff",
+                              "fontSize": 20,
+                              "lineHeight": 20,
+                            },
+                            Object {
+                              "fontSize": 18,
                             },
                           ],
-                          Object {
-                            "fontFamily": "material-community",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          Object {},
                         ]
                       }
                     >
-                      󰀄
+                      TE
                     </Text>
                   </View>
                   <Text
@@ -736,7 +726,7 @@ Array [
                         },
                         Object {
                           "fontSize": 18,
-                          "marginLeft": 5,
+                          "marginLeft": 8,
                         },
                       ]
                     }

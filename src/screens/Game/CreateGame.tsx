@@ -132,7 +132,7 @@ const CreateGame = (props: CreateGameProps) => {
                 <Text style={tableStyle.headerRest}>Games</Text>
                 <Text style={tableStyle.headerRest}>Best</Text>
                 <Text style={tableStyle.headerRest}>HC</Text>
-                <Text style={{flex: 1}}></Text>
+                <Text style={{flex: 1.2}}></Text>
             </View>
             <>
                 {newGameData.players.map((player, index) => {
@@ -199,7 +199,7 @@ const tableStyle = StyleSheet.create({
     playersTable: {
         borderWidth: 1,
         borderColor: "lightgray",
-        borderRadius: 12,
+        borderRadius: 10,
         elevation: 4,
         backgroundColor: '#f0f0f0',
         minHeight: 30,
