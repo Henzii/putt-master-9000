@@ -1501,7 +1501,7 @@ exports[`<Settings /> testit Renderöityy oikein 1`] = `
               }
             }
           >
-            5.2.1
+            5.2.2
           </Text>
         </View>
         <View
@@ -1528,7 +1528,7 @@ exports[`<Settings /> testit Renderöityy oikein 1`] = `
               }
             }
           >
-            70
+            71
           </Text>
         </View>
       </View>
