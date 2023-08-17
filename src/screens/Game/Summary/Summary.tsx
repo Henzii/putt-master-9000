@@ -14,6 +14,7 @@ import Container from '../../../components/ThemedComponents/Container';
 import { Button, Headline } from 'react-native-paper';
 import { parseDate } from '../../../utils/dates';
 import { addNotification } from '../../../reducers/notificationReducer';
+import { theme } from '../../../utils/theme';
 
 const Summary = () => {
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
@@ -74,15 +75,19 @@ const Summary = () => {
     return (
         <ScrollView>
             <View>
-                <Headline style={tyylit.title}>{data.course}</Headline>
-                <Headline style={tyylit.subTitle}>{data.layout}</Headline>
-                <View style={tyylit.container}>
-                    <TableNames scorecards={sortedScorecards} />
-                    <ScrollView horizontal>
-                        <TableScores scorecards={sortedScorecards} pars={data.pars} showBeers={!settings.getBoolValue('Prohibition')} />
-                    </ScrollView>
-                </View>
-                <Headline style={tyylit.date}>{parseDate(data.startTime)}</Headline>
+                <ScreenCaptureWrapper withoutScrollView={!captureScreen}>
+                    <View ref={viewRef} collapsable={false} style={[captureScreen && tyylit.captureContainer]}>
+                        <Headline style={tyylit.title}>{data.course}</Headline>
+                        <Headline style={tyylit.subTitle}>{data.layout}</Headline>
+                        <View style={tyylit.container}>
+                            <TableNames scorecards={sortedScorecards} />
+                            <ScreenCaptureWrapper withoutScrollView={captureScreen}>
+                                <TableScores scorecards={sortedScorecards} pars={data.pars} showBeers={!settings.getBoolValue('Prohibition')} />
+                            </ScreenCaptureWrapper>
+                        </View>
+                        <Headline style={tyylit.date}>{parseDate(data.startTime)}</Headline>
+                    </View>
+                </ScreenCaptureWrapper>
             </View>
             <Container fullHeight>
                 <Button icon={'share-variant'} onPress={() => setCaptureScreen(true)}>Share image</Button>
@@ -94,10 +99,23 @@ const Summary = () => {
     );
 };
 
+type ScreenCaptureWrapperProps = {
+    withoutScrollView: boolean
+    children: React.ReactNode
+}
+
+const ScreenCaptureWrapper = (props: ScreenCaptureWrapperProps) =>
+    props.withoutScrollView ? <View>{props.children}</View> : <ScrollView horizontal>{props.children}</ScrollView>;
+
 const tyylit = StyleSheet.create({
     container: {
         display: 'flex',
         flexDirection: 'row',
+    },
+    captureContainer: {
+        flex: 1,
+        paddingRight: 80,
+        backgroundColor: theme.colors.background,
     },
     header: {
         width: '100%',

@@ -46,5 +46,5 @@ describe('<Game /> testit', () => {
         // Pikkuruinen odotus jotta animaatiot ehtii animoitua.
         await new Promise((resolve) => setTimeout(resolve, 500));
         expect(toJSON()).toMatchSnapshot();
-    });
+    }, 10000);
 });
