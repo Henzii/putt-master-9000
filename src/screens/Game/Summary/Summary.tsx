@@ -27,8 +27,9 @@ const Summary = () => {
 
     useEffect(() => {
         if (captureScreen) {
-            handleShareScorecard();
-            setCaptureScreen(false);
+            handleShareScorecard().finally(() => {
+                setCaptureScreen(false);
+            });
         }
     }, [captureScreen]);
     if (!ready || !data) {
