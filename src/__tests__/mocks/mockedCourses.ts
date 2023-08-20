@@ -1,3 +1,5 @@
+import { Course } from "../../hooks/useCourses";
+
 export default [
     {
         id: 'courseid1',
@@ -40,4 +42,4 @@ export default [
             },
         ]
     },
-];
+] as Course[];
