@@ -1,4 +1,10 @@
-const user1 = {
+import { ACCOUNT_TYPE, User } from "../../hooks/useMe";
+
+type MockedUser = User & {
+    __typename: string
+}
+
+const user1: MockedUser = {
     __typename: 'User',
     name: 'TestUser1',
     id: 'userid1',
@@ -6,11 +12,11 @@ const user1 = {
     blockFriendRequests: false,
     blockStatsSharing: false,
     achievements: [],
-    accountType: 'pleb',
+    accountType: ACCOUNT_TYPE.PLEB,
     groupName: 'abc',
 };
 
-const user2 = {
+const user2: MockedUser = {
     __typename: 'User',
     name: 'TestUser2',
     id: 'userid2',
@@ -18,11 +24,11 @@ const user2 = {
     blockFriendRequests: false,
     blockStatsSharing: false,
     achievements: [],
-    accountType: 'pleb',
+    accountType: ACCOUNT_TYPE.PLEB,
     groupName: 'abc',
 };
 
-const user3 = {
+const user3: MockedUser = {
     __typename: 'User',
     name: 'TestUser3',
     id: 'userid3',
@@ -30,7 +36,7 @@ const user3 = {
     blockFriendRequests: false,
     blockStatsSharing: false,
     achievements: [],
-    accountType: 'pleb',
+    accountType: ACCOUNT_TYPE.PLEB,
     groupName: 'abc',
 };
 
