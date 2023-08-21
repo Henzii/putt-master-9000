@@ -52,7 +52,6 @@
     "@types/jest": "^27.4.0",
     "@types/react": "~18.2.14",
     "@types/react-dom": "~18.0.10",
-    "@types/react-native": "^0.70.6",
     "@types/react-native-table-component": "^1.2.3",
     "@types/react-test-renderer": "^17.0.1",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
