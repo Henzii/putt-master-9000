@@ -49,7 +49,7 @@ if (process.argv[3] === 'commit') {
     (async function runCommands() {
         await exec('git add app.json');
         await wait(250);
-        await exec('git commit -m "update app.json"', (_err, stdout) => console.log(stdout));
+        await exec(`git commit -m "version ${updatedVersion}`, (_err, stdout) => console.log(stdout));
         await wait(250);
         await exec(`git tag ${updatedVersion}`);
     })();
