@@ -10,9 +10,14 @@ import { ActivityIndicator, useTheme } from 'react-native-paper';
 type PlayerArgs = {
     player: Scorecard,
     selectedRound: number,
-    setScore: (playerId: string, selectedRound: number, value: number) => void,
+    setScore: (playerId: string, selectedRound: number, value: number, playerName?: string) => void,
     par: number,
     layoutId: string
+}
+
+type PendingState = {
+    selectedRound: number,
+    pendingScore: number
 }
 /**
  *  ### Pejaala
@@ -23,7 +28,7 @@ type PlayerArgs = {
  *  @param setScore callback tuloksen asettamiselle. Saa parateriksi tuloksen
  */
 const Player = React.memo(function Scorecard ({ player, selectedRound, setScore, par, layoutId }: PlayerArgs) {
-    const [pendingButton, setPendingButton] = useState<number | undefined>();
+    const [pendingButton, setPendingButton] = useState<PendingState>();
     const listRef = useRef<FlatList>(null);
     const [viewWidth, setViewWidth] = useState<number>(0);
     const theme = useTheme();
@@ -34,6 +39,7 @@ const Player = React.memo(function Scorecard ({ player, selectedRound, setScore,
     useEffect(() => {
         if (pendingButton) setPendingButton(undefined);
     }, [player]);
+
     // Valittu rata vaihtuu, scrollataan alkuun
     useEffect(() => {
         listRef.current?.scrollToIndex({ index: 0 });
@@ -41,7 +47,7 @@ const Player = React.memo(function Scorecard ({ player, selectedRound, setScore,
     const settings = useSettings();
     const handleButtonClick = (score: number) => {
         setScore(player.user.id as string, selectedRound, score);
-        setPendingButton(score);
+        setPendingButton({selectedRound, pendingScore: score});
     };
     const handleOnLayout = (event: LayoutChangeEvent) => {
         if (!viewWidth) setViewWidth(event.nativeEvent.layout.width);
@@ -66,7 +72,7 @@ const Player = React.memo(function Scorecard ({ player, selectedRound, setScore,
                                 onClick={handleButtonClick}
                                 par={!player.scores[selectedRound] ? par : undefined}
                                 selected={(player.scores[selectedRound] - 1 === index)}
-                                pending={(pendingButton === item)}
+                                pending={(pendingButton?.pendingScore === item && pendingButton?.selectedRound === selectedRound)}
                             />;
                         }}
                         horizontal

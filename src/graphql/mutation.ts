@@ -61,6 +61,9 @@ export const SET_SCORE = gql`
     mutation($gameId: ID!, $playerId: ID!, $hole: Int!, $value: Int!) {
         setScore(gameId: $gameId, playerId: $playerId, hole: $hole, value: $value) {
             scorecards {
+                user {
+                    id
+                }
                 scores
             }
         }

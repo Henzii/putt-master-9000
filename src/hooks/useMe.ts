@@ -11,7 +11,7 @@ const useMe = (getFriends = false) => {
     const query = getFriends ? GET_ME_WITH_FRIENDS : GET_ME;
 
     const { data, loading, client, error } = useQuery<RawUser>(query, { fetchPolicy: 'cache-and-network' });
-    const [loginMutation] = useMutation(LOGIN, { refetchQueries: [{ query: GET_ME }, { query: GET_ME_WITH_FRIENDS }] });
+    const [loginMutation] = useMutation(LOGIN, { refetchQueries: [{ query: GET_ME }, { query: GET_ME_WITH_FRIENDS }], errorPolicy: 'all'});
     const [updateSettingsMutation] = useMutation(UPDATE_MY_SETTINGS, {
         // Päivitetään vastaus/uudet asetukset välimuistiin
         update: (cache, result) => {
@@ -35,7 +35,9 @@ const useMe = (getFriends = false) => {
         } else if (!data?.getMe && loggedIn && !loading) {
             setLoggedIn(false);
         }
+
     }, [data]);
+
     const login = async (username: string, password: string) => {
         const pushToken = await AsyncStorage.getItem('pushToken');
         const result = await loginMutation({ variables: { user: username, password: password, pushToken } });

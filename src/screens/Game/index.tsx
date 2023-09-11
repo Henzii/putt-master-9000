@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-native';
 import { ADD_PLAYERS_TO_GAME, CREATE_GAME } from '../../graphql/mutation';
 import { GET_OLD_GAMES } from '../../graphql/queries';
-import { gameData, newGame, setNoSubscription, unloadGame } from '../../reducers/gameDataReducer';
+import { gameData, newGame, unloadGame } from '../../reducers/gameDataReducer';
 import { addNotification } from '../../reducers/notificationReducer';
 import { RootState } from '../../utils/store';
 import Beers from './Beers';
@@ -37,7 +37,7 @@ export default function GameContainer() {
     useSubscription(
         (data) => {
             const response = data?.data?.scorecardUpdated;
-            if (!response) return;
+            if (!response || response.updaterId === me?.id) return;
             if (response.updatedScorecardPlayerId) {
                 updateScorecard(response.game, response.updatedScorecardPlayerId, client);
             } else {
@@ -50,7 +50,6 @@ export default function GameContainer() {
         (error) => {
             // eslint-disable-next-line no-console
             console.log(error);
-            dispatch(setNoSubscription());
             dispatch(addNotification('Subscription failed. The game data is not updated in real time.', "warning"));
         },
         { query: GAME_SUBSCRIPTION, variables: { gameId: gameId }, dependency: gameId}

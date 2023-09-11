@@ -4,9 +4,12 @@ import { GET_GAME, GET_LAYOUT } from "../graphql/queries";
 import { User } from "./useMe";
 import { useEffect } from 'react';
 import { Layout } from './useCourses';
+import { cacheUpdateUserScores } from '../utils/gameCahcheUpdates';
+import { useDispatch } from 'react-redux';
+import { addNotification } from '../reducers/notificationReducer';
 
-const useGame = (gameId: string, noSubscription = false) => {
-    const { data, loading, error, refetch } = useQuery<{ getGame: Game }>(
+const useGame = (gameId: string) => {
+    const { data, loading, error } = useQuery<{ getGame: Game }>(
         GET_GAME,
         {
             variables: { gameId },
@@ -15,7 +18,8 @@ const useGame = (gameId: string, noSubscription = false) => {
     const [getLayoutInfo, { data: layout }] = useLazyQuery<{getLayout: Layout}>(GET_LAYOUT);
     const [closeGameMutation] = useMutation(CLOSE_GAME, { refetchQueries: [{ query: GET_GAME, variables: { gameId } }] });
     const [setBeersMutation] = useMutation(SET_BEERS);
-    const [setScoreMutation] = useMutation(SET_SCORE);
+    const [setScoreMutation] = useMutation<{setScore: Game}>(SET_SCORE, {errorPolicy: 'all'});
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (data?.getGame.layout_id) {
@@ -32,8 +36,20 @@ const useGame = (gameId: string, noSubscription = false) => {
         }
     };
     const setScore = async (args: SetScoreArgs) => {
-        await setScoreMutation({ variables: args });
-        if (noSubscription) refetch();
+        try {
+            const response = await setScoreMutation({ variables: args });
+            const newScoresArrayForPlayer = response.data?.setScore.scorecards.find(sc => sc.user.id === args.playerId)?.scores;
+            if (!newScoresArrayForPlayer) throw new Error();
+            cacheUpdateUserScores({
+                playerId: args.playerId,
+                gameId: args.gameId,
+                scores: newScoresArrayForPlayer
+            });
+            return true;
+        } catch (e) {
+            dispatch(addNotification(`Error! Result might not have been saved :/`, 'alert'));
+            return false;
+        }
     };
     const closeGame = async (reopen?: boolean) => {
         try {
