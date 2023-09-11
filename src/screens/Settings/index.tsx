@@ -23,9 +23,12 @@ const Settings = () => {
     const handleBlockFriendsChange = () => {
         updateSettings({ blockFriendRequests: !me?.blockFriendRequests });
     };
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleBlockStatsSharingChange = () => {
         updateSettings({ blockStatsSharing: !me?.blockStatsSharing });
     };
+
     const handleDeleteAccount = async () => {
         // Poistetaan tunnukset
         const res = await deleteAccountMutation();
@@ -76,7 +79,9 @@ const Settings = () => {
             <Title style={{ marginTop: 10, marginLeft: 15 }}>Friends</Title>
 
             <SingleSwitch testID="blockFriendRequestsSwitch" onPress={handleBlockFriendsChange} value={me?.blockFriendRequests} text="Block other users from adding you as a friend" />
-            <SingleSwitch onPress={handleBlockStatsSharingChange} value={me?.blockStatsSharing} text="Block friends from seeing my stats" noBorder />
+            {/* Not fully implemented
+                <SingleSwitch onPress={handleBlockStatsSharingChange} value={me?.blockStatsSharing} text="Block friends from seeing my stats" noBorder />
+            */}
             <Divider />
             <View style={tyyli.section}>
                 <ChangePassword onPasswordChange={handlePasswordChange} />
