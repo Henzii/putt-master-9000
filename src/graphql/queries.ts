@@ -174,3 +174,25 @@ export const GET_ACHIEVEMENTS = gql`
     }
   }
 `;
+
+export const BEST_POOL = gql`
+    query GetBestPoolForLayout($players: Int!, $layoutId: ID!) {
+        getBestPoolForLayout(players: $players, layoutId: $layoutId) {
+            totalPar
+            totalScore
+            gamesCount
+            game {
+                startTime
+                course
+                layout
+                scorecards {
+                    plusminus
+                    total
+                    user {
+                        name
+                    }
+                }
+            }
+        }
+    }
+`;
