@@ -17,6 +17,7 @@ import LineChart from "./LineChart";
 import SelectButtonGroup from "../../components/SelectButtonGroup";
 import SelectButton from "../../components/SelectButton";
 import BarChart from "./BarChart";
+import BestPoolGame from "./BestPoolGame";
 
 type StatsViewProps = {
     selectedCourse: {
@@ -85,8 +86,8 @@ export default function StatsView({ selectedCourse, selectedUser }: StatsViewPro
             <LineChart par={0} data={scoresToDisplay} />
             <Spacer size={15} />
             <Divider />
-            <Title style={{paddingLeft: 20}}> Holes data</Title>
-
+            <Headline style={{marginLeft: 25}}>Holes data</Headline>
+            <Spacer />
             <BarChart stats={stats.getHolesStats(selectedUser.id as string)} holes={selectedCourse.layout.holes} />
             <Spacer size={15} />
             <RoundTabs
@@ -115,6 +116,10 @@ export default function StatsView({ selectedCourse, selectedUser }: StatsViewPro
                         } title="Others" />
                     </View>
                 }
+            </Container>
+            <Divider />
+            <Container>
+                <BestPoolGame layoutId={selectedCourse.layout.id} />
             </Container>
 
         </Container>
