@@ -1,19 +1,15 @@
-import React from 'react';
-import { View, StyleSheet, ViewStyle, Pressable } from 'react-native';
+import React, { PropsWithChildren } from 'react';
+import { View, StyleSheet, ViewStyle, Pressable, StyleProp } from 'react-native';
 
-type VS = ViewStyle | false
-
-type SplitContainerProps = {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    children: React.ReactElement[] | null | React.ReactElement | any,
+type Props = {
     left?: boolean,
     bottonMargin?: boolean,
     spaceAround?: boolean,
-    style?: VS | VS[]
+    style?: StyleProp<ViewStyle>
     onPress?: () => void,
     testID?: string
 }
-const SplitContainer = ({children, ...props} : SplitContainerProps) => {
+const SplitContainer = ({children, ...props}: PropsWithChildren<Props>) => {
     const style = [
         tyylit.main,
         (props.left && tyylit.left),

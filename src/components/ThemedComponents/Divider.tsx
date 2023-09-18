@@ -2,7 +2,11 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Divider as PaperDivider, useTheme} from 'react-native-paper';
 
-const Divider = ({margin=13}: {margin?: number}) => {
+type Props = {
+    margin?: number
+}
+
+const Divider = ({margin=13}: Props) => {
     const { colors } = useTheme();
     const tyyli = styles(colors, margin);
     return (

@@ -1,14 +1,12 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 import { Dimensions, StyleSheet, View, ScrollView } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
-type ContainerChild = React.ReactElement | null | false | Element | undefined | React.ReactNode;
-
-type ContainerProps = {
-    children: (ContainerChild | ContainerChild[]),
+type Props = {
     fullScreen?: boolean,
     noFlex?: boolean,
-    style?: { [key: string]: string | number},
+    style?: StyleProp<ViewStyle>
     fullWidth?: boolean
     noPadding?: boolean,
     verticalPadding?: boolean,
@@ -16,7 +14,7 @@ type ContainerProps = {
     fullHeight?: boolean,
 }
 
-const Container = (props: ContainerProps) => {
+const Container = (props: PropsWithChildren<Props>) => {
     const { colors } = useTheme();
     const tyyli = [
         props.fullScreen && tyylit.fullScreen,
