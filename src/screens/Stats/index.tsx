@@ -7,14 +7,19 @@ import StatsView from './StatsView';
 import Container from '../../components/ThemedComponents/Container';
 import FriendsList, { Friend } from '../../components/FriendsList';
 import useMe, { User } from '../../hooks/useMe';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../utils/store';
+import { setSelectedLayout } from '../../reducers/selectedLayoutReducer';
 
 const Stats = () => {
-    const [selectedCourse, setSelectedCourse] = useState<{ course: Course, layout: Layout } | null>(null);
     const [selectedUser, setSelectedUser] = useState<User>();
     const [showSelectCourse, setShowSelectCourse] = useState(false);
     const [showSelectFriend, setShowSelectFriend] = useState(false);
+    const dispatch = useDispatch();
+    const selectedCourse = useSelector((state: RootState) => state.selectedLayout);
+
     const handleCourseSelect = (layout: Layout, course: Course) => {
-        setSelectedCourse({ course, layout });
+        dispatch(setSelectedLayout(course, layout));
         setShowSelectCourse(false);
     };
     const {me} = useMe();
