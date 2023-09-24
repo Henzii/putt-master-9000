@@ -7,7 +7,7 @@ import { Routes, Route, useNavigate } from 'react-router-native';
 
 import Game from '../screens/Game';
 import Frontpage from '../screens/Frontpage';
-import SelectCourses from './SelectCourse';
+import SelectCourses from './SelectCourse/SelectCourse';
 import FriendsList from './FriendsList';
 import Notifications from './Notifications';
 import Achievements from '../screens/Achievements';

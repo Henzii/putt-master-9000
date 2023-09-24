@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react-native';
 import React from 'react';
 import { Provider } from 'react-native-paper';
-import SelectCourses from '../components/SelectCourse';
+import SelectCourses from '../components/SelectCourse/SelectCourse';
 import mockedCourses from './mocks/mockedCourses';
 
 const TestComp = () => <Provider><SelectCourses /></Provider>;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Paragraph } from 'react-native-paper';
-import SelectCourses from '../../components/SelectCourse';
+import SelectCourses from '../../components/SelectCourse/SelectCourse';
 import { Course, Layout } from '../../hooks/useCourses';
 import SplitContainer from '../../components/ThemedComponents/SplitContainer';
 import StatsView from './StatsView';
