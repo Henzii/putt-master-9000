@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { PropsWithChildren, createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-native";
 
 const BackContext = createContext<BackActions>({} as BackActions);
@@ -11,7 +11,7 @@ interface BackActions {
     goBack: () => void,
 }
 
-export default function BackButtonProvider ( {children}: { children: React.ReactElement | Element | false | null }) {
+export default function BackButtonProvider ( {children}: PropsWithChildren) {
     const [destination, setDestination] = useState<string | undefined>();
     const [callBack, setStateCallBack] = useState<() => void | undefined>();
     const navigate = useNavigate();

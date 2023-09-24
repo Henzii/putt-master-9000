@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Paragraph } from 'react-native-paper';
-import SelectCourses from '../../components/SelectCourse';
+import SelectCourses from '../../components/SelectCourse/SelectCourse';
 import { Course, Layout } from '../../hooks/useCourses';
 import SplitContainer from '../../components/ThemedComponents/SplitContainer';
 import StatsView from './StatsView';
 import Container from '../../components/ThemedComponents/Container';
 import FriendsList, { Friend } from '../../components/FriendsList';
 import useMe, { User } from '../../hooks/useMe';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../utils/store';
+import { setSelectedLayout } from '../../reducers/selectedLayoutReducer';
 
 const Stats = () => {
-    const [selectedCourse, setSelectedCourse] = useState<{ course: Course, layout: Layout } | null>(null);
     const [selectedUser, setSelectedUser] = useState<User>();
     const [showSelectCourse, setShowSelectCourse] = useState(false);
     const [showSelectFriend, setShowSelectFriend] = useState(false);
+    const dispatch = useDispatch();
+    const selectedCourse = useSelector((state: RootState) => state.selectedLayout);
+
     const handleCourseSelect = (layout: Layout, course: Course) => {
-        setSelectedCourse({ course, layout });
+        dispatch(setSelectedLayout(course, layout));
         setShowSelectCourse(false);
     };
     const {me} = useMe();

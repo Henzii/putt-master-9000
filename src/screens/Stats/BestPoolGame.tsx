@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
         gap: 10
     },
     infoText: {
-        flexBasis: '30%',
+        flexBasis: 110,
     },
     infoValue: {
         fontWeight: "700"

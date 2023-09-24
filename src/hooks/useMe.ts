@@ -59,7 +59,8 @@ const useMe = (getFriends = false) => {
         }
         return true;
     };
-    return { me: data?.getMe ?? null, logged: loggedIn, login, logout, loading, error, updateSettings };
+    const isAdmin = () => data?.getMe.accountType === ACCOUNT_TYPE.ADMIN || data?.getMe.accountType === ACCOUNT_TYPE.GOD;
+    return { me: data?.getMe ?? null, logged: loggedIn, login, logout, loading, error, updateSettings, isAdmin };
 };
 
 export enum ACCOUNT_TYPE {

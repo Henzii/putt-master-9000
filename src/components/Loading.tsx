@@ -21,7 +21,7 @@ const Loading = ({loadingText = 'Loading...', noFullScreen=false, showTexts, cha
     const textIndex = useRef(-1);
     const [customText, setCustomText] = useState('');
     useEffect(() => {
-        let textInterval: NodeJS.Timer;
+        let textInterval: ReturnType<typeof setInterval>;
         if (showTexts) {
             textInterval = setInterval(() => {
                 if (textIndex.current < texts.length-1) {

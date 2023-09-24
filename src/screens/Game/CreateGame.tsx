@@ -4,7 +4,7 @@ import { Button, Headline, IconButton} from 'react-native-paper';
 import { Course, Layout } from '../../hooks/useCourses';
 import useMe, { User } from '../../hooks/useMe';
 import FriendsList from '../../components/FriendsList';
-import SelectCourses from '../../components/SelectCourse';
+import SelectCourses from '../../components/SelectCourse/SelectCourse';
 import Container from '../../components/ThemedComponents/Container';
 import Loading from '../../components/Loading';
 import { useBackButton } from '../../components/BackButtonProvider';
