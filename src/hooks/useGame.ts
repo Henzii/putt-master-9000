@@ -38,12 +38,15 @@ const useGame = (gameId: string) => {
     const setScore = async (args: SetScoreArgs) => {
         try {
             const response = await setScoreMutation({ variables: args });
-            const newScoresArrayForPlayer = response.data?.setScore.scorecards.find(sc => sc.user.id === args.playerId)?.scores;
-            if (!newScoresArrayForPlayer) throw new Error();
+            const {scores, plusminus} = response.data?.setScore.scorecards.find(sc => sc.user.id === args.playerId) ?? {};
+            if (!scores) throw new Error();
             cacheUpdateUserScores({
                 playerId: args.playerId,
                 gameId: args.gameId,
-                scores: newScoresArrayForPlayer
+                scorecard: {
+                    scores,
+                    plusminus
+                }
             });
             return true;
         } catch (e) {

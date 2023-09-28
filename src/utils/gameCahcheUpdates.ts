@@ -1,5 +1,5 @@
 import { ApolloClient } from "@apollo/client";
-import { Game } from '../hooks/useGame';
+import { Game, Scorecard } from '../hooks/useGame';
 import { GET_GAME } from "../graphql/queries";
 import { client } from "../graphql/apolloClient";
 
@@ -16,8 +16,8 @@ export const updateGame = (game: Game, client: ApolloClient<object>) => {
     return;
 };
 
-type UpdateUserScore = (params: {playerId: string, gameId: string, scores: number[]}) => void
-export const cacheUpdateUserScores: UpdateUserScore = ({playerId, gameId, scores}) => {
+type UpdateUserScore = (params: {playerId: string, gameId: string, scorecard: Partial<Scorecard>}) => void
+export const cacheUpdateUserScores: UpdateUserScore = ({playerId, gameId, scorecard}) => {
     const oldData = client.readQuery<{getGame: Game}>({ query: GET_GAME, variables: { gameId }});
     if (!oldData) return;
 
@@ -28,7 +28,7 @@ export const cacheUpdateUserScores: UpdateUserScore = ({playerId, gameId, scores
             ...oldData,
             getGame: {
                 ...oldData.getGame,
-                scorecards: oldData.getGame.scorecards.map(sc => sc.user.id === playerId ? {...sc, scores} :  sc)
+                scorecards: oldData.getGame.scorecards.map(sc => sc.user.id === playerId ? {...sc, ...scorecard} :  sc)
             }
         }
     });
