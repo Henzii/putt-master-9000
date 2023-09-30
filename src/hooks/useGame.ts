@@ -1,15 +1,15 @@
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { SET_SCORE, CLOSE_GAME, SET_BEERS } from "../graphql/mutation";
 import { GET_GAME, GET_LAYOUT } from "../graphql/queries";
-import { User } from "./useMe";
 import { useEffect } from 'react';
-import { Layout } from './useCourses';
 import { cacheUpdateUserScores } from '../utils/gameCahcheUpdates';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../reducers/notificationReducer';
+import type { Game, GetGameResponse, SetScoreArgs } from '../types/game';
+import { Layout } from '../types/course';
 
 const useGame = (gameId: string) => {
-    const { data, loading, error } = useQuery<{ getGame: Game }>(
+    const { data, loading, error } = useQuery<GetGameResponse>(
         GET_GAME,
         {
             variables: { gameId },
@@ -85,34 +85,4 @@ const useGame = (gameId: string) => {
     };
 };
 
-export type Game = {
-    id: string,
-    course: string,
-    layout: string,
-    holes: number,
-    pars: number[],
-    date: string,
-    startTime: number,
-    endTime?: number,
-    par: number,
-    isOpen: boolean,
-    scorecards: Scorecard[],
-    myScorecard: Scorecard,
-    layout_id: string,
-}
-export type Scorecard = {
-    scores: number[],
-    user: User,
-    plusminus?: number,
-    beers: number,
-    total?: number,
-    hc: number,
-}
-
-export type SetScoreArgs = {
-    gameId: string,
-    playerId: string,
-    hole: number,
-    value: number,
-}
 export default useGame;

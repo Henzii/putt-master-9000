@@ -3,20 +3,22 @@ import { useMutation, useQuery } from '@apollo/client';
 import { LOGIN, UPDATE_MY_SETTINGS } from '../graphql/mutation';
 import { GET_ME, GET_ME_WITH_FRIENDS } from '../graphql/queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Game } from './useGame';
+import { AccountType, User } from '../types/user';
+
+type GetMeResponse = { getMe: User }
 
 const useMe = (getFriends = false) => {
 
     // Jos getFriend, valitaan query jossa on ystävät mukana
     const query = getFriends ? GET_ME_WITH_FRIENDS : GET_ME;
 
-    const { data, loading, client, error } = useQuery<RawUser>(query, { fetchPolicy: 'cache-and-network' });
+    const { data, loading, client, error } = useQuery<GetMeResponse>(query, { fetchPolicy: 'cache-and-network' });
     const [loginMutation] = useMutation(LOGIN, { refetchQueries: [{ query: GET_ME }, { query: GET_ME_WITH_FRIENDS }], errorPolicy: 'all'});
     const [updateSettingsMutation] = useMutation(UPDATE_MY_SETTINGS, {
         // Päivitetään vastaus/uudet asetukset välimuistiin
         update: (cache, result) => {
             const newSettingsResult = result.data.changeSettings;
-            const oldCache = cache.readQuery<RawUser>({ query: GET_ME });
+            const oldCache = cache.readQuery<GetMeResponse>({ query: GET_ME });
             cache.writeQuery({
                 query: GET_ME,
                 data: {
@@ -59,34 +61,8 @@ const useMe = (getFriends = false) => {
         }
         return true;
     };
-    const isAdmin = () => data?.getMe.accountType === ACCOUNT_TYPE.ADMIN || data?.getMe.accountType === ACCOUNT_TYPE.GOD;
+    const isAdmin = () => data?.getMe.accountType === AccountType.ADMIN || data?.getMe.accountType === AccountType.GOD;
     return { me: data?.getMe ?? null, logged: loggedIn, login, logout, loading, error, updateSettings, isAdmin };
 };
 
-export enum ACCOUNT_TYPE {
-    PLEB = 'pleb',
-    ADMIN = 'admin',
-    GOD = 'god'
-}
-
-export type User = {
-    name: string,
-    id: number | string,
-    email: string | null,
-    friends?: User[],
-    blockFriendRequests?: boolean,
-    blockStatsSharing?: boolean,
-    achievements: Achievement[],
-    groupName?: string,
-    accountType: ACCOUNT_TYPE
-}
-
-export type Achievement = {
-    id: string,
-    layout_id: string,
-    game: Game
-}
-type RawUser = {
-    getMe: User,
-}
 export default useMe;

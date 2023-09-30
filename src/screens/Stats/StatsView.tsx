@@ -10,14 +10,14 @@ import Container from "../../components/ThemedComponents/Container";
 import Divider from "../../components/ThemedComponents/Divider";
 import Spacer from "../../components/ThemedComponents/Spacer";
 import { GET_STATS } from "../../graphql/queries";
-import { Course, Layout } from "../../hooks/useCourses";
-import { User } from "../../hooks/useMe";
 import useStats from "../../hooks/useStats";
 import LineChart from "./LineChart";
 import SelectButtonGroup from "../../components/SelectButtonGroup";
 import SelectButton from "../../components/SelectButton";
 import BarChart from "./BarChart";
 import BestPoolGame from "./BestPoolGame";
+import { Course, Layout } from "../../types/course";
+import { User } from "../../types/user";
 
 type StatsViewProps = {
     selectedCourse: {

@@ -1,4 +1,4 @@
-import { Course } from "../../hooks/useCourses";
+import { Course } from "../../types/course";
 
 export default [
     {

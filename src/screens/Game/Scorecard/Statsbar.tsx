@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from "react-native";
-import { SingleStats } from '../../../hooks/useStats';
 import { scoreColors } from '../../../utils/theme';
+import type { SingleStats } from '../../../types/stats';
 
 const displayStats = [
     'eagle',

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet, Animated } from 'react-native';
-import { Game } from '../hooks/useGame';
+import { Game } from '../types/game';
 
 const TAB_WIDTH = 47;
 const TAB_HEIGHT = 47;

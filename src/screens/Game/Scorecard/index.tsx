@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, FlatList, LayoutChangeEvent, Pressable } from 'react-native';
 import { useSettings } from '../../../components/LocalSettingsProvider';
-import { Scorecard } from '../../../hooks/useGame';
 import useStats from '../../../hooks/useStats';
 import Statsbar from './Statsbar';
 import SplitContainer from '../../../components/ThemedComponents/SplitContainer';
 import { ActivityIndicator, useTheme } from 'react-native-paper';
+import type { Scorecard } from '../../../types/game';
 
 type PlayerArgs = {
     player: Scorecard,

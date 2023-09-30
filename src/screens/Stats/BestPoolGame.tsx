@@ -6,10 +6,10 @@ import useTextInput from '../../hooks/useTextInput';
 import { useQuery } from '@apollo/client';
 import { BEST_POOL } from '../../graphql/queries';
 import Loading from '../../components/Loading';
-import { Game } from '../../hooks/useGame';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../../reducers/notificationReducer';
 import { parseDate } from '../../utils/dates';
+import { Game } from '../../types/game';
 
 type Props = {
     layoutId: string | number,

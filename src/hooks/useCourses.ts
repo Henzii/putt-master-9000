@@ -6,7 +6,8 @@ import { useDispatch } from 'react-redux';
 import { ADD_COURSE, ADD_LAYOUT } from "../graphql/mutation";
 import { GET_COURSES } from "../graphql/queries";
 import { addNotification } from '../reducers/notificationReducer';
-import useGPS, { GPShookReturn } from './useGPS';
+import useGPS from './useGPS';
+import type { Coordinates, GetCoursesResponse, NewLayout } from '../types/course';
 
 const useCourses = (showDistance = true) => {
 
@@ -17,7 +18,7 @@ const useCourses = (showDistance = true) => {
     });
     const dispatch = useDispatch();
     const gps = useGPS();
-    const { data, previousData, loading, error, fetchMore, refetch, variables } = useQuery<RawCourseData>(
+    const { data, previousData, loading, error, fetchMore, refetch, variables } = useQuery<GetCoursesResponse>(
         GET_COURSES,
         {
             variables: {
@@ -79,41 +80,6 @@ const useCourses = (showDistance = true) => {
         gps, restricted: !!searchLimits.maxDistance
     };
 };
-export type Course = {
-    name: string,
-    layouts: Layout[]
-    id: string | number,
-    canEdit?: boolean,
-    distance: {
-        meters: number,
-        string: string,
-    }
-    location: {
-        coordinates: number[]
-    },
-    gps: GPShookReturn
-}
-export type Coordinates = {
-    lat: number,
-    lon: number
-}
-export type Layout = {
-    name: string,
-    names?: (string | null)[]
-    pars: number[],
-    par: number,
-    holes: number,
-    id: string | number,
-    canEdit?: boolean,
-}
-export type RawCourseData = {
-    getCourses: {
-        courses: Course[],
-        nextOffset: number,
-        hasMore: boolean,
-    }
-}
-export type NewLayout = Pick<Partial<Layout>, "id"> & Omit<Layout, "par" | "id">
 
 type SearchLimits = {
     limit: number,

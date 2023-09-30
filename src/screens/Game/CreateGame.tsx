@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ViewStyle, StyleProp } from "react-native";
 import { Button, Headline, IconButton} from 'react-native-paper';
-import { Course, Layout } from '../../hooks/useCourses';
-import useMe, { User } from '../../hooks/useMe';
+import useMe from '../../hooks/useMe';
 import FriendsList from '../../components/FriendsList';
 import SelectCourses from '../../components/SelectCourse/SelectCourse';
 import Container from '../../components/ThemedComponents/Container';
@@ -12,6 +11,8 @@ import NumberedTitle from '../../components/NumberedTitle';
 import Divider from '../../components/ThemedComponents/Divider';
 import Spacer from '../../components/ThemedComponents/Spacer';
 import useStats from '../../hooks/useStats';
+import { Course, Layout } from '../../types/course';
+import { User } from '../../types/user';
 
 export type NewGameData = {
     course?: Course | null,

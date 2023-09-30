@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, Text } from "react-native";
 import { Button, Caption, Headline, IconButton, TextInput, Title } from "react-native-paper";
-import { Layout, NewLayout } from '../hooks/useCourses';
 import Divider from './ThemedComponents/Divider';
+import { Layout, NewLayout } from '../types/course';
 
 const AddLayout = ({ onCancel, onAdd, layout }: AddLayoutProps) => {
     const [holes, setHoles] = useState<number | undefined>(layout?.holes);

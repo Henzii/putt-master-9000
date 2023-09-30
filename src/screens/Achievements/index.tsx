@@ -6,8 +6,8 @@ import ErrorScreen from '../../components/ErrorScreen';
 import Loading from '../../components/Loading';
 import Container from '../../components/ThemedComponents/Container';
 import { GET_ACHIEVEMENTS } from '../../graphql/queries';
-import { User } from '../../hooks/useMe';
 import Badge from './Badge';
+import { User } from '../../types/user';
 
 const Achievements = () => {
     const {data, loading, error} = useQuery<{getMe?: User}>(GET_ACHIEVEMENTS, {fetchPolicy: 'no-cache'});

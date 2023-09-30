@@ -5,13 +5,13 @@ import { Button, Paragraph, Searchbar, Title } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-native';
 import { GET_OLD_GAMES } from '../../graphql/queries';
-import { Game } from '../../hooks/useGame';
 import { newGame } from '../../reducers/gameDataReducer';
 import Loading from '../../components/Loading';
 import Container from '../../components/ThemedComponents/Container';
 import useTextInput from '../../hooks/useTextInput';
 import GameItem from './GameItem';
 import useMe from '../../hooks/useMe';
+import { Game } from '../../types/game';
 type GamesQueryResponse = {
     games: Game[],
     hasMore: boolean,
