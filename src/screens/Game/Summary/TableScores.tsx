@@ -1,7 +1,7 @@
 import React from 'react';
 import { DataTable } from 'react-native-paper';
-import { Scorecard } from '../../../hooks/useGame';
 import { scoreColor, tableStyles } from './styles';
+import { Scorecard } from '../../../types/game';
 
 type Props = {
     scorecards: Scorecard[]

@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import * as ExpoLocation from 'expo-location';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../reducers/notificationReducer';
+import { GPShookReturn } from '../types/gps';
 
 const useGPS = (): GPShookReturn => {
-    const [location, setLocation] = useState<Location | null>(null);
+    const [location, setLocation] = useState<ExpoLocation.LocationObjectCoords | null>(null);
     const [error, setError] = useState<string | undefined>();
     const dispatch = useDispatch();
     useEffect(() => {
@@ -35,13 +36,5 @@ const useGPS = (): GPShookReturn => {
     };
 
 };
-export type Location = ExpoLocation.LocationObject['coords']
-export type GPShookReturn = {
-    loading: boolean,
-    error?: string,
-    lat?: number,
-    lon?: number,
-    ready: boolean,
-    acc: number | null,
-}
+
 export default useGPS;

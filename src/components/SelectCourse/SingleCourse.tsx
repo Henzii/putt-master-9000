@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text } from "react-native";
 import { List, Surface, TouchableRipple, useTheme } from "react-native-paper";
-import { Course, Layout, NewLayout } from "../../hooks/useCourses";
+import { Course, Layout, NewLayout } from "../../types/course";
 import SelectLayout from "./SelectLayout";
 
 type SingleCourseProps = {

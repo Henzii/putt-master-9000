@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import PlayerScorecard from './Scorecard';
 import { Dimensions } from 'react-native';
 import RoundTabs from '../../components/RoundTabs';
-import useGame, { Scorecard } from '../../hooks/useGame';
+import useGame from '../../hooks/useGame';
 import Container from '../../components/ThemedComponents/Container';
 import { Button, Title } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +12,7 @@ import Loading from '../../components/Loading';
 import { RootState } from '../../utils/store';
 import ErrorScreen from '../../components/ErrorScreen';
 import { useSettings } from '../../components/LocalSettingsProvider';
+import type { Scorecard } from '../../types/game';
 
 export default function Game() {
     const [selectedRound, setSelectedRound] = useState(0);

@@ -1,4 +1,4 @@
-import { Course, Layout } from "../hooks/useCourses";
+import { Course, Layout } from "../types/course";
 
 enum SelectedLayoutActionType {SET, CLEAR}
 type SelectedLayoutState = {course: Course, layout: Layout} | null

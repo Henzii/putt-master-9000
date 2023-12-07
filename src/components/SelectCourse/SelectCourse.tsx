@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { Button, Modal, Searchbar, Portal, Headline, useTheme } from "react-native-paper";
-import useCourses, { Coordinates, Course, Layout, NewLayout } from "../../hooks/useCourses";
+import useCourses from "../../hooks/useCourses";
 import useTextInput from "../../hooks/useTextInput";
 import AddCourse from "../AddCourse";
 import ErrorScreen from "../ErrorScreen";
 import Loading from "../Loading";
 import Container from "../ThemedComponents/Container";
 import SingleCourse from './SingleCourse';
+import { Coordinates, Course, Layout, NewLayout } from "../../types/course";
 
 type SelectCoursesProps = {
     onSelect?: (layout: Layout, course: Course) => void,

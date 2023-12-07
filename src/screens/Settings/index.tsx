@@ -4,7 +4,7 @@ import { Button, Paragraph, TextInput, Title, TouchableRipple } from 'react-nati
 import Container from '../../components/ThemedComponents/Container';
 import Divider from '../../components/ThemedComponents/Divider';
 import appInfo from '../../../app.json';
-import useMe, { ACCOUNT_TYPE } from '../../hooks/useMe';
+import useMe from '../../hooks/useMe';
 import { useMutation } from '@apollo/client';
 import { DELETE_ACCOUNT } from '../../graphql/mutation';
 import { useNavigate } from 'react-router-native';
@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { addNotification } from '../../reducers/notificationReducer';
 import { SingleSwitch } from '../../components/LocalSettings';
 import Spacer from '../../components/ThemedComponents/Spacer';
+import { AccountType } from '../../types/user';
 
 const Settings = () => {
     const { me, updateSettings, logout } = useMe();
@@ -116,7 +117,7 @@ const Settings = () => {
                 <Title>Info</Title>
                 <InfoText text1="version" text2={appInfo.expo.version} />
                 <InfoText text1="build" text2={appInfo.expo.android.versionCode.toString()} />
-                {(me?.accountType && me.accountType !== ACCOUNT_TYPE.PLEB) && (
+                {(me?.accountType && me.accountType !== AccountType.PLEB) && (
                     <InfoText text1="account type" text2={me?.accountType ?? 'N/A'} />
                 )}
             </View>

@@ -20,28 +20,34 @@ export default function LocalSettings() {
 }
 type SingleSwitchProps = {
     text: string,
-    onPress: (name?: SettingName) => void,
-    value?: boolean,
+    onPress: (name: SettingName) => void,
+    value?: string | boolean,
     name?: SettingName,
     noBorder?: boolean,
     testID?: string,
 }
+
 export const SingleSwitch = ({text, onPress, value=false, name, noBorder = false, testID}: SingleSwitchProps ) => {
     const handleChange = () => {
-        onPress(name);
+        onPress(name as SettingName);
     };
     return (
          <SplitContainer onPress={handleChange} style={[tyyli.single, !noBorder && tyyli.withBorder]}>
-            <Text>{text}</Text>
-            <Switch value={value} onValueChange={handleChange} testID={testID} />
+            <Text style={tyyli.text}>{text}</Text>
+            <Switch value={Boolean(value)} onValueChange={handleChange} testID={testID} />
         </SplitContainer>
     );
 };
 
 const tyyli = StyleSheet.create({
+    text: {
+        flexShrink: 1,
+        marginRight: 10,
+    },
     single: {
         paddingHorizontal: 15,
         paddingVertical: 12,
+        maxWidth: '100%'
     },
     withBorder: {
         borderBottomWidth: 0.5,

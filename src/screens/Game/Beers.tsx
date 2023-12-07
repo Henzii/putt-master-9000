@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button, Headline, Modal, Paragraph, Portal, TextInput } from "react-native-paper";
 import Container from "../../components/ThemedComponents/Container";
-import useGame, { Scorecard } from '../../hooks/useGame';
+import useGame from '../../hooks/useGame';
 import useTextInput from '../../hooks/useTextInput';
 import { Ionicons } from '@expo/vector-icons';
 import beerPoems from '../../utils/beerPoems.json';
@@ -13,6 +13,7 @@ import { RootState } from '../../utils/store';
 import { gameData } from '../../reducers/gameDataReducer';
 import AlcConverter from '../../components/AlcConverter';
 import Divider from '../../components/ThemedComponents/Divider';
+import { Scorecard } from '../../types/game';
 
 const Beers = () => {
 

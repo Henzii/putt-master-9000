@@ -2,8 +2,8 @@ import React from 'react';
 import { Dimensions, ScrollView } from 'react-native';
 import { StackedBarChart } from "react-native-chart-kit";
 import { useTheme } from 'react-native-paper';
-import { SingleStats } from "../../hooks/useStats";
 import { scoreColors } from '../../utils/theme';
+import { SingleStats } from '../../types/stats';
 
 const LEFT_MARGIN = 70;
 

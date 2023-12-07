@@ -1,4 +1,4 @@
-import { User } from "../hooks/useMe";
+import { User } from "../types/user";
 
 export type InitialsAndColors = {
     [userId: string]: {

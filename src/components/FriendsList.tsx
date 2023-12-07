@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Alert, FlatList, Pressable, StyleSheet, View } from "react-native";
 import { Avatar, Button, Checkbox, IconButton, Modal, Portal, Text, useTheme } from 'react-native-paper';
 import { REMOVE_FRIEND } from '../graphql/mutation';
-import useMe, { User } from '../hooks/useMe';
+import useMe from '../hooks/useMe';
 import AddFriend from './AddFriend';
 import ErrorScreen from './ErrorScreen';
 import Loading from './Loading';
@@ -12,6 +12,7 @@ import { GET_ME_WITH_FRIENDS } from '../graphql/queries';
 import SplitContainer from './ThemedComponents/SplitContainer';
 import { useNavigate } from 'react-router-native';
 import { InitialsAndColors, initialsAndColorGenerator } from '../utils/initialsAndColorGenerator';
+import { User } from '../types/user';
 
 
 type FriendListProps = {

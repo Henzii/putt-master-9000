@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { Button, Caption, Headline, Subheading, Switch, TextInput } from "react-native-paper";
-import { Coordinates } from "../hooks/useCourses";
 import useGPS from "../hooks/useGPS";
 import Loading from "./Loading";
 import Divider from "./ThemedComponents/Divider";
+import { Coordinates } from "../types/course";
+
+type AddCourseProps = {
+    onCancel?: () => void,
+    onAdd?: (name: string, coordinates: Coordinates) => void,
+    loading?: boolean,
+}
 
 const AddCourse = ({ onCancel, onAdd, loading=false }: AddCourseProps) => {
     const [newName, setNewName] = useState('');
@@ -104,10 +110,5 @@ const tyyli = StyleSheet.create({
         flexDirection: 'row',
     }
 });
-type AddCourseProps = {
-    onCancel?: () => void,
-    onAdd?: (name: string, coordinates: Coordinates) => void,
-    loading?: boolean,
-}
 
 export default AddCourse;

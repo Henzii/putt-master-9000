@@ -2,13 +2,14 @@ import { WatchQueryFetchPolicy } from '@apollo/client';
 import { useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { GET_LAYOUT_STATS } from '../graphql/queries';
+import { SingleStats, StatsCard } from '../types/stats';
 
 export default function useStats(
     layoutId: string | undefined,
     playersIds: string[],
     fetchPolicy?: WatchQueryFetchPolicy,
     altDeps?: unknown,
-): StatsHook {
+) {
     const [getStats, { data, error, loading }] = useLazyQuery<RawStats>(GET_LAYOUT_STATS);
     useEffect(() => {
         if (layoutId && playersIds?.length > 0) {
@@ -61,34 +62,6 @@ export default function useStats(
     };
 }
 
-export interface StatsHook {
-    loading?: boolean,
-    error?: unknown,
-    getStatsForHole: (playerId: string, holeIndex: number) => SingleStats | undefined
-    getHolesStats: (playerId: string) => SingleStats[] | undefined
-    getBest: (playerId: string | number) => number | undefined,
-    getHc: (playerId: string | number) => number | undefined,
-    getField: (playerId: string | number, filed: keyof StatsCard) => number | string | undefined | SingleStats[]
-}
-
 interface RawStats {
     getLayoutStats: StatsCard[]
-}
-export type SingleStats = {
-    index: number
-    count: number
-    best: number
-    average: number
-    eagle: number
-    par: number
-    birdie: number
-    bogey: number
-    doubleBogey: number
-}
-export type StatsCard = {
-    games: number
-    playerId: string
-    holes: SingleStats[]
-    best: number
-    hc: number
 }

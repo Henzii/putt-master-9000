@@ -2,7 +2,7 @@ import { format, fromUnixTime } from "date-fns";
 import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Caption, Chip, Subheading, Title } from "react-native-paper";
-import { Game } from "../../hooks/useGame";
+import { Game } from "../../types/game";
 
 interface GameItemProps {
     onClick: (gameid: string, gameOpen?: boolean) => void,

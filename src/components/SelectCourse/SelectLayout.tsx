@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button, IconButton, Modal, Portal, TouchableRipple, useTheme } from 'react-native-paper';
-import { Course, Layout, NewLayout } from "../../hooks/useCourses";
 import AddLayout from "../AddLayout";
 import Spacer from "../ThemedComponents/Spacer";
 import Divider from "../ThemedComponents/Divider";
@@ -9,6 +8,7 @@ import useMe from "../../hooks/useMe";
 import { useNavigate } from "react-router-native";
 import { useDispatch } from "react-redux";
 import { setSelectedLayout } from "../../reducers/selectedLayoutReducer";
+import { Course, Layout, NewLayout } from "../../types/course";
 
 type SelecLayoutProps = {
     course: Course
