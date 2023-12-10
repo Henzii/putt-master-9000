@@ -76,8 +76,8 @@ export default function FirstTime() {
         setErrors(newErrors);
     };
     const handleValidateUsername = async () => {
-        if (username.length < 5) {
-            setErrors({ ...errors, userName: 'too short, min 5 letters!' });
+        if (username.length < 3) {
+            setErrors({ ...errors, userName: 'too short, min 3 letters!' });
         } else {
             searchUser({ variables: { search: username } });
         }
@@ -88,11 +88,14 @@ export default function FirstTime() {
             <Paragraph>
                 Before you can start using FuDisc, you&apos;ll have to make some big decisions.
             </Paragraph>
-            <Button mode="text" onPress={() => navi('/')} >Already have an account?</Button>
+            <Paragraph>
+                If you already have an account, you may proceed directly to the login screen.
+            </Paragraph>
+            <Button mode="text" onPress={() => navi('/')} >To the login screen!</Button>
             <Title>Username</Title>
             <Paragraph>
                 Pick a unique username. Other players can find you with this. Also use this name to login
-                if you ever need to.
+                to the website (fudisc.henzi.fi). This name can be changed afterwards on the website.
             </Paragraph>
             <TextInput
                 label={`Username${errors.userName ? ` - ${errors.userName}` : ''}`}
@@ -107,7 +110,7 @@ export default function FirstTime() {
             <Spacer />
             <Title>Password</Title>
             <Paragraph>
-                Use this password to login
+                Use this password to login.
             </Paragraph>
             <TextInput
                 label={`Password${errors.password1 ? ` - ${errors.password1}` : ''}`}

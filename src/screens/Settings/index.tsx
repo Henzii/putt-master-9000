@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Alert, Linking, StyleSheet, Text, View } from 'react-native';
-import { Button, Paragraph, TextInput, Title, TouchableRipple } from 'react-native-paper';
+import { Linking, StyleSheet, Text, View } from 'react-native';
+import { Button, TextInput, Title } from 'react-native-paper';
 import Container from '../../components/ThemedComponents/Container';
 import Divider from '../../components/ThemedComponents/Divider';
 import appInfo from '../../../app.json';
@@ -14,6 +14,7 @@ import { addNotification } from '../../reducers/notificationReducer';
 import { SingleSwitch } from '../../components/LocalSettings';
 import Spacer from '../../components/ThemedComponents/Spacer';
 import { AccountType } from '../../types/user';
+import DeleteAccount from './DeleteAccount';
 
 const Settings = () => {
     const { me, updateSettings, logout } = useMe();
@@ -37,6 +38,7 @@ const Settings = () => {
             // Kirjaudutaan ulos
             logout();
             navi('/');
+            dispatch(addNotification("Account deleted", "success"));
         }
     };
     const handlePasswordChange = async (newPassword: string) => {
@@ -56,21 +58,6 @@ const Settings = () => {
                 dispatch(addNotification('Group name changed to ' + groupName, 'info'));
             }
         }
-    };
-    const confirmDelete = () => {
-        Alert.alert(
-            'Delete account?',
-            'Deleted account cannot be restored!',
-            [
-                {
-                    text: 'Cancel',
-                },
-                {
-                    text: 'Delete',
-                    onPress: handleDeleteAccount
-                }
-            ]
-        );
     };
 
     const isSavedGroupName = me?.groupName === groupName;
@@ -123,13 +110,7 @@ const Settings = () => {
             </View>
             <Divider />
             <View style={tyyli.section}>
-                <Title>Delete account</Title>
-                <Paragraph>
-                    To delete your account, hold down the delete button for five seconds.
-                </Paragraph>
-                <TouchableRipple onPress={() => null} delayLongPress={4000} onLongPress={confirmDelete} style={tyyli.deleteContainer} >
-                    <Text style={tyyli.delete}>Delete</Text>
-                </TouchableRipple>
+                <DeleteAccount handleDeleteAccount={handleDeleteAccount} />
             </View>
         </Container >
     );
