@@ -1,17 +1,11 @@
 import React from 'react';
 import Login from '../components/Login';
 import { render, fireEvent } from '@testing-library/react-native';
-import { Provider as ReduxProvider } from 'react-redux';
-import store from '../utils/store';
 
-describe('<Login />>', () => {
-    it('Login lomake toimii oikein', () => {
+describe('<Login />', () => {
+    it('form functions properly', () => {
         const loginFunction = jest.fn(() => Promise.resolve());
-        const { getByTestId } = render(
-            <ReduxProvider store={store}>
-                <Login login={loginFunction} />
-            </ReduxProvider>
-        );
+        const { getByTestId } = render(<Login login={loginFunction} />);
 
         // Syötetään testitunnukset
         fireEvent.changeText(getByTestId('user'), 'Testeri');

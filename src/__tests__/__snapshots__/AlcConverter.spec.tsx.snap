@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
+exports[`<AlcConverter /> renders 1`] = `
 <RCTScrollView
   contentContainerStyle={
-    Array [
+    [
       undefined,
       undefined,
       undefined,
       false,
-      Object {
+      {
         "backgroundColor": "#f6f6f6",
         "padding": 0,
       },
@@ -20,27 +20,27 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
   <View>
     <Text
       style={
-        Array [
-          Object {
+        [
+          {
             "color": "#000000",
             "fontFamily": "System",
             "fontWeight": "400",
           },
-          Object {
+          {
             "textAlign": "left",
           },
-          Array [
-            Object {
+          [
+            {
               "textAlign": "left",
             },
-            Object {
+            {
               "color": "rgba(0, 0, 0, 0.87)",
               "fontFamily": "System",
               "fontWeight": "400",
               "writingDirection": "ltr",
             },
-            Array [
-              Object {
+            [
+              {
                 "fontSize": 24,
                 "letterSpacing": 0,
                 "lineHeight": 32,
@@ -56,7 +56,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
     </Text>
     <View
       style={
-        Object {
+        {
           "alignItems": "center",
           "display": "flex",
           "flexDirection": "row",
@@ -65,7 +65,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
     >
       <Text
         style={
-          Object {
+          {
             "minWidth": 120,
           }
         }
@@ -74,7 +74,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
       </Text>
       <View
         style={
-          Object {
+          {
             "width": 100,
           }
         }
@@ -82,15 +82,15 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
         <View
           pointerEvents="none"
           style={
-            Array [
-              Object {
+            [
+              {
                 "bottom": 0,
                 "left": 0,
                 "position": "absolute",
                 "right": 0,
                 "top": 6,
               },
-              Object {
+              {
                 "backgroundColor": "#f6f6f6",
                 "borderColor": "rgba(0, 0, 0, 0.54)",
                 "borderRadius": 4,
@@ -103,11 +103,11 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
         <View>
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "paddingBottom": 0,
                 },
-                Object {
+                {
                   "minHeight": 48,
                   "paddingTop": 8,
                 },
@@ -126,21 +126,21 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
               placeholderTextColor="rgba(0, 0, 0, 0.54)"
               selectionColor="#6200ee"
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "flexGrow": 1,
                     "margin": 0,
                     "paddingHorizontal": 14,
                     "zIndex": 1,
                   },
-                  Object {
+                  {
                     "height": 40,
                   },
-                  Object {
+                  {
                     "paddingBottom": 0,
                     "paddingTop": 0,
                   },
-                  Object {
+                  {
                     "color": "#000000",
                     "fontFamily": "System",
                     "fontSize": 16,
@@ -150,8 +150,8 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
                     "textAlignVertical": "center",
                   },
                   false,
-                  Array [
-                    Object {},
+                  [
+                    {},
                   ],
                 ]
               }
@@ -164,7 +164,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignItems": "center",
           "display": "flex",
           "flexDirection": "row",
@@ -173,7 +173,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
     >
       <Text
         style={
-          Object {
+          {
             "minWidth": 120,
           }
         }
@@ -182,7 +182,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
       </Text>
       <View
         style={
-          Object {
+          {
             "width": 100,
           }
         }
@@ -190,15 +190,15 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
         <View
           pointerEvents="none"
           style={
-            Array [
-              Object {
+            [
+              {
                 "bottom": 0,
                 "left": 0,
                 "position": "absolute",
                 "right": 0,
                 "top": 6,
               },
-              Object {
+              {
                 "backgroundColor": "#f6f6f6",
                 "borderColor": "rgba(0, 0, 0, 0.54)",
                 "borderRadius": 4,
@@ -211,11 +211,11 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
         <View>
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "paddingBottom": 0,
                 },
-                Object {
+                {
                   "minHeight": 48,
                   "paddingTop": 8,
                 },
@@ -234,21 +234,21 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
               placeholderTextColor="rgba(0, 0, 0, 0.54)"
               selectionColor="#6200ee"
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "flexGrow": 1,
                     "margin": 0,
                     "paddingHorizontal": 14,
                     "zIndex": 1,
                   },
-                  Object {
+                  {
                     "height": 40,
                   },
-                  Object {
+                  {
                     "paddingBottom": 0,
                     "paddingTop": 0,
                   },
-                  Object {
+                  {
                     "color": "#000000",
                     "fontFamily": "System",
                     "fontSize": 16,
@@ -258,8 +258,8 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
                     "textAlignVertical": "center",
                   },
                   false,
-                  Array [
-                    Object {},
+                  [
+                    {},
                   ],
                 ]
               }
@@ -272,7 +272,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignItems": "center",
           "display": "flex",
           "flexDirection": "row",
@@ -281,7 +281,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
     >
       <Text
         style={
-          Object {
+          {
             "minWidth": 120,
           }
         }
@@ -290,7 +290,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
       </Text>
       <View
         style={
-          Object {
+          {
             "width": 100,
           }
         }
@@ -298,15 +298,15 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
         <View
           pointerEvents="none"
           style={
-            Array [
-              Object {
+            [
+              {
                 "bottom": 0,
                 "left": 0,
                 "position": "absolute",
                 "right": 0,
                 "top": 6,
               },
-              Object {
+              {
                 "backgroundColor": "#f6f6f6",
                 "borderColor": "rgba(0, 0, 0, 0.54)",
                 "borderRadius": 4,
@@ -319,11 +319,11 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
         <View>
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "paddingBottom": 0,
                 },
-                Object {
+                {
                   "minHeight": 48,
                   "paddingTop": 8,
                 },
@@ -342,21 +342,21 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
               placeholderTextColor="rgba(0, 0, 0, 0.54)"
               selectionColor="#6200ee"
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "flexGrow": 1,
                     "margin": 0,
                     "paddingHorizontal": 14,
                     "zIndex": 1,
                   },
-                  Object {
+                  {
                     "height": 40,
                   },
-                  Object {
+                  {
                     "paddingBottom": 0,
                     "paddingTop": 0,
                   },
-                  Object {
+                  {
                     "color": "#000000",
                     "fontFamily": "System",
                     "fontSize": 16,
@@ -366,8 +366,8 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
                     "textAlignVertical": "center",
                   },
                   false,
-                  Array [
-                    Object {},
+                  [
+                    {},
                   ],
                 ]
               }
@@ -380,7 +380,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignItems": "center",
           "display": "flex",
           "flexDirection": "row",
@@ -389,7 +389,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
     >
       <Text
         style={
-          Object {
+          {
             "minWidth": 120,
           }
         }
@@ -398,7 +398,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
       </Text>
       <View
         style={
-          Object {
+          {
             "width": 100,
           }
         }
@@ -406,15 +406,15 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
         <View
           pointerEvents="none"
           style={
-            Array [
-              Object {
+            [
+              {
                 "bottom": 0,
                 "left": 0,
                 "position": "absolute",
                 "right": 0,
                 "top": 6,
               },
-              Object {
+              {
                 "backgroundColor": "#f6f6f6",
                 "borderColor": "rgba(0, 0, 0, 0.54)",
                 "borderRadius": 4,
@@ -427,11 +427,11 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
         <View>
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "paddingBottom": 0,
                 },
-                Object {
+                {
                   "minHeight": 48,
                   "paddingTop": 8,
                 },
@@ -450,21 +450,21 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
               placeholderTextColor="rgba(0, 0, 0, 0.54)"
               selectionColor="#6200ee"
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "flexGrow": 1,
                     "margin": 0,
                     "paddingHorizontal": 14,
                     "zIndex": 1,
                   },
-                  Object {
+                  {
                     "height": 40,
                   },
-                  Object {
+                  {
                     "paddingBottom": 0,
                     "paddingTop": 0,
                   },
-                  Object {
+                  {
                     "color": "#000000",
                     "fontFamily": "System",
                     "fontSize": 16,
@@ -474,8 +474,8 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
                     "textAlignVertical": "center",
                   },
                   false,
-                  Array [
-                    Object {},
+                  [
+                    {},
                   ],
                 ]
               }
@@ -488,7 +488,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
     </View>
     <View
       style={
-        Object {
+        {
           "alignItems": "center",
           "display": "flex",
           "flexDirection": "row",
@@ -497,7 +497,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
     >
       <Text
         style={
-          Object {
+          {
             "minWidth": 120,
           }
         }
@@ -506,7 +506,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
       </Text>
       <View
         style={
-          Object {
+          {
             "width": 100,
           }
         }
@@ -514,15 +514,15 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
         <View
           pointerEvents="none"
           style={
-            Array [
-              Object {
+            [
+              {
                 "bottom": 0,
                 "left": 0,
                 "position": "absolute",
                 "right": 0,
                 "top": 6,
               },
-              Object {
+              {
                 "backgroundColor": "#f6f6f6",
                 "borderColor": "rgba(0, 0, 0, 0.54)",
                 "borderRadius": 4,
@@ -535,11 +535,11 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
         <View>
           <View
             style={
-              Array [
-                Object {
+              [
+                {
                   "paddingBottom": 0,
                 },
-                Object {
+                {
                   "minHeight": 48,
                   "paddingTop": 8,
                 },
@@ -558,21 +558,21 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
               placeholderTextColor="rgba(0, 0, 0, 0.54)"
               selectionColor="#6200ee"
               style={
-                Array [
-                  Object {
+                [
+                  {
                     "flexGrow": 1,
                     "margin": 0,
                     "paddingHorizontal": 14,
                     "zIndex": 1,
                   },
-                  Object {
+                  {
                     "height": 40,
                   },
-                  Object {
+                  {
                     "paddingBottom": 0,
                     "paddingTop": 0,
                   },
-                  Object {
+                  {
                     "color": "#000000",
                     "fontFamily": "System",
                     "fontSize": 16,
@@ -582,8 +582,8 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
                     "textAlignVertical": "center",
                   },
                   false,
-                  Array [
-                    Object {},
+                  [
+                    {},
                   ],
                 ]
               }
@@ -596,11 +596,11 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
     </View>
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "marginTop": 20,
           },
-          Object {
+          {
             "alignItems": "center",
             "display": "flex",
             "flexDirection": "row",
@@ -610,7 +610,7 @@ exports[`<AlcConverter /> testit Renderöityy oikein... 1`] = `
     >
       <Text
         style={
-          Object {
+          {
             "minWidth": 120,
           }
         }

@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { render, fireEvent } from '@testing-library/react-native';
-//import { Provider } from 'react-native-paper';
+import { render, fireEvent, act } from '@testing-library/react-native';
 import RoundTabs from '../components/RoundTabs';
 
 const testGame = {
@@ -9,26 +8,24 @@ const testGame = {
     scorecards: []
 };
 
-describe('<RoundTabs /> testit', () => {
-    it('Tabit renderöityvät', () => {
-        const { getAllByTestId } = render(<RoundTabs gameData={testGame} selectedRound={0} setSelectedRound={() => null} />);
+jest.useFakeTimers();
 
-        // 9 väylää, oletetaan että 9 tabia renderöityy
+describe('<RoundTabs />', () => {
+    it('should render tabs', () => {
+        const { getAllByTestId } = render(<RoundTabs gameData={testGame} selectedRound={0} setSelectedRound={() => null} />);
         expect(getAllByTestId('SingleTab')).toHaveLength(9);
 
     });
-    it('Tabin klikkaus toimii', () => {
+    it('should fire setSelectedRound when clicked', () => {
         const onTabClick = jest.fn();
         const { getAllByTestId } = render(<RoundTabs gameData={testGame} selectedRound={0} setSelectedRound={onTabClick} />);
 
         const tabit = getAllByTestId('SingleTab');
-        // Klikataan 5. tabia (indeksi 4)
-        fireEvent.press(tabit[4]);
+        act(() => {
+            fireEvent.press(tabit[4]);
+        });
 
-        // setSelectedRound aktivoituu
         expect(onTabClick).toHaveBeenCalled();
-
-        // Funktion parametri on klikatun tabin indeksi
         expect(onTabClick.mock.calls[0][0]).toBe(4);
     });
 });
