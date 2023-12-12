@@ -6,9 +6,9 @@ import mockQueries from './mockQueries';
 const cache = new InMemoryCache();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function Wrapper ({ children }: { children: any }) {
+export default function Wrapper ({ children, extraMocks = [] }: { children: any, extraMocks?: any}) {
     return (
-        <MockedProvider mocks={mockQueries} addTypename={true} cache={cache}
+        <MockedProvider mocks={[...mockQueries, ...extraMocks]} addTypename={true} cache={cache}
         >
             {children}
         </MockedProvider>

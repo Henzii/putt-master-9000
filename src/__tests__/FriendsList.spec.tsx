@@ -5,26 +5,25 @@ import { Provider } from 'react-native-paper';
 import Wrapper from './mocks/ApolloMockWrapper';
 import FriendsList from '../components/FriendsList';
 import mockedUsers from './mocks/mockedUsers';
+import { theme } from '../utils/theme';
 
-jest.mock('react-router-native', () => {
-    return {
-        useNavigate: () => null,
-    };
-});
+jest.useFakeTimers();
+
 const TestComponent = () => (
-    <Provider>
+    <Provider theme={theme}>
         <Wrapper>
             <FriendsList />
         </Wrapper>
     </Provider>
 );
 
-describe('<FriendList /> testit', () => {
-    it('Frendit renderöityy...', async () => {
+describe('<FriendList />', () => {
+    it('should render properly', async () => {
         const { getByText, toJSON } = render(<TestComponent />);
         const me = mockedUsers[0];
+
         expect(getByText('Loading...')).toBeDefined();
-        // Odotetaan että molemmat kaverit löytyy ja että ne myös näkyy
+
         await waitFor(() => {
             if (!me.friends) return;
             expect(getByText(me.friends[0].name)).toBeDefined();

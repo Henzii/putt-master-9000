@@ -2,21 +2,19 @@ import React from 'react';
 import Loading from '../components/Loading';
 import { render } from '@testing-library/react-native';
 
+jest.useFakeTimers();
+
 describe('<Loading />', () => {
-    it('Default tekstinä on Loading...', () => {
+    it('should display "Loading..." as default', () => {
         const { getAllByText, getByTestId } = render(<Loading />);
 
-        // Loading teksti löytyy
         expect(getAllByText('Loading...')).toBeDefined();
-        // Rinkula löytyy
         expect(getByTestId('progress')).toBeDefined();
     });
-    it('Propsina annettu teksti välittyy oikein...', () => {
+    it('should display custom loadingText', () => {
         const { getAllByText, getByTestId } = render(<Loading loadingText='TestingTest'/>);
 
-        // Oma teksti löytyy
         expect (getAllByText('TestingTest')).toBeDefined();
-        // Rinkulakomponentti löytyy
         expect(getByTestId('progress')).toBeDefined();
     });
 

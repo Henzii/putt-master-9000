@@ -1,5 +1,5 @@
 import { UPDATE_MY_SETTINGS } from "../../graphql/mutation";
-import { GET_ME, GET_ME_WITH_FRIENDS } from "../../graphql/queries";
+import { GET_ME, GET_ME_WITH_FRIENDS, SEARCH_USER } from "../../graphql/queries";
 import mockedUsers from "./mockedUsers";
 
 export default [
@@ -37,6 +37,24 @@ export default [
                     blockStatsSharing: false,
                     groupName: 'abc',
                     __typename: 'User'
+                }
+            }
+        }
+    },
+    {
+        request: {
+            query: SEARCH_USER,
+            variables: {
+                search: 'takenUsername'
+            }
+        },
+        result: {
+            data: {
+                searchUser: {
+                    users: [
+                        {id: 'mockedTakenUsername', name: 'takenUsername'}
+                    ],
+                    hasMore: false
                 }
             }
         }

@@ -101,11 +101,12 @@ export default function FirstTime() {
                 label={`Username${errors.userName ? ` - ${errors.userName}` : ''}`}
                 autoComplete='off'
                 mode="outlined"
+                testID='username'
                 onBlur={handleValidateUsername}
                 error={'userName' in errors}
                 value={username}
                 onChangeText={(text) => setUsername(text)}
-                right={<TextInput.Icon name="reload" onPress={() => setUsername(UsernameGenerator.generateUsername())} />}
+                right={<TextInput.Icon testID name="reload" onPress={() => setUsername(UsernameGenerator.generateUsername())} />}
             />
             <Spacer />
             <Title>Password</Title>
@@ -116,6 +117,7 @@ export default function FirstTime() {
                 label={`Password${errors.password1 ? ` - ${errors.password1}` : ''}`}
                 autoComplete='off'
                 mode="outlined"
+                testID="password1"
                 error={'password1' in errors}
                 onBlur={validateForm}
                 value={password1}
@@ -128,6 +130,7 @@ export default function FirstTime() {
                 autoComplete='off'
                 onBlur={validateForm}
                 error={'password2' in errors}
+                testID="password2"
                 mode="outlined"
                 value={password2}
                 onChangeText={(text) => setPassword2(text)}
@@ -146,7 +149,7 @@ export default function FirstTime() {
                 onChangeText={(text) => setEmail(text)}
             />
             <Spacer />
-            <Button mode="contained" disabled={Object.keys(errors).length > 0} onPress={handleSignUp} >Sign up!</Button>
+            <Button mode="contained" disabled={Object.keys(errors).length > 0} onPress={handleSignUp} testID="signup">Sign up!</Button>
         </Container>
     );
 }

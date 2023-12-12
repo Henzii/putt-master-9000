@@ -4,12 +4,14 @@ import { render, fireEvent } from '@testing-library/react-native';
 
 import { defaultValues as dv } from '../components/AlcConverter';
 
-describe('<AlcConverter /> testit', () => {
-    it('Renderöityy oikein...', () => {
+jest.useFakeTimers();
+
+describe('<AlcConverter />', () => {
+    it('renders', () => {
         const puu = render(<AlcConverter />).toJSON();
         expect(puu).toMatchSnapshot();
     });
-    it('Laskuri toimii...', () => {
+    it('counter works properly', () => {
         const { getByTestId } = render(<AlcConverter />);
         const result = getByTestId('beers');
         // Alussa 0
@@ -28,6 +30,6 @@ describe('<AlcConverter /> testit', () => {
                         dv.wine.multiplier * 4 +
                         dv.normal.multiplier * 6;
         summa = Math.round(summa*100)/100;
-        expect(result.children[0]).toContain(summa);
+        expect(result.children[0]).toContain(summa.toString());
     });
 });
