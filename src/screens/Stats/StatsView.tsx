@@ -56,7 +56,7 @@ export default function StatsView({ selectedCourse, selectedUser }: StatsViewPro
         return <View><Text> No data...</Text></View>;
     }
     return (
-        <Container withScrollView noPadding>
+        <Container noPadding>
             <Container>
                 <Headline>{`${selectedUser.name}'s`} stats</Headline>
                 <Title>

@@ -11,6 +11,8 @@ import { RootState } from '../../utils/store';
 import { setSelectedLayout } from '../../reducers/selectedLayoutReducer';
 import { User } from '../../types/user';
 import { Course, Layout } from '../../types/course';
+import Activity from './Activity';
+import Divider from '../../components/ThemedComponents/Divider';
 
 const Stats = () => {
     const [selectedUser, setSelectedUser] = useState<User>();
@@ -23,7 +25,7 @@ const Stats = () => {
         dispatch(setSelectedLayout(course, layout));
         setShowSelectCourse(false);
     };
-    const {me} = useMe();
+    const { me } = useMe();
     useEffect(() => {
         if (!selectedUser && me) {
             setSelectedUser(me);
@@ -49,16 +51,18 @@ const Stats = () => {
                 {selectedUser?.id !== me?.id && <Button onPress={() => setSelectedUser(me || undefined)}>My stats</Button>}
                 <Button onPress={() => setShowSelectFriend(true)}>Spy friend</Button>
             </SplitContainer>
-            {selectedCourse && selectedUser
-                ? <StatsView selectedCourse={selectedCourse} selectedUser={selectedUser} />
-                : (
-                    <Container>
+            <Container withScrollView noPadding>
+                <Activity />
+                <Divider />
+                {selectedCourse && selectedUser
+                    ? <StatsView selectedCourse={selectedCourse} selectedUser={selectedUser} />
+                    : (
                         <Paragraph>
-                            No course/layout selected.
+                            Select course and layout to view layout specific stats.
                         </Paragraph>
-                    </Container>
-                )
-            }
+                    )
+                }
+            </Container>
         </>
     );
 };

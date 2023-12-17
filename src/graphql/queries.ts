@@ -196,3 +196,16 @@ export const BEST_POOL = gql`
         }
     }
 `;
+
+export const GET_ACTIVITY = gql`
+  query GetPastActivity ($year: Int) {
+    getPastActivity(year: $year) {
+      from
+      to
+      months {
+        games
+        month
+      }
+    }
+  }
+`;
