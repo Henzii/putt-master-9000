@@ -8,6 +8,7 @@ import { BarChart } from 'react-native-chart-kit';
 import { theme } from '../../utils/theme';
 import { AbstractChartConfig } from 'react-native-chart-kit/dist/AbstractChart';
 import PrevNextSelector from '../../components/PrevNextSelector';
+import { User } from '../../types/user';
 
 const monthNames = [
     'Jan',
@@ -24,9 +25,19 @@ const monthNames = [
     'Dec'
 ];
 
-const Activity = () => {
+type Props = {
+    selectedUser?: User
+}
+
+const Activity = ({selectedUser}: Props) => {
     const [selectedYear, setSelectedYear] = useState<number>();
-    const { data, error, loading } = useQuery<ActivityResponse>(GET_ACTIVITY, {variables: {year: selectedYear}});
+    const { data, error, loading } = useQuery<ActivityResponse>(GET_ACTIVITY, {
+        variables: {
+            year: selectedYear,
+            userId: selectedUser?.id
+        },
+        fetchPolicy: 'cache-first'
+    });
 
     if (loading) {
         return <Loading noFullScreen />;
@@ -34,10 +45,6 @@ const Activity = () => {
 
     if (error) {
         return <><Text style={{ fontWeight: 'bold' }}>Error!</Text><Text>Loading past activity failed :/</Text></>;
-    }
-
-    if (!data?.getPastActivity) {
-        return <Text>You haven&apos;t played any games apparently.</Text>;
     }
 
     const chartData = {
@@ -56,12 +63,12 @@ const Activity = () => {
 
     return (
         <View>
-            <Headline style={{paddingLeft: 15}}>Your activity</Headline>
+            <Headline style={{paddingLeft: 15}}>{selectedUser ? `${selectedUser.name}'s` : 'Your'} activity</Headline>
             <PrevNextSelector
                 options={selectorOptions}
                 onChange={setSelectedYear}
                 selected={selectedYear}
-                delay={1000}
+                delay={500}
             />
             <BarChart
                 data={chartData}
@@ -75,7 +82,7 @@ const Activity = () => {
                 showValuesOnTopOfBars
             />
             <Text style={{padding: 5}}>
-                Total of {data?.getPastActivity.months.reduce((acc, curr) => acc + curr.games, 0)} games between {data.getPastActivity.from} - {data.getPastActivity.to}
+                Total of {data?.getPastActivity.months.reduce((acc, curr) => acc + curr.games, 0)} games between {data?.getPastActivity.from} - {data?.getPastActivity.to}
             </Text>
         </View>
     );

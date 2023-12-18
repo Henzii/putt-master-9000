@@ -6,7 +6,6 @@ import FriendsList from '../../components/FriendsList';
 import SelectCourses from '../../components/SelectCourse/SelectCourse';
 import Container from '../../components/ThemedComponents/Container';
 import Loading from '../../components/Loading';
-import { useBackButton } from '../../components/BackButtonProvider';
 import NumberedTitle from '../../components/NumberedTitle';
 import Divider from '../../components/ThemedComponents/Divider';
 import Spacer from '../../components/ThemedComponents/Spacer';
@@ -31,7 +30,6 @@ const CreateGame = (props: CreateGameProps) => {
     const [selectCourse, setSelectCourse] = useState(false);
     const [addFriend, setAddFriend] = useState(false);
     const me = useMe();
-    const backButton = useBackButton();
     const {getHc, getBest, getField, loading} = useStats(
         (newGameData.layout?.id as string | undefined),
         (newGameData.players.map(player => player.id) as string[]),
@@ -86,15 +84,13 @@ const CreateGame = (props: CreateGameProps) => {
         if (props.onCreate) props.onCreate(newGameData);
     };
     const handleShowFriendsList = () => {
-        backButton.setCallBack(() => setAddFriend(false));
         setAddFriend(true);
     };
     const handleSetSelectCourse = () => {
-        backButton.setCallBack(() => setSelectCourse(false));
         setSelectCourse(true);
     };
-    if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} title="Select course" />;
-    if (addFriend) return <FriendsList onClick={handleAddFriend} hideRemoveButton multiSelect />;
+    if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} title="Select course" onBackAction={() => setSelectCourse(false)} />;
+    if (addFriend) return <FriendsList onClick={handleAddFriend} hideRemoveButton multiSelect onBackAction={() => setAddFriend(false)} />;
 
     const tyyli = createStyle();
     const {course, layout} = newGameData;

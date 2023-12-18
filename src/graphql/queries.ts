@@ -198,8 +198,8 @@ export const BEST_POOL = gql`
 `;
 
 export const GET_ACTIVITY = gql`
-  query GetPastActivity ($year: Int) {
-    getPastActivity(year: $year) {
+  query GetPastActivity ($year: Int, $userId: ID) {
+    getPastActivity(year: $year, userId: $userId) {
       from
       to
       months {

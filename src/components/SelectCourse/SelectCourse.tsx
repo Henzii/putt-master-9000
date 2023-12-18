@@ -9,14 +9,16 @@ import Loading from "../Loading";
 import Container from "../ThemedComponents/Container";
 import SingleCourse from './SingleCourse';
 import { Coordinates, Course, Layout, NewLayout } from "../../types/course";
+import { useBackButton } from "../BackButtonProvider";
 
 type SelectCoursesProps = {
     onSelect?: (layout: Layout, course: Course) => void,
     title?: string,
     showDistance?: boolean,
     showTraffic?: boolean,
+    onBackAction?: () => void
 }
-const SelectCourses = ({ onSelect, title, showDistance = true }: SelectCoursesProps) => {
+const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true }: SelectCoursesProps) => {
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
     const { courses, loading, addLayout, addCourse, fetchMore, error, gpsAvailable, ...restOfUseCourses } = useCourses(showDistance);
@@ -24,6 +26,14 @@ const SelectCourses = ({ onSelect, title, showDistance = true }: SelectCoursesPr
     const [expandedCourse, setExpandedCourse] = useState<Course | null>(null);
     const ref = useRef<FlatList>(null);
     const { colors } = useTheme();
+    const backButton = useBackButton();
+
+    useEffect(() => {
+        if (onBackAction) {
+            backButton.setCallBack(onBackAction);
+        }
+        return () => backButton.setCallBack(undefined);
+    });
 
     useEffect(() => {
         if (expandedCourse) {

@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, FlatList, Pressable, StyleSheet, View } from "react-native";
 import { Avatar, Button, Checkbox, IconButton, Modal, Portal, Text, useTheme } from 'react-native-paper';
 import { REMOVE_FRIEND } from '../graphql/mutation';
@@ -13,12 +13,14 @@ import SplitContainer from './ThemedComponents/SplitContainer';
 import { useNavigate } from 'react-router-native';
 import { InitialsAndColors, initialsAndColorGenerator } from '../utils/initialsAndColorGenerator';
 import { User } from '../types/user';
+import { useBackButton } from './BackButtonProvider';
 
 
 type FriendListProps = {
     onClick?: (friends: Friend[]) => void,
     hideRemoveButton?: boolean,
-    multiSelect?: boolean
+    multiSelect?: boolean,
+    onBackAction?: () => void
 }
 export type Friend = {
     id: number | string,
@@ -30,6 +32,15 @@ const FriendsList = (props: FriendListProps) => {
     const [removeFriend] = useMutation(REMOVE_FRIEND, { refetchQueries: [{ query: GET_ME_WITH_FRIENDS }] });
     const [selectedFriends, setSelectedFriends] = useState<Friend[]>([]);
     const navi = useNavigate();
+    const backButton = useBackButton();
+
+    useEffect(() => {
+        if (props.onBackAction) {
+            backButton.setCallBack(props.onBackAction);
+            return () => backButton.setCallBack(undefined);
+        }
+    }, []);
+
     const handleFriendClick = (friend: Friend) => {
         if (!props.multiSelect) {
             if (props.onClick) {

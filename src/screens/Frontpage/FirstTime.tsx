@@ -106,7 +106,7 @@ export default function FirstTime() {
                 error={'userName' in errors}
                 value={username}
                 onChangeText={(text) => setUsername(text)}
-                right={<TextInput.Icon testID name="reload" onPress={() => setUsername(UsernameGenerator.generateUsername())} />}
+                right={<TextInput.Icon name="reload" onPress={() => setUsername(UsernameGenerator.generateUsername())} />}
             />
             <Spacer />
             <Title>Password</Title>
