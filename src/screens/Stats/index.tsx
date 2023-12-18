@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button, Paragraph } from 'react-native-paper';
 import SelectCourses from '../../components/SelectCourse/SelectCourse';
 import SplitContainer from '../../components/ThemedComponents/SplitContainer';
@@ -13,6 +13,9 @@ import { User } from '../../types/user';
 import { Course, Layout } from '../../types/course';
 import Activity from './Activity';
 import Divider from '../../components/ThemedComponents/Divider';
+import Loading from '../../components/Loading';
+import Spacer from '../../components/ThemedComponents/Spacer';
+import { View } from 'react-native';
 
 const Stats = () => {
     const [selectedUser, setSelectedUser] = useState<User>();
@@ -26,42 +29,43 @@ const Stats = () => {
         setShowSelectCourse(false);
     };
     const { me } = useMe();
-    useEffect(() => {
-        if (!selectedUser && me) {
-            setSelectedUser(me);
-        }
-    }, [me]);
+
     const handleFriendSelect = (friends?: Friend[]) => {
         if (friends) {
             setSelectedUser(friends[0] as User);
-        } else if (me) {
-            setSelectedUser(me);
         }
         setShowSelectFriend(false);
     };
+
+    if (!me) return <Loading />;
     if (showSelectCourse) {
-        return <SelectCourses onSelect={handleCourseSelect} showTraffic={false} />;
+        return <SelectCourses onSelect={handleCourseSelect} showTraffic={false} onBackAction={() => setShowSelectCourse(false)} />;
     } else if (showSelectFriend) {
-        return <FriendsList onClick={handleFriendSelect} hideRemoveButton />;
+        return <FriendsList onClick={handleFriendSelect} hideRemoveButton onBackAction={() => setShowSelectFriend(false)} />;
     }
     return (
         <>
             <SplitContainer spaceAround>
-                <Button onPress={() => setShowSelectCourse(true)}>Select course</Button>
-                {selectedUser?.id !== me?.id && <Button onPress={() => setSelectedUser(me || undefined)}>My stats</Button>}
-                <Button onPress={() => setShowSelectFriend(true)}>Spy friend</Button>
+                {selectedUser && <Button onPress={() => setSelectedUser(undefined)}>My stats</Button>}
+                <Button onPress={() => setShowSelectFriend(true)} icon="incognito">Spy a friend</Button>
             </SplitContainer>
-            <Container withScrollView noPadding>
-                <Activity />
+            <Container withScrollView noPadding fullHeight>
+                <Activity selectedUser={selectedUser} />
                 <Divider />
-                {selectedCourse && selectedUser
-                    ? <StatsView selectedCourse={selectedCourse} selectedUser={selectedUser} />
-                    : (
-                        <Paragraph>
-                            Select course and layout to view layout specific stats.
-                        </Paragraph>
-                    )
-                }
+                {selectedCourse ? (
+                    <>
+                        <View style={{paddingHorizontal: 10}}>
+                            <Button icon="golf" onPress={() => setShowSelectCourse(true)} mode="outlined">Change course</Button>
+                        </View>
+                        <StatsView selectedCourse={selectedCourse} selectedUser={selectedUser ?? me} />
+                    </>
+                ) : (
+                    <Container>
+                        <Paragraph>No course selected. Select a course to view layout specific stats.</Paragraph>
+                        <Spacer />
+                        <Button icon="golf" onPress={() => setShowSelectCourse(true)} mode="contained">Select course</Button>
+                    </Container>
+                )}
             </Container>
         </>
     );

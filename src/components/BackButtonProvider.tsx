@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, createContext, useContext, useState } from "react";
+import React, { PropsWithChildren, createContext, useContext, useRef } from "react";
 import { useNavigate } from "react-router-native";
 
 const BackContext = createContext<BackActions>({} as BackActions);
@@ -7,29 +7,29 @@ export const useBackButton = () => useContext(BackContext);
 
 interface BackActions {
     setDestination: (dest: string) => void,
-    setCallBack: (cb: () => void) => void,
+    setCallBack: (cb?: () => void) => void,
     goBack: () => void,
 }
 
 export default function BackButtonProvider ( {children}: PropsWithChildren) {
-    const [destination, setDestination] = useState<string | undefined>();
-    const [callBack, setStateCallBack] = useState<() => void | undefined>();
+    const destination = useRef<string | undefined>();
+    const callBack = useRef<() => void>();
     const navigate = useNavigate();
 
     const backActions = {
         setDestination: (dest: string | undefined) => {
-            setDestination(dest);
+            destination.current = dest;
         },
-        setCallBack: (cb: () => void | undefined) => {
-            setStateCallBack(() => cb);
+        setCallBack: (cb?: () => void) => {
+            callBack.current = cb;
         },
         goBack: () => {
-            if (callBack) {
-                callBack();
-                setStateCallBack(undefined);
-            } else if (destination) {
-                navigate(destination);
-                setDestination(undefined);
+            if (callBack.current) {
+                callBack.current();
+                callBack.current = undefined;
+            } else if (destination.current) {
+                navigate(destination.current);
+                destination.current = undefined;
             } else {
                 navigate(-1);
             }
