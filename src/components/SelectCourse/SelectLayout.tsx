@@ -31,14 +31,25 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
     const handleLayoutSelect = (layout: Layout) => {
         if (onSelect) onSelect(layout, course);
     };
+
     const handleEditLayout = (layout: Layout) => {
         setEditedLayout(layout);
         setAddLayoutModal(true);
     };
+    const handleAddNewLayout = () => {
+        if (editedLayout) {
+            setEditedLayout(undefined);
+        }
+        setAddLayoutModal(true);
+    };
+
     const handleStatsClick = (layout: Layout) => {
         dispatch(setSelectedLayout(course, layout));
         navi('/stats');
     };
+
+    const layouts = [...course.layouts].sort(a => a.deprecated ? 1 : -1);
+
     return (
         <View>
             <Portal>
@@ -58,8 +69,16 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
             <Divider margin={3} opacity={1} />
             <Spacer size={5} />
 
-            {course.layouts.map(layout => (
-                <View key={layout.id} style={[{ backgroundColor: colors.primary }, styles.layout]}>
+            {layouts.map(layout => (
+                <View
+                    key={layout.id}
+                    style={[{backgroundColor: colors.primary}, styles.layout, layout.deprecated && styles.deprecatedLayout]}
+                >
+                    {layout.deprecated && (
+                        <View style={styles.deprecatedTextView}>
+                            <Text style={styles.deprecatedText}>OBSOLETE</Text>
+                        </View>
+                    )}
                     <TouchableRipple onPress={() => handleLayoutSelect(layout)} style={{flex: 1}}>
                         <View>
                             <Text style={styles.layoutName}>{layout.name}</Text>
@@ -75,7 +94,7 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
                 </View>
             ))}
             <View style={styles.buttons}>
-                <Button onPress={() => setAddLayoutModal(true)} icon="text-box-plus-outline" uppercase={false} mode="outlined" style={styles.button}>Add layout</Button>
+                <Button onPress={handleAddNewLayout} icon="text-box-plus-outline" uppercase={false} mode="outlined" style={styles.button}>Add layout</Button>
 
                 {/* Not implemented*/}
                 {(course.canEdit && false) && <Button icon="file-edit-outline" uppercase={false} mode="outlined" style={styles.button}>Edit course</Button>}
@@ -85,6 +104,26 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
 };
 
 const styles = StyleSheet.create({
+    deprecatedLayout: {
+        backgroundColor: '#999999',
+        overlayColor: 'black'
+    },
+    deprecatedTextView: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: 0.2,
+        marginHorizontal: 7,
+        marginVertical: 9
+    },
+    deprecatedText: {
+        fontSize: 40,
+        transform: [
+            {rotate: '-7deg'}
+        ]
+    },
     layout: {
         borderRadius: 7,
         marginTop: 4,
@@ -93,7 +132,7 @@ const styles = StyleSheet.create({
         paddingVertical: 9,
         flexDirection: 'row',
         borderWidth: 1,
-        borderColor: '#00000050'
+        borderColor: '#00000050',
     },
     layoutName: {
         color: 'white',

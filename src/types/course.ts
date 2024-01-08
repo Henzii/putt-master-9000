@@ -28,6 +28,7 @@ export type Layout = {
     holes: number,
     id: string | number,
     canEdit?: boolean,
+    deprecated: boolean
 }
 
 export type GetCoursesResponse = {
