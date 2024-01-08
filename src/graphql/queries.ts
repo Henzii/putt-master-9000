@@ -58,6 +58,7 @@ query ($limit: Int!, $offset: Int!, $search: String, $coordinates: [Float], $max
         holes
         canEdit
         names
+        deprecated
       }
     }
   }
