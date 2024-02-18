@@ -1504,7 +1504,7 @@ exports[`<Settings /> test render properly 1`] = `
             }
           }
         >
-          5.8.0
+          5.8.1
         </Text>
       </View>
       <View
@@ -1531,7 +1531,7 @@ exports[`<Settings /> test render properly 1`] = `
             }
           }
         >
-          83
+          84
         </Text>
       </View>
     </View>
