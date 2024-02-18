@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, FlatList, LayoutChangeEvent, Pressable } from 'react-native';
+import { View, Text, FlatList, LayoutChangeEvent } from 'react-native';
 import { useSettings } from '../../../components/LocalSettingsProvider';
 import useStats from '../../../hooks/useStats';
 import Statsbar from './Statsbar';
 import SplitContainer from '../../../components/ThemedComponents/SplitContainer';
-import { ActivityIndicator, useTheme } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
 import type { Scorecard } from '../../../types/game';
+import { ScoreButton } from './ScoreButton';
+import { styles } from './styles';
 
 type PlayerArgs = {
     player: Scorecard,
@@ -19,14 +21,7 @@ type PendingState = {
     selectedRound: number,
     pendingScore: number
 }
-/**
- *  ### Pejaala
- *  Renderöi yhden pelaajan + tulosnapit
- *
- *  @param player Pelaajan Scorecard
- *  @param selectedRound Valittu kierros
- *  @param setScore callback tuloksen asettamiselle. Saa parateriksi tuloksen
- */
+
 const Player = React.memo(function Scorecard ({ player, selectedRound, setScore, par, layoutId }: PlayerArgs) {
     const [pendingButton, setPendingButton] = useState<PendingState>();
     const listRef = useRef<FlatList>(null);
@@ -35,12 +30,14 @@ const Player = React.memo(function Scorecard ({ player, selectedRound, setScore,
     const napitData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const stats = useStats(layoutId, [player.user.id as string]);
 
-    // Tulosten päivittyessä poistetaan pelaajalta pending
     useEffect(() => {
-        if (pendingButton) setPendingButton(undefined);
-    }, [player]);
+        if (pendingButton) {
+            if (player.scores[pendingButton.selectedRound] === pendingButton.pendingScore) {
+                setPendingButton(undefined);
+            }
+        }
+    }, [player, pendingButton]);
 
-    // Valittu rata vaihtuu, scrollataan alkuun
     useEffect(() => {
         listRef.current?.scrollToIndex({ index: 0 });
     }, [selectedRound]);
@@ -55,14 +52,14 @@ const Player = React.memo(function Scorecard ({ player, selectedRound, setScore,
 
     const plusMinus = player.plusminus ?? 0;
     return (
-        <View style={[tyyli.container, {backgroundColor: theme.colors.surface}]} onLayout={handleOnLayout}>
-            <SplitContainer style={tyyli.header}>
-                <Text style={tyyli.title}>{player.user.name}</Text>
+        <View style={[styles.container, {backgroundColor: theme.colors.surface}]} onLayout={handleOnLayout}>
+            <SplitContainer style={styles.header}>
+                <Text style={styles.title}>{player.user.name}</Text>
                 {!settings.getBoolValue('HidePlusMinus') &&
-                    <Text style={tyyli.plusMinus}>{`${plusMinus > 0 ? '+' : ''}${plusMinus}`}</Text>
+                    <Text style={styles.plusMinus}>{`${plusMinus > 0 ? '+' : ''}${plusMinus}`}</Text>
                 }
             </SplitContainer>
-                <View style={tyyli.scoreButtons}>
+                <View style={styles.scoreButtons}>
                     <FlatList
                         ref={listRef}
                         data={napitData}
@@ -89,95 +86,6 @@ const Player = React.memo(function Scorecard ({ player, selectedRound, setScore,
         </View>
 
     );
-});
-
-const ScoreButton = ({ onClick, number, selected, pending, par }: { par?: number, onClick?: (score: number) => void, number: number, selected: boolean, pending: boolean }) => {
-
-    const bgStyles = [
-        tyyli.scoreButton,
-        (par === number) && tyyli.scoreButtonPar,
-        selected && tyyli.scoreButtonSelected,
-        pending && tyyli.scoreButtonPending
-    ];
-    const handleClick = () => {
-        onClick?.(number);
-    };
-
-    return (
-        <Pressable
-            style={bgStyles}
-            onPress={handleClick}
-        >
-            {pending ? (
-                <ActivityIndicator />
-            ) : (
-                <Text style={tyyli.scoreButtonText}>{number}</Text>
-            )}
-        </Pressable>
-    );
-};
-
-const tyyli = StyleSheet.create({
-    scoreButton: {
-        marginRight: 5,
-        borderWidth: 1,
-        borderColor: '#000',
-        backgroundColor: 'lightgray',
-        width: 45,
-        height: 45,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 7,
-        elevation: 2,
-    },
-    throwingOrderText: {
-        fontSize: 12,
-        opacity: 0.2,
-        marginTop: -6,
-    },
-    scoreButtons: {
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-    },
-    scoreButtonPending: {
-        borderColor: 'green',
-        backgroundColor: '#D3DFD3'
-    },
-    scoreButtonPar: {
-        borderWidth: 2,
-    },
-    scoreButtonText: {
-        fontSize: 18,
-        fontWeight: '600',
-        color: '#4a4a4a'
-    },
-    scoreButtonSelected: {
-        backgroundColor: '#8ecf8a',
-        borderColor: 'green',
-    },
-    plusMinus: {
-        fontSize: 21,
-        fontWeight: 'bold',
-    },
-    container: {
-        elevation: 3,
-        width: '96%',
-        alignSelf: 'center',
-        marginBottom: 8,
-        borderRadius: 4,
-    },
-    header: {
-        backgroundColor: "#d8e8d8",
-        paddingVertical: 7,
-        paddingHorizontal: 15,
-        borderTopRightRadius: 4,
-        borderTopLeftRadius: 4,
-    },
-    title: {
-        fontSize: 21,
-        fontWeight: '600',
-    }
 });
 
 export default Player;
