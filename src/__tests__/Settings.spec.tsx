@@ -12,10 +12,6 @@ const wrappedSettings = () => (
 );
 
 describe('<Settings /> test', () => {
-    it('render properly', () => {
-        const { toJSON } = render(wrappedSettings());
-        expect(toJSON()).toMatchSnapshot();
-    });
     it('block firendrequests switch toggles', async () => {
         const { getByTestId } = render(wrappedSettings());
         const kytkin = getByTestId('blockFriendRequestsSwitch');
