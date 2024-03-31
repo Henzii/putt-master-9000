@@ -3,7 +3,7 @@ import { CORE_GAME_INFO, CORE_SCORECARD_INFO } from "./fragments";
 
 export const GAME_SUBSCRIPTION = gql`
   subscription($gameId: ID!) {
-    scorecardUpdated(gameId: $gameId) {
+    gameUpdated(gameId: $gameId) {
       game {
         ...CoreGameInfo
         scorecards {
@@ -18,7 +18,6 @@ export const GAME_SUBSCRIPTION = gql`
           beers
         }
       }
-      updatedScorecardPlayerId
       updaterId
     }
   }
