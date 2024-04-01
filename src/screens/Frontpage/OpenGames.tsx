@@ -4,10 +4,8 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { Button, useTheme } from 'react-native-paper';
 import SplitContainer from '../../components/ThemedComponents/SplitContainer';
 import Spacer from '../../components/ThemedComponents/Spacer';
-
 import Svg, {Path} from 'react-native-svg';
 import { useNavigate } from 'react-router-native';
-import Icon from 'react-native-paper/src/components/Icon';
 import { parseDate } from '../../utils/dates';
 import { getCompletedHoles } from './utils';
 
@@ -25,7 +23,6 @@ const OpenGames = ({openGames}: OpenGamesProps) => {
             <View style={styles.info}>
                 <SplitContainer>
                     <Text>You have {openGames.length} unfinished games</Text>
-                    <Icon source={"information-outline"} size={20} />
                 </SplitContainer>
             </View>
         );
@@ -96,7 +93,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#E5F9FF',
         width: '90%',
         padding: 10,
-        margin: 15,
+        marginTop: 15,
     }
 });
 
