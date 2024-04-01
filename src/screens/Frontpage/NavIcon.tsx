@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, ImageSourcePropType, Image } from "react-native";
+import { useTheme } from 'react-native-paper';
 import { Link } from 'react-router-native';
 
 type NavIconProps = {
     icon: ImageSourcePropType
     title: string
     to: string
-    backgroundColor: string
+    backgroundColor?: string
+    iconColor?: string
+    onClick?: () => void
 }
 
-const NavIcon = ({title, to, icon, backgroundColor} : NavIconProps) => {
+const NavIcon = ({title, to, icon, backgroundColor, iconColor, onClick} : NavIconProps) => {
     const [pressed, setPressed] = useState(false);
+    const {colors} = useTheme();
+
     return (
-        <Link style={styles.container} to={to} underlayColor="none" onPressIn={() => setPressed(true)} onPressOut={() => setPressed(false)}>
+        <Link style={styles.container} to={to} onPress={onClick} underlayColor="none" onPressIn={() => setPressed(true)} onPressOut={() => setPressed(false)}>
             <View>
-                <View style={[styles.iconContainer, {backgroundColor}, pressed && {elevation: 0}]}>
-                    <Image source={icon} style={styles.icon} />
+                <View style={[styles.iconContainer, pressed && {elevation: 0}, {backgroundColor: backgroundColor || colors.surface}]}>
+                    <Image source={icon} style={styles.icon} tintColor={iconColor} />
                 </View>
                 <Text style={styles.text}>{title}</Text>
             </View>
@@ -29,6 +34,7 @@ const styles = StyleSheet.create({
     },
     iconContainer: {
         borderRadius: 12,
+        backgroundColor: '#EFFFEF',
         elevation: 8,
         padding: 15,
     },

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Game } from '../../types/game';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { Button, useTheme } from 'react-native-paper';
 import SplitContainer from '../../components/ThemedComponents/SplitContainer';
 import Spacer from '../../components/ThemedComponents/Spacer';
-import Svg, {Path} from 'react-native-svg';
 import { useNavigate } from 'react-router-native';
 import { parseDate } from '../../utils/dates';
 import { getCompletedHoles } from './utils';
+import RoundBottom from './RoundBottom';
 
 type OpenGamesProps = {
     openGames: Game[]
@@ -29,7 +29,6 @@ const OpenGames = ({openGames}: OpenGamesProps) => {
     }
 
     const game = openGames[0];
-    const screenWidth = Dimensions.get('window').width;
     const backgroundColor = `${colors.primary}`;
 
     const handleContinueGame = () => {
@@ -58,12 +57,7 @@ const OpenGames = ({openGames}: OpenGamesProps) => {
                     <Button icon="reload" style={styles.continueButton} color="black" onPress={handleContinueGame}>Continue</Button>
                 </View>
             </View>
-            <Svg width={screenWidth} height="40" style={{marginTop: -0.1}}>
-        <Path
-          d={`M-5,0 Q${screenWidth / 2},80 ${screenWidth+5},0 H0 Z`}
-          fill={backgroundColor}
-        />
-      </Svg>
+            <RoundBottom fill={colors.primary} />
         </View>
     );
 };

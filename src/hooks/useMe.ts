@@ -12,8 +12,8 @@ const useMe = (getFriends = false) => {
     // Jos getFriend, valitaan query jossa on ystävät mukana
     const query = getFriends ? GET_ME_WITH_FRIENDS : GET_ME;
 
-    const { data, loading, client, error } = useQuery<GetMeResponse>(query, { fetchPolicy: 'cache-and-network' });
-    const [loginMutation] = useMutation(LOGIN, { refetchQueries: [{ query: GET_ME }, { query: GET_ME_WITH_FRIENDS }], errorPolicy: 'all'});
+    const { data, loading, client, error, refetch } = useQuery<GetMeResponse>(query, { fetchPolicy: 'cache-and-network' });
+    const [loginMutation] = useMutation(LOGIN, {errorPolicy: 'all'});
     const [updateSettingsMutation] = useMutation(UPDATE_MY_SETTINGS, {
         // Päivitetään vastaus/uudet asetukset välimuistiin
         update: (cache, result) => {
@@ -45,6 +45,7 @@ const useMe = (getFriends = false) => {
         const result = await loginMutation({ variables: { user: username, password: password, pushToken } });
         const token = result.data.login;
         await AsyncStorage.setItem('token', token);
+        refetch();
         setLoggedIn(true);
     };
     const logout = async () => {
