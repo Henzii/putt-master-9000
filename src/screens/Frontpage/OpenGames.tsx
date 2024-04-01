@@ -33,7 +33,7 @@ const OpenGames = ({openGames}: OpenGamesProps) => {
 
     const game = openGames[0];
     const screenWidth = Dimensions.get('window').width;
-    const backgroundColor = `${colors.primary}EF`;
+    const backgroundColor = `${colors.primary}`;
 
     const handleContinueGame = () => {
         nav(`/game/${game.id}`);
@@ -49,7 +49,7 @@ const OpenGames = ({openGames}: OpenGamesProps) => {
                     <Text style={styles.secText}>{game.scorecards.length} players</Text>
                 </SplitContainer>
                 <SplitContainer>
-                <Text style={styles.medText}>{game.layout}</Text>
+                <Text style={styles.secText}>{game.layout}</Text>
                 <Text style={styles.secText}>{parseDate(game.startTime)}</Text>
                 </SplitContainer>
                 <SplitContainer>
@@ -61,7 +61,7 @@ const OpenGames = ({openGames}: OpenGamesProps) => {
                     <Button icon="reload" style={styles.continueButton} color="black" onPress={handleContinueGame}>Continue</Button>
                 </View>
             </View>
-            <Svg width={screenWidth} height="80" style={{marginTop: -1}}>
+            <Svg width={screenWidth} height="40" style={{marginTop: -0.1}}>
         <Path
           d={`M-5,0 Q${screenWidth / 2},80 ${screenWidth+5},0 H0 Z`}
           fill={backgroundColor}
@@ -86,13 +86,9 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 22
     },
-    medText: {
-        color: 'white',
-        fontSize: 19
-    },
     secText: {
         color: 'white',
-        fontSize: 16
+        fontSize: 14
     },
     info: {
         borderRadius: 10,

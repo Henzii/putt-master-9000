@@ -57,6 +57,7 @@ const createStyles = (topSafeArea: number) => StyleSheet.create({
         width: '100%',
         height: (70 + topSafeArea),
         paddingTop: topSafeArea,
+        elevation: 0,
         left: 0,
         right: 0,
         top: 0,
