@@ -120,6 +120,7 @@ ${CORE_GAME_INFO}
           id
           total
           plusminus
+          scores
           user {
             id
             name

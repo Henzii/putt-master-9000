@@ -11,15 +11,15 @@ import ErrorScreen from '../../components/ErrorScreen';
 import { useQuery } from '@apollo/client';
 import { GET_OLD_GAMES } from '../../graphql/queries';
 import firstTimeLaunched from '../../utils/firstTimeLaunched';
+import OpenGames from './OpenGames';
 
-const master = require('../../../assets/master2.png');
 const pilli = require('../../../assets/icons/pilli.png');
 const maali = require('../../../assets/icons/maali.png');
 const courses = require('../../../assets/icons/courses.png');
 const friends = require('../../../assets/icons/friends.png');
 const stats = require('../../../assets/icons/stats.png');
 const settings = require('../../../assets/icons/settings.png');
-const resume = require('../../../assets/icons/continue.png');
+// const resume = require('../../../assets/icons/continue.png');
 const achievement = require('../../../assets/icons/achievement.png');
 
 const Frontpage = () => {
@@ -45,28 +45,13 @@ const Frontpage = () => {
         );
     }
 
-    const openGamesCount = openGames.data?.getGames?.games?.length || 0;
-    let oldGamesText = `Browse old and open games.`;
-    if (openGamesCount > 0) {
-        oldGamesText += (openGamesCount === 1)
-            ? `\nYou have one open game at ${openGames.data.getGames.games[0].course}`
-            : `\nYou have ${openGamesCount} open games!`;
-    }
     return (
-        <Container noFlex withScrollView style={{ alignItems: 'center' }}>
-            <Image source={master} resizeMode='stretch' style={tyyli.kuva} />
+        <Container noFlex withScrollView style={{ alignItems: 'center' }} noPadding>
             {(logged) ?
                 <>
-                    {openGames?.data?.getGames?.games?.length === 1 &&
-                        <NaviCard
-                            title='Continue Game'
-                            text={`Continue game at ${openGames.data.getGames.games[0].course}`}
-                            to={`/game/${openGames.data.getGames.games[0].id}`}
-                            icon={resume}
-                        />
-                    }
+                    <OpenGames openGames={openGames.data?.getGames?.games ?? []} />
                     <NaviCard title='New Game' text="Create a new game!" to="/game?force" icon={pilli} />
-                    <NaviCard title="Old games" text={oldGamesText} to="/games" icon={maali} />
+                    <NaviCard title="Old games" text="Browse old and open games." to="/games" icon={maali} />
                     <NaviCard title="Courses" to="/courses" text="Add/browse/search courses." icon={courses} />
                     <NaviCard title="Friends" to="/friends" text="Find, add, kill friends. Or create one. <3" icon={friends} />
                     <NaviCard title="Stats" to="/stats" text="Check your stats, find your handicap. GRAPHS!" icon={stats} />
