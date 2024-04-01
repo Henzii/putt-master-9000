@@ -35,7 +35,7 @@ const Frontpage = () => {
 
     const handleOpenWebsite = async () => {
         const token = await AsyncStorage.getItem('token');
-        Linking.openURL(`https://fudisc.henzi.fi/${token}`);
+        Linking.openURL(`https://fudisc.henzi.fi/login?token=${token}`);
     };
 
     useEffect(() => {
