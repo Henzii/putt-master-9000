@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-native";
 import { useDispatch } from "react-redux";
 import { setSelectedLayout } from "../../reducers/selectedLayoutReducer";
 import { Course, Layout, NewLayout } from "../../types/course";
+import ExtraMenu from "./ExtraMenu";
 
 type SelecLayoutProps = {
     course: Course
@@ -95,9 +96,7 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
             ))}
             <View style={styles.buttons}>
                 <Button onPress={handleAddNewLayout} icon="text-box-plus-outline" uppercase={false} mode="outlined" style={styles.button}>Add layout</Button>
-
-                {/* Not implemented*/}
-                {(course.canEdit && false) && <Button icon="file-edit-outline" uppercase={false} mode="outlined" style={styles.button}>Edit course</Button>}
+                {(course.canEdit || isAdmin()) && <ExtraMenu course={course} />}
             </View>
         </View>
     );

@@ -111,3 +111,9 @@ export const ABANDON_GAME = gql`
         abandonGame(gameId: $gameId)
     }
 `;
+
+export const DELETE_COURSE = gql`
+    mutation deleteCourse($courseId: ID!) {
+        deleteCourse(courseId: $courseId)
+    }
+`;
