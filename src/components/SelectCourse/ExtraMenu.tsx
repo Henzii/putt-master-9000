@@ -55,6 +55,7 @@ const ExtraMenu = ({course}: Props) => {
                     onDismiss={() => setVisible(false)}
                     anchor={anchor}
                 >
+                    <Menu.Item title="Edit course" onPress={() => null} />
                     <Menu.Item title="Delete course" onPress={handleDeleteCourse} />
                 </Menu>
             </View>

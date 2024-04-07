@@ -1,47 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Button, IconButton, Modal, Portal, TouchableRipple, useTheme } from 'react-native-paper';
-import AddLayout from "../AddLayout";
+import { IconButton, TouchableRipple, useTheme } from 'react-native-paper';
 import Spacer from "../ThemedComponents/Spacer";
 import Divider from "../ThemedComponents/Divider";
 import useMe from "../../hooks/useMe";
 import { useNavigate } from "react-router-native";
 import { useDispatch } from "react-redux";
 import { setSelectedLayout } from "../../reducers/selectedLayoutReducer";
-import { Course, Layout, NewLayout } from "../../types/course";
-import ExtraMenu from "./ExtraMenu";
+import { Course, Layout } from "../../types/course";
 
 type SelecLayoutProps = {
     course: Course
     onSelect?: (layout: Layout, course: Course) => void,
-    onAddLayout?: (courseId: number | string, layout: NewLayout) => void,
+    onEditLayout: (layout: Layout) => void
 }
 
-const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
-    const [addLayoutModal, setAddLayoutModal] = useState(false);
-    const [editedLayout, setEditedLayout] = useState<Layout>();
+const SelectLayout = ({ course, onSelect, onEditLayout }: SelecLayoutProps) => {
     const navi = useNavigate();
     const dispatch = useDispatch();
     const { colors } = useTheme();
     const {isAdmin} = useMe();
-    const handleAddLayout = (layout: NewLayout) => {
-        if (onAddLayout) onAddLayout(course.id, layout);
-        setAddLayoutModal(false);
 
-    };
     const handleLayoutSelect = (layout: Layout) => {
         if (onSelect) onSelect(layout, course);
-    };
-
-    const handleEditLayout = (layout: Layout) => {
-        setEditedLayout(layout);
-        setAddLayoutModal(true);
-    };
-    const handleAddNewLayout = () => {
-        if (editedLayout) {
-            setEditedLayout(undefined);
-        }
-        setAddLayoutModal(true);
     };
 
     const handleStatsClick = (layout: Layout) => {
@@ -53,19 +34,6 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
 
     return (
         <View>
-            <Portal>
-                <Modal
-                    visible={addLayoutModal}
-                    onDismiss={() => setAddLayoutModal(false)}
-                    contentContainerStyle={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-                >
-                    <AddLayout
-                        onCancel={() => setAddLayoutModal(false)}
-                        onAdd={handleAddLayout}
-                        layout={editedLayout}
-                    />
-                </Modal>
-            </Portal>
             <Spacer size={5} />
             <Divider margin={3} opacity={1} />
             <Spacer size={5} />
@@ -89,15 +57,11 @@ const SelectLayout = ({ course, onSelect, onAddLayout }: SelecLayoutProps) => {
                     </TouchableRipple>
 
                     <View style={styles.icons}>
-                        {(layout.canEdit || isAdmin()) && <IconButton style={{marginRight: 2}} size={30} icon="file-edit-outline" color="white" onPress={() => handleEditLayout(layout)} />}
+                        {(layout.canEdit || isAdmin()) && <IconButton style={{marginRight: 2}} size={30} icon="file-edit-outline" color="white" onPress={() => onEditLayout(layout)} />}
                         <IconButton size={30} onPress={() => handleStatsClick(layout)} icon="chart-bar" color="white" style={{marginLeft: 0}} />
                     </View>
                 </View>
             ))}
-            <View style={styles.buttons}>
-                <Button onPress={handleAddNewLayout} icon="text-box-plus-outline" uppercase={false} mode="outlined" style={styles.button}>Add layout</Button>
-                {(course.canEdit || isAdmin()) && <ExtraMenu course={course} />}
-            </View>
         </View>
     );
 };
@@ -146,14 +110,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignSelf: 'center'
     },
-    buttons: {
-        marginTop: 12,
-        justifyContent: 'space-between',
-        flexDirection: 'row'
-    },
-    button: {
-        borderWidth: 1,
-    }
 });
 
 export default SelectLayout;
