@@ -1,26 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Text } from "react-native";
-import { List, Surface, TouchableRipple, useTheme } from "react-native-paper";
+import { Button, List, Modal, Portal, Surface, TouchableRipple, useTheme } from "react-native-paper";
 import { Course, Layout, NewLayout } from "../../types/course";
 import SelectLayout from "./SelectLayout";
+import AddLayout from '../AddLayout';
+import ExtraMenu from './ExtraMenu';
 
 type SingleCourseProps = {
     course: Course,
     onAddLayout?: (courseId: number | string, layout: NewLayout) => void,
+    onEditCoursePress: () => void
     onLayoutClick?: (layout: Layout, course: Course) => void,
     onCourseClick?: (course: Course | null, listIndex?: number) => void,
     expanded: boolean,
     dimmed: boolean,
     listIndex: number
     showDistance?: boolean,
+    isAdmin: boolean
 }
 
-const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expanded, dimmed, listIndex, showDistance = true}: SingleCourseProps) => {
+const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, onEditCoursePress, expanded, dimmed, listIndex, isAdmin, showDistance = true}: SingleCourseProps) => {
     const { colors } = useTheme();
+    const [addLayoutModal, setAddLayoutModal] = useState(false);
+    const [layoutToEdit, setLayoutToEdit] = useState<Layout>();
     const handleCourseClick = () => {
         if (!onCourseClick) return;
         if (expanded) onCourseClick(null);
         else onCourseClick(course, listIndex);
+    };
+
+    const handleAddLayoutClick = () => {
+        if (layoutToEdit) setLayoutToEdit(undefined);
+        setAddLayoutModal(true);
+    };
+
+    const addLayout = (layout: NewLayout) => {
+        onAddLayout?.(course.id, layout);
+        setAddLayoutModal(false);
+    };
+
+    const handleEditLayout = (layout: Layout) => {
+        setLayoutToEdit(layout);
+        setAddLayoutModal(true);
     };
 
     const description = course.layouts.length + ' layout' + (course.layouts.length !== 1 ? 's' : '');
@@ -29,6 +50,19 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expan
         <Surface
             style={[styles.container, { backgroundColor: colors.surface, borderColor: colors.primary }, dimmed && styles.notSelected]}
         >
+              <Portal>
+                <Modal
+                    visible={addLayoutModal}
+                    onDismiss={() => setAddLayoutModal(false)}
+                    contentContainerStyle={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                >
+                    <AddLayout
+                        onCancel={() => setAddLayoutModal(false)}
+                        onAdd={addLayout}
+                        layout={layoutToEdit}
+                    />
+                </Modal>
+            </Portal>
             <TouchableRipple onPress={handleCourseClick}>
                 <View style={styles.header}>
                     <View style={{ flex: 1 }}>
@@ -47,7 +81,15 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expan
                 </View>
             </TouchableRipple>
 
-            {expanded && <SelectLayout course={course} onSelect={onLayoutClick} onAddLayout={onAddLayout} />}
+            {expanded && (
+                <View>
+                    <SelectLayout course={course} onSelect={onLayoutClick} onEditLayout={handleEditLayout} />
+                    <View style={styles.bottomButtons}>
+                        <Button onPress={handleAddLayoutClick} mode='outlined' icon="text-box-plus-outline" uppercase={false}>Add layout</Button>
+                        {(course.canEdit || isAdmin) && <ExtraMenu course={course} onEditCoursePress={onEditCoursePress} />}
+                    </View>
+                </View>
+            )}
         </Surface>
     );
 };
@@ -92,7 +134,12 @@ const styles = StyleSheet.create({
         margin: 0,
         padding: 0,
     },
-
+    bottomButtons: {
+        marginTop: 12,
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        alignItems: 'center'
+    }
 });
 
 export default SingleCourse;

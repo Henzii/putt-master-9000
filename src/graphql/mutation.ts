@@ -16,8 +16,8 @@ export const ADD_LAYOUT = gql`
     }
 `;
 export const ADD_COURSE = gql`
-    mutation ($name: String!, $coordinates: InputLocation) {
-        addCourse(name: $name, coordinates: $coordinates) {
+    mutation ($name: String!, $coordinates: InputLocation, $courseId: ID) {
+        addCourse(name: $name, coordinates: $coordinates, courseId: $courseId) {
             id
             name
             layouts {
@@ -109,5 +109,11 @@ export const DELETE_ACCOUNT = gql`
 export const ABANDON_GAME = gql`
     mutation abandonGame($gameId: ID!) {
         abandonGame(gameId: $gameId)
+    }
+`;
+
+export const DELETE_COURSE = gql`
+    mutation deleteCourse($courseId: ID!) {
+        deleteCourse(courseId: $courseId)
     }
 `;
