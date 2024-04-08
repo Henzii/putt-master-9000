@@ -10,6 +10,7 @@ import Container from "../ThemedComponents/Container";
 import SingleCourse from './SingleCourse';
 import { Coordinates, Course, Layout, NewLayout } from "../../types/course";
 import { useBackButton } from "../BackButtonProvider";
+import useMe from "../../hooks/useMe";
 
 type SelectCoursesProps = {
     onSelect?: (layout: Layout, course: Course) => void,
@@ -21,12 +22,14 @@ type SelectCoursesProps = {
 const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true }: SelectCoursesProps) => {
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
+    const [courseToEdit, setCourseToEdit] = useState<Course>();
     const { courses, loading, addLayout, addCourse, fetchMore, error, gpsAvailable, ...restOfUseCourses } = useCourses(showDistance);
     const searchInput = useTextInput({ defaultValue: '', callBackDelay: 500 }, restOfUseCourses.setSearchString);
     const [expandedCourse, setExpandedCourse] = useState<Course | null>(null);
     const ref = useRef<FlatList>(null);
     const { colors } = useTheme();
     const backButton = useBackButton();
+    const {isAdmin} = useMe();
 
     useEffect(() => {
         if (onBackAction) {
@@ -44,16 +47,20 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true }: S
     const handleAddLayout = (courseId: number | string, layout: NewLayout) => {
         addLayout(courseId, layout);
     };
+
     const handleClickLayout = (layout: Layout, course: Course) => {
         if (onSelect) onSelect(layout, course);
     };
+
     const handleClickCourse = (course: Course | null) => {
         setExpandedCourse(course ?? null);
     };
-    const handleAddCourse = (newCourseName: string, coordinates: Coordinates) => {
-        addCourse(newCourseName, coordinates);
+
+    const handleAddCourse = (newCourseName: string, coordinates: Coordinates, courseId?: string) => {
+        addCourse(newCourseName, coordinates, courseId);
         setDisplayAddCourse(false);
     };
+
     const handleClickSearch = () => {
         if (!displaySearchBar) {
             setDisplaySearchBar(true);
@@ -61,6 +68,17 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true }: S
             ref.current?.scrollToIndex({index: 0});
         } else setDisplaySearchBar(false);
     };
+
+    const handleEditCourse = (course: Course) => {
+        setCourseToEdit(course);
+        setDisplayAddCourse(true);
+    };
+
+    const handleAddCourseClick = () => {
+        if (courseToEdit) setCourseToEdit(undefined);
+        setDisplayAddCourse(true);
+    };
+
     if (error) return (
         <ErrorScreen errorMessage={error.message} />
     );
@@ -79,6 +97,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true }: S
                     {displayAddCourse && <AddCourse
                         onCancel={() => setDisplayAddCourse(false)}
                         onAdd={handleAddCourse}
+                        course={courseToEdit}
                         loading={loading}
                     />}
                 </Modal>
@@ -87,7 +106,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true }: S
                 {(expandedCourse ? 'Select layout' : title)}
             </Headline> : null}
             <View style={tyyli.topButtons}>
-                <Button mode="outlined" icon="text-box-plus-outline" onPress={() => setDisplayAddCourse(true)} testID="AddCourseButton">Add Course</Button>
+                <Button mode="outlined" icon="text-box-plus-outline" onPress={handleAddCourseClick} testID="AddCourseButton">Add Course</Button>
                 <Button mode="outlined" icon="magnify" onPress={handleClickSearch}>Search</Button>
             </View>
             {displaySearchBar ? <Searchbar
@@ -117,9 +136,11 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true }: S
                         onAddLayout={handleAddLayout}
                         onLayoutClick={handleClickLayout}
                         onCourseClick={handleClickCourse}
+                        onEditCoursePress={() => handleEditCourse(item)}
                         expanded={expandedCourse?.id === item.id}
                         dimmed={Boolean(expandedCourse && expandedCourse?.id !== item.id)}
                         showDistance={gpsAvailable}
+                        isAdmin={isAdmin()}
                     />)
                 }
             />

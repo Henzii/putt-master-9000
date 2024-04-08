@@ -4,21 +4,23 @@ import { Button, Caption, Headline, Subheading, Switch, TextInput } from "react-
 import useGPS from "../hooks/useGPS";
 import Loading from "./Loading";
 import Divider from "./ThemedComponents/Divider";
-import { Coordinates } from "../types/course";
+import { Coordinates, Course } from "../types/course";
+import { GPShookReturn } from "../types/gps";
 
 type AddCourseProps = {
     onCancel?: () => void,
-    onAdd?: (name: string, coordinates: Coordinates) => void,
+    onAdd?: (name: string, coordinates: Coordinates, courseId?: string) => void,
     loading?: boolean,
+    course?: Course
 }
 
-const AddCourse = ({ onCancel, onAdd, loading=false }: AddCourseProps) => {
-    const [newName, setNewName] = useState('');
-    const [lat, setLat] = useState<string | undefined>();
-    const [lon, setLon] = useState<string | undefined>();
+const AddCourse = ({ onCancel, onAdd, course, loading=false }: AddCourseProps) => {
+    const [newName, setNewName] = useState(course?.name ?? '');
+    const [lat, setLat] = useState<string | undefined>(course?.location.coordinates[1].toString());
+    const [lon, setLon] = useState<string | undefined>(course?.location.coordinates[0].toString());
     const gps = useGPS();
     useEffect(() => {
-        if (gps.ready) {
+        if (gps.ready && !course) {
             setLat(gps.lat?.toString());
             setLon(gps.lon?.toString());
         }
@@ -28,11 +30,11 @@ const AddCourse = ({ onCancel, onAdd, loading=false }: AddCourseProps) => {
             lat: Number.parseFloat(lat || '0') || 0,
             lon: Number.parseFloat(lon || '0') || 0,
         };
-        if (onAdd) onAdd(newName, coords);
+        if (onAdd) onAdd(newName, coords, course?.id.toString());
     };
     return (
         <View style={tyyli.root}>
-            <Headline testID="AddCourseTitle">Add Course</Headline>
+            <Headline testID="AddCourseTitle">{course ? 'Edit' : 'Add'} Course</Headline>
             <Subheading>Name</Subheading>
             <TextInput value={newName} autoComplete='off' mode="outlined" label="Course name" onChangeText={(value) => setNewName(value)} />
             <Divider />
@@ -41,15 +43,18 @@ const AddCourse = ({ onCancel, onAdd, loading=false }: AddCourseProps) => {
                 : <LocationForm
                     latitude={lat}
                     longitude={lon}
-                    accuracy={gps.acc}
+                    gps={gps}
                     setLat={setLat}
                     setLon={setLon}
+                    manualCoords={!!course}
                 />
             }
             {gps.error && <Caption style={{ color: 'red' }}>{gps.error} Set coordinates manually</Caption>}
             <Divider />
             <View style={[tyyli.split, { margin: 20 }]}>
-                <Button icon="check" onPress={handleAddCourse} mode="contained" color='green' loading={loading} disabled={loading}>Add</Button>
+                <Button icon="check" onPress={handleAddCourse} mode="contained" color='green' loading={loading} disabled={loading}>
+                    {course ? 'Save' : 'Add'}
+                </Button>
                 <Button icon="cancel" onPress={onCancel} mode="contained" color='red'>Cancel</Button>
             </View>
 
@@ -57,11 +62,13 @@ const AddCourse = ({ onCancel, onAdd, loading=false }: AddCourseProps) => {
     );
 
 };
-const LocationForm = ({ latitude, longitude, accuracy, setLat, setLon }: {
-    latitude?: string, longitude?: string, accuracy?: number | null,
-    setLat: (v: string) => void, setLon: (v: string) => void
+const LocationForm = ({ latitude, longitude, setLat, setLon, gps, manualCoords = false }: {
+    latitude?: string, longitude?: string,
+    setLat: (v: string) => void, setLon: (v: string) => void,
+    gps?: GPShookReturn,
+    manualCoords?: boolean
 }) => {
-    const [manualCoordinates, setManualCoordinates] = useState(false);
+    const [manualCoordinates, setManualCoordinates] = useState(manualCoords);
 
     return (
         <>
@@ -92,7 +99,13 @@ const LocationForm = ({ latitude, longitude, accuracy, setLat, setLon }: {
                     onChangeText={setLon}
                 />
             </View>
-            <Text style={{ marginTop: 10 }}>GPS accruacy: {Math.floor(accuracy || 0)}m</Text>
+            {gps && (
+                <>
+                    <Text style={{ marginTop: 10 }}>GPS accruacy: {Math.floor(gps?.acc || 0)}m</Text>
+                    <Text>Current lat: {gps.lat?.toFixed(5)}</Text>
+                    <Text>Current lon: {gps.lon?.toFixed(5)}</Text>
+                </>
+            )}
         </>
     );
 };

@@ -12,9 +12,10 @@ import { GET_COURSES } from '../../graphql/queries';
 
 type Props = {
     course: Course
+    onEditCoursePress: () => void
 }
 
-const ExtraMenu = ({course}: Props) => {
+const ExtraMenu = ({course, onEditCoursePress}: Props) => {
     const [visible, setVisible] = useState(false);
     const [anchor, setAnchor] = useState({x: 0, y: 0});
     const [deleteCourse] = useMutation(DELETE_COURSE);
@@ -27,6 +28,11 @@ const ExtraMenu = ({course}: Props) => {
             y: event.nativeEvent.pageY
         });
         setVisible(true);
+    };
+
+    const handleEditCourse = () => {
+        onEditCoursePress();
+        setVisible(false);
     };
 
     const handleDeleteCourse = () => {
@@ -48,14 +54,14 @@ const ExtraMenu = ({course}: Props) => {
 
     return (
         <View>
-            <IconButton icon="menu" onPress={handleOpenMenu} size={20} />
-            <View style={{zIndex: 99999}}>
+            <IconButton icon="dots-horizontal" onPress={handleOpenMenu} size={20} />
+            <View>
                 <Menu
                     visible={visible}
                     onDismiss={() => setVisible(false)}
                     anchor={anchor}
                 >
-                    <Menu.Item title="Edit course" onPress={() => null} />
+                    <Menu.Item title="Edit course" onPress={handleEditCourse} />
                     <Menu.Item title="Delete course" onPress={handleDeleteCourse} />
                 </Menu>
             </View>

@@ -9,15 +9,17 @@ import ExtraMenu from './ExtraMenu';
 type SingleCourseProps = {
     course: Course,
     onAddLayout?: (courseId: number | string, layout: NewLayout) => void,
+    onEditCoursePress: () => void
     onLayoutClick?: (layout: Layout, course: Course) => void,
     onCourseClick?: (course: Course | null, listIndex?: number) => void,
     expanded: boolean,
     dimmed: boolean,
     listIndex: number
     showDistance?: boolean,
+    isAdmin: boolean
 }
 
-const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expanded, dimmed, listIndex, showDistance = true}: SingleCourseProps) => {
+const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, onEditCoursePress, expanded, dimmed, listIndex, isAdmin, showDistance = true}: SingleCourseProps) => {
     const { colors } = useTheme();
     const [addLayoutModal, setAddLayoutModal] = useState(false);
     const [layoutToEdit, setLayoutToEdit] = useState<Layout>();
@@ -84,7 +86,7 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, expan
                     <SelectLayout course={course} onSelect={onLayoutClick} onEditLayout={handleEditLayout} />
                     <View style={styles.bottomButtons}>
                         <Button onPress={handleAddLayoutClick} mode='outlined' icon="text-box-plus-outline" uppercase={false}>Add layout</Button>
-                        <ExtraMenu course={course} />
+                        {(course.canEdit || isAdmin) && <ExtraMenu course={course} onEditCoursePress={onEditCoursePress} />}
                     </View>
                 </View>
             )}

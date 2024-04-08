@@ -8,6 +8,7 @@ import { GET_COURSES } from "../graphql/queries";
 import { addNotification } from '../reducers/notificationReducer';
 import useGPS from './useGPS';
 import type { Coordinates, GetCoursesResponse, NewLayout } from '../types/course';
+import { extractApolloErrorMessage } from '../utils/apollo';
 
 const useCourses = (showDistance = true) => {
 
@@ -65,12 +66,18 @@ const useCourses = (showDistance = true) => {
             dispatch(addNotification(message, 'alert'));
         }
     };
-    const addCourse = async (newCourseName: string, coordinates: Coordinates) => {
+    const addCourse = async (newCourseName: string, coordinates: Coordinates, courseId?: string) => {
         if (loadingAddCourse) return;
         try {
-            await addCourseMutation({ variables: { name: newCourseName, coordinates } });
-            refetch({ limit: 1, offset: 0, search: newCourseName });
+            await addCourseMutation({ variables: { name: newCourseName, coordinates, courseId } });
+            if (courseId) {
+                dispatch(addNotification('Saved', 'success'));
+                refetch();
+            } else {
+                refetch({ limit: 1, offset: 0, search: newCourseName });
+            }
         } catch (e) {
+            dispatch(addNotification(`Error! ${extractApolloErrorMessage(e)}`, 'alert'));
             console.log('ERROR', e);
         }
     };
