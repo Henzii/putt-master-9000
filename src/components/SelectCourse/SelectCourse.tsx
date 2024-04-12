@@ -11,6 +11,7 @@ import SingleCourse from './SingleCourse';
 import { Coordinates, Course, Layout, NewLayout } from "../../types/course";
 import { useBackButton } from "../BackButtonProvider";
 import useMe from "../../hooks/useMe";
+import useLiveData from "../../hooks/useLiveData";
 
 type SelectCoursesProps = {
     onSelect?: (layout: Layout, course: Course) => void,
@@ -19,7 +20,7 @@ type SelectCoursesProps = {
     showTraffic?: boolean,
     onBackAction?: () => void
 }
-const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true }: SelectCoursesProps) => {
+const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, showTraffic }: SelectCoursesProps) => {
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
     const [courseToEdit, setCourseToEdit] = useState<Course>();
@@ -30,6 +31,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true }: S
     const { colors } = useTheme();
     const backButton = useBackButton();
     const {isAdmin} = useMe();
+    const liveData = useLiveData(showTraffic);
 
     useEffect(() => {
         if (onBackAction) {
@@ -141,6 +143,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true }: S
                         dimmed={Boolean(expandedCourse && expandedCourse?.id !== item.id)}
                         showDistance={gpsAvailable}
                         isAdmin={isAdmin()}
+                        liveData={liveData}
                     />)
                 }
             />

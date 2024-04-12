@@ -1,47 +1,36 @@
-/* eslint-disable no-useless-escape */
 import { useEffect, useState } from 'react';
-type LiveData = {
-    [key: string]: {
-        live: number,
-        today: number,
-    }
+export type LiveData = {
+    name: string,
+    liveNow: number,
+    liveToday: number
 }
 const useLiveData = (enabled = true) => {
-    const [liveData, setLiveData] = useState<LiveData | undefined>();
+    const [liveData, setLiveData] = useState<LiveData[]>([]);
     useEffect(() => {
-        if (enabled) {
-            getLiveData().then(res => {
-                if (res) {
-                    setLiveData(res);
-                }
-            }).catch((e) => {
-                // eslint-disable-next-line no-console
-                console.log('Failed to fetch live data,', e);
-            });
-        }
-    }, []);
+        if (enabled) fetchLiveData().then(setLiveData);
+    }, [enabled]);
     return liveData;
 };
 
-const getLiveData = async (): Promise<LiveData> => {
+const fetchLiveData = async () => {
     const uri = 'https://frisbeegolfradat.fi/wp-json/course-statistics/ajax?activeTab=0';
-    const data = await (await fetch(uri)).json();
-    const radatHTML = data.html.match(/<tbody>([\s\S]*?)<\/tbody>/ig)[0].split('\n');
-    const radat: LiveData = {};
-    let radanNimi = '';
-    for (const rivi of radatHTML) {
-        if (rivi.includes('class=\"title\"')) {
-            radanNimi = stripTags(rivi);
-            radat[radanNimi] = { live: 0, today: 0 };
-        } else if (rivi.includes('class=\"live-indicator')) {
-            radat[radanNimi].live = Number.parseInt(stripTags(rivi));
-        } else if (rivi.includes('class=\"today')) {
-            radat[radanNimi].today = Number.parseInt(stripTags(rivi));
-        }
-    }
-    return radat;
+    const data = fetch(uri).then(response => response.json()).then(data => {
+        const radat = data.html.match(/(<tr>)(.*?)(<\/tr>)/igs)
+            .map((course: string) => {
+                const {name, liveNow, liveToday} = course.split('\n').reduce((acc, curr) => {
+                    if (curr.includes('class="title"')) return {...acc, name: stripTags(curr)};
+                    if (curr.includes('class="live-indicator')) return {...acc, liveNow: stripTags(curr)};
+                    if (curr.includes('class="toda')) return {...acc, liveToday: stripTags(curr)};
+                    return acc;
+                }, {name: '', liveNow: '', liveToday: ''});
+                return {name, liveNow, liveToday};
+            });
+        return radat;
+    }).catch(() => []);
+    return data;
 };
-const stripTags = (str: string) => {
-    return str.replace(/(<([^>]+)>)/gi, "");
-};
+
+const stripTags = (str?: string) => str ? str.replace(/(<([^>]+)>)/gi, "") : '';
+
+
 export default useLiveData;

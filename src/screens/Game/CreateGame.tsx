@@ -89,7 +89,7 @@ const CreateGame = (props: CreateGameProps) => {
     const handleSetSelectCourse = () => {
         setSelectCourse(true);
     };
-    if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} title="Select course" onBackAction={() => setSelectCourse(false)} />;
+    if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} title="Select course" onBackAction={() => setSelectCourse(false)} showTraffic={false} />;
     if (addFriend) return <FriendsList onClick={handleAddFriend} hideRemoveButton multiSelect onBackAction={() => setAddFriend(false)} />;
 
     const tyyli = createStyle();
