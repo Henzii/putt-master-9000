@@ -5,9 +5,8 @@ import { Course, Layout, NewLayout } from "../../types/course";
 import SelectLayout from "./SelectLayout";
 import AddLayout from '../AddLayout';
 import ExtraMenu from './ExtraMenu';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import { LiveData } from '../../hooks/useLiveData';
-import Icon from 'react-native-paper/src/components/Icon';
-
 
 type SingleCourseProps = {
     course: Course,
@@ -77,13 +76,13 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, onEdi
                         <View style={styles.extraInfo}>
                             {showDistance && (
                                 <View style={styles.distance}>
-                                    <Icon source="map-marker-distance" size={18} color="gray" />
+                                    <Icon name="map-marker-distance" size={18} color="gray" />
                                     <Text style={styles.iconText}>{course.distance.string}</Text>
                                 </View>
                             )}
                             {courseLiveData && (
                                 <View style={styles.distance}>
-                                    <Icon source={getLiveIcon(courseLiveData.liveNow)} size={18} color="gray" />
+                                    <Icon name={getLiveIcon(courseLiveData.liveNow)} size={18} color="gray" />
                                     <Text style={styles.iconText}>{courseLiveData.liveNow} ({courseLiveData.liveToday})</Text>
                                 </View>
                             )}
