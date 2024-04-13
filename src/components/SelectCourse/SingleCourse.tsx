@@ -5,6 +5,8 @@ import { Course, Layout, NewLayout } from "../../types/course";
 import SelectLayout from "./SelectLayout";
 import AddLayout from '../AddLayout';
 import ExtraMenu from './ExtraMenu';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
+import { LiveData } from '../../hooks/useLiveData';
 
 type SingleCourseProps = {
     course: Course,
@@ -17,9 +19,10 @@ type SingleCourseProps = {
     listIndex: number
     showDistance?: boolean,
     isAdmin: boolean
+    liveData?: LiveData[]
 }
 
-const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, onEditCoursePress, expanded, dimmed, listIndex, isAdmin, showDistance = true}: SingleCourseProps) => {
+const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, onEditCoursePress, expanded, dimmed, listIndex, isAdmin, showDistance = true, liveData}: SingleCourseProps) => {
     const { colors } = useTheme();
     const [addLayoutModal, setAddLayoutModal] = useState(false);
     const [layoutToEdit, setLayoutToEdit] = useState<Layout>();
@@ -45,6 +48,7 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, onEdi
     };
 
     const description = course.layouts.length + ' layout' + (course.layouts.length !== 1 ? 's' : '');
+    const courseLiveData = liveData?.find(liveCourse => liveCourse.name.includes(course.name));
 
     return (
         <Surface
@@ -67,16 +71,26 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, onEdi
                 <View style={styles.header}>
                     <View style={{ flex: 1 }}>
                         <Text style={styles.courseName}>{course.name}</Text>
-                        <Text style={styles.layouts}>{`${description} layouts`}</Text>
-                    </View>
-                    {showDistance && (
-                        <View style={styles.distance}>
-                            <List.Icon icon="map-marker-distance" style={styles.icon} />
-                            <Text style={styles.iconText}>{course.distance.string}</Text>
+                        <View>
+                        <Text style={styles.layouts}>{description}</Text>
+                        <View style={styles.extraInfo}>
+                            {showDistance && (
+                                <View style={styles.distance}>
+                                    <Icon name="map-marker-distance" size={18} color="gray" />
+                                    <Text style={styles.iconText}>{course.distance.string}</Text>
+                                </View>
+                            )}
+                            {courseLiveData && (
+                                <View style={styles.distance}>
+                                    <Icon name={getLiveIcon(courseLiveData.liveNow)} size={18} color="gray" />
+                                    <Text style={styles.iconText}>{courseLiveData.liveNow} ({courseLiveData.liveToday})</Text>
+                                </View>
+                            )}
                         </View>
-                    )}
+                        </View>
+                    </View>
                     <View>
-                        <List.Icon icon={expanded ? 'chevron-up' : 'chevron-down'} style={styles.icon} />
+                        <List.Icon icon={expanded ? 'chevron-up' : 'chevron-down'} style={{height: 24, marginRight: 0}} />
                     </View>
                 </View>
             </TouchableRipple>
@@ -101,9 +115,9 @@ const styles = StyleSheet.create({
     container: {
         borderRadius: 7,
         paddingHorizontal: 12,
-        paddingVertical: 15,
+        paddingVertical: 10,
         marginHorizontal: 6,
-        marginVertical: 3,
+        marginVertical: 5,
         borderWidth: 1,
         elevation: 4,
         minHeight: 77,
@@ -113,26 +127,30 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     courseName: {
-        fontSize: 18,
+        fontSize: 20,
     },
     layouts: {
         fontSize: 14,
-        color: '#808080'
+        color: '#808080',
+        marginRight: 10
+    },
+    extraInfo: {
+        flexDirection: 'row',
+        gap: 5,
+        marginTop: 2,
     },
     distance: {
-        justifyContent: 'flex-start',
+        flexDirection: 'row',
         alignItems: 'center',
-        flexBasis: 70,
-    },
-    icon: {
-        height: 24,
-        width: 24,
-        margin: 2
+        gap: 5,
+        marginRight: 6,
     },
     iconText: {
-        textAlign: 'center',
         margin: 0,
         padding: 0,
+        fontSize: 13,
+        color: '#808080',
+
     },
     bottomButtons: {
         marginTop: 12,
@@ -141,5 +159,13 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }
 });
+
+const getLiveIcon = (count: number) => {
+    if (count < 10) return 'signal-cellular-outline';
+    if (count < 30) return 'signal-cellular-1';
+    if (count < 50) return 'signal-cellular-2';
+
+    return 'signal-cellular-3';
+};
 
 export default SingleCourse;
