@@ -57,8 +57,8 @@ const SelectLayout = ({ course, onSelect, onEditLayout }: SelecLayoutProps) => {
                     </TouchableRipple>
 
                     <View style={styles.icons}>
-                        {(layout.canEdit || isAdmin()) && <IconButton style={{marginRight: 2}} size={30} icon="file-edit-outline" color="white" onPress={() => onEditLayout(layout)} />}
-                        <IconButton size={30} onPress={() => handleStatsClick(layout)} icon="chart-bar" color="white" style={{marginLeft: 0}} />
+                        {(layout.canEdit || isAdmin()) && <IconButton style={{marginRight: 2}} size={30} icon="file-edit-outline" iconColor="white" onPress={() => onEditLayout(layout)} />}
+                        <IconButton size={30} onPress={() => handleStatsClick(layout)} icon="chart-bar" iconColor="white" style={{marginLeft: 0}} />
                     </View>
                 </View>
             ))}

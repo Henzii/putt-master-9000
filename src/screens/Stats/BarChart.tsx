@@ -46,9 +46,9 @@ const BarChart = ({stats, holes}: {stats: SingleStats[] | undefined, holes: numb
         barColors,
     };
     const chartConfig = {
-        backgroundGradientTo: colors.accent,
+        backgroundGradientTo: colors.secondary,
         backgroundGradientToOpacity: 0.4,
-        backgroundGradientFrom: colors.accent,
+        backgroundGradientFrom: colors.primary,
         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         strokeWidth: 2, // optional, default 3
         barPercentage: 0.75,

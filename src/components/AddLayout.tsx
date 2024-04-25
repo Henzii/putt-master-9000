@@ -122,7 +122,7 @@ const HolesPars = ({ onParChange, pars, onNameChange, names, deprecated }: HoleP
                     <IconButton
                         style={tyyli.parInputButtons}
                         icon="minus"
-                        color="red"
+                        iconColor="red"
                         onPress={() => {
                             if (pars[i] > 1) {
                                 onParChange(i, pars[i] - 1);
@@ -133,7 +133,7 @@ const HolesPars = ({ onParChange, pars, onNameChange, names, deprecated }: HoleP
                     <IconButton
                         icon="plus"
                         style={tyyli.parInputButtons}
-                        color='green'
+                        iconColor='green'
                         onPress={() => {
                             onParChange(i, pars[i] + 1);
                         }}

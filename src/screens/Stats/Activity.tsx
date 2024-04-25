@@ -91,9 +91,9 @@ const Activity = ({selectedUser}: Props) => {
 export default Activity;
 
 const chartConfig: AbstractChartConfig = {
-    backgroundGradientTo: theme.colors.accent,
+    backgroundGradientTo: theme.colors.secondary,
     backgroundGradientToOpacity: 0.75,
-    backgroundGradientFrom: theme.colors.accent,
+    backgroundGradientFrom: theme.colors.primary,
     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
     barPercentage: 0.50,
 };

@@ -61,7 +61,7 @@ const AddFriend = ({ onCancel }: AddFriendProps) => {
             </View>
             <View style={tyyli.napit}>
                 <Button mode='contained' color='green' onPress={handleAdd}>Add</Button>
-                <Button mode='contained' color='red' onPress={onCancel}>Cancel</Button>
+                <Button mode='outlined' onPress={onCancel}>Cancel</Button>
             </View>
 
         </Container>
@@ -83,6 +83,7 @@ const tyyli = StyleSheet.create({
         height: '90%',
         padding: 20,
         borderRadius: 10,
+        backgroundColor: '#fafafa'
     },
     napit: {
         marginTop: 15,
