@@ -14,7 +14,7 @@ jobs:
       - name: Node
         uses: actions/setup-node@v2
         with:
-          node-version: 18
+          node-version: 20.10.0
       - name: Expo
         uses: expo/expo-github-action@v7
         with:
