@@ -144,7 +144,7 @@ const SingleFriend = ({ friend, onClick, onDelete, showRemoveButton = true, show
                     {/*<Avatar.Icon icon={selected ? 'account-tie' : 'account'} size={40} style={{backgroundColor: selected ? colors.surface : '#89ab9f'}} />*/}
                     <Text style={tyyli.singleFriendText}>{friend.name}</Text>
                 </View>
-                {showRemoveButton && <IconButton color="rgb(223,50,50)" icon="trash-can" onPress={handleDelete} style={{backgroundColor: colors.background}} />}
+                {showRemoveButton && <IconButton iconColor="darkred" icon="trash-can-outline" onPress={handleDelete} style={{backgroundColor: colors.background}} />}
                 {showCheckBox && <Checkbox status={selected ? 'checked' : 'unchecked'} />}
             </View>
         </Pressable>

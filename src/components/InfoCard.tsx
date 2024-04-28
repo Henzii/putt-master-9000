@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet, View } from 'react-native';
-import { Title, useTheme} from 'react-native-paper';
+import { MD3Theme, Title, useTheme} from 'react-native-paper';
 
 type InfoCardProps = {
     title?: string,
@@ -20,7 +20,7 @@ export default function InfoCard(props: InfoCardProps) {
     );
 }
 
-const createTyyli = (theme: ReactNativePaper.Theme) => StyleSheet.create({
+const createTyyli = (theme: MD3Theme) => StyleSheet.create({
     card: {
         alignSelf: 'flex-start',
         display: 'flex',

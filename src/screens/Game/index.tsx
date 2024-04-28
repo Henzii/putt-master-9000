@@ -54,10 +54,10 @@ export default function GameContainer() {
     const [navIndex, setNavIndex] = useState(gameData?.gameOpen === false ? 1 : 0);
     const settings = useSettings();
     const [navRoutes, setNavRoutes] = useState([
-        { key: 'gameRoute', title: 'Scorecard', icon: 'counter' },
-        { key: 'summaryRoute', title: 'Summary', icon: 'format-list-numbered' },
+        { key: 'gameRoute', title: 'Scorecard', focusedIcon: 'card-account-details', unfocusedIcon: 'card-account-details-outline' },
+        { key: 'summaryRoute', title: 'Summary', focusedIcon: 'view-list', unfocusedIcon: 'view-list-outline' },
 //      { key: 'beerRoute', title: 'Beers', icon: 'beer-outline' },
-        { key: 'setupRoute', title: 'Setup', icon: 'cog-outline' },
+        { key: 'setupRoute', title: 'Setup', focusedIcon: 'cog', unfocusedIcon: 'cog-outline' },
     ]);
     useEffect(() => {
         if (location.search === '?force' && gameData?.gameId) {
@@ -70,7 +70,7 @@ export default function GameContainer() {
         const hasBeerRoute = !!navRoutes.find(r => r.key === 'beerRoute');
         const copyOfNavRoutes = [...navRoutes];
         if (!settings.getBoolValue('Prohibition') && !hasBeerRoute) {
-            copyOfNavRoutes.splice(2, 0, { key: 'beerRoute', title: 'Beers', icon: 'beer-outline' });
+            copyOfNavRoutes.splice(2, 0, { key: 'beerRoute', title: 'Beers', focusedIcon: 'beer', unfocusedIcon: 'beer-outline' });
             setNavRoutes(copyOfNavRoutes);
             setNavIndex(3);
         } else if (settings.getBoolValue('Prohibition') && hasBeerRoute) {
@@ -125,7 +125,7 @@ export default function GameContainer() {
     return (
         <BottomNavigation
             shifting={false}
-            style={{ width: '100%' }}
+            // style={{ width: '100%' }}
             navigationState={{
                 index: navIndex,
                 routes: navRoutes,

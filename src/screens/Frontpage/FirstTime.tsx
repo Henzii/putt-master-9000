@@ -106,7 +106,7 @@ export default function FirstTime() {
                 error={'userName' in errors}
                 value={username}
                 onChangeText={(text) => setUsername(text)}
-                right={<TextInput.Icon name="reload" onPress={() => setUsername(UsernameGenerator.generateUsername())} />}
+                right={<TextInput.Icon icon="reload" onPress={() => setUsername(UsernameGenerator.generateUsername())} />}
             />
             <Spacer />
             <Title>Password</Title>
@@ -122,7 +122,7 @@ export default function FirstTime() {
                 onBlur={validateForm}
                 value={password1}
                 onChangeText={(text) => setPassword1(text)}
-                right={<TextInput.Icon name="reload" onPress={handleGenRndPass} />}
+                right={<TextInput.Icon icon="reload" onPress={handleGenRndPass} />}
             />
             <Spacer size={3} />
             <TextInput

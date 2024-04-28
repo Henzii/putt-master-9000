@@ -152,7 +152,7 @@ const Setup = () => {
                     If the game is finished, only your scorecard will be burned in hell.
                 </Paragraph>
                 <Spacer />
-                <Button style={tyyli.nappi} mode='contained' color='red' onPress={verifyAbandonGame}>Discard game</Button>
+                <Button style={tyyli.nappi} mode='contained' buttonColor='darkred' onPress={verifyAbandonGame}>Discard game</Button>
             </Container>
             <Divider />
             <Paragraph style={{ color: 'gray' }}>

@@ -80,7 +80,7 @@ const Settings = () => {
                     <Text>Group name links you and your friends on stats page at</Text>
                     <Button
                         mode="text"
-                        style={{color: 'blue'}}
+                        textColor='blue'
                         compact
                         uppercase={false}
                         onPress={() => Linking.openURL('https://fudisc.henzi.fi')}
@@ -94,7 +94,7 @@ const Settings = () => {
                     mode="outlined"
                     outlineColor={isSavedGroupName ? 'green' : undefined}
                     dense
-                    right={isSavedGroupName && groupName !== '' ? <TextInput.Icon name="check-circle-outline" color="green" /> : undefined}
+                    right={isSavedGroupName && groupName !== '' ? <TextInput.Icon icon="check-circle-outline" color="green" /> : undefined}
                 />
                 <Spacer />
                 <Button onPress={handleSetGroup} mode="contained" disabled={isSavedGroupName}>Save</Button>

@@ -47,9 +47,9 @@ const LineChart = ({ data, par }: LineChartProps) => {
             width={Dimensions.get('screen').width}
             yAxisInterval={2} // optional, defaults to 1
             chartConfig={{
-                backgroundGradientTo: colors.accent,
+                backgroundGradientTo: colors.primary,
                 backgroundGradientToOpacity: 0.4,
-                backgroundGradientFrom: colors.accent,
+                backgroundGradientFrom: colors.secondary,
                 decimalPlaces: 0, // optional, defaults to 2dp
                 color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                 labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,

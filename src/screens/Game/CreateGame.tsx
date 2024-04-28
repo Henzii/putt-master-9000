@@ -153,7 +153,6 @@ const CreateGame = (props: CreateGameProps) => {
             <Spacer />
             <View style={tyyli.bottomButtons}>
                 <Button
-                    color='green'
                     mode='contained'
                     onPress={handleCreate}
                     disabled={(!newGameData.course || !newGameData.layout || newGameData.players.length < 1 || props.loading)}
@@ -161,7 +160,7 @@ const CreateGame = (props: CreateGameProps) => {
                 >
                     Create
                 </Button>
-                <Button color='red' mode='contained' onPress={props.onCancel}>Cancel</Button>
+                <Button  mode='outlined' onPress={props.onCancel}>Cancel</Button>
             </View>
         </Container>
     );
@@ -184,7 +183,7 @@ const TableItem = ({name, games, best, hc, even, onRemove, additionalStyle}: Tab
                 <Text style={tableStyle.listRest}>{games}</Text>
                 <Text style={tableStyle.listRest}>{best}</Text>
                 <Text style={tableStyle.listRest}>{hc}</Text>
-                <IconButton icon="trash-can" color="red" size={15} onPress={onRemove ? onRemove : undefined} style={{margin: 0, padding: 0, marginRight: 12,}} disabled={!onRemove} />
+                <IconButton icon="trash-can" iconColor="red" size={15} onPress={onRemove ? onRemove : undefined} style={{margin: 0, padding: 0, marginRight: 12,}} disabled={!onRemove} />
         </View>
     );
 };

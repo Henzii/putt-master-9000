@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from "react-native";
 import { useTheme } from 'react-native-paper';
+import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
 type SelectButtonGroupProps = {
     children: JSX.Element[],
@@ -14,8 +15,8 @@ const SelectButtonGroup = ({children, onSelect, selectedDefault}: SelectButtonGr
         setSelected(name);
         onSelect?.(name);
     };
-    const theme = useTheme();
-    const styles = makeStyles(theme);
+    const {colors} = useTheme();
+    const styles = makeStyles(colors);
     return (
         <View style={styles.container}>
             {React.Children.map(children, (child, index) => {
@@ -36,7 +37,7 @@ const SelectButtonGroup = ({children, onSelect, selectedDefault}: SelectButtonGr
     );
 };
 
-const makeStyles = (theme: ReactNativePaper.Theme) => StyleSheet.create({
+const makeStyles = (colors: MD3Colors) => StyleSheet.create({
     container: {
         flexDirection: 'row',
     },
@@ -52,7 +53,7 @@ const makeStyles = (theme: ReactNativePaper.Theme) => StyleSheet.create({
         borderBottomRightRadius: 7,
     },
     selected: {
-        backgroundColor: theme.colors.primary+'50',
+        backgroundColor: colors.tertiary,
     }
 });
 

@@ -2,6 +2,8 @@ import React from 'react';
 import Login from '../components/Login';
 import { render, fireEvent } from '@testing-library/react-native';
 
+jest.useFakeTimers();
+
 describe('<Login />', () => {
     it('form functions properly', () => {
         const loginFunction = jest.fn(() => Promise.resolve());

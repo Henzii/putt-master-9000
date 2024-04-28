@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Divider as PaperDivider, useTheme} from 'react-native-paper';
+import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
 type Props = {
     margin?: number
@@ -15,7 +16,7 @@ const Divider = ({margin=13, opacity = 0.5}: Props) => {
     );
 };
 
-const styles = (colors: ReactNativePaper.ThemeColors, margin: number) => StyleSheet.create({
+const styles = (colors: MD3Colors, margin: number) => StyleSheet.create({
     root: {
         marginTop: margin,
         marginBottom: margin,
