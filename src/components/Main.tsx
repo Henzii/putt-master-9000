@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useRef } from 'react';
-import { Alert, BackHandler } from 'react-native';
+import { BackHandler } from 'react-native';
 import ToolBar from './ToolBar';
 
 import { Routes, Route, useNavigate } from 'react-router-native';
@@ -26,12 +26,14 @@ import DevPage from './DevPage';
 import { useQuery } from '@apollo/client';
 import { HANDSHAKE } from '../graphql/queries';
 import appInfo from '../../app.json';
+import { setCommonState } from '../reducers/commonReducer';
 
 export default function App() {
     const dispatch = useDispatch();
     const backButton = useBackButton();
     const navi = useNavigate();
     const {data, loading} = useQuery(HANDSHAKE);
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const notificListener = useRef<any>();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,7 +42,7 @@ export default function App() {
     useEffect(() => {
         if (!loading && data?.handShake?.latestVersion) {
             if (data?.handShake?.latestVersion > appInfo.expo.android.versionCode) {
-                Alert.alert("New version available", "You don't have the latest version of FuDisc installed!\n\nConsider updating...");
+                dispatch(setCommonState({isUpdateAvailable: true}));
             }
         }
     }, [data, loading]);

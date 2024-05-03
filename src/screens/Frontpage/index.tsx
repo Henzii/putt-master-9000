@@ -11,11 +11,10 @@ import ErrorScreen from '../../components/ErrorScreen';
 import { useQuery } from '@apollo/client';
 import { GET_OLD_GAMES } from '../../graphql/queries';
 import firstTimeLaunched from '../../utils/firstTimeLaunched';
-import OpenGames from './OpenGames';
 import NavIcon from './NavIcon';
 import Spacer from '../../components/ThemedComponents/Spacer';
-import LoggedIn from './LoggedIn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Header from './Header/Header';
 
 const pilli = require('../../../assets/icons/pilli.png');
 const maali = require('../../../assets/icons/maali.png');
@@ -62,7 +61,7 @@ const Frontpage = () => {
         <Container noFlex withScrollView style={{ alignItems: 'center' }} noPadding>
             {(logged) ?
                 <>
-                    {ongoingGames.length ? <OpenGames openGames={ongoingGames} /> : <LoggedIn />}
+                    <Header openGames={ongoingGames} />
                     <Spacer size={20} />
                     <View style={styles.iconsContainer}>
                         <NavIcon title="New Game" to="/game?force" icon={pilli} iconColor='#006633' />

@@ -1,13 +1,13 @@
 import React from 'react';
-import { Game } from '../../types/game';
+import { Game } from '../../../types/game';
 import { View, Text, StyleSheet } from 'react-native';
 import { Button, useTheme } from 'react-native-paper';
-import SplitContainer from '../../components/ThemedComponents/SplitContainer';
-import Spacer from '../../components/ThemedComponents/Spacer';
+import SplitContainer from '../../../components/ThemedComponents/SplitContainer';
+import Spacer from '../../../components/ThemedComponents/Spacer';
 import { useNavigate } from 'react-router-native';
-import { parseDate } from '../../utils/dates';
-import { getCompletedHoles } from './utils';
-import RoundBottom from './RoundBottom';
+import { parseDate } from '../../../utils/dates';
+import { getCompletedHoles } from '../utils';
+import RoundBottom from '../RoundBottom';
 
 type OpenGamesProps = {
     openGames: Game[]

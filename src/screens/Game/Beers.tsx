@@ -46,7 +46,7 @@ const Beers = () => {
                     visible={converterOpen}
                     onDismiss={() => setConverterOpen(false)}
                 >
-                    <Container noFlex style={{ marginHorizontal: 20 }}>
+                    <Container noFlex style={{ marginHorizontal: 20, backgroundColor: 'white' }}>
                         <AlcConverter />
                         <Button
                             mode="contained"
