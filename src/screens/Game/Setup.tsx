@@ -127,7 +127,7 @@ const Setup = () => {
                             Reopen the game. Other players will be notified of your cheating attempt.
                         </Paragraph>
                         <Spacer />
-                        <Button mode="contained" color="orange" style={tyyli.nappi} onPress={handleReopen}>Reopen</Button>
+                        <Button mode="contained" buttonColor="orange" style={tyyli.nappi} onPress={handleReopen}>Reopen</Button>
                     </Container>
                     <Divider />
                 </>

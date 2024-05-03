@@ -35,7 +35,7 @@ const DeleteAccount = ({handleDeleteAccount}: Props) => {
             )}
             <Spacer />
             <Button
-                color="red"
+                buttonColor="darkred"
                 mode='contained'
                 onPress={handleDeleteClick}
                 disabled={showConfirm && nameInput !== me?.name.toLowerCase()}

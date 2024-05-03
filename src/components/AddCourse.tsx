@@ -52,10 +52,10 @@ const AddCourse = ({ onCancel, onAdd, course, loading=false }: AddCourseProps) =
             {gps.error && <Caption style={{ color: 'red' }}>{gps.error} Set coordinates manually</Caption>}
             <Divider />
             <View style={[tyyli.split, { margin: 20 }]}>
-                <Button icon="check" onPress={handleAddCourse} mode="contained" color='green' loading={loading} disabled={loading}>
+                <Button icon="check" onPress={handleAddCourse} mode="contained" loading={loading} disabled={loading}>
                     {course ? 'Save' : 'Add'}
                 </Button>
-                <Button icon="cancel" onPress={onCancel} mode="contained" color='red'>Cancel</Button>
+                <Button icon="cancel" onPress={onCancel} mode="outlined">Cancel</Button>
             </View>
 
         </View>

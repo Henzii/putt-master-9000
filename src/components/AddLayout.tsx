@@ -76,8 +76,8 @@ const AddLayout = ({ onCancel, onAdd, layout }: AddLayoutProps) => {
                 {holes || 0} Holes, par {pars.reduce((p, c) => p + c, 0)}
             </Text>
             <View style={tyyli.buttonsContainer}>
-                <Button onPress={handleAdd} icon="check" color='green' mode='contained'>{layout ? 'Save' : 'Add'}</Button>
-                <Button onPress={handleCancel} icon="cancel" color='red' mode='contained'>Cancel</Button>
+                <Button onPress={handleAdd} icon="check"  mode='contained'>{layout ? 'Save' : 'Add'}</Button>
+                <Button onPress={handleCancel} icon="cancel" mode='outlined'>Cancel</Button>
             </View>
         </ScrollView>
     );
