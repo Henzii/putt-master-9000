@@ -1,0 +1,51 @@
+name: Build, test and deploy
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20.10.0
+      - name: Check version code
+        run: bash ./scripts/check-app-json.sh
+      - name: Install
+        run: npm install
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm run test
+  
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20.10.0
+      - name: Install
+        run: npm ci
+      - name: Expo
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      - name: Build App
+        run: eas build -p android --non-interactive
+      - name: Publish on Play Store
+        run: eas submit -p andoid --latest 
+    
+
