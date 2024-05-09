@@ -16,9 +16,9 @@ import Spacer from '../../components/ThemedComponents/Spacer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from './Header/Header';
 
-const pilli = require('../../../assets/icons/pilli.png');
-const maali = require('../../../assets/icons/maali.png');
-const courses = require('../../../assets/icons/courses.png');
+const pilli = require('../../../assets/icons/play.png');
+const maali = require('../../../assets/icons/checklist.png');
+const courses = require('../../../assets/icons/place.png');
 const friends = require('../../../assets/icons/friends.png');
 const stats = require('../../../assets/icons/stats.png');
 const settings = require('../../../assets/icons/settings.png');
@@ -64,15 +64,15 @@ const Frontpage = () => {
                     <Header openGames={ongoingGames} />
                     <Spacer size={20} />
                     <View style={styles.iconsContainer}>
-                        <NavIcon title="New Game" to="/game?force" icon={pilli} iconColor='#006633' />
-                        <NavIcon title="Old games" to="/games" icon={maali} iconColor="#333366" />
-                        <NavIcon title="Courses" to="/courses" icon={courses} iconColor="#663333" />
-                        <NavIcon title="Friends" to="/friends"icon={friends} iconColor="#003333"  />
-                        <NavIcon title="Stats" to="/stats"icon={stats} iconColor="#663366" />
-                        <NavIcon title="Achievements" to="/achievements"icon={achievement} iconColor="#666600"  />
+                        <NavIcon title="New Game" to="/game?force" icon={pilli} />
+                        <NavIcon title="Old games" to="/games" icon={maali} />
+                        <NavIcon title="Courses" to="/courses" icon={courses} />
+                        <NavIcon title="Friends" to="/friends"icon={friends} />
+                        <NavIcon title="Stats" to="/stats"icon={stats}  />
+                        <NavIcon title="Achievements" to="/achievements"icon={achievement} />
                         <NavIcon title="Settings" to="/settings" icon={settings} />
                         <NavIcon title="Website" to="/" icon={www} onClick={handleOpenWebsite} />
-                        <NavIcon title="Logout" to="/" icon={signout} onClick={logout} iconColor="#A00000" />
+                        <NavIcon title="Logout" to="/" icon={signout} onClick={logout} />
                     </View>
                 </>
                 :
