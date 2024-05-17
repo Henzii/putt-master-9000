@@ -47,6 +47,6 @@ jobs:
       - name: Build App
         run: eas build -p android --non-interactive
       - name: Publish on Play Store
-        run: eas submit -p andoid --latest 
+        run: eas submit -p android --latest 
     
 
