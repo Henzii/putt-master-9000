@@ -1,20 +1,19 @@
 import React from 'react';
 import { Game } from '../../../types/game';
 import { View, Text, StyleSheet } from 'react-native';
-import { Button, useTheme } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import SplitContainer from '../../../components/ThemedComponents/SplitContainer';
 import Spacer from '../../../components/ThemedComponents/Spacer';
 import { useNavigate } from 'react-router-native';
 import { parseDate } from '../../../utils/dates';
 import { getCompletedHoles } from '../utils';
-import RoundBottom from '../RoundBottom';
+import RoundedHeader from '../../../components/RoundedHeader';
 
 type OpenGamesProps = {
     openGames: Game[]
 }
 
 const OpenGames = ({openGames}: OpenGamesProps) => {
-    const {colors} = useTheme();
     const nav = useNavigate();
 
     if (!openGames.length) return null;
@@ -29,7 +28,6 @@ const OpenGames = ({openGames}: OpenGamesProps) => {
     }
 
     const game = openGames[0];
-    const backgroundColor = `${colors.primary}`;
 
     const handleContinueGame = () => {
         nav(`/game/${game.id}`);
@@ -39,7 +37,7 @@ const OpenGames = ({openGames}: OpenGamesProps) => {
 
     return (
         <View style={styles.container}>
-            <View style={[styles.infoContainer, {backgroundColor}]}>
+            <RoundedHeader>
                 <SplitContainer>
                     <Text style={styles.mainText}>{game.course}</Text>
                     <Text style={styles.secText}>{game.scorecards.length} players</Text>
@@ -56,8 +54,7 @@ const OpenGames = ({openGames}: OpenGamesProps) => {
                 <View style={{flexDirection: 'row'}}>
                     <Button icon="reload" style={styles.continueButton} color="black" onPress={handleContinueGame}>Continue</Button>
                 </View>
-            </View>
-            <RoundBottom fill={colors.primary} />
+            </RoundedHeader>
         </View>
     );
 };

@@ -66,13 +66,18 @@ const Summary = () => {
         await closeGame();
         dispatch(addNotification('Game closed', 'info'));
     };
+
+    const showBeers = !settings.getBoolValue('Prohibition');
+
     const sortedScorecards = [...data.scorecards].sort((a, b) => {
         if (!a.total || !b.total) return 0;
         if (settings.getBoolValue('SortHC')) {
-            return (a.total - a.hc) - (b.total - b.hc);
+             return (a.total - a.hc - a.beers * 0.5) - (b.total - b.hc - b.beers * 0.5);
         }
         return (a.total || 0) - (b.total || 0);
     });
+
+
     return (
         <ScrollView>
             <View>
@@ -83,7 +88,7 @@ const Summary = () => {
                         <View style={tyylit.container}>
                             <TableNames scorecards={sortedScorecards} />
                             <ScreenCaptureWrapper withoutScrollView={captureScreen}>
-                                <TableScores scorecards={sortedScorecards} pars={data.pars} showBeers={!settings.getBoolValue('Prohibition')} />
+                                <TableScores scorecards={sortedScorecards} pars={data.pars} showBeers={showBeers} />
                             </ScreenCaptureWrapper>
                         </View>
                         <Headline style={tyylit.date}>{parseDate(data.startTime)}</Headline>

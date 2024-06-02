@@ -6,10 +6,11 @@ import { Scorecard } from '../../../types/game';
 type Props = {
     scorecards: Scorecard[]
     pars: number[]
-    showBeers: boolean
+    showBeers?: boolean
 }
 
-const TableScores = ({ scorecards, pars, showBeers=false }: Props) => {
+const TableScores = ({ scorecards, pars, showBeers }: Props) => {
+    const showBeersInfo = showBeers || scorecards.some(sc => sc.beers > 0);
     return (
         <DataTable>
             <DataTable.Header>
@@ -21,14 +22,13 @@ const TableScores = ({ scorecards, pars, showBeers=false }: Props) => {
                 <DataTable.Title style={tableStyles.total}>Total</DataTable.Title>
                 <DataTable.Title style={tableStyles.total}>+/-</DataTable.Title>
                 <DataTable.Title style={tableStyles.total}>Hc</DataTable.Title>
-                <DataTable.Title style={tableStyles.hcPlusMinus}>Hc +/-</DataTable.Title>
-                {showBeers && (
+                {showBeersInfo && (
                     <>
                     <DataTable.Title style={tableStyles.total}>Beers</DataTable.Title>
                     <DataTable.Title style={tableStyles.total}>bHc</DataTable.Title>
-                    <DataTable.Title style={tableStyles.hcPlusMinus}>bHc +/-</DataTable.Title>
                     </>
                 )}
+                <DataTable.Title style={tableStyles.totalPlusMinus} textStyle={tableStyles.totalText}>Tot +/-</DataTable.Title>
             </DataTable.Header>
             {scorecards.map(sc =>
                 <DataTable.Row key={`dt-row-${sc.user.id}`}>
@@ -47,14 +47,13 @@ const TableScores = ({ scorecards, pars, showBeers=false }: Props) => {
                     <DataTable.Cell style={tableStyles.total} textStyle={tableStyles.scoreText}>{sc.total}</DataTable.Cell>
                     <DataTable.Cell style={tableStyles.total} textStyle={tableStyles.scoreText}>{sc.plusminus}</DataTable.Cell>
                     <DataTable.Cell style={tableStyles.total} textStyle={tableStyles.scoreText}>{sc.hc}</DataTable.Cell>
-                    <DataTable.Cell style={tableStyles.hcPlusMinus} textStyle={tableStyles.scoreText}>{(sc.plusminus || 0) - sc.hc}</DataTable.Cell>
-                    {showBeers && (
-                    <>
-                    <DataTable.Title style={tableStyles.total} textStyle={tableStyles.scoreText}>{sc.beers}</DataTable.Title>
-                    <DataTable.Title style={tableStyles.total} textStyle={tableStyles.scoreText}>{sc.beers * 0.5}</DataTable.Title>
-                    <DataTable.Title style={tableStyles.hcPlusMinus} textStyle={tableStyles.scoreText}>{(sc.plusminus || 0) - (sc.beers * 0.5)}</DataTable.Title>
-                    </>
-                )}
+                    {showBeersInfo && (
+                        <>
+                            <DataTable.Title style={tableStyles.total} textStyle={tableStyles.scoreText}>{sc.beers}</DataTable.Title>
+                            <DataTable.Title style={tableStyles.total} textStyle={tableStyles.scoreText}>{sc.beers * 0.5}</DataTable.Title>
+                        </>
+                    )}
+                    <DataTable.Title style={tableStyles.totalPlusMinus} textStyle={tableStyles.totalText}>{(sc.plusminus || 0) - sc.hc - (sc.beers * 0.5 * (showBeersInfo ? 1 : 0))}</DataTable.Title>
 
                 </DataTable.Row>
             )}

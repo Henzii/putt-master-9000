@@ -15,5 +15,4 @@ const RoundBottom = ({fill}: {fill: string}) => {
     );
 };
 
-
 export default RoundBottom;
