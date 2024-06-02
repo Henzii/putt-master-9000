@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useQuery } from "@apollo/client";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Headline, Title } from "react-native-paper";
 import ErrorScreen from "../../components/ErrorScreen";
 import InfoCard from "../../components/InfoCard";
@@ -72,7 +72,18 @@ export default function StatsView({ selectedCourse, selectedUser }: StatsViewPro
                     <InfoCard title="Ten latest sorted" text={
                         [...scores.slice(-10)]
                             .sort((a: number, b: number) => a - b)
-                            .join(', ')
+                            .map((score, index, allScores) => {
+                                const midIndex = allScores.length / 2;
+                                const isHcSCore = allScores.length >= 10 && (midIndex % 2 === 0 ? index === midIndex : [midIndex - 1, midIndex].includes(index));
+                                return (
+                                    <React.Fragment key={index}>
+                                        <Text style={isHcSCore && styles.bold}>
+                                            {score}
+                                        </Text>
+                                        {index < allScores.length - 1 && <Text>, </Text>}
+                                    </React.Fragment>
+                                );
+                            })
                     } />
                     <InfoCard title="HC" text={data.getHc[0].hc} />
                 </View>
@@ -86,7 +97,7 @@ export default function StatsView({ selectedCourse, selectedUser }: StatsViewPro
             <LineChart par={0} data={scoresToDisplay} />
             <Spacer size={15} />
             <Divider />
-            <Headline style={{marginLeft: 25}}>Holes data</Headline>
+            <Headline style={{ marginLeft: 25 }}>Holes data</Headline>
             <Spacer />
             <BarChart stats={stats.getHolesStats(selectedUser.id as string)} holes={selectedCourse.layout.holes} />
             <Spacer size={15} />
@@ -126,3 +137,9 @@ export default function StatsView({ selectedCourse, selectedUser }: StatsViewPro
     );
 }
 
+const styles = StyleSheet.create({
+    bold: {
+        fontWeight: '900',
+        fontSize: 15,
+    }
+});

@@ -25,9 +25,14 @@ export const tableStyles = StyleSheet.create({
         minWidth: 50,
         justifyContent: 'center',
     },
-    hcPlusMinus: {
-        width: 42,
+    totalPlusMinus: {
+        width: 50,
         justifyContent: 'center',
+    },
+    totalText: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        color: 'black',
     }
 });
 

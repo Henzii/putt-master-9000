@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 import { MD3Theme, Title, useTheme} from 'react-native-paper';
 
 type InfoCardProps = {
     title?: string,
-    text: string | number,
+    text: ReactNode,
 }
 
 export default function InfoCard(props: InfoCardProps) {
