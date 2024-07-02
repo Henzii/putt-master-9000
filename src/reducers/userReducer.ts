@@ -1,4 +1,8 @@
-export const reducer = (state: UserData | undefined, action: UserReducerAction) => {
+const initialState: UserLoggedOut = {
+    isLoggedIn: false
+};
+
+export const reducer = (state: UserLoggedIn | UserLoggedOut = initialState, action: UserReducerAction) => {
     switch(action.type) {
         case 'SET_USER': {
             return action.data;
@@ -8,12 +12,29 @@ export const reducer = (state: UserData | undefined, action: UserReducerAction) 
     }
 };
 
-type UserData = {
+export const setUser = (user: Omit<UserLoggedIn, 'isLoggedIn'> | null): UserReducerAction => {
+    return {
+        type: 'SET_USER',
+        data: user ?{
+            ...user,
+            isLoggedIn: true
+        } : {isLoggedIn: false}
+    };
+};
+
+type UserLoggedIn = {
     id: number | string,
     user: string,
+    isLoggedIn: true
 }
-type UserReducerAction = setUserAction
-type setUserAction = {
+
+type UserLoggedOut = {
+    isLoggedIn: false
+}
+
+type UserReducerAction = {
     type: 'SET_USER',
-    data: UserData
+    data: UserLoggedIn | UserLoggedOut
 }
+
+export default reducer;

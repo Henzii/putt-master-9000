@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { View, StyleSheet, Linking } from "react-native";
 import { Button } from 'react-native-paper';
 import { Link, useNavigate } from 'react-router-native';
-import useMe from '../../hooks/useMe';
 import Loading from '../../components/Loading';
 import Login from '../../components/Login';
 import Container from '../../components/ThemedComponents/Container';
@@ -15,6 +14,7 @@ import NavIcon from './NavIcon';
 import Spacer from '../../components/ThemedComponents/Spacer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from './Header/Header';
+import { SESSION_STATE, useSession } from '../../hooks/useSession';
 
 const pilli = require('../../../assets/icons/play.png');
 const maali = require('../../../assets/icons/checklist.png');
@@ -28,9 +28,10 @@ const signout = require('../../../assets/icons/sign-out.png');
 const www = require('../../../assets/icons/www.png');
 
 const Frontpage = () => {
-    const { me, logged, logout, login, loading, error } = useMe();
     const openGames = useQuery(GET_OLD_GAMES, { variables: { onlyOpenGames: true }, fetchPolicy: 'cache-and-network' });
     const navi = useNavigate();
+
+    const session = useSession();
 
     const handleOpenWebsite = async () => {
         const token = await AsyncStorage.getItem('token');
@@ -39,19 +40,19 @@ const Frontpage = () => {
 
     useEffect(() => {
         (async function IIFE() {
-            if (!logged && !loading && await firstTimeLaunched()) {
+            if (!session.isLoggedIn && session.state === SESSION_STATE.FINISHED && await firstTimeLaunched()) {
                 navi('/firstTime');
             }
         })();
-    }, [loading]);
-    if (loading && !me) {
+    }, [session]);
+    if (session.state === SESSION_STATE.LOADING) {
         return (
             <Loading loadingText='Connecting to server...' showTexts />
         );
     }
-    if (error) {
+    if (session.state === SESSION_STATE.ERROR) {
         return (
-            <ErrorScreen errorMessage={error?.message} />
+            <ErrorScreen errorMessage='Session failed' />
         );
     }
 
@@ -59,7 +60,7 @@ const Frontpage = () => {
 
     return (
         <Container noFlex withScrollView style={{ alignItems: 'center' }} noPadding>
-            {(logged) ?
+            {(session.isLoggedIn) ?
                 <>
                     <Header openGames={ongoingGames} />
                     <Spacer size={20} />
@@ -72,12 +73,12 @@ const Frontpage = () => {
                         <NavIcon title="Achievements" to="/achievements"icon={achievement} />
                         <NavIcon title="Settings" to="/settings" icon={settings} />
                         <NavIcon title="Website" to="/" icon={www} onClick={handleOpenWebsite} />
-                        <NavIcon title="Logout" to="/" icon={signout} onClick={logout} />
+                        <NavIcon title="Logout" to="/" icon={signout} onClick={() => session.clear()} />
                     </View>
                 </>
                 :
                 <>
-                    <Login login={login} />
+                    <Login />
                     <Link to="/signUp"><Button>Sign up!</Button></Link>
                     {process.env.NODE_ENV === 'development' && (
                         <>

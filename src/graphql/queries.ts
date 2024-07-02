@@ -154,8 +154,8 @@ export const SEARCH_USER = gql`
 `;
 
 export const HANDSHAKE = gql`
-  query {
-    handShake {
+  query ($pushToken: String) {
+    handShake (pushToken: $pushToken) {
       latestVersion
     }
   }

@@ -1,15 +1,18 @@
 type CommonState = {
-    isUpdateAvailable?: boolean
+    isUpdateAvailable: boolean
+    pushToken: string | null
+    loginToken: string | null
 };
 
 type CommonAction = {
-    type: 'SET'
+    type: 'SET_COMMON_STATE'
     payload: Partial<CommonState>
 };
 
-const reducer = (state: CommonState = {}, action: CommonAction) => {
+
+const reducer = (state: Partial<CommonState> = {}, action: CommonAction) => {
     switch(action.type) {
-        case 'SET':
+        case 'SET_COMMON_STATE':
             return {
                 ...state,
                 ...action.payload
@@ -20,7 +23,7 @@ const reducer = (state: CommonState = {}, action: CommonAction) => {
 };
 
 export const setCommonState = (newState: Partial<CommonState>) => ({
-    type: 'SET',
+    type: 'SET_COMMON_STATE',
     payload: newState
 });
 
