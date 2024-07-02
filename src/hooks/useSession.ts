@@ -5,8 +5,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setCommonState } from "../reducers/commonReducer";
 import { useLazyQuery } from "@apollo/client";
 import { GET_ME } from "../graphql/queries";
-import { User } from "../types/user";
 import { setUser } from "../reducers/userReducer";
+import { GetMe } from "../types/queries";
 
 export enum SESSION_STATE {
     IDLE = 'idle',
@@ -21,7 +21,7 @@ export const useSession = () => {
     const [sessionState, setSessionState] = useState(SESSION_STATE.IDLE);
 
     const dispatch = useDispatch();
-    const [getMe] = useLazyQuery<{getMe: User}>(GET_ME);
+    const [getMe] = useLazyQuery<GetMe>(GET_ME);
 
     useEffect(() => {
         const getTokenFromStorage = async () => {

@@ -17,7 +17,7 @@ import Settings from '../screens/Settings';
 import Stats from '../screens/Stats';
 import registerForPushNotificationsAsync from '../utils/registerForPushNotifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NotificationResponse, Subscription, addNotificationReceivedListener, addNotificationResponseReceivedListener, removeNotificationSubscription } from 'expo-notifications';
+import { Subscription, addNotificationReceivedListener, removeNotificationSubscription, useLastNotificationResponse } from 'expo-notifications';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNotification } from '../reducers/notificationReducer';
 import FirstTime from '../screens/Frontpage/FirstTime';
@@ -29,18 +29,19 @@ import appInfo from '../../app.json';
 import { setCommonState } from '../reducers/commonReducer';
 import { RootState } from '../utils/store';
 import { useSession } from '../hooks/useSession';
+import { HandShake } from '../types/queries';
 
 export default function App() {
     const dispatch = useDispatch();
     const backButton = useBackButton();
     const navi = useNavigate();
     const pushToken = useSelector((state: RootState) => state.common.pushToken);
-    const [shakeHands] = useLazyQuery<{handShake: {latestVersion: number}}>(HANDSHAKE);
+    const [shakeHands] = useLazyQuery<HandShake>(HANDSHAKE);
 
     const user = useSession();
 
     const notificListener = useRef<Subscription>();
-    const notificationResponseListener = useRef<Subscription>();
+    const lastNotificationResponse = useLastNotificationResponse();
 
     useEffect(() => {
         const doHandShake = async () => {
@@ -55,12 +56,13 @@ export default function App() {
         }
     }, [user, pushToken]);
 
-    const handleNotificationClicked = (event: NotificationResponse) => {
-        const gameId = event.notification.request.content.data?.gameId;
+    useEffect(() => {
+        const gameId = lastNotificationResponse?.notification.request.content.data?.gameId;
         if (gameId) {
             navi(`/game/${gameId}`);
         }
-    };
+
+    }, [lastNotificationResponse]);
 
     useEffect(() => {
         const handleBack = () => {
@@ -80,7 +82,6 @@ export default function App() {
             dispatch(addNotification(notification.request.content.body || 'Received an empty notification???', 'info'));
         });
 
-        notificationResponseListener.current = addNotificationResponseReceivedListener(handleNotificationClicked);
 
         // Listeneri kännykän back-napille
         BackHandler.addEventListener('hardwareBackPress', handleBack);
@@ -88,9 +89,6 @@ export default function App() {
             // Poistetaan listenerit
             if (notificListener.current) {
                 removeNotificationSubscription(notificListener.current);
-            }
-            if (notificationResponseListener.current) {
-                removeNotificationSubscription(notificationResponseListener.current);
             }
             BackHandler.removeEventListener('hardwareBackPress', handleBack);
         };
