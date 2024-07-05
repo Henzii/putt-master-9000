@@ -46,7 +46,7 @@ export const useSession = () => {
                 if (!id || !name) {
                     throw new Error();
                 } else {
-                    dispatch(setUser({id, user: name}));
+                    dispatch(setUser({id, name}));
                     setSessionState(SESSION_STATE.FINISHED);
                 }
             } catch {
@@ -70,7 +70,9 @@ export const useSession = () => {
     };
 
     const hookReturn = useMemo(() => ({
-        ...user,
+        id: user.isLoggedIn ? user.id : null,
+        name: user.isLoggedIn ? user.name : '',
+        isLoggedIn: user.isLoggedIn,
         state: sessionState,
         clear
     }), [user, sessionState]);

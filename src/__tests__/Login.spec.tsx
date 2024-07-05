@@ -3,24 +3,25 @@ import Login from '../components/Login';
 import { render, fireEvent } from '@testing-library/react-native';
 
 jest.useFakeTimers();
+const mockedMutation = jest.fn();
+
+jest.mock('@apollo/client', () => ({
+    useMutation: () => [mockedMutation, {loading: false}]
+}));
 
 describe('<Login />', () => {
-    it('form functions properly', () => {
-        const loginFunction = jest.fn(() => Promise.resolve());
-        const { getByTestId } = render(<Login login={loginFunction} />);
+    it('form functions properly', async () => {
 
-        // Syötetään testitunnukset
+        const { getByTestId } = render(<Login />);
+
         fireEvent.changeText(getByTestId('user'), 'Testeri');
         fireEvent.changeText(getByTestId('password'), 'abcd123');
 
-        // Painetaan login-nappia
         fireEvent.press(getByTestId('LoginButton'));
 
-        // Loginfunktio laukeaa
-        expect(loginFunction).toHaveBeenCalled();
 
-        // Funktion parametrit täsmää
-        expect(loginFunction.mock.calls[0]).toEqual(['Testeri', 'abcd123']);
-
+        expect(mockedMutation).toHaveBeenCalledTimes(1);
+        expect(mockedMutation.mock.calls[0][0]).toHaveProperty('variables.user', 'Testeri');
+        expect(mockedMutation.mock.calls[0][0]).toHaveProperty('variables.password', 'abcd123');
     });
 });

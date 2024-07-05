@@ -24,7 +24,7 @@ export const setUser = (user: Omit<UserLoggedIn, 'isLoggedIn'> | null): UserRedu
 
 type UserLoggedIn = {
     id: number | string,
-    user: string,
+    name: string,
     isLoggedIn: true
 }
 
