@@ -17,42 +17,52 @@ import Settings from '../screens/Settings';
 import Stats from '../screens/Stats';
 import registerForPushNotificationsAsync from '../utils/registerForPushNotifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NotificationResponse, addNotificationReceivedListener, addNotificationResponseReceivedListener, removeNotificationSubscription } from 'expo-notifications';
-import { useDispatch } from 'react-redux';
+import { Subscription, addNotificationReceivedListener, removeNotificationSubscription, useLastNotificationResponse } from 'expo-notifications';
+import { useDispatch, useSelector } from 'react-redux';
 import { addNotification } from '../reducers/notificationReducer';
 import FirstTime from '../screens/Frontpage/FirstTime';
 import { useBackButton } from './BackButtonProvider';
 import DevPage from './DevPage';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { HANDSHAKE } from '../graphql/queries';
 import appInfo from '../../app.json';
 import { setCommonState } from '../reducers/commonReducer';
+import { RootState } from '../utils/store';
+import { useSession } from '../hooks/useSession';
+import { HandShake } from '../types/queries';
 
 export default function App() {
     const dispatch = useDispatch();
     const backButton = useBackButton();
     const navi = useNavigate();
-    const {data, loading} = useQuery(HANDSHAKE);
+    const pushToken = useSelector((state: RootState) => state.common.pushToken);
+    const [shakeHands] = useLazyQuery<HandShake>(HANDSHAKE);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const notificListener = useRef<any>();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const notificationResponseListener = useRef<any>();
+    const user = useSession();
+
+    const notificListener = useRef<Subscription>();
+    const lastNotificationResponse = useLastNotificationResponse();
 
     useEffect(() => {
-        if (!loading && data?.handShake?.latestVersion) {
-            if (data?.handShake?.latestVersion > appInfo.expo.android.versionCode) {
+        const doHandShake = async () => {
+            const handShakeResponse = await shakeHands({variables: {pushToken}});
+            const latestVersion = handShakeResponse.data?.handShake?.latestVersion;
+            if (latestVersion && latestVersion > appInfo.expo.android.versionCode) {
                 dispatch(setCommonState({isUpdateAvailable: true}));
             }
+        };
+        if (user.isLoggedIn && pushToken !== undefined) {
+            doHandShake();
         }
-    }, [data, loading]);
+    }, [user, pushToken]);
 
-    const handleNotificationClicked = (event: NotificationResponse) => {
-        const gameId = event.notification.request.content.data?.gameId;
+    useEffect(() => {
+        const gameId = lastNotificationResponse?.notification.request.content.data?.gameId;
         if (gameId) {
             navi(`/game/${gameId}`);
         }
-    };
+
+    }, [lastNotificationResponse]);
 
     useEffect(() => {
         const handleBack = () => {
@@ -62,22 +72,24 @@ export default function App() {
         // Haetaan push notifikaatioiden token ja tallennetaan se asyncstorageen
         registerForPushNotificationsAsync().then(token => {
             if (token) AsyncStorage.setItem('pushToken', token);
+            dispatch(setCommonState({pushToken: token}));
         }).catch(error => {
             dispatch(addNotification(error.message, 'warning'));
+            dispatch(setCommonState({pushToken: null}));
         });
         // Lisätään listeneri kuuntelemaan push notifikaatioita ja laitetaan ne omaan notifikaationininononon
         notificListener.current = addNotificationReceivedListener(notification => {
             dispatch(addNotification(notification.request.content.body || 'Received an empty notification???', 'info'));
         });
 
-        notificationResponseListener.current = addNotificationResponseReceivedListener(handleNotificationClicked);
 
         // Listeneri kännykän back-napille
         BackHandler.addEventListener('hardwareBackPress', handleBack);
         return () => {
             // Poistetaan listenerit
-            removeNotificationSubscription(notificListener.current);
-            removeNotificationSubscription(notificationResponseListener.current);
+            if (notificListener.current) {
+                removeNotificationSubscription(notificListener.current);
+            }
             BackHandler.removeEventListener('hardwareBackPress', handleBack);
         };
     }, []);

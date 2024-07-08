@@ -14,7 +14,7 @@ jest.mock('react-router-native', () => {
 });
 jest.mock('react-redux', () => {
     return {
-        useDispatch: () => null,
+        useDispatch: () => () => null,
     };
 });
 
