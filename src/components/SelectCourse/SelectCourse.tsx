@@ -12,6 +12,7 @@ import { Coordinates, Course, Layout, NewLayout } from "../../types/course";
 import { useBackButton } from "../BackButtonProvider";
 import useMe from "../../hooks/useMe";
 import useLiveData from "../../hooks/useLiveData";
+import SelectCourseMap from "./SelectCourseMap";
 
 type SelectCoursesProps = {
     onSelect?: (layout: Layout, course: Course) => void,
@@ -23,6 +24,7 @@ type SelectCoursesProps = {
 const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, showTraffic }: SelectCoursesProps) => {
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
+    const [displayMap, setDisplayMap] = useState(false);
     const [courseToEdit, setCourseToEdit] = useState<Course>();
     const { courses, loading, addLayout, addCourse, fetchMore, error, gpsAvailable, ...restOfUseCourses } = useCourses(showDistance);
     const searchInput = useTextInput({ defaultValue: '', callBackDelay: 500 }, restOfUseCourses.setSearchString);
@@ -38,7 +40,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
             backButton.setCallBack(onBackAction);
         }
         return () => backButton.setCallBack(undefined);
-    });
+    }, []);
 
     useEffect(() => {
         if (expandedCourse) {
@@ -88,6 +90,15 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
     if (!courses) return (
         <Loading loadingText="Loading courses..." />
     );
+
+    if (displayMap) {
+        return <SelectCourseMap onClose={() => setDisplayMap(false)} onSelectCourse={courseName => {
+            setDisplaySearchBar(true);
+            setDisplayMap(false);
+            searchInput.onChangeText(courseName);
+        }}/>;
+    }
+
     return (
         <Container noPadding>
             <Portal>
@@ -110,6 +121,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
             <View style={tyyli.topButtons}>
                 <Button mode="outlined" icon="text-box-plus-outline" onPress={handleAddCourseClick} testID="AddCourseButton">Add Course</Button>
                 <Button mode="outlined" icon="magnify" onPress={handleClickSearch}>Search</Button>
+                <Button mode="outlined" icon="map" onPress={() => setDisplayMap(true)}>Map</Button>
             </View>
             {displaySearchBar ? <Searchbar
                 autoComplete='off'
@@ -160,8 +172,8 @@ const tyyli = StyleSheet.create({
     topButtons: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingHorizontal: 20,
+        justifyContent: 'space-evenly',
+        paddingHorizontal: 2,
         paddingVertical: 10,
     },
     shadow: {
