@@ -9,8 +9,11 @@ import { StyleSheet, View, Text } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Course } from '../../types/course';
 import SplitContainer from '../ThemedComponents/SplitContainer';
-import { Button, Drawer, Portal, SegmentedButtons } from 'react-native-paper';
+import { Button, Drawer, Headline, Portal, SegmentedButtons, Title } from 'react-native-paper';
 import { useBackButton } from '../BackButtonProvider';
+import Sheet from '../Sheet';
+import SelectLayout from './SelectLayout';
+import CourseDetailsSheet from './CourseDetailsSheet';
 
 type Props = {
     onClose: () => void
@@ -21,7 +24,7 @@ const SelectCourseMap = ({ onClose, onSelectCourse }: Props) => {
     const { loading, lon = 0, lat = 0, error, ready } = useGPS();
     const [maxDistance, setMaxDistance] = useState(10_000);
     const [selectedCourseId, setSelectedCourseId] = useState<string | number>();
-    const [showDrawer, setShowDrawer] = useState(false);
+    const [showSheet, setShowSheet] = useState(false);
     const [fetchCourses, { data, error: queryError }] = useLazyQuery<GetCourses, GetCoursesVariables>(GET_COURSES);
     const backButton = useBackButton();
 
@@ -55,6 +58,7 @@ const SelectCourseMap = ({ onClose, onSelectCourse }: Props) => {
 
     return (
         <View style={styles.container}>
+            {selectedCourse && <CourseDetailsSheet open={showSheet} onClose={() => setShowSheet(false)} course={selectedCourse} />}
             <SegmentedButtons
                 value={maxDistance.toString()}
                 onValueChange={value => setMaxDistance(+value)}
@@ -72,16 +76,7 @@ const SelectCourseMap = ({ onClose, onSelectCourse }: Props) => {
                     }
                 ]}
             />
-            {showDrawer && (
-                <Drawer.Section title={selectedCourse?.name ?? ''} style={styles.drawer}>
-                    <View>
-                        <Text>Jeee</Text>
-                        <Button onPress={() => setShowDrawer(false)}>Close</Button>
-                    </View>
-
-                </Drawer.Section>
-            )}
-            {selectedCourse && <CourseInfo course={selectedCourse} onSelect={() => setShowDrawer(true)} />}
+            {selectedCourse && <CourseInfo course={selectedCourse} onSelect={() => setShowSheet(true)} />}
             <MapView
                 provider={PROVIDER_GOOGLE}
                 style={styles.mapView}
@@ -156,7 +151,7 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         left: 10,
         zIndex: 2,
-        maxWidth: '90%'
+        maxWidth: '80%'
     },
     drawer: {
         position: 'absolute',
