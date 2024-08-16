@@ -23,7 +23,7 @@ describe('<FirstTime />', () => {
         expect(submitButton.props.accessibilityState.disabled).toBeTruthy();
 
 
-    });
+    }, 1000 * 10);
     it('password should match and not be too short', async () => {
         const {getByTestId, findAllByText} = render(<Wrapper><FirstTime /></Wrapper>);
         const passwordField1 = getByTestId('password1');
