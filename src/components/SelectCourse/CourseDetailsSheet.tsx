@@ -2,7 +2,7 @@ import React from 'react';
 import { Course, Layout } from '../../types/course';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Sheet from '../Sheet';
-import { Button, Headline, IconButton } from 'react-native-paper';
+import { Button, Headline } from 'react-native-paper';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import Spacer from '../ThemedComponents/Spacer';
 import SplitContainer from '../ThemedComponents/SplitContainer';
@@ -12,9 +12,14 @@ type Props = {
     course: Course
     open: boolean
     onClose: () => void
+    onSelectLayout: (layout: Layout, course: Course) => void
 }
 
-const CourseDetailsSheet = ({course, open, onClose}: Props) => {
+const CourseDetailsSheet = ({course, open, onClose, onSelectLayout}: Props) => {
+    const handleLayoutSelect = (layout: Layout) => {
+        onSelectLayout(layout, course);
+    };
+
     return (
         <Sheet open={open} onClose={onClose}>
             <Headline style={styles.courseName}>{course.name}</Headline>
@@ -29,13 +34,16 @@ const CourseDetailsSheet = ({course, open, onClose}: Props) => {
             <ScrollView>
                 <Spacer />
                 <Headline>Layouts</Headline>
-                {course.layouts.map(layout => <SingleLayout layout={layout} key={layout.id} />)}
+                {course.layouts.map(layout => <SingleLayout layout={layout} key={layout.id} onSelect={handleLayoutSelect} />)}
             </ScrollView>
         </Sheet>
     );
 };
 
-const SingleLayout = ({layout}: {layout: Layout}) => {
+const SingleLayout = ({layout, onSelect}: {layout: Layout, onSelect: (layout: Layout) => void}) => {
+    const handleSelectClick = () => {
+        onSelect(layout);
+    };
     return (
         <View style={styles.layout}>
             <SplitContainer>
@@ -45,7 +53,7 @@ const SingleLayout = ({layout}: {layout: Layout}) => {
             <Text>{layout.pars.join(',')}</Text>
             </View>
             <View style={styles.row}>
-                <Button>Select</Button>
+                <Button onPress={handleSelectClick}>Select</Button>
             </View>
             </SplitContainer>
         </View>

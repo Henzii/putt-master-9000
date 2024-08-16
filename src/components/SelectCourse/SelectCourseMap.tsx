@@ -7,20 +7,18 @@ import { GET_COURSES } from '../../graphql/queries';
 import { GetCourses, GetCoursesVariables } from '../../types/queries';
 import { StyleSheet, View, Text } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import { Course } from '../../types/course';
+import { Course, Layout } from '../../types/course';
 import SplitContainer from '../ThemedComponents/SplitContainer';
-import { Button, Drawer, Headline, Portal, SegmentedButtons, Title } from 'react-native-paper';
+import { Button, SegmentedButtons } from 'react-native-paper';
 import { useBackButton } from '../BackButtonProvider';
-import Sheet from '../Sheet';
-import SelectLayout from './SelectLayout';
 import CourseDetailsSheet from './CourseDetailsSheet';
 
 type Props = {
     onClose: () => void
-    onSelectCourse: (courseName: string) => void
+    onSelectLayout: (layout: Layout, course: Course) => void
 }
 
-const SelectCourseMap = ({ onClose, onSelectCourse }: Props) => {
+const SelectCourseMap = ({ onClose, onSelectLayout }: Props) => {
     const { loading, lon = 0, lat = 0, error, ready } = useGPS();
     const [maxDistance, setMaxDistance] = useState(10_000);
     const [selectedCourseId, setSelectedCourseId] = useState<string | number>();
@@ -58,7 +56,14 @@ const SelectCourseMap = ({ onClose, onSelectCourse }: Props) => {
 
     return (
         <View style={styles.container}>
-            {selectedCourse && <CourseDetailsSheet open={showSheet} onClose={() => setShowSheet(false)} course={selectedCourse} />}
+            {selectedCourse && (
+                <CourseDetailsSheet
+                    open={showSheet}
+                    onClose={() => setShowSheet(false)}
+                    course={selectedCourse}
+                    onSelectLayout={onSelectLayout}
+                />
+            )}
             <SegmentedButtons
                 value={maxDistance.toString()}
                 onValueChange={value => setMaxDistance(+value)}

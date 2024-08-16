@@ -92,11 +92,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
     );
 
     if (displayMap) {
-        return <SelectCourseMap onClose={() => setDisplayMap(false)} onSelectCourse={courseName => {
-            setDisplaySearchBar(true);
-            setDisplayMap(false);
-            searchInput.onChangeText(courseName);
-        }}/>;
+        return <SelectCourseMap onClose={() => setDisplayMap(false)} onSelectLayout={handleClickLayout} />;
     }
 
     return (
