@@ -84,7 +84,7 @@ export default function Game() {
 
     useEffect(() => {
         goToFirstIncompleteHole();
-    }, []);
+    }, [data?.id]);
 
     if (!data) return <Loading />;
     if (error) {

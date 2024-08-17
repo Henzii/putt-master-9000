@@ -47,14 +47,14 @@ const SingleLayout = ({layout, onSelect}: {layout: Layout, onSelect: (layout: La
     return (
         <View style={styles.layout}>
             <SplitContainer>
+                <View style={{flexShrink: 1}}>
+                    <Text style={styles.layoutName} numberOfLines={2}>{layout.name}</Text>
+                    <Text>{layout.holes} holes, par {layout.par}</Text>
+                    <Text numberOfLines={2}>{layout.pars.join(',')}</Text>
+                </View>
                 <View>
-            <Text style={styles.layoutName}>{layout.name}</Text>
-            <Text>{layout.holes} holes, par {layout.par}</Text>
-            <Text>{layout.pars.join(',')}</Text>
-            </View>
-            <View style={styles.row}>
-                <Button onPress={handleSelectClick}>Select</Button>
-            </View>
+                    <Button onPress={handleSelectClick}>Select</Button>
+                </View>
             </SplitContainer>
         </View>
     );
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         elevation: 3,
         marginBottom: 5,
+        marginTop: 5,
         padding: 8,
         borderRadius: 2,
     },

@@ -72,10 +72,14 @@ export default function GameContainer() {
         if (!settings.getBoolValue('Prohibition') && !hasBeerRoute) {
             copyOfNavRoutes.splice(2, 0, { key: 'beerRoute', title: 'Beers', focusedIcon: 'beer', unfocusedIcon: 'beer-outline' });
             setNavRoutes(copyOfNavRoutes);
-            setNavIndex(3);
+            if (navIndex >= 2) {
+                setNavIndex(navIndex + 1);
+            }
         } else if (settings.getBoolValue('Prohibition') && hasBeerRoute) {
             setNavRoutes(copyOfNavRoutes.filter(route => route.key !== 'beerRoute'));
-            setNavIndex(2);
+            if (navIndex >= 2) {
+                setNavIndex(navIndex - 1);
+            }
         }
     }, [settings]);
 
