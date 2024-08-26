@@ -106,8 +106,8 @@ ${CORE_SCORECARD_INFO}
 `;
 export const GET_OLD_GAMES = gql`
 ${CORE_GAME_INFO}
-  query ($onlyOpenGames: Boolean, $limit: Int, $offset: Int, $search: String) {
-    getGames (onlyOpenGames: $onlyOpenGames, limit: $limit, offset: $offset, search: $search) {
+  query ($onlyOpenGames: Boolean, $limit: Int, $offset: Int, $search: String, $onlyGroupGames: Boolean) {
+    getGames (onlyOpenGames: $onlyOpenGames, limit: $limit, offset: $offset, search: $search, onlyGroupGames: $onlyGroupGames) {
       hasMore
       nextOffset
       count
