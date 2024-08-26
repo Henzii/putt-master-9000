@@ -31,6 +31,14 @@ export default function GameItem(props: GameItemProps) {
                                 );
                         })}
                     </View>
+                    {game.groupName || game.bHcMultiplier !== 1 ? (
+                        <>
+                        <View style={{flexDirection: 'row', marginTop: 12, gap: 5}}>
+                        {game.groupName && <Chip icon="account-group">{game.groupName}</Chip>}
+                        {game.bHcMultiplier !== 1 && <Chip icon="beer">bHc {game.bHcMultiplier}x</Chip>}
+                        </View>
+                        </>
+                    ): null}
                 </View>
                 <View style={tyyli.cardRight}>
                     <Caption style={tyyli.alignRight}>{date}</Caption>

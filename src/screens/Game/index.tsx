@@ -99,20 +99,32 @@ export default function GameContainer() {
         }
     };
     const handleCreateGame = async (data: NewGameData) => {
-        if (!data.layout || !data.course) return;
-        const res = await createGameMutation({
-            variables: { courseId: data.course.id, layoutId: data.layout.id }
-        });
-        const newGameId = res.data.createGame;
-        await addPlayersMutation({
-            variables: {
-                gameId: newGameId,
-                playerIds: data.players.map(p => p.id)
+        try {
+            if (!data.layout || !data.course) return;
+            if (data.bHcMultiplier && isNaN(Number(data.bHcMultiplier))) {
+                throw Error('bHcMultiplier is not a number?');
             }
-        });
-        dispatch(newGame(newGameId));
-        dispatch(addNotification('New game created!', 'success'));
-        setNavIndex(0);
+            const res = await createGameMutation({
+                variables: {
+                    courseId: data.course.id,
+                    layoutId: data.layout.id,
+                    isGroupGame: data.isCompetition,
+                    bHcMultiplier: data.bHcMultiplier ? Number(data.bHcMultiplier) : undefined
+                }
+            });
+            const newGameId = res.data.createGame;
+            await addPlayersMutation({
+                variables: {
+                    gameId: newGameId,
+                    playerIds: data.players.map(p => p.id)
+                }
+            });
+            dispatch(newGame(newGameId));
+            dispatch(addNotification('New game created!', 'success'));
+            setNavIndex(0);
+        } catch {
+            dispatch(addNotification('Failed to create a game!', 'alert'));
+        }
     };
     // Jos peliä ei ole ladattu -> createGame, tai jos erroreita tai loading tms...
     if (!gameData?.gameId) {

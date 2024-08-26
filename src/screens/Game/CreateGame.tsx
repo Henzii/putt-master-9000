@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ViewStyle, StyleProp } from "react-native";
-import { Button, Headline, IconButton} from 'react-native-paper';
-import useMe from '../../hooks/useMe';
+import { Button, Headline, IconButton, Switch, TextInput } from 'react-native-paper';
 import FriendsList from '../../components/FriendsList';
 import SelectCourses from '../../components/SelectCourse/SelectCourse';
 import Container from '../../components/ThemedComponents/Container';
-import Loading from '../../components/Loading';
 import NumberedTitle from '../../components/NumberedTitle';
 import Divider from '../../components/ThemedComponents/Divider';
 import Spacer from '../../components/ThemedComponents/Spacer';
 import useStats from '../../hooks/useStats';
 import { Course, Layout } from '../../types/course';
 import { User } from '../../types/user';
+import ErrorScreen from '../../components/ErrorScreen';
+import SplitContainer from '../../components/ThemedComponents/SplitContainer';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../utils/store';
 
 export type NewGameData = {
     course?: Course | null,
     layout?: Layout,
     players: Pick<User, 'name' | 'id'>[]
+    isCompetition?: boolean,
+    bHcMultiplier?: string
 }
 type CreateGameProps = {
     onCreate?: (data: NewGameData) => void,
@@ -26,30 +30,34 @@ type CreateGameProps = {
 
 const CreateGame = (props: CreateGameProps) => {
     const [newGameData, setNewGameData] = useState<NewGameData>({ course: undefined, layout: undefined, players: [] });
-
+    const user = useSelector((state: RootState) => state.user);
     const [selectCourse, setSelectCourse] = useState(false);
     const [addFriend, setAddFriend] = useState(false);
-    const me = useMe();
-    const {getHc, getBest, getField, loading} = useStats(
+    const { getHc, getBest, getField, loading } = useStats(
         (newGameData.layout?.id as string | undefined),
         (newGameData.players.map(player => player.id) as string[]),
         'network-only',
         newGameData.players,
     );
     useEffect(() => {   // Kirjautuneet tiedot playerlistiin mounttauksen yhteydessä
-        if (me.me) {
+        if (user.isLoggedIn) {
             setNewGameData({
                 ...newGameData,
                 players: [{
-                    id: me.me.id,
-                    name: me.me.name
+                    id: user.id,
+                    name: user.name
                 }]
             });
         }
-    }, [me.me]);
-    if (me.error || !me.me) {
-        return <Loading loadingText='Loading user...' />;
-    }
+    }, [user]);
+
+    const handleEditGameData = (data: Partial<NewGameData>) => {
+        setNewGameData(old => ({
+            ...old,
+            ...data
+        }));
+    };
+
     const handleSelectCourse = (layout: Layout, course: Course) => {
         setNewGameData({
             ...newGameData,
@@ -58,19 +66,19 @@ const CreateGame = (props: CreateGameProps) => {
         });
         setSelectCourse(false);
     };
-    const handleAddFriend = (friends: { name: string, id: string | number}[]) => {
+    const handleAddFriend = (friends: { name: string, id: string | number }[]) => {
 
-        const filterDuplicates = (friends: { name: string, id: string | number}[]) => {
+        const filterDuplicates = (friends: { name: string, id: string | number }[]) => {
             return friends.filter(f => {
                 return newGameData.players.find(p => p.id === f.id) ? false : true;
             });
         };
         // Jos pelaa ei ole listalla, lisätään se...
-            setNewGameData({
-                ...newGameData,
+        setNewGameData({
+            ...newGameData,
             players: newGameData.players.concat(filterDuplicates(friends)),
-            layout: newGameData.layout ? {...newGameData.layout} : undefined
-            });
+            layout: newGameData.layout ? { ...newGameData.layout } : undefined
+        });
         setAddFriend(false);
     };
     const handleRemoveFriend = (id: string | number) => {
@@ -89,11 +97,16 @@ const CreateGame = (props: CreateGameProps) => {
     const handleSetSelectCourse = () => {
         setSelectCourse(true);
     };
+
+    if (!user.isLoggedIn) {
+        return <ErrorScreen errorMessage='You are not logged in?' />;
+    }
+
     if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} title="Select course" onBackAction={() => setSelectCourse(false)} showTraffic={false} />;
     if (addFriend) return <FriendsList onClick={handleAddFriend} hideRemoveButton multiSelect onBackAction={() => setAddFriend(false)} />;
 
     const tyyli = createStyle();
-    const {course, layout} = newGameData;
+    const { course, layout } = newGameData;
     return (
         <Container withScrollView noFlex fullHeight>
             <Headline>New Game</Headline>
@@ -129,7 +142,7 @@ const CreateGame = (props: CreateGameProps) => {
                 <Text style={tableStyle.headerRest}>Games</Text>
                 <Text style={tableStyle.headerRest}>Best</Text>
                 <Text style={tableStyle.headerRest}>HC</Text>
-                <Text style={{flex: 1.2}}></Text>
+                <Text style={{ flex: 1.2 }}></Text>
             </View>
             <>
                 {newGameData.players.map((player, index) => {
@@ -141,26 +154,49 @@ const CreateGame = (props: CreateGameProps) => {
                         games={getField(player.id, 'games') as number}
                         best={layout?.par && best ? best - layout.par : ''}
                         even={index % 2 === 0}
-                        onRemove={player.id !== me?.me?.id ? () => handleRemoveFriend(player.id) : null}
+                        onRemove={player.id !== user.id ? () => handleRemoveFriend(player.id) : null}
                         additionalStyle={tableStyle.playersTable}
                     />;
                 })}
             </>
             <Spacer />
             <Button style={tyyli.button} compact mode={newGameData.players.length > 1 ? 'outlined' : 'contained'} onPress={handleShowFriendsList}>Add players</Button>
-            <Divider margin={30} />
-            <NumberedTitle number='3' title="Create game" />
+            <Divider />
+            <NumberedTitle number="3" title="Settings" accordion>
+                <View>
+                    {!user.groupName && (<Text style={tyyli.errorText}>Options disabled because you&apos;re not part of any group</Text>)}
+                    <SplitContainer>
+                        <Text>Is a group competition game</Text>
+                        <Switch
+                            disabled={!user.groupName}
+                            value={newGameData.isCompetition}
+                            onChange={() => handleEditGameData({ isCompetition: !newGameData.isCompetition })}
+                        />
+                    </SplitContainer>
+                    <SplitContainer>
+                        <Text>bHC multiplier</Text>
+                        <TextInput
+                            keyboardType="number-pad"
+                            mode="outlined"
+                            value={newGameData.bHcMultiplier}
+                            onChangeText={value => handleEditGameData({bHcMultiplier: value})}
+                        />
+                    </SplitContainer>
+                </View>
+            </NumberedTitle>
+            <Divider />
+            <NumberedTitle number='4' title="Create game" />
             <Spacer />
             <View style={tyyli.bottomButtons}>
                 <Button
                     mode='contained'
                     onPress={handleCreate}
-                    disabled={(!newGameData.course || !newGameData.layout || newGameData.players.length < 1 || props.loading)}
+                    disabled={(!newGameData.course || !newGameData.layout || newGameData.players.length < 1 || props.loading || (newGameData.bHcMultiplier !== undefined && isNaN(Number(newGameData.bHcMultiplier))))}
                     loading={props.loading}
                 >
                     Create
                 </Button>
-                <Button  mode='outlined' onPress={props.onCancel}>Cancel</Button>
+                <Button mode='outlined' onPress={props.onCancel}>Cancel</Button>
             </View>
         </Container>
     );
@@ -176,14 +212,14 @@ type TableItemProps = {
     onRemove: (() => void) | null
 }
 
-const TableItem = ({name, games, best, hc, even, onRemove, additionalStyle}: TableItemProps) => {
+const TableItem = ({ name, games, best, hc, even, onRemove, additionalStyle }: TableItemProps) => {
     return (
         <View style={[tableStyle.table, additionalStyle, even && tableStyle.background]}>
-                <Text style={tableStyle.listName}>{name}</Text>
-                <Text style={tableStyle.listRest}>{games}</Text>
-                <Text style={tableStyle.listRest}>{best}</Text>
-                <Text style={tableStyle.listRest}>{hc}</Text>
-                <IconButton icon="trash-can" iconColor="red" size={15} onPress={onRemove ? onRemove : undefined} style={{margin: 0, padding: 0, marginRight: 12,}} disabled={!onRemove} />
+            <Text style={tableStyle.listName}>{name}</Text>
+            <Text style={tableStyle.listRest}>{games}</Text>
+            <Text style={tableStyle.listRest}>{best}</Text>
+            <Text style={tableStyle.listRest}>{hc}</Text>
+            <IconButton icon="trash-can" iconColor="red" size={15} onPress={onRemove ? onRemove : undefined} style={{ margin: 0, padding: 0, marginRight: 12, }} disabled={!onRemove} />
         </View>
     );
 };
@@ -235,6 +271,10 @@ const createStyle = () => StyleSheet.create({
         width: '50%',
         fontSize: 16,
     },
+    errorText: {
+        color: 'darkred'
+    },
+
     parsText: {
         color: 'gray',
         fontSize: 14,

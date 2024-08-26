@@ -15,7 +15,19 @@ export enum SESSION_STATE {
     ERROR = 'error'
 }
 
-export const useSession = () => {
+type Session = {
+    id: string | null
+    name: string
+    isLoggedIn: boolean
+    state: SESSION_STATE
+    clear: () => void
+}
+
+type LoggedIn = Omit<Session, 'isLoggedIn' | 'id'> & {isLoggedIn: true, id: string}
+
+export const isLoggedIn = (session: Session): session is LoggedIn => session.isLoggedIn === true;
+
+export const useSession = (): Session => {
     const loginToken = useSelector((state: RootState) => state.common.loginToken);
     const user = useSelector((state: RootState) => state.user);
     const [sessionState, setSessionState] = useState(SESSION_STATE.IDLE);
@@ -42,11 +54,11 @@ export const useSession = () => {
         const getAndSetUser = async () => {
             try {
                 const user = await getMe();
-                const {id, name} = user?.data?.getMe ?? {};
+                const {id, name, groupName} = user?.data?.getMe ?? {};
                 if (!id || !name) {
                     throw new Error();
                 } else {
-                    dispatch(setUser({id, name}));
+                    dispatch(setUser({id, name, groupName}));
                     setSessionState(SESSION_STATE.FINISHED);
                 }
             } catch {
@@ -70,7 +82,7 @@ export const useSession = () => {
     };
 
     const hookReturn = useMemo(() => ({
-        id: user.isLoggedIn ? user.id : null,
+        id: user.isLoggedIn ? user.id.toString() : null,
         name: user.isLoggedIn ? user.name : '',
         isLoggedIn: user.isLoggedIn,
         state: sessionState,
