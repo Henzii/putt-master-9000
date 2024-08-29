@@ -21,6 +21,7 @@ export const mockedGame: MockedGame = {
     endTime: 0,
     par: 13,
     isOpen: true,
+    bHcMultiplier: 1,
     scorecards: [
         {
             __typename: 'Scorecard',

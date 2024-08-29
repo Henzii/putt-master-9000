@@ -7,9 +7,10 @@ type Props = {
     scorecards: Scorecard[]
     pars: number[]
     showBeers?: boolean
+    bHcMultiplier: number
 }
 
-const TableScores = ({ scorecards, pars, showBeers }: Props) => {
+const TableScores = ({ scorecards, pars, showBeers, bHcMultiplier }: Props) => {
     const showBeersInfo = showBeers || scorecards.some(sc => sc.beers > 0);
     return (
         <DataTable>
@@ -50,10 +51,15 @@ const TableScores = ({ scorecards, pars, showBeers }: Props) => {
                     {showBeersInfo && (
                         <>
                             <DataTable.Title style={tableStyles.total} textStyle={tableStyles.scoreText}>{sc.beers}</DataTable.Title>
-                            <DataTable.Title style={tableStyles.total} textStyle={tableStyles.scoreText}>{sc.beers * 0.5}</DataTable.Title>
+                            <DataTable.Title style={tableStyles.total} textStyle={tableStyles.scoreText}>{sc.beers * 0.5 * bHcMultiplier}</DataTable.Title>
                         </>
                     )}
-                    <DataTable.Title style={tableStyles.totalPlusMinus} textStyle={tableStyles.totalText}>{(sc.plusminus || 0) - sc.hc - (sc.beers * 0.5 * (showBeersInfo ? 1 : 0))}</DataTable.Title>
+                    <DataTable.Title
+                        style={tableStyles.totalPlusMinus}
+                        textStyle={tableStyles.totalText}
+                    >
+                        {(sc.plusminus || 0) - sc.hc - (sc.beers * 0.5 * bHcMultiplier * (showBeersInfo ? 1 : 0))}
+                    </DataTable.Title>
 
                 </DataTable.Row>
             )}

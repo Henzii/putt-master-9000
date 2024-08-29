@@ -11,7 +11,7 @@ import { useSettings } from '../../../components/LocalSettingsProvider';
 import TableNames from './TableNames';
 import TableScores from './TableScores';
 import Container from '../../../components/ThemedComponents/Container';
-import { Button, Headline } from 'react-native-paper';
+import { Button, Chip, Headline } from 'react-native-paper';
 import { parseDate } from '../../../utils/dates';
 import { addNotification } from '../../../reducers/notificationReducer';
 import { theme } from '../../../utils/theme';
@@ -77,7 +77,6 @@ const Summary = () => {
         return (a.total || 0) - (b.total || 0);
     });
 
-
     return (
         <ScrollView>
             <View>
@@ -88,12 +87,16 @@ const Summary = () => {
                         <View style={tyylit.container}>
                             <TableNames scorecards={sortedScorecards} />
                             <ScreenCaptureWrapper withoutScrollView={captureScreen}>
-                                <TableScores scorecards={sortedScorecards} pars={data.pars} showBeers={showBeers} />
+                                <TableScores scorecards={sortedScorecards} pars={data.pars} showBeers={showBeers} bHcMultiplier={data.bHcMultiplier} />
                             </ScreenCaptureWrapper>
                         </View>
                         <Headline style={tyylit.date}>{parseDate(data.startTime)}</Headline>
                     </View>
                 </ScreenCaptureWrapper>
+            </View>
+            <View style={tyylit.gameChips}>
+            {data.groupName && <Chip icon="account-group">{data.groupName}</Chip>}
+            {data.bHcMultiplier !== 1 && <Chip icon="beer"> {data.bHcMultiplier}x bHc</Chip>}
             </View>
             <Container fullHeight>
                 <Button icon={'share-variant'} onPress={() => setCaptureScreen(true)}>Share image</Button>
@@ -117,6 +120,11 @@ const tyylit = StyleSheet.create({
     container: {
         display: 'flex',
         flexDirection: 'row',
+    },
+    gameChips: {
+        flexDirection: 'row',
+        paddingHorizontal: 15,
+        gap: 5
     },
     captureContainer: {
         flex: 1,

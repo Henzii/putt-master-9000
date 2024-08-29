@@ -24,6 +24,8 @@ export const CORE_GAME_INFO = gql`
         isOpen
         holes
         layout_id
+        groupName
+        bHcMultiplier
     }
 `;
 

@@ -46,8 +46,8 @@ export const REMOVE_FRIEND = gql`
     }
 `;
 export const CREATE_GAME = gql`
-    mutation ($courseId: ID!, $layoutId: ID!) {
-        createGame(courseId: $courseId, layoutId: $layoutId)
+    mutation ($courseId: ID!, $layoutId: ID!, $isGroupGame: Boolean, $bHcMultiplier: Float) {
+        createGame(courseId: $courseId, layoutId: $layoutId, isGroupGame: $isGroupGame, bHcMultiplier: $bHcMultiplier)
     }
 `;
 export const ADD_PLAYERS_TO_GAME = gql`

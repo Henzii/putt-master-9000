@@ -26,6 +26,7 @@ type UserLoggedIn = {
     id: number | string,
     name: string,
     isLoggedIn: true
+    groupName?: string
 }
 
 type UserLoggedOut = {

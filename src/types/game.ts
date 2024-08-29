@@ -14,6 +14,8 @@ export type Game = {
     scorecards: Scorecard[],
     myScorecard: Scorecard,
     layout_id: string,
+    groupName?: string,
+    bHcMultiplier: number
 }
 export type Scorecard = {
     scores: number[],

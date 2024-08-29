@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { StyleSheet, View, Text } from "react-native";
+import { List } from 'react-native-paper';
 
 type Props = {
     number: string,
-    title: string
+    title: string,
+    accordion?: boolean
+    children?: ReactNode
 }
 
-const NumberedTitle = ({number, title}: Props) => (
+const NumberedTitle = (props: Props) => {
+    if (props.accordion) {
+        return (
+            <List.Accordion title={<Title {...props} />} titleStyle={styles.accordionTitle} style={styles.accordion}>
+                {props.children}
+            </List.Accordion>
+        );
+    }
+
+    return <Title {...props} />;
+};
+
+const Title = ({number, title}: {number: string, title: string}) => (
     <View style={styles.container}>
         <Text style={[styles.text, styles.number]}>{number}</Text>
         <Text style={styles.text}>{title}</Text>
@@ -19,6 +34,12 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    accordionTitle: {
+        marginLeft: -15
+    },
+    accordion: {
+        backgroundColor: 'white',
     },
     text: {
         fontSize: 18,
