@@ -72,7 +72,7 @@ const Summary = () => {
     const sortedScorecards = [...data.scorecards].sort((a, b) => {
         if (!a.total || !b.total) return 0;
         if (settings.getBoolValue('SortHC')) {
-             return (a.total - a.hc - a.beers * 0.5) - (b.total - b.hc - b.beers * 0.5);
+             return (a.total - a.hc - a.beers * 0.5 * data.bHcMultiplier) - (b.total - b.hc - b.beers * 0.5 * data.bHcMultiplier);
         }
         return (a.total || 0) - (b.total || 0);
     });

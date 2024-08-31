@@ -45,7 +45,9 @@ export default function GameItem(props: GameItemProps) {
                     <View>
                         {game.isOpen
                             ? <Chip style={tyyli.chippi} icon="lock-open-variant">Open</Chip>
-                            : <Title style={tyyli.alignRight}>{game.myScorecard.total} ({(game.myScorecard.total || 0) - game.par})</Title>}
+                            : (
+                                game.myScorecard && <Title style={tyyli.alignRight}>{game.myScorecard.total} ({(game.myScorecard.total || 0) - game.par})</Title>
+                            )}
                     </View>
                 </View>
             </View>
