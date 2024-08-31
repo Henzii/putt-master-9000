@@ -12,13 +12,16 @@ import { client } from './src/graphql/apolloClient';
 import LocalSettingsProvider from './src/components/LocalSettingsProvider';
 import BackButtonProvider from './src/components/BackButtonProvider';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import ErrorBoundary from 'react-native-error-boundary';
+import BSOD from './src/components/BSOD';
 
 export default function App() {
 
   return (
-    <ReduxProvider store={store}>
-      <ApolloProvider client={client}>
-        <NativeRouter>
+    <NativeRouter>
+      <ErrorBoundary FallbackComponent={BSOD}>
+      <ReduxProvider store={store}>
+        <ApolloProvider client={client}>
           <BackButtonProvider>
             <PaperProvider theme={theme}>
               <LocalSettingsProvider>
@@ -28,9 +31,10 @@ export default function App() {
               </LocalSettingsProvider>
             </PaperProvider>
           </BackButtonProvider>
-        </NativeRouter>
-      </ApolloProvider>
-    </ReduxProvider>
+        </ApolloProvider>
+      </ReduxProvider>
+      </ErrorBoundary>
+    </NativeRouter>
 
   );
 }
