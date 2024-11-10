@@ -62,9 +62,16 @@ export default function GameContainer() {
     ]);
 
     useEffect(() => {
-        const newRoutes = navRoutes.toSpliced(-1, 0, {key: 'throwStyleRoute', title: 'Throw Style', focusedIcon: 'dice-3', unfocusedIcon: 'dice-3-outline'});
-        setNavRoutes(newRoutes);
-    }, []);
+        const hasRandomRoute = navRoutes.some(route => route.key === 'throwStyleRoute');
+
+        if (settings.getBoolValue('RandomThrowStyle') && !hasRandomRoute) {
+            const newRoutes = navRoutes.toSpliced(-1, 0, {key: 'throwStyleRoute', title: 'Throw Style', focusedIcon: 'dice-3', unfocusedIcon: 'dice-3-outline'});
+            setNavRoutes(newRoutes);
+        } else if (hasRandomRoute) {
+            setNavRoutes(routes => routes.filter(route => route.key !== 'throwStyleRoute'));
+            setNavIndex(index => index - 1);
+        }
+    }, [settings]);
 
     useEffect(() => {
         if (location.search === '?force' && gameData?.gameId) {

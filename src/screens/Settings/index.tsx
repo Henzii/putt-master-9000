@@ -66,7 +66,7 @@ const Settings = () => {
         <Container noPadding withScrollView noFlex>
             <Title style={{ marginTop: 10, marginLeft: 15 }}>Friends</Title>
 
-            <SingleSwitch testID="blockFriendRequestsSwitch" onPress={handleBlockFriendsChange} value={me?.blockFriendRequests} text="Block other users from adding you as a friend" />
+            <SingleSwitch testID="blockFriendRequestsSwitch" onPress={handleBlockFriendsChange} value={me?.blockFriendRequests} text="Block other users from adding you as a friend" noBorder />
             {/* Not fully implemented
                 <SingleSwitch onPress={handleBlockStatsSharingChange} value={me?.blockStatsSharing} text="Block friends from seeing my stats" noBorder />
             */}
