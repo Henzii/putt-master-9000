@@ -14,7 +14,8 @@ export default function LocalSettings() {
             <SingleSwitch text="Auto select first unfinished hole" onPress={settings.toggle} value={settings.getValue('AutoAdvance')} name="AutoAdvance" />
             <SingleSwitch text="Hide stats from scorecards" onPress={settings.toggle} value={settings.getValue('HideStatsBars')} name="HideStatsBars" />
             <SingleSwitch text="Hide +/- from scorecards" onPress={settings.toggle} value={settings.getValue('HidePlusMinus')} name="HidePlusMinus" />
-            <SingleSwitch text="Prohibition" onPress={settings.toggle} value={settings.getValue('Prohibition')} name="Prohibition" noBorder />
+            <SingleSwitch text="Prohibition" onPress={settings.toggle} value={settings.getValue('Prohibition')} name="Prohibition" />
+            <SingleSwitch text="Random throw styles" onPress={settings.toggle} value={settings.getValue('RandomThrowStyle')} name="RandomThrowStyle" noBorder />
         </>
     );
 }
