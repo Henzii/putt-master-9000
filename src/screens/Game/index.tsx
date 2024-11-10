@@ -19,6 +19,7 @@ import { GAME_SUBSCRIPTION } from '../../graphql/subscriptions';
 import { updateGame } from '../../utils/gameCahcheUpdates';
 import { useSubscription } from '../../hooks/useSubscription';
 import useMe from '../../hooks/useMe';
+import ThrowStyle from './ThrowStyle';
 
 export default function GameContainer() {
     /*
@@ -59,6 +60,12 @@ export default function GameContainer() {
 //      { key: 'beerRoute', title: 'Beers', icon: 'beer-outline' },
         { key: 'setupRoute', title: 'Setup', focusedIcon: 'cog', unfocusedIcon: 'cog-outline' },
     ]);
+
+    useEffect(() => {
+        const newRoutes = navRoutes.toSpliced(-1, 0, {key: 'throwStyleRoute', title: 'Throw Style', focusedIcon: 'dice-3', unfocusedIcon: 'dice-3-outline'});
+        setNavRoutes(newRoutes);
+    }, []);
+
     useEffect(() => {
         if (location.search === '?force' && gameData?.gameId) {
             dispatch(unloadGame());
@@ -137,6 +144,7 @@ export default function GameContainer() {
         setupRoute: Setup,
         beerRoute: Beers,
         summaryRoute: Summary,
+        throwStyleRoute: ThrowStyle
     });
     return (
         <BottomNavigation
