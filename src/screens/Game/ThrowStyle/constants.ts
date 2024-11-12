@@ -8,8 +8,8 @@ export const THROW_STYLES = [
     'Tomahawk',
     'Grenade',
     'Hyzer',
-    'Unhyzer',
-    'Your choise',
+    'Anhyzer',
+    'Your choice',
 ];
 
 export const DISCS = [
