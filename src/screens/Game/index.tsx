@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useMutation, useApolloClient } from '@apollo/client';
 import { BottomNavigation } from 'react-native-paper';
 import { AppState, Platform, Vibration } from 'react-native';
@@ -21,13 +21,21 @@ import { useSubscription } from '../../hooks/useSubscription';
 import useMe from '../../hooks/useMe';
 import ThrowStyle from './ThrowStyle';
 
+const NAV_ROUTES = [
+    { key: 'gameRoute', title: 'Scorecard', focusedIcon: 'card-account-details', unfocusedIcon: 'card-account-details-outline' },
+    { key: 'summaryRoute', title: 'Summary', focusedIcon: 'view-list', unfocusedIcon: 'view-list-outline' },
+    { key: 'throwStyleRoute', title: 'Throw Style', focusedIcon: 'dice-3', unfocusedIcon: 'dice-3-outline' },
+    { key: 'beerRoute', title: 'Beers', focusedIcon: 'beer', unfocusedIcon: 'beer-outline' },
+    { key: 'setupRoute', title: 'Setup', focusedIcon: 'cog', unfocusedIcon: 'cog-outline' },
+];
+
 export default function GameContainer() {
     /*
         HOOKS
     */
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
-    const {gameId} = gameData ?? {};
-    const {me} = useMe();
+    const { gameId } = gameData ?? {};
+    const { me } = useMe();
     const [createGameMutation, { loading }] = useMutation(CREATE_GAME, { refetchQueries: [{ query: GET_OLD_GAMES }] });
     const [addPlayersMutation] = useMutation(ADD_PLAYERS_TO_GAME);
     const dispatch = useDispatch();
@@ -50,28 +58,21 @@ export default function GameContainer() {
             console.log(error);
             dispatch(addNotification('Subscription failed. The game data is not updated in real time.', "warning"));
         },
-        { query: GAME_SUBSCRIPTION, variables: { gameId: gameId }, dependency: gameId}
+        { query: GAME_SUBSCRIPTION, variables: { gameId: gameId }, dependency: gameId }
     );
     const [navIndex, setNavIndex] = useState(gameData?.gameOpen === false ? 1 : 0);
     const settings = useSettings();
-    const [navRoutes, setNavRoutes] = useState([
-        { key: 'gameRoute', title: 'Scorecard', focusedIcon: 'card-account-details', unfocusedIcon: 'card-account-details-outline' },
-        { key: 'summaryRoute', title: 'Summary', focusedIcon: 'view-list', unfocusedIcon: 'view-list-outline' },
-//      { key: 'beerRoute', title: 'Beers', icon: 'beer-outline' },
-        { key: 'setupRoute', title: 'Setup', focusedIcon: 'cog', unfocusedIcon: 'cog-outline' },
-    ]);
 
-    useEffect(() => {
-        const hasRandomRoute = navRoutes.some(route => route.key === 'throwStyleRoute');
-
-        if (settings.getBoolValue('RandomThrowStyle') && !hasRandomRoute) {
-            const newRoutes = navRoutes.toSpliced(-1, 0, {key: 'throwStyleRoute', title: 'Throw Style', focusedIcon: 'dice-3', unfocusedIcon: 'dice-3-outline'});
-            setNavRoutes(newRoutes);
-        } else if (hasRandomRoute) {
-            setNavRoutes(routes => routes.filter(route => route.key !== 'throwStyleRoute'));
-            setNavIndex(index => index - 1);
+    const navRoutes = useMemo(() => NAV_ROUTES.filter(route => {
+        if (route.key === 'beerRoute' && !settings.getBoolValue('Prohibition')) {
+            return false;
         }
-    }, [settings]);
+        if (route.key === 'throwStyleRoute' && !settings.getBoolValue('RandomThrowStyle')) {
+            return false;
+        }
+
+        return true;
+    }), [settings]);
 
     useEffect(() => {
         if (location.search === '?force' && gameData?.gameId) {
@@ -80,22 +81,6 @@ export default function GameContainer() {
             dispatch(newGame(params.gameId));
         }
     }, []);
-    useEffect(() => {
-        const hasBeerRoute = !!navRoutes.find(r => r.key === 'beerRoute');
-        const copyOfNavRoutes = [...navRoutes];
-        if (!settings.getBoolValue('Prohibition') && !hasBeerRoute) {
-            copyOfNavRoutes.splice(2, 0, { key: 'beerRoute', title: 'Beers', focusedIcon: 'beer', unfocusedIcon: 'beer-outline' });
-            setNavRoutes(copyOfNavRoutes);
-            if (navIndex >= 2) {
-                setNavIndex(navIndex + 1);
-            }
-        } else if (settings.getBoolValue('Prohibition') && hasBeerRoute) {
-            setNavRoutes(copyOfNavRoutes.filter(route => route.key !== 'beerRoute'));
-            if (navIndex >= 2) {
-                setNavIndex(navIndex - 1);
-            }
-        }
-    }, [settings]);
 
     useEffect(() => {
         // Listeneri joka kuuntelee sovelluksen tilaa
@@ -153,12 +138,14 @@ export default function GameContainer() {
         summaryRoute: Summary,
         throwStyleRoute: ThrowStyle
     });
+
+
     return (
         <BottomNavigation
             shifting={false}
             // style={{ width: '100%' }}
             navigationState={{
-                index: navIndex,
+                index: navIndex < navRoutes.length ? navIndex : navRoutes.length - 1,
                 routes: navRoutes,
             }}
             onIndexChange={setNavIndex}
