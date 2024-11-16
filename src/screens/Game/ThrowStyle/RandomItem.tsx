@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Text } from 'react-native';
+import { StyleProp, Text, TextStyle } from 'react-native';
 
 type Props = {
     items: string[]
     isRunning: boolean
+    style?: StyleProp<TextStyle>
 }
 
-const RandomItem = ({ items, isRunning }: Props) => {
+const RandomItem = ({ items, isRunning, style }: Props) => {
     const [randomDisc, setRandomDisc] = useState('');
     useEffect(() => {
         if (isRunning) {
@@ -19,7 +20,7 @@ const RandomItem = ({ items, isRunning }: Props) => {
         }
     }, [isRunning]);
     return (
-        <Text>{randomDisc}</Text>
+        <Text style={style}>{randomDisc}</Text>
     );
 };
 
