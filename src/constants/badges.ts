@@ -21,6 +21,11 @@ export default [
         title: 'No pars',
         text: 'Zero pars, try harder!',
         imageSrc: require('../../assets/achievements/0pars.png')
+    },
+    {
+        name: 'GoldenBox',
+        title: 'Golden box',
+        text: 'Why do I always have to throw first?',
     }
 
 ];
