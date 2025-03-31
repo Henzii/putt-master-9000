@@ -54,11 +54,14 @@ const Activity = ({selectedUser}: Props) => {
         ],
     };
 
-    const selectorOptions = [
-        {label: 'Year 2022', value: 2022},
-        {label: 'Year 2023', value: 2023},
-        {label: 'Last 12 months', value: undefined},
-    ];
+    const currentYear = new Date().getFullYear();
+
+    const years: {label: string, value: number | undefined}[] = Array
+        .from({length: currentYear - 2022 + 1}, (_, i) => ({label: `Year ${2022 + i}`, value: 2022 + i}));
+
+    const selectorOptions = years.concat(
+        {label: 'Last 12 months', value: undefined}
+    );
 
 
     return (
