@@ -14,7 +14,7 @@
     "eas:submit": "eas submit -p android --latest",
     "eas:deploy": "npm run eas:build&&npm run eas:submit",
     "emulator:list": "%userProfile%\\AppData\\Local\\Android\\sdk\\emulator\\emulator -list-avds",
-    "emulator:pixel4": "start %userProfile%\\AppData\\Local\\Android\\sdk\\emulator\\emulator -avd Pixel_4_API_30"
+    "emulator": "start %userProfile%\\AppData\\Local\\Android\\sdk\\emulator\\emulator -avd"
   },
   "dependencies": {
     "@apollo/client": "^3.8.8",
