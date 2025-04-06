@@ -39,3 +39,14 @@ export const CORE_SCORECARD_INFO = gql`
         hc
     }
 `;
+
+export const CORE_ACHIEVEMENT_INFO = gql`
+    fragment CoreAchievementInfo on Achievement {
+        id
+        game {
+          course
+          layout
+          startTime
+        }
+    }
+`;
