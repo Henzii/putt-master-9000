@@ -64,7 +64,7 @@ export default function GameContainer() {
     const settings = useSettings();
 
     const navRoutes = useMemo(() => NAV_ROUTES.filter(route => {
-        if (route.key === 'beerRoute' && !settings.getBoolValue('Prohibition')) {
+        if (route.key === 'beerRoute' && settings.getBoolValue('Prohibition')) {
             return false;
         }
         if (route.key === 'throwStyleRoute' && !settings.getBoolValue('RandomThrowStyle')) {
