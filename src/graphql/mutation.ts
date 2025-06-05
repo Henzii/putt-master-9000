@@ -117,3 +117,9 @@ export const DELETE_COURSE = gql`
         deleteCourse(courseId: $courseId)
     }
 `;
+
+export const SEND_FEEDBACK = gql`
+    mutation sendFeedback($email: String, $subject: String!, $text: String!) {
+        sendFeedback(email: $email, subject: $subject, text: $text)
+    }
+`;

@@ -18,6 +18,7 @@ export enum SESSION_STATE {
 type Session = {
     id: string | null
     name: string
+    email?: string
     isLoggedIn: boolean
     state: SESSION_STATE
     clear: () => void

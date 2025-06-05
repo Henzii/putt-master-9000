@@ -26,6 +26,7 @@ const settings = require('../../../assets/icons/settings.png');
 const achievement = require('../../../assets/icons/achievement.png');
 const signout = require('../../../assets/icons/sign-out.png');
 const www = require('../../../assets/icons/www.png');
+const feedback = require('../../../assets/icons/feedback.png');
 
 const Frontpage = () => {
     const openGames = useQuery(GET_OLD_GAMES, { variables: { onlyOpenGames: true }, fetchPolicy: 'cache-and-network' });
@@ -73,6 +74,7 @@ const Frontpage = () => {
                         <NavIcon title="Achievements" to="/achievements"icon={achievement} />
                         <NavIcon title="Settings" to="/settings" icon={settings} />
                         <NavIcon title="Website" to="/" icon={www} onClick={handleOpenWebsite} />
+                        <NavIcon title="Feedback" to="feedback" icon={feedback} />
                         <NavIcon title="Logout" to="/" icon={signout} onClick={() => session.clear()} />
                     </View>
                 </>

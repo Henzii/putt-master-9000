@@ -30,6 +30,7 @@ import { setCommonState } from '../reducers/commonReducer';
 import { RootState } from '../utils/store';
 import { useSession } from '../hooks/useSession';
 import { HandShake } from '../types/queries';
+import Feedback from '../screens/Feedback';
 
 export default function App() {
     const dispatch = useDispatch();
@@ -108,6 +109,7 @@ export default function App() {
                 <Route path="/firstTime" element={<FirstTime />} />
                 <Route path="/development" element={<DevPage />} />
                 <Route path="/achievements" element={<Achievements />} />
+                <Route path="/feedback" element={<Feedback />} />
                 <Route path="/" element={<Frontpage />} />
             </Routes>
             <StatusBar style="auto" />

@@ -4,6 +4,7 @@ export const CORE_USER_INFO = gql`
     fragment CoreUserInfo on User {
         id
         name
+        email
         blockFriendRequests
         blockStatsSharing
         accountType
