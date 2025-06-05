@@ -69,6 +69,7 @@ ${CORE_USER_INFO}
 query {
   getMe {
    ...CoreUserInfo
+   email
   }
 }`;
 
