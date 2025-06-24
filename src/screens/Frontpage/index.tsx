@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import React, { useEffect } from 'react';
 import { View, StyleSheet, Linking } from "react-native";
-import { Button } from 'react-native-paper';
+import { Button, Paragraph } from 'react-native-paper';
 import { Link, useNavigate } from 'react-router-native';
 import Loading from '../../components/Loading';
 import Login from '../../components/Login';
@@ -15,6 +15,7 @@ import Spacer from '../../components/ThemedComponents/Spacer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from './Header/Header';
 import { SESSION_STATE, useSession } from '../../hooks/useSession';
+import * as ExpoUpdates from 'expo-updates';
 
 const pilli = require('../../../assets/icons/play.png');
 const maali = require('../../../assets/icons/checklist.png');
@@ -53,7 +54,12 @@ const Frontpage = () => {
     }
     if (session.state === SESSION_STATE.ERROR) {
         return (
-            <ErrorScreen errorMessage='Session failed' />
+            <ErrorScreen errorMessage='Session failed' showBackToFrontpage={false}>
+                <Spacer />
+                <Paragraph>Some things you might want to try to fix this error:</Paragraph>
+                <Button onPress={() => session.clear()}>Clear session</Button>
+                <Button onPress={() => ExpoUpdates.reloadAsync()}>Reload the app</Button>
+            </ErrorScreen>
         );
     }
 

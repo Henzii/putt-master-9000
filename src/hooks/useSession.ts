@@ -34,7 +34,7 @@ export const useSession = (): Session => {
     const [sessionState, setSessionState] = useState(SESSION_STATE.IDLE);
 
     const dispatch = useDispatch();
-    const [getMe] = useLazyQuery<GetMe>(GET_ME);
+    const [getMe] = useLazyQuery<GetMe>(GET_ME, {fetchPolicy: 'no-cache'});
 
     useEffect(() => {
         const getTokenFromStorage = async () => {
@@ -79,7 +79,7 @@ export const useSession = (): Session => {
         setSessionState(SESSION_STATE.IDLE);
         dispatch(setCommonState({loginToken: null}));
         dispatch(setUser(null));
-        AsyncStorage.clear();
+        AsyncStorage.removeItem('token');
     };
 
     const hookReturn = useMemo(() => ({

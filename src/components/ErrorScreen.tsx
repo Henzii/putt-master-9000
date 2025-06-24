@@ -4,7 +4,12 @@ import { StyleSheet } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import Container from './ThemedComponents/Container';
 
-const ErrorScreen = ({errorMessage}: { errorMessage: string }) => {
+type Props = {
+    errorMessage: string;
+    showBackToFrontpage?: boolean;
+    children?: React.ReactNode;
+}
+const ErrorScreen = ({errorMessage, children, showBackToFrontpage = true}: Props) => {
     const navi = useNavigate();
     return (
         <Container fullWidth>
@@ -15,9 +20,12 @@ const ErrorScreen = ({errorMessage}: { errorMessage: string }) => {
             <Paragraph>
                 {errorMessage}
             </Paragraph>
-            <Paragraph style={styles.button}>
-                <Button onPress={() => navi('/')}>Back to frontpage</Button>
-            </Paragraph>
+            {showBackToFrontpage && (
+                <Paragraph style={styles.button}>
+                    <Button onPress={() => navi('/')}>Back to the frontpage</Button>
+                </Paragraph>
+            )}
+            {children}
         </Container>
     );
 };
