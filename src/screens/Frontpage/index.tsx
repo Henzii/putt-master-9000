@@ -23,11 +23,11 @@ const courses = require('../../../assets/icons/place.png');
 const friends = require('../../../assets/icons/friends.png');
 const stats = require('../../../assets/icons/stats.png');
 const settings = require('../../../assets/icons/settings.png');
-// const resume = require('../../../assets/icons/continue.png');
 const achievement = require('../../../assets/icons/achievement.png');
 const signout = require('../../../assets/icons/sign-out.png');
 const www = require('../../../assets/icons/www.png');
 const feedback = require('../../../assets/icons/feedback.png');
+const group = require('../../../assets/icons/group.png');
 
 const Frontpage = () => {
     const openGames = useQuery(GET_OLD_GAMES, { variables: { onlyOpenGames: true }, fetchPolicy: 'cache-and-network' });
@@ -78,6 +78,7 @@ const Frontpage = () => {
                         <NavIcon title="Friends" to="/friends"icon={friends} />
                         <NavIcon title="Stats" to="/stats"icon={stats}  />
                         <NavIcon title="Achievements" to="/achievements"icon={achievement} />
+                        <NavIcon title="Group" to="/group" icon={group} />
                         <NavIcon title="Settings" to="/settings" icon={settings} />
                         <NavIcon title="Website" to="/" icon={www} onClick={handleOpenWebsite} />
                         <NavIcon title="Feedback" to="feedback" icon={feedback} />

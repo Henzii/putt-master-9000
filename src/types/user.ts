@@ -20,6 +20,8 @@ export type User = {
 
 export type SafeUser = Pick<User, 'name' | 'id' | 'groupName'>
 
+export type UpdatableUserSettings = Pick<User, 'blockFriendRequests' | 'blockStatsSharing' | 'groupName'> & {password?: string};
+
 export type Achievement = {
     id: string,
     layout_id: string,
