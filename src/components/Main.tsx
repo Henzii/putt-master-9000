@@ -31,6 +31,7 @@ import { RootState } from '../utils/store';
 import { useSession } from '../hooks/useSession';
 import { HandShake } from '../types/queries';
 import Feedback from '../screens/Feedback';
+import Group from '../screens/Group';
 
 export default function App() {
     const dispatch = useDispatch();
@@ -110,6 +111,7 @@ export default function App() {
                 <Route path="/development" element={<DevPage />} />
                 <Route path="/achievements" element={<Achievements />} />
                 <Route path="/feedback" element={<Feedback />} />
+                <Route path="/group" element={<Group />} />
                 <Route path="/" element={<Frontpage />} />
             </Routes>
             <StatusBar style="auto" />

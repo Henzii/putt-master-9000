@@ -12,7 +12,7 @@ export const reducer = (state: UserLoggedIn | UserLoggedOut = initialState, acti
     }
 };
 
-export const setUser = (user: Omit<UserLoggedIn, 'isLoggedIn'> | null): UserReducerAction => {
+export const setUser = (user: UserLoggedIn | null): UserReducerAction => {
     return {
         type: 'SET_USER',
         data: user ?{

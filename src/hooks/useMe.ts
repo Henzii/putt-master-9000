@@ -3,7 +3,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { LOGIN, UPDATE_MY_SETTINGS } from '../graphql/mutation';
 import { GET_ME, GET_ME_WITH_FRIENDS } from '../graphql/queries';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AccountType, User } from '../types/user';
+import { AccountType, UpdatableUserSettings, User } from '../types/user';
 
 type GetMeResponse = { getMe: User }
 
@@ -54,7 +54,7 @@ const useMe = (getFriends = false) => {
         await client.clearStore();
         setLoggedIn(false);
     };
-    const updateSettings = async (newSettings: (Pick<User, 'blockFriendRequests' | 'blockStatsSharing' | 'groupName'> | { password: string }) ) => {
+    const updateSettings = async (newSettings: UpdatableUserSettings ) => {
         try {
             await updateSettingsMutation({ variables: newSettings });
         } catch(e) {

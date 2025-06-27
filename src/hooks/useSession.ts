@@ -59,7 +59,7 @@ export const useSession = (): Session => {
                 if (!id || !name) {
                     throw new Error();
                 } else {
-                    dispatch(setUser({id, name, groupName}));
+                    dispatch(setUser({id, name, groupName, isLoggedIn: true}));
                     setSessionState(SESSION_STATE.FINISHED);
                 }
             } catch {

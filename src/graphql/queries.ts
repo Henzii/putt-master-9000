@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { CORE_USER_INFO, CORE_GAME_INFO, CORE_SCORECARD_INFO, CORE_ACHIEVEMENT_INFO } from "./fragments";
+import { CORE_USER_INFO, CORE_GAME_INFO, CORE_SCORECARD_INFO, CORE_ACHIEVEMENT_INFO, CORE_SAFE_USER_INFO } from "./fragments";
 
 export const GET_LAYOUT = gql`
   query($layoutId: ID!) {
@@ -214,4 +214,13 @@ export const GET_ACTIVITY = gql`
       }
     }
   }
+`;
+
+export const GET_GROUP_MEMBERS = gql`
+  query GetGroupMembers {
+    getGroupMembers {
+     ...CoreSafeUserInfo
+    }
+  }
+${CORE_SAFE_USER_INFO}
 `;

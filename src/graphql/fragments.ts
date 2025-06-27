@@ -1,5 +1,13 @@
 import gql from "graphql-tag";
 
+export const CORE_SAFE_USER_INFO = gql`
+    fragment CoreSafeUserInfo on SafeUser {
+        id
+        name
+        groupName
+    }
+`;
+
 export const CORE_USER_INFO = gql`
     fragment CoreUserInfo on User {
         id

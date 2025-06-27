@@ -76,31 +76,6 @@ const Settings = () => {
             </View>
             <Divider />
             <View style={tyyli.section}>
-                <Title>Group</Title>
-                    <Text>Group name links you and your friends on stats page at</Text>
-                    <Button
-                        mode="text"
-                        textColor='blue'
-                        compact
-                        uppercase={false}
-                        onPress={() => Linking.openURL('https://fudisc.henzi.fi')}
-                    >
-                        https://fudisc.henzi.fi
-                    </Button>
-                <TextInput
-                    label="Group name"
-                    value={groupName}
-                    onChangeText={setGroupName}
-                    mode="outlined"
-                    outlineColor={isSavedGroupName ? 'green' : undefined}
-                    dense
-                    right={isSavedGroupName && groupName !== '' ? <TextInput.Icon icon="check-circle-outline" color="green" /> : undefined}
-                />
-                <Spacer />
-                <Button onPress={handleSetGroup} mode="contained" disabled={isSavedGroupName}>Save</Button>
-            </View>
-            <Divider />
-            <View style={tyyli.section}>
                 <Title>Info</Title>
                 <InfoText text1="version" text2={appInfo.expo.version} />
                 <InfoText text1="build" text2={appInfo.expo.android.versionCode.toString()} />
