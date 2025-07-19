@@ -5,10 +5,22 @@ import { addNotification } from '../reducers/notificationReducer';
 import { GPShookReturn } from '../types/gps';
 
 const useGPS = (): GPShookReturn => {
-    const [location, setLocation] = useState<ExpoLocation.LocationObjectCoords | null>(null);
+    const [currentLocation, setCurrentLocation] = useState<ExpoLocation.LocationObjectCoords | null>(null);
+    const [lastKnownLocation, setLastKnownLocation] = useState<ExpoLocation.LocationObjectCoords | null>(null);
+
     const [error, setError] = useState<string | undefined>();
     const dispatch = useDispatch();
     useEffect(() => {
+        const getCurrentLocation = async () => {
+            const loc = await ExpoLocation.getCurrentPositionAsync({});
+            setCurrentLocation(loc.coords);
+        };
+        const getLastKnownLocation = async () => {
+            const loc = await ExpoLocation.getLastKnownPositionAsync({});
+            if (loc) {
+                setLastKnownLocation(loc.coords);
+            }
+        };
         const getLocation = async () => {
             try {
                 const res = await ExpoLocation.requestForegroundPermissionsAsync();
@@ -17,8 +29,8 @@ const useGPS = (): GPShookReturn => {
                     dispatch(addNotification(`Location failed! Reveived: ${JSON.stringify(res)}`, 'warning'));
                     return;
                 }
-                const loc = await ExpoLocation.getCurrentPositionAsync({});
-                setLocation(loc.coords);
+                getLastKnownLocation();
+                getCurrentLocation();
             } catch(e) {
                 setError((e as Error).message);
             }
@@ -26,13 +38,18 @@ const useGPS = (): GPShookReturn => {
         getLocation();
     }, []);
 
+    const location = currentLocation ?? lastKnownLocation;
+
+    const lat = location?.latitude;
+    const lon = location?.longitude;
+
     return {
         loading: (!location && !error),
         error,
-        ready: (location && location.latitude && location.longitude) ? true : false,
-        lat: location?.latitude,
-        lon: location?.longitude,
-        acc: location?.accuracy || null
+        ready: Boolean(lat && lon),
+        lat,
+        lon,
+        acc: location?.accuracy ?? lastKnownLocation?.accuracy ?? null
     };
 
 };
