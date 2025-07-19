@@ -6,5 +6,10 @@ export type GetMe = {getMe: User}
 
 export type GetCourses = {getCourses: {hasMore: boolean, count: number, courses: Course[], nextOffset?: number}}
 export type GetCoursesVariables = {
-    limit: number, offset: number, coordinates?: [lat: number, lon: number], maxDistance?: number, search?: string
+    limit: number,
+    offset: number,
+    coordinates?: [lon: number, lat: number],
+    searchCoordinates?: [lon: number, lat: number],
+    maxDistance?: number,
+    search?: string
 }
