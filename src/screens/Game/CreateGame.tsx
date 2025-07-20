@@ -14,6 +14,7 @@ import ErrorScreen from '../../components/ErrorScreen';
 import SplitContainer from '../../components/ThemedComponents/SplitContainer';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utils/store';
+import InfoDialog from '../../components/InfoDialog';
 
 export type NewGameData = {
     course?: Course | null,
@@ -164,9 +165,19 @@ const CreateGame = (props: CreateGameProps) => {
             <Divider />
             <NumberedTitle number="3" title="Settings" accordion>
                 <View>
-                    {!user.groupName && (<Text style={tyyli.errorText}>Options disabled because you&apos;re not part of any group</Text>)}
+                    {!user.groupName && (<Text style={tyyli.errorText}>Group competition disabled, not part of any group</Text>)}
                     <SplitContainer>
-                        <Text>Is a group competition game</Text>
+                        <View style={tyyli.infoText}>
+                            <Text>Is a group competition game</Text>
+                            <InfoDialog>
+                                <Text>
+                                    This switch marks the game as a group competition. Points will be awarded to players belonging to the group {user.groupName ? ` ${user.groupName}` : ''}.
+                                </Text>
+                                <Text>
+                                    If you&apos;re not part of any group, select &quot;Groups&quot; from the main view to join one.
+                                </Text>
+                            </InfoDialog>
+                        </View>
                         <Switch
                             disabled={!user.groupName}
                             value={newGameData.isCompetition}
@@ -174,12 +185,22 @@ const CreateGame = (props: CreateGameProps) => {
                         />
                     </SplitContainer>
                     <SplitContainer>
-                        <Text>bHC multiplier</Text>
+                        <View style={tyyli.infoText}>
+                            <Text>bHC Multiplier</Text>
+                            <InfoDialog>
+                                <Text>
+                                    Adjust the beer handicap for this game. The beer handicap is 0.5 throws per beer.
+                                </Text>
+                                <Text>
+                                    The new beer handicap (bHC) value is calculated as 0.5 multiplied by the selected multiplier, giving throws per beer.
+                                </Text>
+                            </InfoDialog>
+                        </View>
                         <TextInput
                             keyboardType="number-pad"
                             mode="outlined"
                             value={newGameData.bHcMultiplier}
-                            onChangeText={value => handleEditGameData({bHcMultiplier: value})}
+                            onChangeText={value => handleEditGameData({ bHcMultiplier: value })}
                         />
                     </SplitContainer>
                 </View>
@@ -274,7 +295,14 @@ const createStyle = () => StyleSheet.create({
     errorText: {
         color: 'darkred'
     },
-
+    infoText: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignContent: 'flex-start',
+        justifyContent: 'flex-start',
+        gap: 0
+    },
     parsText: {
         color: 'gray',
         fontSize: 14,

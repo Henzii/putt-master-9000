@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import useGPS from "../../hooks/useGPS";
 import ErrorScreen from "../ErrorScreen";
-import Loading from '../Loading';
 import { useLazyQuery } from '@apollo/client';
 import { GET_COURSES } from '../../graphql/queries';
 import { GetCourses, GetCoursesVariables } from '../../types/queries';
 import { StyleSheet, View, Text } from 'react-native';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Details, Marker, PROVIDER_GOOGLE, Region } from 'react-native-maps';
 import { Course, Layout } from '../../types/course';
 import SplitContainer from '../ThemedComponents/SplitContainer';
-import { Button, SegmentedButtons } from 'react-native-paper';
+import { ActivityIndicator, Button } from 'react-native-paper';
 import { useBackButton } from '../BackButtonProvider';
 import CourseDetailsSheet from './CourseDetailsSheet';
 
@@ -19,11 +18,11 @@ type Props = {
 }
 
 const SelectCourseMap = ({ onClose, onSelectLayout }: Props) => {
-    const { loading, lon = 0, lat = 0, error, ready } = useGPS();
-    const [maxDistance, setMaxDistance] = useState(10_000);
+    const { loading, lon = 0, lat = 0, ready } = useGPS();
+    const [region, setRegion] = useState<Region>();
     const [selectedCourseId, setSelectedCourseId] = useState<string | number>();
     const [showSheet, setShowSheet] = useState(false);
-    const [fetchCourses, { data, error: queryError }] = useLazyQuery<GetCourses, GetCoursesVariables>(GET_COURSES);
+    const [fetchCourses, { data, previousData, error: queryError }] = useLazyQuery<GetCourses, GetCoursesVariables>(GET_COURSES);
     const backButton = useBackButton();
 
     useEffect(() => {
@@ -31,27 +30,40 @@ const SelectCourseMap = ({ onClose, onSelectLayout }: Props) => {
     }, []);
 
     useEffect(() => {
-        if (ready) {
+        if (region) {
+            const maxDistance = Math.round(111.32 * (region.latitudeDelta / 2)) * 1000;
             fetchCourses({
                 variables: {
                     limit: 1000,
                     offset: 0,
                     coordinates: [lon, lat],
+                    searchCoordinates: [region.longitude, region.latitude],
                     maxDistance
                 }
             });
         }
-    }, [ready, maxDistance]);
+    }, [region]);
 
-    if (error || queryError) {
-        return <ErrorScreen errorMessage={`Failed to load ${error ? 'GPS' : 'courses'}`} />;
+    useEffect(() => {
+        setRegion({
+            latitude: lat,
+            longitude: lon,
+            latitudeDelta: 0.1,
+            longitudeDelta: 0.1
+        });
+    }, [ready]);
+
+    const handleRegionChange = (region: Region, details: Details) => {
+        if (details?.isGesture) {
+            setRegion(region);
+        }
+    };
+
+    if (queryError) {
+        return <ErrorScreen errorMessage="Failed to load courses" />;
     }
 
-    if (loading) {
-        return <Loading loadingText='Waiting for GPS' />;
-    }
-
-    const courses = data?.getCourses.courses;
+    const courses = data?.getCourses.courses ?? previousData?.getCourses.courses ?? [];
     const selectedCourse = courses?.find(course => course.id === selectedCourseId);
 
     return (
@@ -64,38 +76,18 @@ const SelectCourseMap = ({ onClose, onSelectLayout }: Props) => {
                     onSelectLayout={onSelectLayout}
                 />
             )}
-            <SegmentedButtons
-                value={maxDistance.toString()}
-                onValueChange={value => setMaxDistance(+value)}
-                style={styles.distanceButtons}
-                buttons={[
-                    {
-                        value: "10000",
-                        label: '10 km'
-                    }, {
-                        value: "100000",
-                        label: "100 km"
-                    }, {
-                        value: "1000000",
-                        label: "1000 km"
-                    }
-                ]}
-            />
             {selectedCourse && <CourseInfo course={selectedCourse} onSelect={() => setShowSheet(true)} />}
+            {loading && <GPSLoading />}
             <MapView
                 provider={PROVIDER_GOOGLE}
                 style={styles.mapView}
                 zoomControlEnabled
                 showsUserLocation
                 onPress={() => setSelectedCourseId(undefined)}
-                initialRegion={{
-                    latitude: lat,
-                    longitude: lon,
-                    latitudeDelta: 0.1,
-                    longitudeDelta: 0.1
-                }}
+                onRegionChangeComplete={handleRegionChange}
+                region={region}
             >
-                {courses?.map(course => {
+                {courses.map(course => {
                     const coordinates = {
                         latitude: course.location.coordinates[1],
                         longitude: course.location.coordinates[0]
@@ -109,6 +101,15 @@ const SelectCourseMap = ({ onClose, onSelectLayout }: Props) => {
                     );
                 })}
             </MapView>
+        </View>
+    );
+};
+
+const GPSLoading = () => {
+    return (
+        <View style={styles.gpsLoading}>
+            <ActivityIndicator />
+            <Text>GPS Loading</Text>
         </View>
     );
 };
@@ -149,14 +150,16 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '600'
     },
-    distanceButtons: {
+    gpsLoading: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
         position: 'absolute',
-        backgroundColor: '#ffffffD0',
         top: 10,
-        borderRadius: 100,
         left: 10,
         zIndex: 2,
-        maxWidth: '80%'
+        gap: 8,
+        padding: 8
     },
     drawer: {
         position: 'absolute',

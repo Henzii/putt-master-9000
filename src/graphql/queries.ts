@@ -35,8 +35,8 @@ query($layoutId: ID!, $playersIds: [ID!]) {
 }
 `;
 export const GET_COURSES = gql`
-query ($limit: Int!, $offset: Int!, $search: String, $coordinates: [Float], $maxDistance: Int) {
-  getCourses (limit: $limit, offset: $offset, search: $search, coordinates: $coordinates, maxDistance: $maxDistance) {
+query ($limit: Int!, $offset: Int!, $search: String, $coordinates: [Float], $maxDistance: Int, $searchCoordinates: [Float]) {
+  getCourses (limit: $limit, offset: $offset, search: $search, coordinates: $coordinates, maxDistance: $maxDistance, searchCoordinates: $searchCoordinates) {
     hasMore
     nextOffset
     courses {
