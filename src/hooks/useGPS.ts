@@ -12,7 +12,7 @@ const useGPS = (): GPShookReturn => {
     const dispatch = useDispatch();
     useEffect(() => {
         const getCurrentLocation = async () => {
-            const loc = await ExpoLocation.getCurrentPositionAsync({});
+            const loc = await ExpoLocation.getCurrentPositionAsync({accuracy: ExpoLocation.Accuracy.High});
             setCurrentLocation(loc.coords);
         };
         const getLastKnownLocation = async () => {
@@ -44,7 +44,7 @@ const useGPS = (): GPShookReturn => {
     const lon = location?.longitude;
 
     return {
-        loading: (!location && !error),
+        loading: (!currentLocation && !error),
         error,
         ready: Boolean(lat && lon),
         lat,
