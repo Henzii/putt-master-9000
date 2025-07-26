@@ -25,7 +25,6 @@ const PROGRESS_BAR_STEPS = [
 ];
 
 export default function FirstTime() {
-    // const [username, setUsername] = useState(UsernameGenerator.generateUsername());
     const [searchUser] = useLazyQuery(SEARCH_USER);
 
     const username = useTextInput({ callBackDelay: 300, defaultValue: '' }, async (value) => {
@@ -111,7 +110,7 @@ export default function FirstTime() {
                     <Spacer size={5} />
                     <Button mode="outlined" onPress={handleSignUp}>Shut up and let me in</Button>
                     <Spacer size={15} />
-                    <Button mode="contained" onPress={() => setStep(1)}>I want to create a proper account</Button>
+                    <Button mode="contained" onPress={() => setStep(1)} testID="create-account">I want to create a proper account</Button>
                 </>
             )}
             {step === 1 && (
@@ -176,7 +175,7 @@ export default function FirstTime() {
                         mode="contained"
                         disabled={'password' in errors || 'password2' in errors}
                         onPress={() => setStep(3)}
-                        testID="nextStep2"
+                        testID="nextStep"
                     >Next</Button>
                 </>)}
             {step === 3 && (
