@@ -18,7 +18,7 @@ const SignUp = () => {
         email: '',
     });
     const [createUserMutation] = useMutation(CREATE_USER);
-    const [addFriendMutation] = useMutation(ADD_FRIEND, {refetchQueries: [{ query: GET_ME_WITH_FRIENDS }]});
+    const [addFriendMutation] = useMutation(ADD_FRIEND, { refetchQueries: [{ query: GET_ME_WITH_FRIENDS }] });
     const dispatch = useDispatch();
     const navi = useNavigate();
     const params = useParams();
@@ -48,12 +48,18 @@ const SignUp = () => {
             // uudelleenohjaus 'back'
             if (params.param === 'createFriend') {
                 dispatch(addNotification(`Account created for ${userData.name}.".`, 'success'));
-                await addFriendMutation({
-                    variables: {
-                        friendName: userData.name.toLowerCase(),
-                    }
-                });
-                navi(-1);
+                try {
+                    await addFriendMutation({
+                        variables: {
+                            friendName: userData.name.toLowerCase(),
+                        }
+                    });
+                    dispatch(addNotification(`You're now friends with ${userData.name} ".`, 'info'));
+                } catch {
+                    dispatch(addNotification(`Failed to add ${userData.name} as friend.`, 'alert'));
+                } finally{
+                    navi(-1);
+                }
             } else {
                 await AsyncStorage.setItem('token', token.data?.createUser);
                 navi("/");
@@ -67,15 +73,15 @@ const SignUp = () => {
         <Container withScrollView style={tyyli.main}>
             <Title>Signup{(params.param === 'createFriend' ? ' a friend' : '')}</Title>
             {(params.param === 'createFriend') &&
-            <>
-                <Paragraph>
-                    You are creating an account for a friend. Instead of creating accounts for everyone, you should force
-                    your friends to use Fudisc.
-                </Paragraph>
-                <Paragraph>
-                    Created friend will be added to your friends list automatically.
-                </Paragraph>
-            </>}
+                <>
+                    <Paragraph>
+                        You are creating an account for a friend. Instead of creating accounts for everyone, you should force
+                        your friends to use Fudisc.
+                    </Paragraph>
+                    <Paragraph>
+                        Created friend will be added to your friends list automatically.
+                    </Paragraph>
+                </>}
             <Subheading style={tyyli.subheading}>Username</Subheading>
             <TextInput value={userData.name} autoComplete='off' mode='outlined' label="Username" onChangeText={(value) => setUserData({ ...userData, name: value })} />
             <Subheading style={tyyli.subheading}>Password</Subheading>

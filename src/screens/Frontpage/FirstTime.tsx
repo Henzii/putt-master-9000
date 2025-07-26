@@ -30,7 +30,8 @@ export default function FirstTime() {
     const username = useTextInput({ callBackDelay: 300, defaultValue: '' }, async (value) => {
         if (value) {
             const response = await searchUser({ variables: { search: value.toLowerCase() } });
-            if (response.data.searchUser?.users?.find((user: { name: string }) => user.name.toLowerCase() === value.toLowerCase())) {
+            const userExists = response.data.searchUser?.users?.some((user: { name: string }) => user.name.toLowerCase() === value.toLowerCase());
+            if (userExists) {
                 setErrors({ ...errors, userName: 'already taken!' });
             } else {
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -103,7 +104,7 @@ export default function FirstTime() {
                         Looks like you are new here. Before you can start playing, you need to create an account. It&apos;ll only take a minute!
                     </Paragraph>
                     <Paragraph>
-                        If you already have an account, you can go directly to the login screen. Or if you&apos;re in a hurry, you can just randomize evertyhing and get started right away.
+                        If you already have an account, you can go directly to the login screen. Or if you&apos;re in a hurry, you can just randomize everything and get started right away.
                     </Paragraph>
                     <Spacer />
                     <Button mode="contained-tonal" onPress={() => navi('/')} >To the login screen!</Button>
@@ -173,7 +174,7 @@ export default function FirstTime() {
                     <Spacer />
                     <Button
                         mode="contained"
-                        disabled={'password' in errors || 'password2' in errors}
+                        disabled={'password1' in errors || 'password2' in errors}
                         onPress={() => setStep(3)}
                         testID="nextStep"
                     >Next</Button>

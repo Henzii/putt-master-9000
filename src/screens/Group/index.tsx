@@ -83,7 +83,7 @@ const Group = () => {
             <Spacer />
             <Title>Website</Title>
             <Paragraph>Group standing, scores etc. can be found on the the website</Paragraph>
-            <Button onPress={handleOpenWebsite} mode="text">httsp://fudisc.henzi.fi</Button>
+            <Button onPress={handleOpenWebsite} mode="text">https://fudisc.henzi.fi</Button>
             {groupName && <LeaveGroup onLeaveGroup={() => handleGroupChange('')} />}
         </Container>
     );
