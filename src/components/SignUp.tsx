@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Alert, StyleSheet, Text } from "react-native";
 import { Button, Paragraph, Subheading, TextInput, Title } from 'react-native-paper';
-import { CREATE_USER } from '../graphql/mutation';
+import { ADD_FRIEND, CREATE_USER } from '../graphql/mutation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../reducers/notificationReducer';
 import { useNavigate, useParams } from 'react-router-native';
 import Container from './ThemedComponents/Container';
+import { GET_ME_WITH_FRIENDS } from '../graphql/queries';
 
 const SignUp = () => {
     const [userData, setUserData] = useState({
@@ -17,6 +18,7 @@ const SignUp = () => {
         email: '',
     });
     const [createUserMutation] = useMutation(CREATE_USER);
+    const [addFriendMutation] = useMutation(ADD_FRIEND, {refetchQueries: [{ query: GET_ME_WITH_FRIENDS }]});
     const dispatch = useDispatch();
     const navi = useNavigate();
     const params = useParams();
@@ -46,6 +48,11 @@ const SignUp = () => {
             // uudelleenohjaus 'back'
             if (params.param === 'createFriend') {
                 dispatch(addNotification(`Account created for ${userData.name}.".`, 'success'));
+                await addFriendMutation({
+                    variables: {
+                        friendName: userData.name.toLowerCase(),
+                    }
+                });
                 navi(-1);
             } else {
                 await AsyncStorage.setItem('token', token.data?.createUser);
@@ -66,7 +73,7 @@ const SignUp = () => {
                     your friends to use Fudisc.
                 </Paragraph>
                 <Paragraph>
-                    After signing up a friend, you still need to add him/her/it as your friend.
+                    Created friend will be added to your friends list automatically.
                 </Paragraph>
             </>}
             <Subheading style={tyyli.subheading}>Username</Subheading>

@@ -20,7 +20,7 @@ const AddFriend = ({ onCancel }: AddFriendProps) => {
     const [dirty, setDirty] = useState(false);
     const dispatch = useDispatch();
     const searchTextInput = useTextInput({ callBackDelay: 1000, defaultValue: '' }, (value) => {
-        if (value !== '') searchUsers({ variables: { search: value } });
+        if (value !== '') searchUsers({ variables: { search: value.toLowerCase() } });
         setDirty(false);
     });
     const handleAdd = async () => {

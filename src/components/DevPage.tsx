@@ -71,6 +71,11 @@ export default function DevPage() {
                 <Button onPress={() => dispatch(addNotification('Testiviesti', 'success'))}>Success</Button>
                 <Button onPress={() => dispatch(addNotification('Testiviesti', 'warning'))}>Warning</Button>
             </View>
+            <Subheading>
+                <Button onPress={() => {
+                    throw new Error('Test error');
+                }}>Throw error</Button>
+            </Subheading>
 
         </Container>
     );
