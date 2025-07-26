@@ -12,7 +12,6 @@ type Props = {
 
 const SelectLocationFromMap = ({ onDismiss, initialRegion, onSelect }: Props) => {
     const [region, setRegion] = useState<Region>(initialRegion);
-
     return (
         <Portal>
             <View>

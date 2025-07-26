@@ -1,5 +1,5 @@
-import React from 'react';
-import { Linking, StyleSheet, View } from "react-native";
+import React, { useState } from 'react';
+import { Alert, Linking, StyleSheet, View } from "react-native";
 import { Button, Chip, Headline, Paragraph, TextInput, Title } from "react-native-paper";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../utils/store';
@@ -9,7 +9,6 @@ import { GET_GROUP_MEMBERS } from '../../graphql/queries';
 import Loading from '../../components/Loading';
 import Spacer from '../../components/ThemedComponents/Spacer';
 import ErrorScreen from '../../components/ErrorScreen';
-import useTextInput from '../../hooks/useTextInput';
 import { useUpdateSettings } from '../../hooks/useUpdateSettings';
 import { addNotification } from '../../reducers/notificationReducer';
 import { setUser } from '../../reducers/userReducer';
@@ -26,7 +25,12 @@ const Group = () => {
         if (!await updateSettings({ variables: { groupName } })) {
             dispatch(addNotification('Error! Group not set :(', 'alert'));
         } else {
-            dispatch(addNotification('Group name changed to ' + groupName, 'info'));
+            if (groupName) {
+                dispatch(addNotification(`You have joined the group ${groupName}`, 'success'));
+            } else {
+                dispatch(addNotification('You have left the group', 'warning'));
+            }
+
             dispatch(setUser({ ...user, groupName }));
             refetch();
         }
@@ -36,11 +40,6 @@ const Group = () => {
         const token = await AsyncStorage.getItem('token');
         Linking.openURL(`https://fudisc.henzi.fi/login?token=${token}`);
     };
-
-    const newGroup = useTextInput({
-        defaultValue: user.isLoggedIn ? user.groupName ?? '' : '',
-        callBackDelay: 1000
-    }, handleGroupChange);
 
     if (!user.isLoggedIn || error) return <ErrorScreen errorMessage="Something is not working properly ..." />;
 
@@ -71,24 +70,69 @@ const Group = () => {
                 <>
                     <Headline>Not in a group</Headline>
                     <Paragraph>
-                    Set a group name to connect with your friends. This links you all together in the same group,
-                    so you can compare scores and compete with each other. You&apos;ll be able to view your group&apos;s
-                    results and competition standings on the website.
+                        Set a group name to connect with your friends. This links you all together in the same group,
+                        so you can compare scores and compete with each other. You&apos;ll be able to view your group&apos;s
+                        results and competition standings on the website.
                     </Paragraph>
                 </>
             )}
-            <Title>Enter group name</Title>
-            <TextInput
-                {...newGroup}
-                mode="outlined"
-                right={groupName && groupName === newGroup.value ? <TextInput.Icon icon="check-circle-outline" color="green" /> : undefined}
-
-            />
+            {!groupName && (<>
+                <Spacer />
+                <JoinGroup onJoinGroup={handleGroupChange} />
+            </>)}
             <Spacer />
             <Title>Website</Title>
             <Paragraph>Group standing, scores etc. can be found on the the website</Paragraph>
-            <Button onPress={handleOpenWebsite} mode="text">httsp://fudisc.henzi.fi</Button>
+            <Button onPress={handleOpenWebsite} mode="text">https://fudisc.henzi.fi</Button>
+            {groupName && <LeaveGroup onLeaveGroup={() => handleGroupChange('')} />}
         </Container>
+    );
+};
+
+const LeaveGroup = ({ onLeaveGroup }: { onLeaveGroup: () => void }) => {
+    const handleLeaveGroupClick = () => {
+        Alert.alert(
+            'Leave group',
+            'Are you sure you want to leave the group? If you decide to join back later, you will be treated as a new member and the previous results will not be included in your standings.',
+            [
+                {
+                    text: 'Leave Group',
+                    onPress: () => {
+                        onLeaveGroup();
+                    },
+                },
+                { text: 'Cancel', isPreferred: true},
+            ],
+            { cancelable: true }
+        );
+    };
+
+    return (
+        <>
+            <Title>Leave group</Title>
+            <Paragraph>
+                Leaving a group will remove you from the group and you will not be able to see the group&apos;s results
+                or standings anymore.
+            </Paragraph>
+            <Spacer />
+            <Button onPress={handleLeaveGroupClick} mode="contained">Leave Group</Button>
+        </>
+    );
+};
+
+const JoinGroup = ({ onJoinGroup }: { onJoinGroup: (groupName: string) => void }) => {
+    const [groupName, setGroupName] = useState('');
+    return (
+        <>
+            <Title>Enter group name</Title>
+            <TextInput
+                value={groupName}
+                onChangeText={setGroupName}
+                mode="outlined"
+            />
+            <Spacer />
+            <Button onPress={() => onJoinGroup(groupName)} mode="contained">Join</Button>
+        </>
     );
 };
 

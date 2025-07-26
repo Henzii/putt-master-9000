@@ -45,14 +45,14 @@ export default [
         request: {
             query: SEARCH_USER,
             variables: {
-                search: 'takenUsername'
+                search: 'takenusername'
             }
         },
         result: {
             data: {
                 searchUser: {
                     users: [
-                        {id: 'mockedTakenUsername', name: 'takenUsername'}
+                        {id: 'mockedTakenUsername', name: 'takenusername'}
                     ],
                     hasMore: false
                 }

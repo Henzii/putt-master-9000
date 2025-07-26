@@ -39,7 +39,7 @@ const AddCourse = ({ onCancel, onAdd, course, loading = false }: AddCourseProps)
         return (
             <SelectLocationFromMap
                 onDismiss={() => setDisplayMap(false)}
-                initialRegion={{ latitude: Number(lat) ?? 0, longitude: Number(lon) ?? 0, latitudeDelta: 0.5, longitudeDelta: 0.5 }}
+                initialRegion={{ latitude: Number(lat) || 0, longitude: Number(lon) || 0, latitudeDelta: 0.5, longitudeDelta: 0.5 }}
                 onSelect={((region) => {
                     setLat(region.latitude.toFixed(7));
                     setLon(region.longitude.toFixed(7));

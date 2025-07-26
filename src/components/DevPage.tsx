@@ -13,7 +13,7 @@ export default function DevPage() {
     const [env, setEnvState] = useState<string | undefined>();
     const [api, setApi] = useState('');
     useEffect(() => {
-        (async function IIFE () {
+        (async function IIFE() {
             const env = await AsyncStorage.getItem('apiEnv') || process.env.NODE_ENV as string;
             setEnvState(env);
         })();
@@ -55,7 +55,7 @@ export default function DevPage() {
             <Button onPress={() => {
                 AsyncStorage.removeItem('firstTime');
             }} mode="contained">Clear</Button>
-                        <Spacer />
+            <Spacer />
             <Subheading>Tyhjennä AsyncStorage</Subheading>
             <Paragraph>
                 firsTime, token, settings...
@@ -71,6 +71,10 @@ export default function DevPage() {
                 <Button onPress={() => dispatch(addNotification('Testiviesti', 'success'))}>Success</Button>
                 <Button onPress={() => dispatch(addNotification('Testiviesti', 'warning'))}>Warning</Button>
             </View>
+            <Subheading>Error testing</Subheading>
+            <Button onPress={() => {
+                throw new Error('Test error');
+            }}>Throw error</Button>
 
         </Container>
     );
