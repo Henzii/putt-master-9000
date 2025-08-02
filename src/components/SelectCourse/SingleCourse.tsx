@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text } from "react-native";
-import { Button, List, Modal, Portal, Surface, TouchableRipple, useTheme } from "react-native-paper";
+import { Button, List, Modal, Portal, TouchableRipple } from "react-native-paper";
 import { Course, Layout, NewLayout } from "../../types/course";
 import SelectLayout from "./SelectLayout";
 import AddLayout from '../AddLayout';
 import ExtraMenu from './ExtraMenu';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import { LiveData } from '../../hooks/useLiveData';
+import { theme } from '../../utils/theme';
 
 type SingleCourseProps = {
     course: Course,
@@ -23,7 +24,6 @@ type SingleCourseProps = {
 }
 
 const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, onEditCoursePress, expanded, dimmed, listIndex, isAdmin, showDistance = true, liveData}: SingleCourseProps) => {
-    const { colors } = useTheme();
     const [addLayoutModal, setAddLayoutModal] = useState(false);
     const [layoutToEdit, setLayoutToEdit] = useState<Layout>();
     const handleCourseClick = () => {
@@ -51,8 +51,8 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, onEdi
     const courseLiveData = liveData?.find(liveCourse => liveCourse.name.includes(course.name));
 
     return (
-        <Surface
-            style={[styles.container, { backgroundColor: colors.surface, borderColor: colors.primary }, dimmed && styles.notSelected]}
+        <View
+            style={[styles.container, dimmed && styles.notSelected, expanded && styles.expanded]}
         >
               <Portal>
                 <Modal
@@ -104,7 +104,7 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, onEdi
                     </View>
                 </View>
             )}
-        </Surface>
+        </View>
     );
 };
 
@@ -113,14 +113,17 @@ const styles = StyleSheet.create({
         opacity: 0.4
     },
     container: {
-        borderRadius: 7,
         paddingHorizontal: 12,
         paddingVertical: 10,
-        marginHorizontal: 6,
-        marginVertical: 5,
-        borderWidth: 1,
-        elevation: 4,
+        marginHorizontal: 3,
+        marginVertical: 3,
+        elevation: 1,
         minHeight: 77,
+        backgroundColor: '#fff',
+    },
+    expanded: {
+        backgroundColor: theme.colors.elevation.level4,
+        elevation: 4
     },
     header: {
         flexDirection: 'row',
