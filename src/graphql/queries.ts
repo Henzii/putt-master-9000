@@ -148,6 +148,7 @@ export const SEARCH_USER = gql`
       users {
         id
         name
+        blockFriendRequests
       }
       hasMore
     }

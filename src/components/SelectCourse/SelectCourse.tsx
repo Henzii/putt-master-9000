@@ -13,6 +13,7 @@ import { useBackButton } from "../BackButtonProvider";
 import useMe from "../../hooks/useMe";
 import useLiveData from "../../hooks/useLiveData";
 import SelectCourseMap from "./SelectCourseMap";
+import { theme } from "../../utils/theme";
 
 type SelectCoursesProps = {
     onSelect?: (layout: Layout, course: Course) => void,
@@ -163,7 +164,8 @@ const Shadow = ({borderColor}: {borderColor: string}) => <View style={[tyyli.sha
 
 const tyyli = StyleSheet.create({
     container: {
-        paddingTop: 10
+        paddingTop: 10,
+        backgroundColor: theme.colors.surface
     },
     topButtons: {
         display: 'flex',

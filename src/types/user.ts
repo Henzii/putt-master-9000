@@ -18,7 +18,7 @@ export type User = {
     accountType: AccountType
 }
 
-export type SafeUser = Pick<User, 'name' | 'id' | 'groupName'>
+export type SafeUser = Pick<User, 'name' | 'id' | 'groupName' | 'blockFriendRequests'>
 
 export type UpdatableUserSettings = Pick<User, 'blockFriendRequests' | 'blockStatsSharing' | 'groupName'> & {password?: string};
 

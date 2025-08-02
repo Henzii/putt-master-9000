@@ -1,37 +1,37 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from "react-native";
 import { Button, Caption, Headline, Menu, TextInput } from 'react-native-paper';
-import { useMutation, useLazyQuery } from '@apollo/client';
-import { ADD_FRIEND } from '../graphql/mutation';
-import { GET_ME_WITH_FRIENDS, SEARCH_USER } from '../graphql/queries';
-import { useDispatch } from 'react-redux';
-import { addNotification } from '../reducers/notificationReducer';
+import { SEARCH_USER } from '../graphql/queries';
 import Container from './ThemedComponents/Container';
 import useTextInput from '../hooks/useTextInput';
 import Loading from './Loading';
+import { useLazyQuery } from '@apollo/client';
+import { SafeUser } from '../types/user';
 
 type AddFriendProps = {
-    onCancel?: () => void,
+    onClose?: () => void,
+    onAddFriend: (friendName: string) => void,
 }
 
-const AddFriend = ({ onCancel }: AddFriendProps) => {
-    const [addFriendMutation] = useMutation(ADD_FRIEND, { refetchQueries: [{ query: GET_ME_WITH_FRIENDS }] });
-    const [searchUsers, { data, loading }] = useLazyQuery(SEARCH_USER);
+type QueryResponse = {
+    searchUser: {
+        users: SafeUser[]
+    }
+}
+
+const AddFriend = ({ onClose, onAddFriend }: AddFriendProps) => {
+    const [searchUsers, { data, loading }] = useLazyQuery<QueryResponse>(SEARCH_USER);
     const [dirty, setDirty] = useState(false);
-    const dispatch = useDispatch();
     const searchTextInput = useTextInput({ callBackDelay: 1000, defaultValue: '' }, (value) => {
         if (value !== '') searchUsers({ variables: { search: value.toLowerCase() } });
         setDirty(false);
     });
-    const handleAdd = async () => {
-        const res = await addFriendMutation({ variables: { friendName: searchTextInput.value } });
-        if (res.data.addFriend) {
-            dispatch(addNotification('Friend added! Nice job little buddy!', 'success'));
-            if (onCancel) onCancel();
-        } else {
-            dispatch(addNotification('Friend not found or request denied', 'alert'));
-        }
+
+    const handleAddFriend = () => {
+        onAddFriend(searchTextInput.value);
+        if (onClose) onClose();
     };
+
     const users = data?.searchUser?.users.slice(0, 5) || undefined;
     return (
         <Container style={tyyli.main} noFlex>
@@ -51,7 +51,7 @@ const AddFriend = ({ onCancel }: AddFriendProps) => {
                 {
                     dirty || loading ? <Loading noFullScreen loadingText=''/> :
                     users ?
-                        users.map((u: { name: string, id: string }) =>
+                        users.map(u =>
                             <Menu.Item titleStyle={tyyli.menuItem} title={u.name} key={u.id} onPress={() => {
                                 searchTextInput.onChangeText(u.name);
                             }
@@ -60,8 +60,8 @@ const AddFriend = ({ onCancel }: AddFriendProps) => {
                 }
             </View>
             <View style={tyyli.napit}>
-                <Button mode='contained' color='green' onPress={handleAdd}>Add</Button>
-                <Button mode='outlined' onPress={onCancel}>Cancel</Button>
+                <Button mode='contained' color='green' onPress={handleAddFriend}>Add</Button>
+                <Button mode='outlined' onPress={onClose}>Cancel</Button>
             </View>
 
         </Container>
