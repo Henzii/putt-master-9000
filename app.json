@@ -3,16 +3,16 @@
     "name": "FuDisc",
     "slug": "putt-master-9000",
     "version": "9.1.0",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/newIcon.png",
     "extra": {
       "eas": {
         "projectId": "8c94b996-c553-4817-960d-632288a8c5aa"
       }
     },
     "splash": {
-      "image": "./assets/newsplash.png",
+      "image": "./assets/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0,
@@ -32,7 +32,7 @@
       },
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/newIcon.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.henzisoft.puttmaster9000",
