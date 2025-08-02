@@ -27,6 +27,14 @@ export const useFriends = () => {
     }, [addFriendMutation, dispatch]);
 
     const removeFriend = useCallback(async (friendId: string | number, friendName?: string) => {
+        const handleRemoveFriend = () => {
+            try {
+                removeFriendMutation({ variables: { friendId } });
+                dispatch(addNotification(`Removed ${friendName || 'friend'} from your friends list!`, 'info'));
+            } catch (error) {
+                dispatch(addNotification(`Failed to remove friend!`, 'alert'));
+            }
+        };
         Alert.alert(
             'Byebye friend',
             `Friends are replaceable but disc golf is for life!\n\nReally remove ${friendName}?`,
@@ -34,7 +42,7 @@ export const useFriends = () => {
                 { text: 'Cancel' },
                 {
                     text: 'Do it',
-                    onPress: () => removeFriendMutation({ variables: { friendId } })
+                    onPress: handleRemoveFriend
                 }
             ]
         );

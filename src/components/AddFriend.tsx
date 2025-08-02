@@ -28,6 +28,9 @@ const AddFriend = ({ onClose, onAddFriend }: AddFriendProps) => {
     });
 
     const handleAddFriend = () => {
+        if (!searchTextInput.value.trim()) {
+            return;
+        }
         onAddFriend(searchTextInput.value);
         if (onClose) onClose();
     };

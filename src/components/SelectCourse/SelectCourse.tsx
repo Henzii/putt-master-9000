@@ -13,7 +13,7 @@ import { useBackButton } from "../BackButtonProvider";
 import useMe from "../../hooks/useMe";
 import useLiveData from "../../hooks/useLiveData";
 import SelectCourseMap from "./SelectCourseMap";
-import { theme } from "../../utils/theme";
+import { MD3Colors } from "react-native-paper/lib/typescript/types";
 
 type SelectCoursesProps = {
     onSelect?: (layout: Layout, course: Course) => void,
@@ -35,6 +35,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
     const backButton = useBackButton();
     const {isAdmin} = useMe();
     const liveData = useLiveData(showTraffic);
+    const styles = createStyles(colors);
 
     useEffect(() => {
         if (onBackAction) {
@@ -96,6 +97,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
         return <SelectCourseMap onClose={() => setDisplayMap(false)} onSelectLayout={handleClickLayout} />;
     }
 
+
     return (
         <Container noPadding>
             <Portal>
@@ -115,7 +117,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
             {title ? <Headline style={{ padding: 10, backgroundColor: colors.surface }}>
                 {(expandedCourse ? 'Select layout' : title)}
             </Headline> : null}
-            <View style={tyyli.topButtons}>
+            <View style={styles.topButtons}>
                 <Button mode="outlined" icon="text-box-plus-outline" onPress={handleAddCourseClick} testID="AddCourseButton">Add Course</Button>
                 <Button mode="outlined" icon="magnify" onPress={handleClickSearch}>Search</Button>
                 <Button mode="outlined" icon="map" onPress={() => setDisplayMap(true)}>Map</Button>
@@ -125,12 +127,12 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
                 {...searchInput}
                 autoFocus
             /> : null}
-            <Shadow borderColor={colors.primary} />
+            <View style={[styles.shadow, {borderColor: colors.primary}]} />
             <FlatList
                 ref={ref}
                 data={courses}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={tyyli.container}
+                contentContainerStyle={styles.container}
                 keyExtractor={(item) => item.id as string}
                 onScrollToIndexFailed={() => null}
                 ListFooterComponent={
@@ -160,12 +162,10 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
     );
 };
 
-const Shadow = ({borderColor}: {borderColor: string}) => <View style={[tyyli.shadow, {borderColor}]} />;
-
-const tyyli = StyleSheet.create({
+const createStyles = (colors: MD3Colors) => StyleSheet.create({
     container: {
         paddingTop: 10,
-        backgroundColor: theme.colors.surface
+        backgroundColor: colors.surface
     },
     topButtons: {
         display: 'flex',
