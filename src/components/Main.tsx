@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { BackHandler } from 'react-native';
 import ToolBar from './ToolBar';
 
@@ -17,7 +17,7 @@ import Settings from '../screens/Settings';
 import Stats from '../screens/Stats';
 import registerForPushNotificationsAsync from '../utils/registerForPushNotifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Subscription, addNotificationReceivedListener, removeNotificationSubscription, useLastNotificationResponse } from 'expo-notifications';
+import { addNotificationReceivedListener, useLastNotificationResponse } from 'expo-notifications';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNotification } from '../reducers/notificationReducer';
 import FirstTime from '../screens/Frontpage/FirstTime';
@@ -42,7 +42,6 @@ export default function App() {
 
     const user = useSession();
 
-    const notificListener = useRef<Subscription>();
     const lastNotificationResponse = useLastNotificationResponse();
 
     useEffect(() => {
@@ -71,7 +70,7 @@ export default function App() {
             backButton.goBack();
             return true;
         };
-        // Haetaan push notifikaatioiden token ja tallennetaan se asyncstorageen
+
         registerForPushNotificationsAsync().then(token => {
             if (token) AsyncStorage.setItem('pushToken', token);
             dispatch(setCommonState({pushToken: token}));
@@ -79,20 +78,16 @@ export default function App() {
             dispatch(addNotification(error.message, 'warning'));
             dispatch(setCommonState({pushToken: null}));
         });
-        // Lisätään listeneri kuuntelemaan push notifikaatioita ja laitetaan ne omaan notifikaationininononon
-        notificListener.current = addNotificationReceivedListener(notification => {
+
+        const notificListener = addNotificationReceivedListener(notification => {
             dispatch(addNotification(notification.request.content.body || 'Received an empty notification???', 'info'));
         });
 
+        const backhandler = BackHandler.addEventListener('hardwareBackPress', handleBack);
 
-        // Listeneri kännykän back-napille
-        BackHandler.addEventListener('hardwareBackPress', handleBack);
         return () => {
-            // Poistetaan listenerit
-            if (notificListener.current) {
-                removeNotificationSubscription(notificListener.current);
-            }
-            BackHandler.removeEventListener('hardwareBackPress', handleBack);
+            notificListener.remove();
+            backhandler.remove();
         };
     }, []);
     return (

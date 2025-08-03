@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Linking, StyleSheet, Text, View } from 'react-native';
-import { Button, TextInput, Title } from 'react-native-paper';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Title } from 'react-native-paper';
 import Container from '../../components/ThemedComponents/Container';
 import Divider from '../../components/ThemedComponents/Divider';
 import appInfo from '../../../app.json';
@@ -12,7 +12,6 @@ import ChangePassword from './ChangePassword';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../../reducers/notificationReducer';
 import { SingleSwitch } from '../../components/LocalSettings';
-import Spacer from '../../components/ThemedComponents/Spacer';
 import { AccountType } from '../../types/user';
 import DeleteAccount from './DeleteAccount';
 
@@ -20,7 +19,6 @@ const Settings = () => {
     const { me, updateSettings, logout } = useMe();
     const navi = useNavigate();
     const [deleteAccountMutation] = useMutation(DELETE_ACCOUNT);
-    const [groupName, setGroupName] = useState(me?.groupName);
     const dispatch = useDispatch();
     const handleBlockFriendsChange = () => {
         updateSettings({ blockFriendRequests: !me?.blockFriendRequests });
@@ -48,19 +46,6 @@ const Settings = () => {
             dispatch(addNotification('Error! Password not changed! :/', 'alert'));
         }
     };
-    const handleSetGroup = async () => {
-        if (!(await updateSettings({ groupName: groupName }))) {
-            dispatch(addNotification('Error! Group not set :(', 'alert'));
-        } else {
-            if (!groupName) {
-                dispatch(addNotification('Group name cleared', 'warning'));
-            } else {
-                dispatch(addNotification('Group name changed to ' + groupName, 'info'));
-            }
-        }
-    };
-
-    const isSavedGroupName = me?.groupName === groupName;
 
     return (
         <Container noPadding withScrollView noFlex>
