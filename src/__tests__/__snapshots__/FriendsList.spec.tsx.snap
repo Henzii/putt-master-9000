@@ -40,17 +40,10 @@ exports[`<FriendList /> should render properly 1`] = `
     >
       <View
         style={
-          [
-            undefined,
-            undefined,
-            undefined,
-            false,
-            {
-              "padding": 20,
-            },
-            undefined,
-            undefined,
-          ]
+          {
+            "marginHorizontal": 20,
+            "marginVertical": 8,
+          }
         }
       >
         <View
@@ -98,7 +91,7 @@ exports[`<FriendList /> should render properly 1`] = `
         <View
           style={
             {
-              "marginVertical": 8,
+              "marginVertical": 4,
             }
           }
         />
@@ -597,7 +590,7 @@ exports[`<FriendList /> should render properly 1`] = `
         style={
           {
             "backgroundColor": "rgb(251, 253, 249)",
-            "marginTop": 10,
+            "marginTop": 8,
           }
         }
         viewabilityConfigCallbackPairs={[]}

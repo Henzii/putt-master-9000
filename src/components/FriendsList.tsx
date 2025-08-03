@@ -6,13 +6,13 @@ import ErrorScreen from './ErrorScreen';
 import Loading from './Loading';
 import Container from './ThemedComponents/Container';
 import SplitContainer from './ThemedComponents/SplitContainer';
-import { useNavigate } from 'react-router-native';
 import { InitialsAndColors, initialsAndColorGenerator } from '../utils/initialsAndColorGenerator';
 import { User } from '../types/user';
 import { useBackButton } from './BackButtonProvider';
 import { theme } from '../utils/theme';
 import Spacer from './ThemedComponents/Spacer';
 import { useFriends } from '../hooks/useFriends';
+import SignUp from './SignUp';
 
 
 type FriendListProps = {
@@ -28,8 +28,8 @@ export type Friend = {
 const FriendsList = (props: FriendListProps) => {
     const {friends, loading, error, removeFriend, addFriend} = useFriends();
     const [addFriendModal, setAddFriendModal] = useState(false);
+    const [showCreateFriendView, setShowCreateFriendView] = useState(false);
     const [selectedFriends, setSelectedFriends] = useState<Friend[]>([]);
-    const navi = useNavigate();
     const backButton = useBackButton();
 
     useEffect(() => {
@@ -62,11 +62,17 @@ const FriendsList = (props: FriendListProps) => {
         return <ErrorScreen errorMessage={error.message} />;
     }
 
+    if(showCreateFriendView) {
+        return (
+            <SignUp onClose={() => setShowCreateFriendView(false)} isFriendSignUp />
+        );
+    }
+
     const initialsAndColors = initialsAndColorGenerator(friends);
 
     return (
         <Container noPadding>
-            <Container noFlex>
+            <View style={tyyli.header}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
                     <Headline>Friends</Headline>
                     {selectedFriends.length > 0 && props.multiSelect && (
@@ -81,12 +87,12 @@ const FriendsList = (props: FriendListProps) => {
                         <AddFriend onClose={() => setAddFriendModal(false)} onAddFriend={addFriend} />
                     </Modal>
                 </Portal>
-                <Spacer size={8} />
+                <Spacer size={4} />
                 <SplitContainer spaceAround>
                     <Button icon="plus" onPress={() => setAddFriendModal(true)} mode="elevated">Add friend</Button>
-                    <Button icon="plus" onPress={() => navi("/signUp/createFriend")} mode="elevated">Create friend</Button>
+                    <Button icon="plus" onPress={() => setShowCreateFriendView(true)} mode="elevated">Create friend</Button>
                 </SplitContainer>
-            </Container>
+            </View>
             <FlatList
                 style={tyyli.lista}
                 data={friends}
@@ -146,8 +152,9 @@ const SingleFriend = ({ friend, onClick, onDelete, showRemoveButton = true, show
 };
 
 const tyyli = StyleSheet.create({
-    main: {
-        width: '100%',
+    header: {
+        marginHorizontal: 20,
+        marginVertical: 8
     },
     selectedBackground: {
         backgroundColor: theme.colors.tertiary,
@@ -183,7 +190,7 @@ const tyyli = StyleSheet.create({
         borderColor: 'lightgray',
     },
     lista: {
-        marginTop: 10,
+        marginTop: 8,
         backgroundColor: theme.colors.surface,
     },
     otsikko: {

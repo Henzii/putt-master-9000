@@ -6,11 +6,16 @@ import { ADD_FRIEND, CREATE_USER } from '../graphql/mutation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../reducers/notificationReducer';
-import { useNavigate, useParams } from 'react-router-native';
+import { useNavigate } from 'react-router-native';
 import Container from './ThemedComponents/Container';
 import { GET_ME_WITH_FRIENDS } from '../graphql/queries';
 
-const SignUp = () => {
+type Props = {
+    onClose?: () => void
+    isFriendSignUp?: boolean;
+}
+
+const SignUp = ({onClose, isFriendSignUp}: Props) => {
     const [userData, setUserData] = useState({
         name: '',
         password: '',
@@ -21,7 +26,6 @@ const SignUp = () => {
     const [addFriendMutation] = useMutation(ADD_FRIEND, { refetchQueries: [{ query: GET_ME_WITH_FRIENDS }] });
     const dispatch = useDispatch();
     const navi = useNavigate();
-    const params = useParams();
 
     const handleSignUp = async () => {
         if (userData.name.length < 4) {
@@ -44,21 +48,19 @@ const SignUp = () => {
                     email: userData.email
                 }
             });
-            // Jos parametrinä on createFriend eli luodaan kaverille tms., ei kirjauduta sillä sisään
-            // uudelleenohjaus 'back'
-            if (params.param === 'createFriend') {
-                dispatch(addNotification(`Account created for ${userData.name}.".`, 'success'));
+            if (isFriendSignUp) {
+                dispatch(addNotification(`Account created for ${userData.name}.`, 'success'));
                 try {
                     await addFriendMutation({
                         variables: {
                             friendName: userData.name.toLowerCase(),
                         }
                     });
-                    dispatch(addNotification(`You're now friends with ${userData.name} ".`, 'info'));
+                    dispatch(addNotification(`You're now friends with ${userData.name}.`, 'info'));
                 } catch {
                     dispatch(addNotification(`Failed to add ${userData.name} as friend.`, 'alert'));
                 } finally{
-                    navi(-1);
+                    onClose?.();
                 }
             } else {
                 await AsyncStorage.setItem('token', token.data?.createUser);
@@ -71,8 +73,8 @@ const SignUp = () => {
     };
     return (
         <Container withScrollView style={tyyli.main}>
-            <Title>Signup{(params.param === 'createFriend' ? ' a friend' : '')}</Title>
-            {(params.param === 'createFriend') &&
+            <Title>Signup{(isFriendSignUp ? ' a friend' : '')}</Title>
+            {(isFriendSignUp) &&
                 <>
                     <Paragraph>
                         You are creating an account for a friend. Instead of creating accounts for everyone, you should force
