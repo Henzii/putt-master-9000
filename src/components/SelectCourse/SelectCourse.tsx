@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import { Button, Modal, Searchbar, Portal, Headline, useTheme } from "react-native-paper";
+import { Button, Modal, Searchbar, Portal, Headline, useTheme, IconButton } from "react-native-paper";
 import useCourses from "../../hooks/useCourses";
 import useTextInput from "../../hooks/useTextInput";
 import AddCourse from "../AddCourse";
@@ -14,6 +14,7 @@ import useMe from "../../hooks/useMe";
 import useLiveData from "../../hooks/useLiveData";
 import SelectCourseMap from "./SelectCourseMap";
 import { MD3Colors } from "react-native-paper/lib/typescript/types";
+import SplitContainer from "../ThemedComponents/SplitContainer";
 
 type SelectCoursesProps = {
     onSelect?: (layout: Layout, course: Course) => void,
@@ -33,7 +34,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
     const ref = useRef<FlatList>(null);
     const { colors } = useTheme();
     const backButton = useBackButton();
-    const {isAdmin} = useMe();
+    const { isAdmin } = useMe();
     const liveData = useLiveData(showTraffic);
     const styles = createStyles(colors);
 
@@ -46,7 +47,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
 
     useEffect(() => {
         if (expandedCourse) {
-           setTimeout(() => ref.current?.scrollToItem({item: expandedCourse, animated: true, viewOffset: 5}), 300);
+            setTimeout(() => ref.current?.scrollToItem({ item: expandedCourse, animated: true, viewOffset: 5 }), 300);
         }
     }, [expandedCourse]);
 
@@ -71,7 +72,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
         if (!displaySearchBar) {
             setDisplaySearchBar(true);
             setExpandedCourse(null);
-            ref.current?.scrollToIndex({index: 0});
+            ref.current?.scrollToIndex({ index: 0 });
         } else setDisplaySearchBar(false);
     };
 
@@ -118,16 +119,22 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
                 {(expandedCourse ? 'Select layout' : title)}
             </Headline> : null}
             <View style={styles.topButtons}>
-                <Button mode="outlined" icon="text-box-plus-outline" onPress={handleAddCourseClick} testID="AddCourseButton">Add Course</Button>
-                <Button mode="outlined" icon="magnify" onPress={handleClickSearch}>Search</Button>
-                <Button mode="outlined" icon="map" onPress={() => setDisplayMap(true)}>Map</Button>
+                <SplitContainer>
+                    <Button mode="elevated" icon="plus" onPress={handleAddCourseClick} testID="AddCourseButton">Add Course</Button>
+                    <View>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <IconButton icon="magnify" onPress={handleClickSearch} mode="contained-tonal" />
+                            <IconButton icon="map" onPress={() => setDisplayMap(true)} mode="contained-tonal" />
+                        </View>
+                    </View>
+                </SplitContainer>
             </View>
             {displaySearchBar ? <Searchbar
                 autoComplete='off'
                 {...searchInput}
                 autoFocus
             /> : null}
-            <View style={[styles.shadow, {borderColor: colors.primary}]} />
+            <View style={[styles.shadow, { borderColor: colors.primary }]} />
             <FlatList
                 ref={ref}
                 data={courses}
@@ -138,7 +145,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
                 ListFooterComponent={
                     (loading)
                         ? <Loading noFullScreen loadingText="" />
-                    : <Text style={{ color: 'rgba(0,0,0,0.2)' }}>    No more... No más...</Text>
+                        : <Text style={{ color: 'rgba(0,0,0,0.2)' }}>    No more... No más...</Text>
                 }
                 onEndReached={fetchMore}
                 onEndReachedThreshold={0.1}
@@ -168,9 +175,6 @@ const createStyles = (colors: MD3Colors) => StyleSheet.create({
         backgroundColor: colors.surface
     },
     topButtons: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
         paddingHorizontal: 2,
         paddingVertical: 10,
     },
