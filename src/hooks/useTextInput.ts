@@ -10,7 +10,7 @@ type HookReturn = {
     value: string,
     onChangeText: (text: string) => void,
     keyboardType: 'numeric' | 'default',
-    ref?: React.RefObject<TextInput>
+    ref?: React.RefObject<TextInput | null>
 }
 /**
 * Palauttaa arrayn ensimmäisessä alkiossa value, onChangeText ja keyboardType

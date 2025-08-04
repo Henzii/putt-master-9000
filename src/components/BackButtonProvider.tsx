@@ -12,24 +12,24 @@ interface BackActions {
 }
 
 export default function BackButtonProvider ( {children}: PropsWithChildren) {
-    const destination = useRef<string | undefined>();
-    const callBack = useRef<() => void>();
+    const destination = useRef<string | null>(null);
+    const callBack = useRef<() => void>(null);
     const navigate = useNavigate();
 
     const backActions = {
-        setDestination: (dest: string | undefined) => {
+        setDestination: (dest: string | null) => {
             destination.current = dest;
         },
         setCallBack: (cb?: () => void) => {
-            callBack.current = cb;
+            callBack.current = cb ?? null;
         },
         goBack: () => {
             if (callBack.current) {
                 callBack.current();
-                callBack.current = undefined;
+                callBack.current = null;
             } else if (destination.current) {
                 navigate(destination.current);
-                destination.current = undefined;
+                destination.current = null;
             } else {
                 navigate(-1);
             }

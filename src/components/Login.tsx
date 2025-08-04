@@ -31,7 +31,7 @@ const Login = () => {
             dispatch(addNotification('Wrong username or password', "alert"));
         }
     };
-    const setFocus = (next?: React.RefObject<TextInput>) => {
+    const setFocus = (next?: React.RefObject<TextInput | null>) => {
         if (!next) return;
         next?.current?.focus();
     };

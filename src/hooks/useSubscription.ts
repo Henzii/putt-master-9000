@@ -8,7 +8,7 @@ type OnError = ((error: unknown) => void) | null
 export const useSubscription = (onData: OnDataReceived, onError: OnError, {query, variables, dependency}: Args) => {
     const [retryAttempts, setRetryAttempts] = useState(0);
     const consecutiveFails = useRef(0);
-    const resetFailsTimeoutId = useRef<NodeJS.Timeout>();
+    const resetFailsTimeoutId = useRef<NodeJS.Timeout>(null);
     const client = useApolloClient();
     useEffect(() => {
         if (!dependency) return;

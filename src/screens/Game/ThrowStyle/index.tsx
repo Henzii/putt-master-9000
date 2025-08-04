@@ -18,7 +18,7 @@ const ThrowStyle = () => {
     const [isRunning, setIsRunning] = useState(false);
     const [individualThrowStyles, setIndividualThrowStyles] = useState(true);
     const [tuplausMusic, setTuplausMusic] = useState<Audio.Sound>();
-    const ref = useRef<NodeJS.Timeout>();
+    const ref = useRef<NodeJS.Timeout>(null);
     const [timeLeft, setTimeLeft] = useState(RANDOMIZER_TIME);
     const game = useGame(gameId);
 
@@ -31,7 +31,9 @@ const ThrowStyle = () => {
 
     const handleStopRunning = () => {
         setIsRunning(false);
-        clearInterval(ref.current);
+        if (ref.current) {
+            clearInterval(ref.current);
+        }
         tuplausMusic?.stopAsync();
     };
 
