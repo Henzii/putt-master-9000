@@ -9,11 +9,6 @@
         "projectId": "8c94b996-c553-4817-960d-632288a8c5aa"
       }
     },
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#000000"
-    },
     "updates": {
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/8c94b996-c553-4817-960d-632288a8c5aa"
@@ -53,6 +48,15 @@
           "sounds": [
             "./assets/sounds/gameon.wav"
           ]
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0f0f12",
+          "image": "./assets/splash-icon.png",
+          "resizeMode": "cover",
+          "imageWidth": 200
         }
       ]
     ],
