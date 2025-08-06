@@ -14,7 +14,7 @@ type Props = {
 
 const PrevNextSelector = ({options, onChange, selected, delay}: Props) => {
     const [selectedIndex, setSelected] = useState<number>(options.findIndex(option => option.value === selected));
-    const timerId = useRef<NodeJS.Timeout>();
+    const timerId = useRef<NodeJS.Timeout>(null);
 
     const handleArrowClick = (value: number) => {
         const newSelectedIndex = selectedIndex + value;
@@ -30,7 +30,9 @@ const PrevNextSelector = ({options, onChange, selected, delay}: Props) => {
     };
 
     useEffect(() => {
-        return () => timerId.current && clearTimeout(timerId.current);
+        return () => {
+            timerId.current && clearTimeout(timerId.current);
+        };
     }, []);
 
     return (

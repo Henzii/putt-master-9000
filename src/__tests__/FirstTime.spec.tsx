@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
+import { render, fireEvent, act } from '@testing-library/react-native';
 import FirstTime from '../screens/Frontpage/FirstTime';
 import Wrapper from './mocks/ApolloMockWrapper';
 import { CREATE_USER } from '../graphql/mutation';
@@ -18,7 +18,11 @@ describe('<FirstTime />', () => {
         expect(usernameInputField.props.value).toBe('testi123');
 
         fireEvent.changeText(usernameInputField, 'takenusername');
-        fireEvent(usernameInputField, 'blur');
+
+        await act(() => {
+            jest.advanceTimersByTime(1000); // Simulate the delay for the username check
+        });
+
 
         expect(await findAllByText('Username - already taken!', {exact: false})).toBeTruthy();
     });

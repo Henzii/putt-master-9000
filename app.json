@@ -2,17 +2,12 @@
   "expo": {
     "name": "FuDisc",
     "slug": "putt-master-9000",
-    "version": "9.1.2",
+    "version": "10.0.0",
     "icon": "./assets/adaptive-icon.png",
     "extra": {
       "eas": {
         "projectId": "8c94b996-c553-4817-960d-632288a8c5aa"
       }
-    },
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0,
@@ -36,7 +31,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.henzisoft.puttmaster9000",
-      "versionCode": 114,
+      "versionCode": 115,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
@@ -53,6 +48,15 @@
           "sounds": [
             "./assets/sounds/gameon.wav"
           ]
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0f0f12",
+          "image": "./assets/splash-icon.png",
+          "resizeMode": "cover",
+          "imageWidth": 200
         }
       ]
     ],

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppRegistry } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NativeRouter } from 'react-router-native';
@@ -15,7 +15,17 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ErrorBoundary from 'react-native-error-boundary';
 import BSOD from './src/components/BSOD';
 
+import * as SplashScreen from 'expo-splash-screen';
+SplashScreen.preventAutoHideAsync();
+
 export default function App() {
+  useEffect(() => {
+    const timeout = setTimeout(async () => {
+      await SplashScreen.hideAsync();
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <NativeRouter>

@@ -836,9 +836,7 @@ exports[`<FriendList /> should render properly 1`] = `
                               "flexGrow": 1,
                               "justifyContent": "center",
                             },
-                            {
-                              "borderRadius": 20,
-                            },
+                            undefined,
                           ],
                         ]
                       }
@@ -1126,9 +1124,7 @@ exports[`<FriendList /> should render properly 1`] = `
                               "flexGrow": 1,
                               "justifyContent": "center",
                             },
-                            {
-                              "borderRadius": 20,
-                            },
+                            undefined,
                           ],
                         ]
                       }

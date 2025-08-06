@@ -1,8 +1,12 @@
 import { Course, Layout } from "../types/course";
 
-enum SelectedLayoutActionType {SET, CLEAR}
+const SelectedLayoutActionType = {
+    SET: 'SET',
+    CLEAR: 'CLEAR'
+} as const;
+
 type SelectedLayoutState = {course: Course, layout: Layout} | null
-type SelectedLayoutAction = {type: SelectedLayoutActionType, data: SelectedLayoutState}
+type SelectedLayoutAction = {type: (typeof SelectedLayoutActionType[keyof typeof SelectedLayoutActionType]), data: SelectedLayoutState}
 
 const reducer = (state: SelectedLayoutState = null, action: SelectedLayoutAction): SelectedLayoutState | null => {
     switch(action.type) {

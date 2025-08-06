@@ -52,7 +52,7 @@ export default [
             data: {
                 searchUser: {
                     users: [
-                        {id: 'mockedTakenUsername', name: 'takenusername'}
+                        {id: 'mockedTakenUsername', name: 'takenusername', blockFriendRequests: false}
                     ],
                     hasMore: false
                 }
