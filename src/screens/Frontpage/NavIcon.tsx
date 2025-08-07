@@ -7,19 +7,26 @@ type NavIconProps = {
     icon: ImageSourcePropType
     title: string
     to: string
-    backgroundColor?: string
     iconColor?: string
     onClick?: () => void
-}
+    placeholder?: boolean
+} | {placeholder: true}
 
-const NavIcon = ({title, to, icon, backgroundColor, iconColor, onClick} : NavIconProps) => {
+const NavIcon = (props : NavIconProps) => {
     const [pressed, setPressed] = useState(false);
-    const {colors} = useTheme();
+
+    const { colors } = useTheme();
+
+    if (props.placeholder) {
+        return <View style={{width: styles.icon.width + (styles.iconContainer.padding * 2)}} />;
+    }
+
+    const {title, to, icon, iconColor, onClick} = props;
 
     return (
         <Link style={styles.container} to={to} onPress={onClick} underlayColor="none" onPressIn={() => setPressed(true)} onPressOut={() => setPressed(false)}>
             <View>
-                <View style={[styles.iconContainer, pressed && {elevation: 0}, {backgroundColor: backgroundColor || colors.surface}]}>
+                <View style={[styles.iconContainer, pressed && {elevation: 0, backgroundColor: colors.tertiary}]}>
                     <Image source={icon} style={styles.icon} tintColor={iconColor} />
                 </View>
                 <Text style={styles.text}>{title}</Text>
@@ -30,12 +37,13 @@ const NavIcon = ({title, to, icon, backgroundColor, iconColor, onClick} : NavIco
 
 const styles = StyleSheet.create({
     container: {
-
     },
     iconContainer: {
-        borderRadius: 12,
-        backgroundColor: '#EFFFEF',
-        elevation: 8,
+        borderRadius: 2,
+        backgroundColor: '#ffffff',
+        elevation: 2,
+        borderWidth: 1,
+        borderColor: '#eeeeee',
         padding: 15,
     },
     icon: {
