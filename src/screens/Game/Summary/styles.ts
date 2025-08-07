@@ -3,7 +3,7 @@ import { scoreColors } from "../../../utils/theme";
 
 export const tableStyles = StyleSheet.create({
     headerText: {
-        fontSize: 12,
+        fontSize: 15,
         fontWeight: '700',
         color: '#5f6a7e',
     },
