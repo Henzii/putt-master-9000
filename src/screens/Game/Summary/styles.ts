@@ -11,9 +11,11 @@ export const tableStyles = StyleSheet.create({
         maxWidth: 15,
     },
     player: {
+        height: 53,
     },
     score: {
         width: 33,
+        height: 53,
         justifyContent: 'center',
     },
     scoreText: {

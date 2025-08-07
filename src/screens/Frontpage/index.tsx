@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import React, { useEffect } from 'react';
 import { View, StyleSheet, Linking } from "react-native";
-import { Button, Paragraph } from 'react-native-paper';
+import { Button, Paragraph, useTheme } from 'react-native-paper';
 import { Link, useNavigate } from 'react-router-native';
 import Loading from '../../components/Loading';
 import Login from '../../components/Login';
@@ -32,6 +32,7 @@ const group = require('../../../assets/icons/group.png');
 const Frontpage = () => {
     const openGames = useQuery(GET_OLD_GAMES, { variables: { onlyOpenGames: true }, fetchPolicy: 'cache-and-network' });
     const navi = useNavigate();
+    const {colors} = useTheme();
 
     const session = useSession();
 
@@ -66,11 +67,11 @@ const Frontpage = () => {
     const ongoingGames = openGames.data?.getGames?.games ?? [];
 
     return (
-        <Container noFlex withScrollView style={{ alignItems: 'center' }} noPadding>
+        <Container noFlex withScrollView style={{ alignItems: 'center', backgroundColor: colors.background }} noPadding>
             {(session.isLoggedIn) ?
                 <>
                     <Header openGames={ongoingGames} />
-                    <Spacer size={20} />
+                    <Spacer size={15} />
                     <View style={styles.iconsContainer}>
                         <NavIcon title="New Game" to="/game?force" icon={pilli} />
                         <NavIcon title="Old games" to="/games" icon={maali} />
@@ -81,9 +82,11 @@ const Frontpage = () => {
                         <NavIcon title="Group" to="/group" icon={group} />
                         <NavIcon title="Settings" to="/settings" icon={settings} />
                         <NavIcon title="Website" to="/" icon={www} onClick={handleOpenWebsite} />
+                        <NavIcon placeholder />
                         <NavIcon title="Feedback" to="feedback" icon={feedback} />
                         <NavIcon title="Logout" to="/" icon={signout} onClick={() => session.clear()} />
                     </View>
+                    <Spacer size={20} />
                 </>
                 :
                 <>
