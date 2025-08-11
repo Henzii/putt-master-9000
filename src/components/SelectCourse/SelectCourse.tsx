@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
-import { Button, Modal, Searchbar, Portal, Headline, useTheme, IconButton } from "react-native-paper";
+import { View, StyleSheet, FlatList } from "react-native";
+import { Modal, Searchbar, Portal, useTheme, IconButton, Text } from "react-native-paper";
 import useCourses from "../../hooks/useCourses";
 import useTextInput from "../../hooks/useTextInput";
 import AddCourse from "../AddCourse";
 import ErrorScreen from "../ErrorScreen";
 import Loading from "../Loading";
-import Container from "../ThemedComponents/Container";
 import SingleCourse from './SingleCourse';
 import { Coordinates, Course, Layout, NewLayout } from "../../types/course";
 import { useBackButton } from "../BackButtonProvider";
@@ -15,6 +14,9 @@ import useLiveData from "../../hooks/useLiveData";
 import SelectCourseMap from "./SelectCourseMap";
 import { MD3Colors } from "react-native-paper/lib/typescript/types";
 import SplitContainer from "../ThemedComponents/SplitContainer";
+import Header from "../RoundedHeader/Header";
+import HeaderButton from "../RoundedHeader/HeaderButton";
+import Spacer from "../ThemedComponents/Spacer";
 
 type SelectCoursesProps = {
     onSelect?: (layout: Layout, course: Course) => void,
@@ -37,6 +39,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
     const { isAdmin } = useMe();
     const liveData = useLiveData(showTraffic);
     const styles = createStyles(colors);
+    const [headerSpacing, setHeaderSpacing] = useState(50);
 
     useEffect(() => {
         if (onBackAction) {
@@ -47,7 +50,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
 
     useEffect(() => {
         if (expandedCourse) {
-            setTimeout(() => ref.current?.scrollToItem({ item: expandedCourse, animated: true, viewOffset: 5 }), 300);
+            setTimeout(() => ref.current?.scrollToItem({ item: expandedCourse, animated: true, viewOffset: headerSpacing * 2 }), 300);
         }
     }, [expandedCourse]);
 
@@ -90,17 +93,13 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
         <ErrorScreen errorMessage={error.message} />
     );
 
-    if (!courses) return (
-        <Loading loadingText="Loading courses..." />
-    );
-
     if (displayMap) {
         return <SelectCourseMap onClose={() => setDisplayMap(false)} onSelectLayout={handleClickLayout} />;
     }
 
 
     return (
-        <Container noPadding>
+        <View>
             <Portal>
                 <Modal
                     visible={displayAddCourse}
@@ -115,77 +114,75 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
                     />}
                 </Modal>
             </Portal>
-            {title ? <Headline style={{ padding: 10, backgroundColor: colors.surface }}>
-                {(expandedCourse ? 'Select layout' : title)}
-            </Headline> : null}
-            <View style={styles.topButtons}>
+            <Header setSpacing={setHeaderSpacing} bottomSize={30}>
+                {title ? <Text variant="headlineSmall" style={styles.title}>
+                    {(expandedCourse ? 'Select layout' : title)}
+                </Text> : null}
                 <SplitContainer>
-                    <Button mode="elevated" icon="plus" onPress={handleAddCourseClick} testID="AddCourseButton">Add Course</Button>
+                    <HeaderButton icon="plus" onPress={handleAddCourseClick} testID="AddCourseButton">Add Course</HeaderButton>
                     <View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <IconButton icon="magnify" onPress={handleClickSearch} mode="contained-tonal" />
-                            <IconButton icon="map" onPress={() => setDisplayMap(true)} mode="contained-tonal" />
+                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                            <IconButton icon="magnify" onPress={handleClickSearch} mode="contained" containerColor={colors.tertiary} />
+                            <IconButton icon="map-outline" onPress={() => setDisplayMap(true)} mode="contained" containerColor={colors.tertiary} />
                         </View>
                     </View>
                 </SplitContainer>
-            </View>
-            {displaySearchBar ? <Searchbar
-                autoComplete='off'
-                {...searchInput}
-                autoFocus
-            /> : null}
-            <View style={[styles.shadow, { borderColor: colors.primary }]} />
-            <FlatList
-                ref={ref}
-                data={courses}
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={styles.container}
-                keyExtractor={(item) => item.id as string}
-                onScrollToIndexFailed={() => null}
-                ListFooterComponent={
-                    (loading)
-                        ? <Loading noFullScreen loadingText="" />
-                        : <Text style={{ color: 'rgba(0,0,0,0.2)' }}>    No more... No más...</Text>
-                }
-                onEndReached={fetchMore}
-                onEndReachedThreshold={0.1}
-                renderItem={({ item, index }) => (
-                    <SingleCourse
-                        course={item}
-                        listIndex={index}
-                        onAddLayout={handleAddLayout}
-                        onLayoutClick={handleClickLayout}
-                        onCourseClick={handleClickCourse}
-                        onEditCoursePress={() => handleEditCourse(item)}
-                        expanded={expandedCourse?.id === item.id}
-                        dimmed={Boolean(expandedCourse && expandedCourse?.id !== item.id)}
-                        showDistance={gpsAvailable}
-                        isAdmin={isAdmin()}
-                        liveData={liveData}
-                    />)
-                }
-            />
-        </Container>
+                {displaySearchBar ? (
+                    <>
+                        <Spacer size={5} />
+                        <Searchbar
+                            autoComplete='off'
+                            {...searchInput}
+                            autoFocus
+                        />
+                    </>
+                ) : null}
+            </Header>
+            {!courses && loading ? (
+                <Loading loadingText="Loading courses..." />
+            ) : (
+                <FlatList
+                    ref={ref}
+                    data={courses}
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={[styles.container, { paddingVertical: headerSpacing * 2 - 10 }]}
+                    keyExtractor={(item) => item.id as string}
+                    onScrollToIndexFailed={() => null}
+                    ListFooterComponent={
+                        (loading)
+                            ? <Loading noFullScreen loadingText="" />
+                            : <Text style={{ color: 'rgba(0,0,0,0.2)' }}>    No more... No más...</Text>
+                    }
+                    onEndReached={fetchMore}
+                    onEndReachedThreshold={0.1}
+                    renderItem={({ item, index }) => (
+                        <SingleCourse
+                            course={item}
+                            listIndex={index}
+                            onAddLayout={handleAddLayout}
+                            onLayoutClick={handleClickLayout}
+                            onCourseClick={handleClickCourse}
+                            onEditCoursePress={() => handleEditCourse(item)}
+                            expanded={expandedCourse?.id === item.id}
+                            dimmed={Boolean(expandedCourse && expandedCourse?.id !== item.id)}
+                            showDistance={gpsAvailable}
+                            isAdmin={isAdmin()}
+                            liveData={liveData}
+                        />)
+                    }
+                />
+            )}
+        </View>
     );
 };
 
 const createStyles = (colors: MD3Colors) => StyleSheet.create({
     container: {
-        paddingTop: 10,
-        backgroundColor: colors.surface
+        backgroundColor: colors.surface,
     },
-    topButtons: {
-        paddingHorizontal: 2,
-        paddingVertical: 10,
-    },
-    shadow: {
-        backgroundColor: '#13131320',
-        position: 'relative',
-        bottom: -5,
-        height: 5,
-        zIndex: 999,
-        opacity: 1,
-        borderTopWidth: 1
+    title: {
+        color: 'white',
+        paddingBottom: 10
     }
 });
 export default SelectCourses;

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, View } from "react-native";
-import { Avatar, Button, Checkbox, Headline, IconButton, Modal, Portal, Text, useTheme } from 'react-native-paper';
+import { Avatar, Button, Checkbox, IconButton, Modal, Portal, Text, useTheme } from 'react-native-paper';
 import AddFriend from './AddFriend';
 import ErrorScreen from './ErrorScreen';
 import Loading from './Loading';
-import Container from './ThemedComponents/Container';
 import SplitContainer from './ThemedComponents/SplitContainer';
 import { InitialsAndColors, initialsAndColorGenerator } from '../utils/initialsAndColorGenerator';
 import { User } from '../types/user';
@@ -13,6 +12,10 @@ import { theme } from '../utils/theme';
 import Spacer from './ThemedComponents/Spacer';
 import { useFriends } from '../hooks/useFriends';
 import SignUp from './SignUp';
+import Header from './RoundedHeader/Header';
+import HeaderButton from './RoundedHeader/HeaderButton';
+import Color from 'color';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 type FriendListProps = {
@@ -26,11 +29,13 @@ export type Friend = {
     name: string,
 }
 const FriendsList = (props: FriendListProps) => {
-    const {friends, loading, error, removeFriend, addFriend} = useFriends();
+    const { friends, loading, error, removeFriend, addFriend } = useFriends();
     const [addFriendModal, setAddFriendModal] = useState(false);
     const [showCreateFriendView, setShowCreateFriendView] = useState(false);
     const [selectedFriends, setSelectedFriends] = useState<Friend[]>([]);
     const backButton = useBackButton();
+    const [headerSpacing, setHeaderSpacing] = useState(50);
+    const insets = useSafeAreaInsets();
 
     useEffect(() => {
         if (props.onBackAction) {
@@ -55,14 +60,11 @@ const FriendsList = (props: FriendListProps) => {
         if (props.onClick) props.onClick(selectedFriends);
     };
 
-    if (loading) {
-        return <Loading />;
-    }
     if (error) {
         return <ErrorScreen errorMessage={error.message} />;
     }
 
-    if(showCreateFriendView) {
+    if (showCreateFriendView) {
         return (
             <SignUp onClose={() => setShowCreateFriendView(false)} isFriendSignUp />
         );
@@ -71,45 +73,59 @@ const FriendsList = (props: FriendListProps) => {
     const initialsAndColors = initialsAndColorGenerator(friends);
 
     return (
-        <Container noPadding>
-            <View style={tyyli.header}>
+        <View style={{position: 'relative', flex: 1}}>
+            <Portal>
+                <Modal
+                    visible={addFriendModal}
+                    onDismiss={() => setAddFriendModal(false)}
+                    contentContainerStyle={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                >
+                    <AddFriend onClose={() => setAddFriendModal(false)} onAddFriend={addFriend} />
+                </Modal>
+            </Portal>
+
+            <Header bottomSize={20} setSpacing={setHeaderSpacing}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-                    <Headline>Friends</Headline>
+                    <Text variant="headlineSmall" style={tyyli.headline}>Friends</Text>
                     {selectedFriends.length > 0 && props.multiSelect && (
-                        <Text>({selectedFriends.length} selected)</Text>)}
+                        <Text style={{ color: 'white' }}>({selectedFriends.length} selected)</Text>)}
                 </View>
-                <Portal>
-                    <Modal
-                        visible={addFriendModal}
-                        onDismiss={() => setAddFriendModal(false)}
-                        contentContainerStyle={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-                    >
-                        <AddFriend onClose={() => setAddFriendModal(false)} onAddFriend={addFriend} />
-                    </Modal>
-                </Portal>
-                <Spacer size={4} />
+                <Spacer size={10} />
                 <SplitContainer spaceAround>
-                    <Button icon="plus" onPress={() => setAddFriendModal(true)} mode="elevated">Add friend</Button>
-                    <Button icon="plus" onPress={() => setShowCreateFriendView(true)} mode="elevated">Create friend</Button>
+                    <HeaderButton icon="account-plus-outline" onPress={() => setAddFriendModal(true)}>Add friend</HeaderButton>
+                    <HeaderButton icon="baby-face-outline" onPress={() => setShowCreateFriendView(true)}>Create friend</HeaderButton>
                 </SplitContainer>
-            </View>
-            <FlatList
-                style={tyyli.lista}
-                data={friends}
-                renderItem={({ item }) => (
-                    <SingleFriend
-                        onClick={handleFriendClick}
-                        onDelete={removeFriend}
-                        friend={item}
-                        selected={selectedFriends.find(f => f.id === item.id) ? true : false}
-                        showRemoveButton={!props.hideRemoveButton}
-                        showCheckBox={props.multiSelect}
-                        initialsAndColors={initialsAndColors}
-                    />
-                )}
-            />
-            {props.multiSelect && <Button style={tyyli.button} mode="contained" onPress={handleOkClick}>OK</Button>}
-        </Container>
+
+            </Header>
+            {loading ? <Loading loadingText="Loading friends..." /> : (
+                <FlatList
+                    style={tyyli.lista}
+                    contentContainerStyle={{ paddingTop: headerSpacing * 2 - 15, paddingBottom: headerSpacing * 2 }}
+                    data={friends}
+                    renderItem={({ item }) => (
+                        <SingleFriend
+                            onClick={handleFriendClick}
+                            onDelete={removeFriend}
+                            friend={item}
+                            selected={selectedFriends.find(f => f.id === item.id) ? true : false}
+                            showRemoveButton={!props.hideRemoveButton}
+                            showCheckBox={props.multiSelect}
+                            initialsAndColors={initialsAndColors}
+                        />
+                    )}
+                />
+            )}
+            {props.multiSelect ?
+                    <Button
+                        style={[tyyli.button, {bottom: insets.bottom}]}
+                        mode="contained"
+                        buttonColor={Color(theme.colors.primary).alpha(0.9).toString()}
+                        onPress={handleOkClick}
+                    >
+                        Add players to game
+                    </Button>
+            : null}
+        </View>
     );
 };
 
@@ -152,6 +168,16 @@ const SingleFriend = ({ friend, onClick, onDelete, showRemoveButton = true, show
 };
 
 const tyyli = StyleSheet.create({
+    button: {
+        position: 'absolute',
+        zIndex: 2,
+        bottom: 0,
+        width: '90%',
+
+        paddingVertical: 10,
+        alignSelf: 'center',
+
+    },
     header: {
         marginHorizontal: 20,
         marginVertical: 8
@@ -181,21 +207,20 @@ const tyyli = StyleSheet.create({
         marginHorizontal: 10,
         marginVertical: 3,
     },
-    button: {
-        margin: 10,
-    },
     separator: {
         minHeight: 1,
         borderTopWidth: 1,
         borderColor: 'lightgray',
     },
     lista: {
-        marginTop: 8,
         backgroundColor: theme.colors.surface,
     },
     otsikko: {
         padding: 10,
         textAlign: 'center',
+    },
+    headline: {
+        color: 'white',
     }
 });
 export default FriendsList;
