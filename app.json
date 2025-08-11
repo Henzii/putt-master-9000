@@ -4,6 +4,7 @@
     "slug": "putt-master-9000",
     "version": "10.0.1",
     "icon": "./assets/adaptive-icon.png",
+    "orientation": "portrait",
     "extra": {
       "eas": {
         "projectId": "8c94b996-c553-4817-960d-632288a8c5aa"

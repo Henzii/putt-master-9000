@@ -1,24 +1,35 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { View } from 'react-native';
-import { Button, Headline } from "react-native-paper";
-import ErrorScreen from '../../components/ErrorScreen';
-import Loading from '../../components/Loading';
-import Container from '../../components/ThemedComponents/Container';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { IconButton, Text, useTheme } from "react-native-paper";
+import ErrorScreen from '@components/ErrorScreen';
+import Loading from '@components/Loading';
 import { GET_ACHIEVEMENTS } from '../../graphql/queries';
 import Badge from './Badge';
 import { User } from '../../types/user';
-import SplitContainer from '../../components/ThemedComponents/SplitContainer';
-import FriendsList, { Friend } from '../../components/FriendsList';
+import FriendsList, { Friend } from '@components/FriendsList';
+import Header from '@components/RoundedHeader/Header';
+import Stack from '@components/Stack';
+import Spacer from '@components/ThemedComponents/Spacer';
 
 const Achievements = () => {
-    const {data, loading, error} = useQuery<{getMe?: User}>(GET_ACHIEVEMENTS, {fetchPolicy: 'no-cache'});
+    const { data, loading, error } = useQuery<{ getMe?: User }>(GET_ACHIEVEMENTS, { fetchPolicy: 'no-cache' });
     const [showSelectFriendView, setShowSelectFriendView] = useState(false);
     const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
+    const [headerSpacing, setHeaderSpacing] = useState(60);
+    const {colors} = useTheme();
 
     const handleFriendSelect = (friends: Friend[] | null) => {
         setSelectedFriend(friends?.[0] ?? null);
         setShowSelectFriendView(false);
+    };
+
+    const handleSpyButtonPress = () => {
+        if (selectedFriend) {
+            setSelectedFriend(null);
+        } else {
+            setShowSelectFriendView(true);
+        }
     };
 
     if (loading) {
@@ -35,26 +46,41 @@ const Achievements = () => {
     const achievements = selectedFriend ? data.getMe.friends?.find(f => f.id === selectedFriend.id)?.achievements : data.getMe.achievements;
 
     return (
-        <Container withScrollView fullScreen noPadding>
-            <SplitContainer style={{paddingHorizontal: 8}}>
-                <Button icon="incognito" onPress={() => setShowSelectFriendView(true)}>Friends&apos; achievements</Button>
-                {selectedFriend && (<Button onPress={() => handleFriendSelect(null)}>My achievements</Button>)}
-            </SplitContainer>
-            <Headline style={{margin: 20, marginTop: 25, marginBottom: 25}}>{selectedFriend ? `${selectedFriend.name}'s` : 'My'} achievements</Headline>
-            <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
-                {achievements?.map((ach, index) => (
-                    <Badge
-                        key={`${ach.id}-${index}`}
-                        badgeName={ach.id}
-                        course={ach.game.course}
-                        layout={ach.game.layout}
-                        date={ach.game.startTime}
-                    />
-                ))}
-            </View>
-        </Container>
+        <View>
+            <Header setSpacing={setHeaderSpacing} bottomSize={20}>
+                <Stack gap={20} direction='row' justifyContent="space-between" alignItems='center'>
+                    <Text variant="headlineSmall" style={styles.headerText}>
+                        {selectedFriend ? `${selectedFriend.name}'s achievements` : 'My achievements'}
+                    </Text>
+                    <IconButton onPress={handleSpyButtonPress} icon={selectedFriend ? 'account' : 'incognito'} containerColor={colors.tertiary} iconColor={colors.primary} />
+                </Stack>
+            </Header>
+            <ScrollView>
+                <Spacer size={headerSpacing} />
+                <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+                    {achievements?.map((ach, index) => (
+                        <Badge
+                            key={`${ach.id}-${index}`}
+                            badgeName={ach.id}
+                            course={ach.game.course}
+                            layout={ach.game.layout}
+                            date={ach.game.startTime}
+                        />
+                    ))}
+                    {achievements?.length === 0 && (
+                        <Text style={{ textAlign: 'center', width: '100%' }}>No achievements yet!</Text>
+                    )}
+                </View>
+            </ScrollView>
+        </View>
     );
 };
+
+const styles = StyleSheet.create({
+    headerText: {
+        color: '#fff'
+    }
+});
 
 
 export default Achievements;
