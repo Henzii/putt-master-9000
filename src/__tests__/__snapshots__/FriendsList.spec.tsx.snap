@@ -1278,11 +1278,14 @@ exports[`<FriendList /> should render properly 1`] = `
         >
           <View
             style={
-              {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "justifyContent": "space-between",
-              }
+              [
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                },
+                undefined,
+              ]
             }
           >
             <Text
@@ -1744,10 +1747,13 @@ exports[`<FriendList /> should render properly 1`] = `
             <View>
               <View
                 style={
-                  {
-                    "flexDirection": "column",
-                    "gap": 8,
-                  }
+                  [
+                    {
+                      "flexDirection": "column",
+                      "gap": 8,
+                    },
+                    undefined,
+                  ]
                 }
               />
             </View>
