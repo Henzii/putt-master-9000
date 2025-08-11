@@ -46,7 +46,7 @@ const Achievements = () => {
     const achievements = selectedFriend ? data.getMe.friends?.find(f => f.id === selectedFriend.id)?.achievements : data.getMe.achievements;
 
     return (
-        <View>
+        <View style={{flex: 1}}>
             <Header setSpacing={setHeaderSpacing} bottomSize={20}>
                 <Stack gap={20} direction='row' justifyContent="space-between" alignItems='center'>
                     <Text variant="headlineSmall" style={styles.headerText}>

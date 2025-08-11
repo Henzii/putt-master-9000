@@ -73,7 +73,7 @@ const OldGames = () => {
     };
 
     return (
-        <View>
+        <View style={{flex: 1}}>
             <Header setSpacing={setHeaderSpacing} bottomSize={20}>
                 <SplitContainer style={{ flexWrap: 'wrap' }}>
                     <View>

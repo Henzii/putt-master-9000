@@ -99,7 +99,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
 
 
     return (
-        <View>
+        <View style={{flex: 1}}>
             <Portal>
                 <Modal
                     visible={displayAddCourse}

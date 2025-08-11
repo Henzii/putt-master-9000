@@ -50,7 +50,7 @@ const OpenGames = ({ openGames }: OpenGamesProps) => {
             </SplitContainer>
             <Spacer />
             <View style={{ flexDirection: 'row' }}>
-                <Button icon="reload" style={styles.continueButton} color="black" onPress={handleContinueGame}>Continue</Button>
+                <Button icon="reload" style={styles.continueButton} textColor="black" onPress={handleContinueGame}>Continue</Button>
             </View>
         </>
     );

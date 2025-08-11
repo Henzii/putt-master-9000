@@ -27,7 +27,7 @@ const AddFriend = ({ onClose, onAddFriend, friends }: AddFriendProps) => {
     const { colors } = useTheme();
     const { id } = useSession();
     const searchTextInput = useTextInput({ callBackDelay: 1000, defaultValue: '' }, (value) => {
-        if (value !== '') searchUsers({ variables: { search: value.toLowerCase() } });
+        searchUsers({ variables: { search: value.toLowerCase() } });
     });
 
     const tyyli = createStyles(colors);
