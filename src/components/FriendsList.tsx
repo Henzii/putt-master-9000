@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, View } from "react-native";
-import { Avatar, Button, Checkbox, IconButton, Modal, Portal, Text, useTheme } from 'react-native-paper';
+import { Avatar, Button, Checkbox, IconButton, Text, useTheme } from 'react-native-paper';
 import AddFriend from './AddFriend';
 import ErrorScreen from './ErrorScreen';
 import Loading from './Loading';
@@ -16,6 +16,7 @@ import Header from './RoundedHeader/Header';
 import HeaderButton from './RoundedHeader/HeaderButton';
 import Color from 'color';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Sheet from './Sheet';
 
 
 type FriendListProps = {
@@ -73,16 +74,10 @@ const FriendsList = (props: FriendListProps) => {
     const initialsAndColors = initialsAndColorGenerator(friends);
 
     return (
-        <View style={{position: 'relative', flex: 1}}>
-            <Portal>
-                <Modal
-                    visible={addFriendModal}
-                    onDismiss={() => setAddFriendModal(false)}
-                    contentContainerStyle={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-                >
-                    <AddFriend onClose={() => setAddFriendModal(false)} onAddFriend={addFriend} />
-                </Modal>
-            </Portal>
+        <View style={{ position: 'relative', flex: 1 }}>
+            <Sheet open={addFriendModal} onClose={() => setAddFriendModal(false)}>
+                <AddFriend onClose={() => setAddFriendModal(false)} onAddFriend={addFriend} friends={friends} />
+            </Sheet>
 
             <Header bottomSize={20} setSpacing={setHeaderSpacing}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
@@ -116,15 +111,15 @@ const FriendsList = (props: FriendListProps) => {
                 />
             )}
             {props.multiSelect ?
-                    <Button
-                        style={[tyyli.button, {bottom: insets.bottom}]}
-                        mode="contained"
-                        buttonColor={Color(theme.colors.primary).alpha(0.9).toString()}
-                        onPress={handleOkClick}
-                    >
-                        Add players to game
-                    </Button>
-            : null}
+                <Button
+                    style={[tyyli.button, { bottom: insets.bottom }]}
+                    mode="contained"
+                    buttonColor={Color(theme.colors.primary).alpha(0.9).toString()}
+                    onPress={handleOkClick}
+                >
+                    Add players to game
+                </Button>
+                : null}
         </View>
     );
 };

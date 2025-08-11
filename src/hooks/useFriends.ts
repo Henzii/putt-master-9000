@@ -20,7 +20,7 @@ export const useFriends = () => {
     const addFriend = useCallback(async (friendName: string) => {
         const res = await addFriendMutation({ variables: { friendName} });
         if (res.data.addFriend) {
-            dispatch(addNotification('Friend added! Nice job little buddy!', 'success'));
+            dispatch(addNotification('Friend added! Well done!', 'success'));
         } else {
             dispatch(addNotification(`Unable to make friends with ${friendName}. User either blocks friend requests or the request failed for some other reason.`, 'alert'));
         }
