@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import { View, Text, Dimensions } from "react-native";
-import { Headline } from "react-native-paper";
 import { GET_ACTIVITY } from '../../graphql/queries';
 import Loading from '../../components/Loading';
 import { BarChart } from 'react-native-chart-kit';
@@ -66,7 +65,6 @@ const Activity = ({selectedUser}: Props) => {
 
     return (
         <View>
-            <Headline style={{paddingLeft: 15}}>{selectedUser ? `${selectedUser.name}'s` : 'Your'} activity</Headline>
             <PrevNextSelector
                 options={selectorOptions}
                 onChange={setSelectedYear}

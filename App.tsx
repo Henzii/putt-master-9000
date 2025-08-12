@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import { AppRegistry } from 'react-native';
-import { Provider as PaperProvider } from 'react-native-paper';
 import { NativeRouter } from 'react-router-native';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ApolloProvider } from '@apollo/client';
 
 import Main from './src/components/Main';
-import { theme } from './src/utils/theme';
 import store from './src/utils/store';
 import { client } from './src/graphql/apolloClient';
 import LocalSettingsProvider from './src/components/LocalSettingsProvider';
@@ -16,6 +14,7 @@ import ErrorBoundary from 'react-native-error-boundary';
 import BSOD from './src/components/BSOD';
 
 import * as SplashScreen from 'expo-splash-screen';
+import ThemeProvider from 'src/context/ThemeProvider';
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -33,13 +32,13 @@ export default function App() {
       <ReduxProvider store={store}>
         <ApolloProvider client={client}>
           <BackButtonProvider>
-            <PaperProvider theme={theme}>
+            <ThemeProvider>
               <LocalSettingsProvider>
                 <SafeAreaProvider>
                   <Main />
                 </SafeAreaProvider>
               </LocalSettingsProvider>
-            </PaperProvider>
+            </ThemeProvider>
           </BackButtonProvider>
         </ApolloProvider>
       </ReduxProvider>

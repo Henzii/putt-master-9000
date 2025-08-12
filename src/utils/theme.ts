@@ -54,3 +54,22 @@ export const theme = {
           "backdrop": "rgba(41, 50, 46, 0.4)"
         }
 };
+
+export const devTheme = {
+  ...theme,
+  colors: {
+    ...theme.colors,
+    primary: 'rgb(0, 83, 108)',
+    tertiary: "rgb(150, 200, 235)",
+  }
+};
+
+export const prevTheme = {
+  ...theme,
+  colors: {
+    ...theme.colors,
+    primary: 'rgb(108, 0, 108)',
+    tertiary: "rgb(235, 0, 235)",
+  }
+};
+
