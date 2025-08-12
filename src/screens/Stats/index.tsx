@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Button, Paragraph } from 'react-native-paper';
-import SelectCourses from '../../components/SelectCourse/SelectCourse';
-import SplitContainer from '../../components/ThemedComponents/SplitContainer';
+import { Button, Text } from 'react-native-paper';
+import SelectCourses from '@components/SelectCourse/SelectCourse';
 import StatsView from './StatsView';
-import Container from '../../components/ThemedComponents/Container';
-import FriendsList, { Friend } from '../../components/FriendsList';
+import Container from '@components/ThemedComponents/Container';
+import FriendsList, { Friend } from '@components/FriendsList';
 import useMe from '../../hooks/useMe';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../utils/store';
@@ -12,9 +11,9 @@ import { setSelectedLayout } from '../../reducers/selectedLayoutReducer';
 import { User } from '../../types/user';
 import { Course, Layout } from '../../types/course';
 import Activity from './Activity';
-import Divider from '../../components/ThemedComponents/Divider';
-import Loading from '../../components/Loading';
-import Spacer from '../../components/ThemedComponents/Spacer';
+import Divider from '@components/ThemedComponents/Divider';
+import Loading from '@components/Loading';
+import Spacer from '@components/ThemedComponents/Spacer';
 import { View } from 'react-native';
 
 const Stats = () => {
@@ -61,7 +60,7 @@ const Stats = () => {
                     </>
                 ) : (
                     <Container>
-                        <Paragraph>No course selected. Select a course to view layout specific stats.</Paragraph>
+                        <Text>No course selected. Select a course to view layout specific stats.</Text>
                         <Spacer />
                         <Button icon="golf" onPress={() => setShowSelectCourse(true)} mode="contained">Select course</Button>
                     </Container>

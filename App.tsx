@@ -16,6 +16,7 @@ import ErrorBoundary from 'react-native-error-boundary';
 import BSOD from './src/components/BSOD';
 
 import * as SplashScreen from 'expo-splash-screen';
+import ThemeProvider from 'src/context/ThemeProvider';
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -33,13 +34,13 @@ export default function App() {
       <ReduxProvider store={store}>
         <ApolloProvider client={client}>
           <BackButtonProvider>
-            <PaperProvider theme={theme}>
+            <ThemeProvider>
               <LocalSettingsProvider>
                 <SafeAreaProvider>
                   <Main />
                 </SafeAreaProvider>
               </LocalSettingsProvider>
-            </PaperProvider>
+            </ThemeProvider>
           </BackButtonProvider>
         </ApolloProvider>
       </ReduxProvider>
