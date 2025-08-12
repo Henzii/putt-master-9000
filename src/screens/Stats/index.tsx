@@ -15,6 +15,9 @@ import Divider from '@components/ThemedComponents/Divider';
 import Loading from '@components/Loading';
 import Spacer from '@components/ThemedComponents/Spacer';
 import { View } from 'react-native';
+import Header from '@components/RoundedHeader/Header';
+import Stack from '@components/Stack';
+import HeaderButton from '@components/RoundedHeader/HeaderButton';
 
 const Stats = () => {
     const [selectedUser, setSelectedUser] = useState<User>();
@@ -22,6 +25,7 @@ const Stats = () => {
     const [showSelectFriend, setShowSelectFriend] = useState(false);
     const dispatch = useDispatch();
     const selectedCourse = useSelector((state: RootState) => state.selectedLayout);
+    const [headerSpacing, setHeaderSpacing] = useState(60);
 
     const handleCourseSelect = (layout: Layout, course: Course) => {
         dispatch(setSelectedLayout(course, layout));
@@ -43,12 +47,20 @@ const Stats = () => {
         return <FriendsList onClick={handleFriendSelect} hideRemoveButton onBackAction={() => setShowSelectFriend(false)} />;
     }
     return (
-        <>
-            <SplitContainer spaceAround>
-                {selectedUser && <Button onPress={() => setSelectedUser(undefined)}>My stats</Button>}
-                <Button onPress={() => setShowSelectFriend(true)} icon="incognito">Spy a friend</Button>
-            </SplitContainer>
+        <View style={{flex: 1}}>
+            <Header setSpacing={setHeaderSpacing} bottomSize={20}>
+            <Stack gap={20} direction='column' justifyContent="space-between" maxWidth="100%">
+                <Text variant="titleLarge" style={{color: '#fff'}} numberOfLines={2}>
+                    {selectedUser ? `${selectedUser.name}'s stats` : 'My stats'}
+                </Text>
+                <Stack direction='row' justifyContent='space-between'>
+                    <HeaderButton onPress={() => setShowSelectFriend(true)} icon="incognito">Spy a friend</HeaderButton>
+                    {selectedUser && <HeaderButton onPress={() => setSelectedUser(undefined)}>My stats</HeaderButton>}
+                </Stack>
+            </Stack>
+            </Header>
             <Container withScrollView noPadding fullHeight>
+                <Spacer size={headerSpacing} />
                 <Activity selectedUser={selectedUser} />
                 <Divider />
                 {selectedCourse ? (
@@ -66,7 +78,7 @@ const Stats = () => {
                     </Container>
                 )}
             </Container>
-        </>
+        </View>
     );
 };
 
