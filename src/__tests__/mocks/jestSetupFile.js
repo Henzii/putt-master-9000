@@ -12,11 +12,13 @@ jest.mock('react-router-native', () => {
         useNavigate: () => null,
     };
 });
-jest.mock('react-redux', () => {
-    return {
-        useDispatch: () => () => null,
-    };
-});
+jest.mock('react-redux', () => ({
+    useDispatch: () => () => null,
+    useSelector: jest.fn().mockImplementation(selector => selector({
+      common: { loginToken: 'mockedToken' },
+      user: {isLoggedIn: true, id: 'mockedId'}
+    })),
+  }));
 
 jest.mock('graphql-ws', () => ({
     createClient: () => null

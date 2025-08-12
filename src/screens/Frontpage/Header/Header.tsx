@@ -5,21 +5,26 @@ import LoggedIn from "./LoggedIn";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../utils/store";
 import UpdateAvailable from "./UpdateAvailable";
+import Header from "../../../components/RoundedHeader/Header";
 
 type Props = {
     openGames?: Game[]
+    setSpacing: (spacing: number) => void
 }
-const Header = ({openGames = []}: Props) => {
+const FrontpageHeader = ({openGames = [], setSpacing}: Props) => {
     const isUpdateAvailable = useSelector<RootState>(state => state.common.isUpdateAvailable) as boolean | undefined;
-    if (openGames.length) {
-        return <OpenGames openGames={openGames} />;
-    }
 
-    if (isUpdateAvailable) {
-        return <UpdateAvailable />;
-    }
+    const showOpenGames = openGames.length;
+    const showUpdate = !showOpenGames && isUpdateAvailable;
+    const showLoggedIn = !showOpenGames && !showUpdate;
 
-    return <LoggedIn />;
+    return (
+        <Header setSpacing={setSpacing}>
+            {showOpenGames ? <OpenGames openGames={openGames} /> : null}
+            {showUpdate ? <UpdateAvailable /> : null}
+            {showLoggedIn ? <LoggedIn /> : null}
+        </Header>
+    );
 };
 
-export default Header;
+export default FrontpageHeader;

@@ -21,6 +21,7 @@
     "@apollo/client": "^3.8.8",
     "@react-native-async-storage/async-storage": "2.1.2",
     "apollo-link-context": "^1.0.20",
+    "color": "^5.0.0",
     "date-fns": "^2.28.0",
     "expo": "~53.0.0",
     "expo-av": "~15.1.7",
@@ -73,7 +74,7 @@
   "jest": {
     "preset": "jest-expo",
     "transformIgnorePatterns": [
-      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|color)"
     ],
     "setupFiles": [
       "./src/__tests__/mocks/jestSetupFile.js"

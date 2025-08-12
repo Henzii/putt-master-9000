@@ -7,13 +7,12 @@ import Spacer from '../../../components/ThemedComponents/Spacer';
 import { useNavigate } from 'react-router-native';
 import { parseDate } from '../../../utils/dates';
 import { getCompletedHoles } from '../utils';
-import RoundedHeader from '../../../components/RoundedHeader';
 
 type OpenGamesProps = {
     openGames: Game[]
 }
 
-const OpenGames = ({openGames}: OpenGamesProps) => {
+const OpenGames = ({ openGames }: OpenGamesProps) => {
     const nav = useNavigate();
 
     if (!openGames.length) return null;
@@ -36,26 +35,24 @@ const OpenGames = ({openGames}: OpenGamesProps) => {
     const completedHoles = getCompletedHoles(game);
 
     return (
-        <View style={styles.container}>
-            <RoundedHeader>
-                <SplitContainer>
-                    <Text style={styles.mainText}>{game.course}</Text>
-                    <Text style={styles.secText}>{game.scorecards.length} players</Text>
-                </SplitContainer>
-                <SplitContainer>
+        <>
+            <SplitContainer>
+                <Text style={styles.mainText}>{game.course}</Text>
+                <Text style={styles.secText}>{game.scorecards.length} players</Text>
+            </SplitContainer>
+            <SplitContainer>
                 <Text style={styles.secText}>{game.layout}</Text>
                 <Text style={styles.secText}>{parseDate(game.startTime)}</Text>
-                </SplitContainer>
-                <SplitContainer>
-                    <View />
-                    <Text style={styles.secText}>{`${completedHoles} / ${game.holes}`} completed</Text>
-                </SplitContainer>
-                <Spacer />
-                <View style={{flexDirection: 'row'}}>
-                    <Button icon="reload" style={styles.continueButton} color="black" onPress={handleContinueGame}>Continue</Button>
-                </View>
-            </RoundedHeader>
-        </View>
+            </SplitContainer>
+            <SplitContainer>
+                <View />
+                <Text style={styles.secText}>{`${completedHoles} / ${game.holes}`} completed</Text>
+            </SplitContainer>
+            <Spacer />
+            <View style={{ flexDirection: 'row' }}>
+                <Button icon="reload" style={styles.continueButton} textColor="black" onPress={handleContinueGame}>Continue</Button>
+            </View>
+        </>
     );
 };
 

@@ -1,5 +1,17 @@
 {
   "compilerOptions": {
+    "paths": {
+      "@icons/*": [
+        "assets/icons/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
+    },
+    "baseUrl": "./",
     "allowSyntheticDefaultImports": true,
     "jsx": "react-native",
     "lib": [

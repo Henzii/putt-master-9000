@@ -103,7 +103,7 @@ export default function Game() {
             <RoundTabs gameData={data} selectedRound={selectedRound} setSelectedRound={setSelectedRound} />
             <Container noPadding>
                 <View
-                    style={{ minHeight: '100%' }}
+                    style={{ flex: 1 }}
                     onTouchStart={(e) => touchPos = [e.nativeEvent.pageX, e.nativeEvent.pageY]}
                     onTouchEnd={(e) => {
                         // 50 % ruudun leveydesä
