@@ -48,8 +48,8 @@ const Achievements = () => {
     return (
         <View style={{flex: 1}}>
             <Header setSpacing={setHeaderSpacing} bottomSize={20}>
-                <Stack gap={20} direction='row' justifyContent="space-between" alignItems='center'>
-                    <Text variant="headlineSmall" style={styles.headerText}>
+                <Stack gap={20} direction='row' justifyContent="space-between" alignItems='center' maxWidth="100%">
+                    <Text variant="headlineSmall" style={styles.headerText} numberOfLines={2}>
                         {selectedFriend ? `${selectedFriend.name}'s achievements` : 'My achievements'}
                     </Text>
                     <IconButton onPress={handleSpyButtonPress} icon={selectedFriend ? 'account' : 'incognito'} containerColor={colors.tertiary} iconColor={colors.primary} />
@@ -71,6 +71,7 @@ const Achievements = () => {
                         <Text style={{ textAlign: 'center', width: '100%' }}>No achievements yet!</Text>
                     )}
                 </View>
+                <Spacer />
             </ScrollView>
         </View>
     );
@@ -78,7 +79,8 @@ const Achievements = () => {
 
 const styles = StyleSheet.create({
     headerText: {
-        color: '#fff'
+        color: '#fff',
+        flexShrink: 1
     }
 });
 
