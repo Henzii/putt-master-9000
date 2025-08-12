@@ -30,14 +30,13 @@ const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
     };
 
     useEffect(() => {
-     useEffect(() => {
-         const initializeTheme = async () => {
-             const env = await AsyncStorage.getItem('apiEnv') || process.env.NODE_ENV as string;
-             handleChangeTheme(env);
-         };
+        const initializeTheme = async () => {
+            const env = await AsyncStorage.getItem('apiEnv') || process.env.NODE_ENV as string;
+            handleChangeTheme(env);
+        };
 
-         initializeTheme();
-     }, []);
+        initializeTheme();
+    }, []);
 
     return (
         <ThemeContext.Provider value={handleChangeTheme}>
