@@ -29,6 +29,7 @@ import signout from '@icons/sign-out.png';
 import www from '@icons/www.png';
 import feedback from '@icons/feedback.png';
 import group from '@icons/group.png';
+import distance from '@icons/distance.png';
 
 const Frontpage = () => {
     const openGames = useQuery(GET_OLD_GAMES, { variables: { onlyOpenGames: true }, fetchPolicy: 'cache-and-network' });
@@ -97,7 +98,7 @@ const Frontpage = () => {
                     <NavIcon title="Group" to="/group" icon={group} />
                     <NavIcon title="Settings" to="/settings" icon={settings} />
                     <NavIcon title="Website" to="/" icon={www} onClick={handleOpenWebsite} />
-                    <NavIcon placeholder />
+                    <NavIcon title="Distance" to="/distance" icon={distance} />
                     <NavIcon title="Feedback" to="feedback" icon={feedback} />
                     <NavIcon title="Logout" to="/" icon={signout} onClick={() => session.clear()} />
                 </View>
