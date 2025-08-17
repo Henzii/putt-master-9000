@@ -32,6 +32,7 @@ import { useSession } from '../hooks/useSession';
 import { HandShake } from '../types/queries';
 import Feedback from '../screens/Feedback';
 import Group from '../screens/Group';
+import Distance from 'src/screens/Distance';
 
 export default function App() {
     const dispatch = useDispatch();
@@ -107,6 +108,7 @@ export default function App() {
                 <Route path="/achievements" element={<Achievements />} />
                 <Route path="/feedback" element={<Feedback />} />
                 <Route path="/group" element={<Group />} />
+                <Route path="/distance" element={<Distance />} />
                 <Route path="/" element={<Frontpage />} />
             </Routes>
             <StatusBar style="auto" />
