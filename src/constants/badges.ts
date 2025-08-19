@@ -25,7 +25,7 @@ export default [
     {
         name: 'GoldenBox',
         title: 'Golden box',
-        text: 'Why do I always have to always throw first?',
+        text: 'Why do I always have to throw first?',
         imageSrc: require('../../assets/achievements/goldenbox.png')
     }
 

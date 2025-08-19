@@ -8,6 +8,7 @@ import ExtraMenu from './ExtraMenu';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import { LiveData } from '../../hooks/useLiveData';
 import { theme } from '../../utils/theme';
+import { useDistanceUnit } from '@hooks/useDistanceUnit';
 
 type SingleCourseProps = {
     course: Course,
@@ -26,6 +27,8 @@ type SingleCourseProps = {
 const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, onEditCoursePress, expanded, dimmed, listIndex, isAdmin, showDistance = true, liveData}: SingleCourseProps) => {
     const [addLayoutModal, setAddLayoutModal] = useState(false);
     const [layoutToEdit, setLayoutToEdit] = useState<Layout>();
+    const distanceString = useDistanceUnit(course.distance.meters);
+
     const handleCourseClick = () => {
         if (!onCourseClick) return;
         if (expanded) onCourseClick(null);
@@ -77,7 +80,7 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, onEdi
                             {showDistance && (
                                 <View style={styles.distance}>
                                     <Icon name="map-marker-distance" size={18} color="gray" />
-                                    <Text style={styles.iconText}>{course.distance.string}</Text>
+                                    <Text style={styles.iconText}>{distanceString}</Text>
                                 </View>
                             )}
                             {courseLiveData && (

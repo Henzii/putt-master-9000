@@ -11,6 +11,7 @@ import SplitContainer from '../ThemedComponents/SplitContainer';
 import { ActivityIndicator, Button } from 'react-native-paper';
 import { useBackButton } from '../BackButtonProvider';
 import CourseDetailsSheet from './CourseDetailsSheet';
+import { useDistanceUnit } from '@hooks/useDistanceUnit';
 
 type Props = {
     onClose: () => void
@@ -115,12 +116,13 @@ const GPSLoading = () => {
 };
 
 const CourseInfo = ({ course, onSelect }: { course: Course, onSelect: (name: string) => void }) => {
+    const distanceString = useDistanceUnit(course.distance.meters);
     return (
         <View style={styles.courseInfo}>
             <SplitContainer>
                 <View>
                     <Text style={styles.courseName}>{course.name}</Text>
-                    <Text>{course.layouts.length} layouts, {course.distance.string} away</Text>
+                    <Text>{course.layouts.length} layouts, {distanceString} away</Text>
                 </View>
                 <Button mode="outlined" onPress={() => onSelect(course.name)}>Select</Button>
             </SplitContainer>

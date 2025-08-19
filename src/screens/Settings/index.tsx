@@ -14,6 +14,7 @@ import { addNotification } from '../../reducers/notificationReducer';
 import { SingleSwitch } from '../../components/LocalSettings';
 import { AccountType } from '../../types/user';
 import DeleteAccount from './DeleteAccount';
+import Units from './Units';
 
 const Settings = () => {
     const { me, updateSettings, logout } = useMe();
@@ -58,6 +59,10 @@ const Settings = () => {
             <Divider />
             <View style={tyyli.section}>
                 <ChangePassword onPasswordChange={handlePasswordChange} />
+            </View>
+            <Divider />
+            <View style={tyyli.section}>
+                <Units />
             </View>
             <Divider />
             <View style={tyyli.section}>
