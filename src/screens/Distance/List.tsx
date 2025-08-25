@@ -2,62 +2,48 @@ import React from "react";
 import Container from "@components/ThemedComponents/Container";
 import { FC } from "react";
 import { Text } from "react-native-paper";
-import { Measurement, SavedMeasurement } from "./types";
 import Stack from "@components/Stack";
 import { StyleSheet, View } from "react-native";
 import { getDistanceFromLatLonInMeters } from "src/utils/distance";
-import { stampToDateString } from "src/utils/time";
 import Spacer from "@components/ThemedComponents/Spacer";
+import { MeasuredThrow } from "src/types/throws";
+import { formattedDate } from "src/utils/dates";
 
-const points: SavedMeasurement[] = [
-  {
-    startingPoint: { lat: 60.3093067, lon: 24.978745, acc: 10 },
-    landingPoint: { lat: 60.3116867, lon: 24.956085, acc: 10 },
-    timestamp: new Date().getTime().toString(),
-  },
-  {
-    startingPoint: { lat: 60.3091067, lon: 24.973745, acc: 10 },
-    landingPoint: { lat: 60.3113367, lon: 24.982085, acc: 10 },
-    timestamp: new Date().getTime().toString(),
-  },
-  {
-    startingPoint: { lat: 60.3013067, lon: 24.972745, acc: 10 },
-    landingPoint: { lat: 60.3156867, lon: 24.951085, acc: 10 },
-    timestamp: new Date().getTime().toString(),
-  },
-];
+type Props = {
+  throws: MeasuredThrow[];
+};
 
-const List: FC = () => {
+const List: FC<Props> = ({ throws }) => {
   return (
     <Container withScrollView>
       <Text variant="headlineSmall">Saved measurements</Text>
       <Spacer />
       <Stack direction="column" gap={10}>
-        {points.map((point, index) => {
-          return <Card measurement={point} index={index} key={index} />;
+        {throws.map((measurement, index) => {
+          return <Card measurement={measurement} index={index} key={index} />;
         })}
       </Stack>
     </Container>
   );
 };
 
-const Card: FC<{ measurement: SavedMeasurement; index: number }> = ({
+const Card: FC<{ measurement: MeasuredThrow; index: number }> = ({
   measurement,
   index,
 }) => {
-  const distance = getDistanceFromLatLonInMeters({
-    lat1: measurement.startingPoint.lat,
-    lon1: measurement.startingPoint.lon,
-    lat2: measurement.landingPoint.lat,
-    lon2: measurement.landingPoint.lon,
-  });
+  const coords = [
+    ...measurement.startingPoint.coordinates,
+    ...measurement.landingPoint.coordinates,
+  ];
+
+  const distance = getDistanceFromLatLonInMeters(coords);
 
   return (
     <View style={styles.card}>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Stack direction="row" gap={10} alignItems="center">
           <Text style={styles.indexText}>{index + 1}.</Text>
-          <Text>{stampToDateString(+measurement.timestamp)}</Text>
+          <Text>{formattedDate(new Date(measurement.createdAt))}</Text>
         </Stack>
         <Text style={styles.distance}>{distance.toFixed(2)} m</Text>
       </Stack>
