@@ -13,9 +13,10 @@ import { RootState } from '../../utils/store';
 import ErrorScreen from '../../components/ErrorScreen';
 import { useSettings } from '../../components/LocalSettingsProvider';
 import type { Scorecard } from '../../types/game';
+import { useGameStore } from 'src/zustand/gameStore';
 
 export default function Game() {
-    const [selectedRound, setSelectedRound] = useState(0);
+    const [selectedRound, setSelectedRound] = useGameStore(state => [state.selectedRound, state.setSelectedRound]);
     const [scorecards, setScorecards] = useState<Scorecard[]>([]);
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const gameId = gameData.gameId;
@@ -115,8 +116,8 @@ export default function Game() {
                         // Jos liike X-suunnassa on vähemmän kuin 70% leveydestä
                         if (Math.abs(movement) < width50) return;
 
-                        if (movement > 0 && selectedRound > 0) setSelectedRound((v) => v - 1);
-                        else if (movement < 0 && selectedRound < data.holes - 1) setSelectedRound((v) => v + 1);
+                        if (movement > 0 && selectedRound > 0) setSelectedRound(selectedRound - 1);
+                        else if (movement < 0 && selectedRound < data.holes - 1) setSelectedRound(selectedRound + 1);
                     }}
                 >
                     <View style={peliStyles.headers}>
