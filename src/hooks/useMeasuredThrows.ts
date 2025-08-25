@@ -1,5 +1,8 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { ADD_MEASURED_THROW } from "src/graphql/mutation";
+import {
+  ADD_MEASURED_THROW,
+  DELETE_MEASURED_THROW,
+} from "src/graphql/mutation";
 import { GET_USER_WITH_THROWS } from "src/graphql/queries";
 import { MeasuredThrow } from "src/types/throws";
 
@@ -21,10 +24,15 @@ export const useMeasuredThrows = () => {
     refetchQueries: [{ query: GET_USER_WITH_THROWS }],
   });
 
+  const [deleteMeasuredThrow] = useMutation(DELETE_MEASURED_THROW, {
+    refetchQueries: [{ query: GET_USER_WITH_THROWS }],
+  });
+
   return {
     throws: data?.getMe.measuredThrows ?? [],
     loading,
     error,
     addMeasuredThrow,
+    deleteMeasuredThrow,
   };
 };
