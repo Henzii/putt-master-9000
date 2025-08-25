@@ -6,6 +6,7 @@ import { Button, Headline } from 'react-native-paper';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import Spacer from '../ThemedComponents/Spacer';
 import SplitContainer from '../ThemedComponents/SplitContainer';
+import { useDistanceUnit } from '@hooks/useDistanceUnit';
 
 
 type Props = {
@@ -20,6 +21,8 @@ const CourseDetailsSheet = ({course, open, onClose, onSelectLayout}: Props) => {
         onSelectLayout(layout, course);
     };
 
+    const distanceString = useDistanceUnit(course.distance.meters);
+
     return (
         <Sheet open={open} onClose={onClose}>
             <Headline style={styles.courseName}>{course.name}</Headline>
@@ -29,7 +32,7 @@ const CourseDetailsSheet = ({course, open, onClose, onSelectLayout}: Props) => {
             </View>
             <View style={styles.row}>
                 <Icon name="map-marker-distance" size={18} color="#707070" />
-                <Text>{course.distance.string} away</Text>
+                <Text>{distanceString} away</Text>
             </View>
             <ScrollView>
                 <Spacer />
