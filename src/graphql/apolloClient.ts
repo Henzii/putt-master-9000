@@ -7,7 +7,7 @@ import { getMainDefinition } from "@apollo/client/utilities";
 
 const PRODUCTION_URI = "https://fudisc-server.henzi.fi";
 const PREVIEW_URI = "https://fudisc-server.henzi.fi";
-const DEVELOPMENT_URI = "http://172.27.97.249:4000";
+const DEVELOPMENT_URI = "http://192.168.192.126:4000";
 
 export const getAPIUrl = async () => {
   const localMode =

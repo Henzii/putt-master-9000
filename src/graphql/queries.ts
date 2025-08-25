@@ -263,7 +263,7 @@ export const GET_GROUP_MEMBERS = gql`
 export const GET_USER_WITH_THROWS = gql`
   query {
     getMe {
-      name
+      id
       measuredThrows {
         ...MeasuredThrow
       }

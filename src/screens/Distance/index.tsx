@@ -28,7 +28,7 @@ const Distance: FC = () => {
   const dispatch = useDispatch();
 
   const handleAddMeasuredThrow = (
-    measuredThrow: Omit<MeasuredThrow, "createdAt">
+    measuredThrow: Omit<MeasuredThrow, "createdAt" | "id">
   ) => {
     try {
       addMeasuredThrow({ variables: { measuredThrow } });
