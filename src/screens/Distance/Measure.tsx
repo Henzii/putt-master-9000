@@ -7,9 +7,13 @@ import { View } from "react-native";
 import Stack from "@components/Stack";
 import Spacer from "@components/ThemedComponents/Spacer";
 import { getDistanceFromLatLonInMeters } from "src/utils/distance";
-import { Point as PointType } from "./types";
+import { Point as PointType, MeasuredThrow } from "src/types/throws";
 
-const Measure: FC = () => {
+type Props = {
+  onAddMeasuredThrow: (measuredThrow: Omit<MeasuredThrow, "createdAt">) => void;
+};
+
+const Measure: FC<Props> = ({ onAddMeasuredThrow }) => {
   const gps = useGPS();
   const [fromLocation, setFromLocation] = useState<PointType>();
   const [toLocation, setToLocation] = useState<PointType>();
@@ -18,24 +22,40 @@ const Measure: FC = () => {
     const { lat, lon, acc } = gps;
     if (!lat || !lon || !acc) return;
 
-    setter((val) => (val ? undefined : { lat, lon, acc }));
+    setter((val) => (val ? undefined : { acc, coordinates: [lat, lon] }));
   };
 
   const handleAddMeasurement = () => {
     setToLocation(undefined);
     setFromLocation(undefined);
+
+    if (fromLocation && toLocation) {
+      onAddMeasuredThrow({
+        startingPoint: fromLocation,
+        landingPoint: toLocation,
+      });
+    }
   };
 
   if (gps.error) {
     return <ErrorScreen errorMessage={"No GPS"} />;
   }
 
-  const distance = getDistanceFromLatLonInMeters({
-    lat1: fromLocation?.lat ?? gps.lat ?? 0,
-    lon1: fromLocation?.lon ?? gps.lon ?? 0,
-    lat2: toLocation?.lat ?? gps.lat ?? 0,
-    lon2: toLocation?.lon ?? gps.lon ?? 0,
-  });
+  const [fromLat, fromLon] = fromLocation?.coordinates ?? [
+    gps.lat ?? 0,
+    gps.lon ?? 0,
+  ];
+  const [toLat, toLon] = toLocation?.coordinates ?? [
+    gps.lat ?? 0,
+    gps.lon ?? 0,
+  ];
+
+  const distance = getDistanceFromLatLonInMeters([
+    fromLat,
+    fromLon,
+    toLat,
+    toLon,
+  ]);
 
   return (
     <View style={{ flex: 1, padding: 14 }}>
@@ -78,7 +98,7 @@ const Measure: FC = () => {
         <Spacer />
         <Button
           mode="contained"
-          disabled={distance < 10}
+          disabled={distance < 10 || !fromLocation || !toLocation}
           onPress={handleAddMeasurement}
         >
           Add to List
@@ -93,12 +113,14 @@ const Point: FC<{
   gps: ReturnType<typeof useGPS>;
   title: string;
 }> = ({ point, gps, title }) => {
+  const [lat, lon] = point?.coordinates ?? [gps.lat ?? 0, gps.lon ?? 0];
+
   return (
     <Stack>
       <Text variant="titleMedium">{title}</Text>
-      <Text>Lat: {point?.lat ?? gps.lat}</Text>
-      <Text>Lon: {point?.lon ?? gps.lon}</Text>
-      <Text>Acc: {gps.acc ?? "-"}</Text>
+      <Text>Lat: {lat}</Text>
+      <Text>Lon: {lon}</Text>
+      <Text>Acc: {point?.acc ?? gps.acc ?? "-"}</Text>
     </Stack>
   );
 };
