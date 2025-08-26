@@ -1,6 +1,6 @@
 import ErrorScreen from "@components/ErrorScreen";
 import useGPS from "@hooks/useGPS";
-import React, { useState } from "react";
+import React from "react";
 import { FC } from "react";
 import { Text, Button } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
@@ -9,6 +9,7 @@ import Spacer from "@components/ThemedComponents/Spacer";
 import { getDistanceFromLatLonInMeters } from "src/utils/distance";
 import { Point as PointType, MeasuredThrow } from "src/types/throws";
 import { useDistanceUnit } from "@hooks/useDistanceUnit";
+import { useMeasurementsStore } from "src/zustand/measurementsStore";
 
 type Props = {
   onAddMeasuredThrow: (
@@ -18,15 +19,25 @@ type Props = {
 
 const Measure: FC<Props> = ({ onAddMeasuredThrow }) => {
   const gps = useGPS();
-  const [fromLocation, setFromLocation] = useState<PointType>();
-  const [toLocation, setToLocation] = useState<PointType>();
+  const [fromLocation, toLocation, setFromLocation, setToLocation] =
+    useMeasurementsStore((state) => [
+      state.startingPoint,
+      state.landingPoint,
+      state.setStartingPoint,
+      state.setLandingPoint,
+    ]);
 
-  const handleSetLocation = (setter: typeof setFromLocation) => () => {
-    const { lat, lon, acc } = gps;
-    if (!lat || !lon || !acc) return;
+  const handleSetLocation =
+    (setter: typeof setFromLocation, clear: boolean) => () => {
+      const { lat, lon, acc } = gps;
+      if (!lat || !lon || !acc) return;
 
-    setter((val) => (val ? undefined : { acc, coordinates: [lat, lon] }));
-  };
+      if (clear) {
+        setter(undefined);
+      } else {
+        setter({ acc, coordinates: [lat, lon] });
+      }
+    };
 
   const handleAddMeasurement = () => {
     setToLocation(undefined);
@@ -73,8 +84,7 @@ const Measure: FC<Props> = ({ onAddMeasuredThrow }) => {
         >
           <Point point={fromLocation} gps={gps} title="Starting point" />
           <Button
-            style={{ flex: 0.2 }}
-            onPress={handleSetLocation(setFromLocation)}
+            onPress={handleSetLocation(setFromLocation, !!fromLocation)}
             mode={fromLocation ? "outlined" : "contained"}
             icon={fromLocation ? "lock" : "lock-open"}
           >
@@ -91,8 +101,7 @@ const Measure: FC<Props> = ({ onAddMeasuredThrow }) => {
           <Button
             mode={toLocation ? "outlined" : "contained"}
             icon={toLocation ? "lock" : "lock-open"}
-            style={{ flex: 0.2 }}
-            onPress={handleSetLocation(setToLocation)}
+            onPress={handleSetLocation(setToLocation, Boolean(toLocation))}
           >
             {toLocation ? "Unlock" : "Lock"}
           </Button>
@@ -128,7 +137,7 @@ const Point: FC<{
     acc > 7 ? styles.red : acc > 3 ? styles.orange : styles.green;
 
   return (
-    <Stack>
+    <Stack style={{ flex: 0 }}>
       <Text variant="titleMedium">{title}</Text>
       <Text>Lat: {lat}</Text>
       <Text>Lon: {lon}</Text>
