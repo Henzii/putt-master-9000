@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import * as ExpoLocation from "expo-location";
 import { useDispatch } from "react-redux";
 import { addNotification } from "../reducers/notificationReducer";
@@ -9,17 +9,21 @@ const useGPS = (): GPShookReturn => {
     useState<ExpoLocation.LocationObjectCoords | null>(null);
   const [lastKnownLocation, setLastKnownLocation] =
     useState<ExpoLocation.LocationObjectCoords | null>(null);
-  let GPSSubscription: ExpoLocation.LocationSubscription;
+
+  const GPSSubscription = useRef<ExpoLocation.LocationSubscription | null>(
+    null
+  );
 
   const [error, setError] = useState<string | undefined>();
   const dispatch = useDispatch();
 
   useEffect(() => {
     const watchLocation = async () => {
-      GPSSubscription = await ExpoLocation.watchPositionAsync(
+      GPSSubscription.current = await ExpoLocation.watchPositionAsync(
         {
           accuracy: ExpoLocation.Accuracy.High,
-          timeInterval: 1000,
+          timeInterval: 500,
+          distanceInterval: 1,
         },
         (loc) => {
           setCurrentLocation(loc.coords);
@@ -54,7 +58,7 @@ const useGPS = (): GPShookReturn => {
     getLocation();
 
     return () => {
-      GPSSubscription?.remove();
+      GPSSubscription.current?.remove();
     };
   }, []);
 
