@@ -13,6 +13,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ErrorBoundary from 'react-native-error-boundary';
 import BSOD from './src/components/BSOD';
 
+import './src/localization/i18n';
+
 import * as SplashScreen from 'expo-splash-screen';
 import ThemeProvider from 'src/context/ThemeProvider';
 SplashScreen.preventAutoHideAsync();
