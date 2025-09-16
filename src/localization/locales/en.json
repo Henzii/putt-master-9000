@@ -5,8 +5,12 @@
         "noImageTitle": "No Tee Sign Image",
         "noImageText": "Take a photo of the tee sign to add it here" ,
         "takePhoto": "Take Photo",
-        "uploadFromGallery": "Upload from Gallery"
+        "uploadFromGallery": "Upload from Gallery",
+        "imageUploadedSuccess": "Image uploaded successfully"
       }
     }
+  },
+  "errors:": {
+    "noCameraPermission": "Camera permission is required to take photos."
   }
 }

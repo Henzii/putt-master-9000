@@ -162,3 +162,17 @@ export const ADD_MEASURED_THROW = gql`
   }
   ${MEASURED_THROW}
 `;
+
+export const GET_UPLOAD_SIGNATURE = gql`
+  mutation GetUploadSignature($layoutId: ID!, $holeNumber: Int!) {
+    getTeeSignUploadSignature(layoutId: $layoutId, holeNumber: $holeNumber) {
+      signature
+      apiKey
+      publicId
+      timestamp
+      overwrite
+      cloudName
+      folder
+    }
+  }
+`;
