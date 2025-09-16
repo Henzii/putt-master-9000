@@ -20,6 +20,12 @@ export type Coordinates = {
     lon: number
 }
 
+type TeeSign = {
+    index: number
+    publicId: string,
+    uploadedAt: string,
+}
+
 export type Layout = {
     name: string,
     names?: (string | null)[]
@@ -29,6 +35,7 @@ export type Layout = {
     id: string | number,
     canEdit?: boolean,
     deprecated: boolean
+    teeSigns: TeeSign[]
 }
 
 export type GetCoursesResponse = {
