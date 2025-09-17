@@ -1,6 +1,5 @@
 import { useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { GET_UPLOAD_SIGNATURE } from "src/graphql/mutation";
 import { GET_GAME, GET_LAYOUT } from "src/graphql/queries";
@@ -30,7 +29,6 @@ export const useHoleMapUpload = () => {
     const [getUploadSignature] = useMutation<UploadSignatureResponse>(GET_UPLOAD_SIGNATURE);
     const client = useApolloClient();
     const dispatch = useDispatch();
-    const {t} = useTranslation();
 
     const game = data?.getGame;
 

@@ -1,4 +1,5 @@
 import type { GPShookReturn } from "./gps";
+import { SafeUser } from "./user";
 
 export type Course = {
     name: string,
@@ -24,6 +25,7 @@ export type TeeSign = {
     index: number
     publicId: string,
     uploadedAt: string,
+    uploadedBy: {id: string, name: string};
 }
 
 export type Layout = {

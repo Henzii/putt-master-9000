@@ -20,6 +20,10 @@ export const GET_LAYOUT = gql`
         index
         publicId
         uploadedAt
+        uploadedBy {
+          id
+          name
+        }
       }
     }
   }

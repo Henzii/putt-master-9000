@@ -15,7 +15,7 @@ const NoImage: FC<Props> = ({onImageUpload}) => {
     const { t } = useTranslation();
 
     return (
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1, marginTop: 60 }}>
             <View style={styles.textContainer}>
                 <Text variant="headlineSmall">
                     {t("screens.game.holeMap.noImageTitle")}

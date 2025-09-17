@@ -27,6 +27,7 @@ type UserLoggedIn = {
     name: string,
     isLoggedIn: true
     groupName?: string
+    accountType: string
 }
 
 type UserLoggedOut = {

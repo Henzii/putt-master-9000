@@ -7,7 +7,9 @@
         "takePhoto": "Take Photo",
         "uploadFromGallery": "Upload from Gallery",
         "imageUploading": "Uploading image...",
-        "failedToLoad": "Failed to load image."
+        "imageLoading": "Loading image...",
+        "failedToLoad": "Failed to load image.",
+        "uploadedBy": "Uploaded by"
       }
     }
   },

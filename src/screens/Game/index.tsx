@@ -25,7 +25,7 @@ import { useGameStore } from 'src/zustand/gameStore';
 
 const NAV_ROUTES = [
     { key: 'gameRoute', title: 'Scorecard', focusedIcon: 'card-account-details', unfocusedIcon: 'card-account-details-outline' },
-    { key: 'mapRoute', title: 'Hole map', focusedIcon: 'map', unfocusedIcon: 'map-outline' },
+    { key: 'mapRoute', title: 'Tee sign', focusedIcon: 'sign-text', unfocusedIcon: 'sign-text' },
     { key: 'summaryRoute', title: 'Summary', focusedIcon: 'view-list', unfocusedIcon: 'view-list-outline' },
     { key: 'throwStyleRoute', title: 'Throw Style', focusedIcon: 'dice-3', unfocusedIcon: 'dice-3-outline' },
     { key: 'beerRoute', title: 'Beers', focusedIcon: 'beer', unfocusedIcon: 'beer-outline' },

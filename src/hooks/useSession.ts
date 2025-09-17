@@ -7,6 +7,7 @@ import { useLazyQuery } from "@apollo/client";
 import { GET_ME } from "../graphql/queries";
 import { setUser } from "../reducers/userReducer";
 import { GetMe } from "../types/queries";
+import { AccountType } from "src/types/user";
 
 export enum SESSION_STATE {
     IDLE = 'idle',
@@ -21,6 +22,7 @@ type Session = {
     email?: string
     isLoggedIn: boolean
     state: SESSION_STATE
+    isAdmin: boolean,
     clear: () => void
 }
 
@@ -55,11 +57,11 @@ export const useSession = (): Session => {
         const getAndSetUser = async () => {
             try {
                 const user = await getMe();
-                const {id, name, groupName} = user?.data?.getMe ?? {};
+                const {id, name, groupName, accountType = 'pleb'} = user?.data?.getMe ?? {};
                 if (!id || !name) {
                     throw new Error();
                 } else {
-                    dispatch(setUser({id, name, groupName, isLoggedIn: true}));
+                    dispatch(setUser({id, name, groupName, isLoggedIn: true, accountType}));
                     setSessionState(SESSION_STATE.FINISHED);
                 }
             } catch {
@@ -85,6 +87,7 @@ export const useSession = (): Session => {
     const hookReturn = useMemo(() => ({
         id: user.isLoggedIn ? user.id.toString() : null,
         name: user.isLoggedIn ? user.name : '',
+        isAdmin: user.isLoggedIn ? [AccountType.ADMIN, AccountType.GOD].includes(user.accountType as AccountType) : false,
         isLoggedIn: user.isLoggedIn,
         state: sessionState,
         clear
