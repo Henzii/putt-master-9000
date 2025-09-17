@@ -7,7 +7,7 @@ import { useLazyQuery } from "@apollo/client";
 import { GET_ME } from "../graphql/queries";
 import { setUser } from "../reducers/userReducer";
 import { GetMe } from "../types/queries";
-import { AccountType } from "src/types/user";
+import { AccountType } from "../types/user";
 
 export enum SESSION_STATE {
     IDLE = 'idle',

@@ -48,4 +48,4 @@ export type GetCoursesResponse = {
     }
 }
 
-export type NewLayout = Pick<Partial<Layout>, "id"> & Omit<Layout, "par" | "id">
+export type NewLayout = Pick<Partial<Layout>, "id"> & Omit<Layout, "par" | "id" | "teeSigns">
