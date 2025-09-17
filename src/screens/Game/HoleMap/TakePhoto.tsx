@@ -2,13 +2,15 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'react-native-paper';
 import * as ExpoImagePicker from 'expo-image-picker';
-import { useHoleMapUpload } from '@hooks/useHoleMapUpload';
 import { useDispatch } from 'react-redux';
 import { addNotification } from 'src/reducers/notificationReducer';
 
-const TakePhoto: React.FC = () => {
+type Props = {
+    onImageUpload: (imageUri: string) => void
+}
+
+const TakePhoto: React.FC<Props> = ({onImageUpload}) => {
     const {t} = useTranslation();
-    const uploadImage = useHoleMapUpload();
     const dispatch = useDispatch();
 
     const handleTakePhoto = async () => {
@@ -29,7 +31,7 @@ const TakePhoto: React.FC = () => {
             return;
         }
 
-        uploadImage(imageUri);
+        onImageUpload(imageUri);
     };
     return (
         <Button mode="contained" onPress={handleTakePhoto}>

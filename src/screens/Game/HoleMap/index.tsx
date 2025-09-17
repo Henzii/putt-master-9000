@@ -1,15 +1,17 @@
 import React from 'react';
 import type { FC } from "react";
-import { View, Text} from "react-native";
+import { View } from "react-native";
 import { useGameStore } from 'src/zustand/gameStore';
 import HoleSelector from '@components/HoleSelector';
 import useGame from '@hooks/useGame';
 import NoImage from './NoImage';
 import TeeSignImage from './TeeSignImage';
+import { useHoleMapUpload } from '@hooks/useHoleMapUpload';
 
 const HoleMap: FC = () => {
   const gameId = useGameStore(state => state.gameId);
   const { layout } = useGame(gameId ?? '');
+  const uploadImage = useHoleMapUpload();
   const [selectedRound, setSelectedRound] = useGameStore(state => [state.selectedRound, state.setSelectedRound]);
 
   if (!layout) {
@@ -24,7 +26,7 @@ const HoleMap: FC = () => {
       {publicId ? (
         <TeeSignImage publidId={publicId} />
       ) : (
-        <NoImage />
+        <NoImage onImageUpload={uploadImage} />
       )}
     </View>
   );

@@ -1,24 +1,21 @@
 import React from 'react';
 import Spacer from "@components/ThemedComponents/Spacer";
 import { FC } from "react";
-import { Button, Text } from "react-native-paper";
-import { View, Image, StyleSheet, Dimensions } from 'react-native';
+import { Text } from "react-native-paper";
+import { View, Image, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import TakePhoto from "./TakePhoto";
 import { useTranslation } from 'react-i18next';
+import FromGallery from './FromGallery';
 
-const NoImage: FC = () => {
+type Props = {
+    onImageUpload: (uri: string) => void
+}
+
+const NoImage: FC<Props> = ({onImageUpload}) => {
     const { t } = useTranslation();
-    /*
-        const handlePickImage = async () => {
-            const result = await ExpoImagePicker.launchImageLibraryAsync({
-                mediaTypes: ['images', 'livePhotos'],
-                allowsEditing: true,
-                quality: 1,
-            });
-        };
-    */
+
     return (
-        <View style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 }}>
             <View style={styles.textContainer}>
                 <Text variant="headlineSmall">
                     {t("screens.game.holeMap.noImageTitle")}
@@ -33,12 +30,10 @@ const NoImage: FC = () => {
             />
             <Spacer size={30} />
             <View style={styles.buttons}>
-                <TakePhoto />
-                <Button mode="contained-tonal" onPress={() => null}>
-                    {t("screens.game.holeMap.uploadFromGallery")}
-                </Button>
+                <TakePhoto onImageUpload={onImageUpload} />
+                <FromGallery onImageUpload={onImageUpload} />
             </View>
-        </View>
+        </ScrollView>
     );
 };
 

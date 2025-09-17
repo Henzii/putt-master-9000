@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.8",
+    "@openspacelabs/react-native-zoomable-view": "^2.4.2",
     "@react-native-async-storage/async-storage": "2.1.2",
     "apollo-link-context": "^1.0.20",
     "color": "^5.0.0",
