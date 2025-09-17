@@ -13,7 +13,7 @@
       }
     }
   },
-  "errors:": {
+  "errors": {
     "noCameraPermission": "Camera permission is required to take photos."
   }
 }

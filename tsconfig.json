@@ -10,6 +10,9 @@
       "@hooks/*": [
         "src/hooks/*"
       ],
+      "src/*": [
+        "src/*"
+      ]
     },
     "baseUrl": "./",
     "allowSyntheticDefaultImports": true,

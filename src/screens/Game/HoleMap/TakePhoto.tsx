@@ -22,7 +22,7 @@ const TakePhoto: React.FC<Props> = ({onImageUpload, iconOnly}) => {
         }
 
         const result = await ExpoImagePicker.launchCameraAsync({
-            mediaTypes: ['images', 'livePhotos'],
+            mediaTypes: ['images'],
             allowsEditing: true,
             quality: 1,
         });

@@ -1,5 +1,5 @@
 import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
-import React, { useState, type FC } from "react";
+import React, { useEffect, useState, type FC } from "react";
 import { Image, StyleSheet, View } from "react-native";
 import TakePhoto from "./TakePhoto";
 import FromGallery from "./FromGallery";
@@ -23,6 +23,10 @@ const TeeSignImage: FC<Props> = ({ teeSign, onImageUpload }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = React.useState(false);
     const { t } = useTranslation();
+
+    useEffect(() => {
+        setIsError(false);
+    }, [publicId, uploadedAt]);
 
     const imageUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/fudisc-tee-signs/${publicId}?t=${uploadedAt}`;
 
