@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Paragraph, Title } from 'react-native-paper';
+import { Button, Paragraph, Title, Text } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import Container from './ThemedComponents/Container';
@@ -13,9 +13,9 @@ const ErrorScreen = ({errorMessage, children, showBackToFrontpage = true}: Props
     const navi = useNavigate();
     return (
         <Container fullWidth>
-            <Paragraph style={{ textAlign: 'center', fontSize: 30, padding: 30, fontWeight: 'bold' }}>
+            <Text variant="headlineMedium" style={styles.shrug}>
             ¯\_(ツ)_/¯
-            </Paragraph>
+            </Text>
             <Title testID='ErrorTitle'>Error</Title>
             <Paragraph>
                 {errorMessage}
@@ -33,6 +33,9 @@ const ErrorScreen = ({errorMessage, children, showBackToFrontpage = true}: Props
 const styles = StyleSheet.create({
     button: {
         marginTop: 20
+    },
+    shrug: {
+        textAlign: 'center',
     }
 });
 

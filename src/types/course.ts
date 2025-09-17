@@ -20,7 +20,7 @@ export type Coordinates = {
     lon: number
 }
 
-type TeeSign = {
+export type TeeSign = {
     index: number
     publicId: string,
     uploadedAt: string,

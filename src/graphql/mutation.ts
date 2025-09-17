@@ -173,6 +173,7 @@ export const GET_UPLOAD_SIGNATURE = gql`
       overwrite
       cloudName
       folder
+      invalidate
     }
   }
 `;

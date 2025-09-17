@@ -1,15 +1,16 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'react-native-paper';
+import { Button, IconButton } from 'react-native-paper';
 import * as ExpoImagePicker from 'expo-image-picker';
 import { useDispatch } from 'react-redux';
 import { addNotification } from 'src/reducers/notificationReducer';
 
 type Props = {
     onImageUpload: (imageUri: string) => void
+    iconOnly?: boolean
 }
 
-const TakePhoto: React.FC<Props> = ({onImageUpload}) => {
+const TakePhoto: React.FC<Props> = ({onImageUpload, iconOnly}) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
 
@@ -33,6 +34,13 @@ const TakePhoto: React.FC<Props> = ({onImageUpload}) => {
 
         onImageUpload(imageUri);
     };
+
+    if (iconOnly) {
+        return (
+            <IconButton icon="camera" mode="contained" onPress={handleTakePhoto} />
+        );
+    }
+
     return (
         <Button mode="contained" onPress={handleTakePhoto}>
             {t("screens.game.holeMap.takePhoto")}
