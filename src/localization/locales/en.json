@@ -1,0 +1,19 @@
+{
+  "screens": {
+    "game": {
+      "holeMap": {
+        "noImageTitle": "No Tee Sign Image",
+        "noImageText": "Take a photo of the tee sign to add it here" ,
+        "takePhoto": "Take Photo",
+        "uploadFromGallery": "Upload from Gallery",
+        "imageUploading": "Uploading image...",
+        "imageLoading": "Loading image...",
+        "failedToLoad": "Failed to load image.",
+        "uploadedBy": "Uploaded by"
+      }
+    }
+  },
+  "errors": {
+    "noCameraPermission": "Camera permission is required to take photos."
+  }
+}

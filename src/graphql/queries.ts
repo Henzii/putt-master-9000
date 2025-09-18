@@ -16,6 +16,15 @@ export const GET_LAYOUT = gql`
       names
       holes
       canEdit
+      teeSigns {
+        index
+        publicId
+        uploadedAt
+        uploadedBy {
+          id
+          name
+        }
+      }
     }
   }
 `;

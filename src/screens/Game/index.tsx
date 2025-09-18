@@ -20,9 +20,12 @@ import { updateGame } from '../../utils/gameCahcheUpdates';
 import { useSubscription } from '../../hooks/useSubscription';
 import useMe from '../../hooks/useMe';
 import ThrowStyle from './ThrowStyle';
+import HoleMap from './HoleMap';
+import { useGameStore } from 'src/zustand/gameStore';
 
 const NAV_ROUTES = [
     { key: 'gameRoute', title: 'Scorecard', focusedIcon: 'card-account-details', unfocusedIcon: 'card-account-details-outline' },
+    { key: 'mapRoute', title: 'Tee sign', focusedIcon: 'sign-text', unfocusedIcon: 'sign-text' },
     { key: 'summaryRoute', title: 'Summary', focusedIcon: 'view-list', unfocusedIcon: 'view-list-outline' },
     { key: 'throwStyleRoute', title: 'Throw Style', focusedIcon: 'dice-3', unfocusedIcon: 'dice-3-outline' },
     { key: 'beerRoute', title: 'Beers', focusedIcon: 'beer', unfocusedIcon: 'beer-outline' },
@@ -34,6 +37,8 @@ export default function GameContainer() {
         HOOKS
     */
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
+    const setGameId = useGameStore(state => state.setGameId);
+
     const { gameId } = gameData ?? {};
     const { me } = useMe();
     const [createGameMutation, { loading }] = useMutation(CREATE_GAME, { refetchQueries: [{ query: GET_OLD_GAMES }] });
@@ -70,6 +75,9 @@ export default function GameContainer() {
         if (route.key === 'throwStyleRoute' && !settings.getBoolValue('RandomThrowStyle')) {
             return false;
         }
+        if (route.key === 'mapRoute' && settings.getBoolValue('HideTeeSign')) {
+            return false;
+        }
 
         return true;
     }), [settings]);
@@ -77,9 +85,16 @@ export default function GameContainer() {
     useEffect(() => {
         if (location.search === '?force' && gameData?.gameId) {
             dispatch(unloadGame());
-        } else if (params?.gameId && (params?.gameId !== gameData?.gameId)) {
-            dispatch(newGame(params.gameId));
+        } else if (params?.gameId) {
+            if (params?.gameId !== gameData?.gameId) {
+                dispatch(newGame(params.gameId));
+            }
+            setGameId(params.gameId);
         }
+
+        return () => {
+            setGameId(undefined);
+        };
     }, []);
 
     useEffect(() => {
@@ -119,6 +134,7 @@ export default function GameContainer() {
                 }
             });
             dispatch(newGame(newGameId));
+            setGameId(newGameId);
             dispatch(addNotification('New game created!', 'success'));
             setNavIndex(0);
         } catch {
@@ -133,6 +149,7 @@ export default function GameContainer() {
     // Alanaville:
     const naviScenes = BottomNavigation.SceneMap({
         gameRoute: Game,
+        mapRoute: HoleMap,
         setupRoute: Setup,
         beerRoute: Beers,
         summaryRoute: Summary,

@@ -1,4 +1,5 @@
 import type { GPShookReturn } from "./gps";
+import { SafeUser } from "./user";
 
 export type Course = {
     name: string,
@@ -20,6 +21,13 @@ export type Coordinates = {
     lon: number
 }
 
+export type TeeSign = {
+    index: number
+    publicId: string,
+    uploadedAt: string,
+    uploadedBy: {id: string, name: string};
+}
+
 export type Layout = {
     name: string,
     names?: (string | null)[]
@@ -29,6 +37,7 @@ export type Layout = {
     id: string | number,
     canEdit?: boolean,
     deprecated: boolean
+    teeSigns: TeeSign[]
 }
 
 export type GetCoursesResponse = {
@@ -39,4 +48,4 @@ export type GetCoursesResponse = {
     }
 }
 
-export type NewLayout = Pick<Partial<Layout>, "id"> & Omit<Layout, "par" | "id">
+export type NewLayout = Pick<Partial<Layout>, "id"> & Omit<Layout, "par" | "id" | "teeSigns">
