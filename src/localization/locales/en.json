@@ -3,7 +3,7 @@
     "game": {
       "holeMap": {
         "noImageTitle": "No Tee Sign Image",
-        "noImageText": "Take a photo of the tee sign to add it here" ,
+        "noImageText": "Take a photo of the tee sign to add it here",
         "takePhoto": "Take Photo",
         "uploadFromGallery": "Upload from Gallery",
         "imageUploading": "Uploading image...",

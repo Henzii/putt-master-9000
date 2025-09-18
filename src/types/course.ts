@@ -1,5 +1,4 @@
 import type { GPShookReturn } from "./gps";
-import { SafeUser } from "./user";
 
 export type Course = {
     name: string,
