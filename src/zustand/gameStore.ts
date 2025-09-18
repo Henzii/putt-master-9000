@@ -6,16 +6,22 @@ type GameStore = {
     gameId: string | undefined
     setSelectedRound: (round: number) => void
     setGameId: (gameId: string | undefined) => void
+    clear: () => void
 }
 
-export const useGameStore = createWithEqualityFn<GameStore>()((set) => ({
+const defaultValues = {
     selectedRound: 0,
-    gameId: undefined,
+    gameId: undefined
+};
+
+export const useGameStore = createWithEqualityFn<GameStore>()((set) => ({
+    ...defaultValues,
     setSelectedRound: (round: number) => set({
         selectedRound: round
     }),
     setGameId: (gameId: string | undefined) => set({
         gameId: gameId
-    })
+    }),
+    clear: () => set({...defaultValues})
 
 }), shallow);
