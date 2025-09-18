@@ -16,6 +16,7 @@ export default function LocalSettings() {
             <SingleSwitch text="Hide +/- from scorecards" onPress={settings.toggle} value={settings.getValue('HidePlusMinus')} name="HidePlusMinus" />
             <SingleSwitch text="Prohibition" onPress={settings.toggle} value={settings.getValue('Prohibition')} name="Prohibition" />
             <SingleSwitch text="Random throw styles" onPress={settings.toggle} value={settings.getValue('RandomThrowStyle')} name="RandomThrowStyle" noBorder />
+            <SingleSwitch text="Hide tee sign tab" onPress={settings.toggle} value={settings.getValue('HideTeeSign')} name="HideTeeSign" noBorder testID="hideTeeSignSwitch" />
         </>
     );
 }

@@ -75,6 +75,9 @@ export default function GameContainer() {
         if (route.key === 'throwStyleRoute' && !settings.getBoolValue('RandomThrowStyle')) {
             return false;
         }
+        if (route.key === 'mapRoute' && settings.getBoolValue('HideTeeSign')) {
+            return false;
+        }
 
         return true;
     }), [settings]);

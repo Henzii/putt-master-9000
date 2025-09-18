@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export type SettingName = 'SortHC' | 'SortBox' | 'Prohibition' | 'AutoAdvance' | 'HideStatsBars' | 'HidePlusMinus' | 'RandomThrowStyle' | 'ImperialUnits'
+export type SettingName = 'SortHC' | 'SortBox' | 'Prohibition' | 'AutoAdvance' | 'HideStatsBars' | 'HidePlusMinus' | 'RandomThrowStyle' | 'ImperialUnits' | 'HideTeeSign';
 
 /**
  *
