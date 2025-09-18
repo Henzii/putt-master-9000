@@ -32,12 +32,15 @@ const NAV_ROUTES = [
     { key: 'setupRoute', title: 'Setup', focusedIcon: 'cog', unfocusedIcon: 'cog-outline' },
 ];
 
+const findIndexOfRoute = (key: string, routes: typeof NAV_ROUTES): number =>
+    routes.findIndex(route => route.key === key);
+
 export default function GameContainer() {
     /*
         HOOKS
     */
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
-    const setGameId = useGameStore(state => state.setGameId);
+    const [setGameId, clearGameStore] = useGameStore(state => [state.setGameId, state.clear]);
 
     const { gameId } = gameData ?? {};
     const { me } = useMe();
@@ -65,9 +68,7 @@ export default function GameContainer() {
         },
         { query: GAME_SUBSCRIPTION, variables: { gameId: gameId }, dependency: gameId }
     );
-    const [navIndex, setNavIndex] = useState(gameData?.gameOpen === false ? 1 : 0);
     const settings = useSettings();
-
     const navRoutes = useMemo(() => NAV_ROUTES.filter(route => {
         if (route.key === 'beerRoute' && settings.getBoolValue('Prohibition')) {
             return false;
@@ -82,6 +83,9 @@ export default function GameContainer() {
         return true;
     }), [settings]);
 
+    const [navIndex, setNavIndex] = useState(findIndexOfRoute(gameData?.gameOpen ? 'gameRoute' : 'summaryRoute', navRoutes));
+
+
     useEffect(() => {
         if (location.search === '?force' && gameData?.gameId) {
             dispatch(unloadGame());
@@ -93,7 +97,7 @@ export default function GameContainer() {
         }
 
         return () => {
-            setGameId(undefined);
+            clearGameStore();
         };
     }, []);
 

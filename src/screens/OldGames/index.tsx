@@ -14,6 +14,7 @@ import { RootState } from '../../utils/store';
 import SplitContainer from '../../components/ThemedComponents/SplitContainer';
 import Header from '../../components/RoundedHeader/Header';
 import Spacer from '../../components/ThemedComponents/Spacer';
+import { useGameStore } from 'src/zustand/gameStore';
 type GamesQueryResponse = {
     games: Game[],
     hasMore: boolean,
@@ -25,6 +26,7 @@ const GAMES_LIMIT = 20;
 
 const OldGames = () => {
     const [showSearchBar, setShowSearchBar] = useState(false);
+    const setGameId = useGameStore(state => state.setGameId);
     const [filterText, setFilterText] = useState('');
     const user = useSelector((state: RootState) => state.user.isLoggedIn ? state.user : undefined);
     const [showOnlyGroupGames, setShowOnlyGroupGames] = useState(false);
@@ -53,6 +55,7 @@ const OldGames = () => {
     const games = data?.getGames?.games;
 
     const handleGameActivation = (gameId: string, gameOpen?: boolean) => {
+        setGameId(gameId);
         dispatch(newGame(gameId, gameOpen));
         navi('/game');
     };

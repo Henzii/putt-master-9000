@@ -1,1 +1,19 @@
-{}
+{
+  "screens": {
+    "game": {
+      "holeMap": {
+        "noImageTitle": "Ei väyläkylttiä",
+        "noImageText": "Ota kuva väyläkyltiltä lisätäksesi sen tähän",
+        "takePhoto": "Ota kuva",
+        "uploadFromGallery": "Lataa galleriasta",
+        "imageUploading": "Kuvaa lähetetään...",
+        "imageLoading": "Kuvaa ladataan...",
+        "failedToLoad": "Kuvan lataus epäonnistui.",
+        "uploadedBy": "Lähettänyt"
+      }
+    }
+  },
+  "errors": {
+    "noCameraPermission": "Kameran käyttöoikeus vaaditaan kuvien ottamiseen."
+  }
+}
