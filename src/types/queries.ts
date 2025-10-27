@@ -1,4 +1,5 @@
 import { Course } from "./course";
+import { Game } from "./game";
 import type { User } from "./user";
 
 export type HandShake = {handShake: {latestVersion: number}}
@@ -13,3 +14,5 @@ export type GetCoursesVariables = {
     maxDistance?: number,
     search?: string
 }
+
+export type GetGames = {getGames: {hasMore: boolean, count: number, games: Game[], nextOffset?: number}}
