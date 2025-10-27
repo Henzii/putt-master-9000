@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { addNotification } from "../reducers/notificationReducer";
 import { GPShookReturn } from "../types/gps";
 
-const useGPS = (): GPShookReturn => {
+const useGPS = (distanceInterval = 1) : GPShookReturn => {
   const [currentLocation, setCurrentLocation] =
     useState<ExpoLocation.LocationObjectCoords | null>(null);
   const [lastKnownLocation, setLastKnownLocation] =
@@ -23,7 +23,7 @@ const useGPS = (): GPShookReturn => {
         {
           accuracy: ExpoLocation.Accuracy.High,
           timeInterval: 500,
-          distanceInterval: 1,
+          distanceInterval: distanceInterval ?? 1
         },
         (loc) => {
           setCurrentLocation(loc.coords);

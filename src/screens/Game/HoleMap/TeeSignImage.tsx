@@ -30,16 +30,19 @@ const TeeSignImage: FC<Props> = ({ teeSign, onImageUpload }) => {
 
     const imageUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/fudisc-tee-signs/${publicId}?t=${uploadedAt}`;
 
-    if (isError) {
-        return <ErrorScreen errorMessage={t('screens.game.holeMap.failedToLoad')} showBackToFrontpage={false} />;
-    }
-
     return (
         <View style={{ flex: 1 }}>
-            {isLoading && (
+            {isLoading && !isError && (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <Loading loadingText={t('screens.game.holeMap.imageLoading')} />
                 </View>
+            )}
+            {isError && (
+                <ErrorScreen
+                    style={{ flex: 1, justifyContent: 'center' }}
+                    errorMessage={t('screens.game.holeMap.failedToLoad')}
+                    showBackToFrontpage={false}
+                />
             )}
 
             <ReactNativeZoomableView

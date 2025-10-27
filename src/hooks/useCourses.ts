@@ -18,7 +18,7 @@ const useCourses = (showDistance = true) => {
         offset: 0,
     });
     const dispatch = useDispatch();
-    const gps = useGPS();
+    const gps = useGPS(500);
     const { data, previousData, loading, error, fetchMore, refetch, variables } = useQuery<GetCoursesResponse>(
         GET_COURSES,
         {

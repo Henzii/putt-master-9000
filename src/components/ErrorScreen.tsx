@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Paragraph, Title, Text } from 'react-native-paper';
-import { StyleSheet } from 'react-native';
+import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import Container from './ThemedComponents/Container';
 
@@ -8,11 +8,12 @@ type Props = {
     errorMessage: string;
     showBackToFrontpage?: boolean;
     children?: React.ReactNode;
+    style?: StyleProp<ViewStyle>
 }
-const ErrorScreen = ({errorMessage, children, showBackToFrontpage = true}: Props) => {
+const ErrorScreen = ({errorMessage, children, style, showBackToFrontpage = true}: Props) => {
     const navi = useNavigate();
     return (
-        <Container fullWidth>
+        <Container fullWidth style={style}>
             <Text variant="headlineMedium" style={styles.shrug}>
             ¯\_(ツ)_/¯
             </Text>
