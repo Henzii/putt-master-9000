@@ -22,7 +22,7 @@ const RandomItem = ({ items, isRunning, style }: Props) => {
         }
     }, [isRunning]);
     return (
-        <Text style={style}>{randomKey ? t(randomKey) : ''}</Text>
+        <Text style={style}>{randomKey ? t(randomKey as any) : ''}</Text>
     );
 };
 

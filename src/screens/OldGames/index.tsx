@@ -84,7 +84,7 @@ const OldGames = () => {
                     <View>
                         <Text variant="headlineSmall" style={styles.header}>{t('screens.oldGames.title')}</Text>
                         <Text style={styles.header}>
-                            {t('screens.oldGames.totalRounds', { count: data?.getGames.count ?? '--' })}
+                            {t('screens.oldGames.totalRounds', { count: data?.getGames.count ?? 0 })}
                         </Text>
                     </View>
                     <IconButton icon="magnify" mode="contained-tonal" containerColor={colors.tertiary} onPress={() => setShowSearchBar(val => !val)} />

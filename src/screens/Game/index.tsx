@@ -31,7 +31,7 @@ const NAV_ROUTES_CONFIG = [
     { key: 'throwStyleRoute', titleKey: 'screens.game.tabs.throwStyle', focusedIcon: 'dice-3', unfocusedIcon: 'dice-3-outline' },
     { key: 'beerRoute', titleKey: 'screens.game.tabs.beers', focusedIcon: 'beer', unfocusedIcon: 'beer-outline' },
     { key: 'setupRoute', titleKey: 'screens.game.tabs.setup', focusedIcon: 'cog', unfocusedIcon: 'cog-outline' },
-];
+] as const;
 
 const findIndexOfRoute = (key: string, routes: any[]): number =>
     routes.findIndex(route => route.key === key);

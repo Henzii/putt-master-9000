@@ -25,6 +25,7 @@
   },
   "screens": {
     "frontpage": {
+      "welcome": "Welcome back!",
       "newGame": "New Game",
       "oldGames": "Old games",
       "courses": "Courses",
@@ -43,8 +44,12 @@
       "clearSession": "Clear session",
       "reloadApp": "Reload the app",
       "signUp": "Sign up!",
-      "playersCount": "Players",
-      "holesCompleted": "Holes",
+      "playersCount": "{{count}} players",
+      "holesCompleted": "{{completed}}/{{total}} holes",
+      "unfinishedGames": "{{count}} unfinished games",
+      "updateAvailable": "Update available",
+      "updateMessage": "A new version of the app is available. Update now to get the latest features and bug fixes.",
+      "updateNow": "Update now",
       "continue": "Continue"
     },
     "main": {
