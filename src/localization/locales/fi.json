@@ -55,8 +55,8 @@
       "newUserIntro": "Näyttää siltä, että olet täällä ensimmäistä kertaa. Ennen kuin voit aloittaa pelaamisen, sinun täytyy luoda tili. Se vie vain hetken!",
       "existingAccountInfo": "Jos sinulla on jo tili, voit siirtyä suoraan kirjautumisnäkymään. Tai jos sinulla on kiire, voit arpoa kaiken ja päästä alkuun heti.",
       "toLoginScreen": "Kirjautumisnäkymään!",
-      "shutUpLetMeIn": "Turpa kiinni ja päästä minut sisään",
-      "createProperAccount": "Haluan luoda kunnollisen tilin",
+      "shutUpLetMeIn": "Turpa kii ja päästä mut sisään",
+      "createProperAccount": "Haluan luoda uuden tilin",
       "usernameTitle": "Käyttäjänimi",
       "usernameHelp": "Valitse uniikki käyttäjänimi. Muut pelaajat voivat löytää sinut tällä nimellä. Käytä tätä nimeä myös kirjautuaksesi verkkosivuille (fudisc.henzi.fi). Nimen voi vaihtaa myöhemmin verkkosivuilla.",
       "usernameAlreadyTaken": "jo käytössä!",
@@ -80,17 +80,17 @@
       "addPlayers": "Lisää pelaajia",
       "gameSettings": "Asetukset",
       "createGame": "Luo peli",
-      "gameOver": "Peli ohi!",
+      "gameOver": "Peli on päättynyt!",
       "startNewGame": "Aloita uusi peli",
       "errorOccurred": "Tapahtui virhe!",
       "notLoggedIn": "Et ole kirjautunut sisään?",
       "groupCompetitionDisabled": "Ryhmäkilpailu pois käytöstä, et kuulu mihinkään ryhmään",
       "isGroupCompetition": "Ryhmäkilpailupeli",
-      "groupCompetitionInfo": "Tämä kytkin merkitsee pelin ryhmäkilpailuksi. Pisteitä jaetaan ryhmään{{groupName}} kuuluville pelaajille.",
+      "groupCompetitionInfo": "Tämä vipu merkitsee pelin ryhmäkilpailuksi. Pisteitä jaetaan ryhmään {{groupName}} kuuluville pelaajille.",
       "groupJoinInfo": "Jos et kuulu mihinkään ryhmään, valitse \"Ryhmät\" päävalikosta liittyäksesi.",
       "bHcMultiplier": "bHC-kerroin",
-      "bHcMultiplierInfo": "Säädä oluttasoitusta tälle pelille. Oluttasoitus on 0,5 heittoa per olut.",
-      "bHcMultiplierCalc": "Uusi oluttasoitus (bHC) lasketaan kertomalla 0,5 valitulla kertoimella, antaen heittoja per olut.",
+      "bHcMultiplierInfo": "Säädä kaljatasoitusta tälle pelille. Kaljatasuri on 0,5 heittoa per olut.",
+      "bHcMultiplierCalc": "Uusi kaljatasuri (bHC) lasketaan kertomalla 0,5 valitulla kertoimella, antaen heittoja per bisse.",
       "tableHeaderName": "Nimi",
       "tableHeaderGames": "Pelit",
       "tableHeaderBest": "Paras",
@@ -125,14 +125,14 @@
         "mainMenu": "Päävalikko",
         "mainMenuMessage": "Poista peli ja palaa päävalikkoon",
         "discardGame": "Hylkää peli",
-        "discardMessage": "Jos peli on ohi, vain tulokorttisi poltetaan helvettiin.",
+        "discardMessage": "Jos peli on päättynyt, vain oma tulokorttisi poltetaan helvetin tulessa.",
         "gameId": "Pelin ID:",
         "noSubscription": "Ei tilausta"
       },
       "beers": {
         "title": "Oluet",
         "whaat": "Mitä?!",
-        "calculator": "Oluelaskin"
+        "calculator": "Kaljalaskin"
       },
       "statsbar": {
         "template": "Paras: {{best}}, Keskiarvo: {{average}}"
@@ -170,7 +170,7 @@
       "noDataAvailable": "Dataa ei saatavilla",
       "activity": {
         "error": "Virhe!",
-        "loadingFailed": "Menneisyyden toiminnan lataus epäonnistui :/",
+        "loadingFailed": "Tilastojen lataus epäonnistui :/",
         "year": "Vuosi {{year}}",
         "last12Months": "Viimeiset 12 kuukautta",
         "totalGames": "Yhteensä {{games}} peliä {{from}} - {{to}}"
@@ -180,14 +180,14 @@
         "best": "Paras",
         "average": "Keskiarvo",
         "eagles": "Kotkat",
-        "birdies": "Linnut",
-        "pars": "Parit",
-        "bogeys": "Bogeyt",
+        "birdies": "Pirkot",
+        "pars": "Paarit",
+        "bogeys": "Boogiet",
         "doubleBogeys": "Kaksois bogey",
         "others": "Muut"
       },
       "bestPoolGame": {
-        "title": "Maailman päälliköt",
+        "title": "Maailman parhaat",
         "info": "Näyttää parhaan pelatun pelin valitulla radalla n:n suuruisella pelaajamäärällä.",
         "poolLabel": "Näytä paras peli pelaajamäärälle: ",
         "noData": "Ei dataa :P",
@@ -229,11 +229,7 @@
       "accountType": "tilityyppi",
       "displayUnitsTitle": "Näyttöyksiköt",
       "metric": "Metrijärjestelmä",
-      "imperial": "Imperiaalijärjestelmä",
-      "languageTitle": "Kieli",
-      "languageAuto": "Automaattinen",
-      "languageEnglish": "English",
-      "languageFinnish": "Suomi"
+      "imperial": "Imperiaalijärjestelmä"
     },
     "feedback": {
       "title": "Jätä palautetta",
@@ -352,7 +348,7 @@
     },
     "addFriend": {
       "title": "Lisää kaveri",
-      "searchHint": "Kuka on isäsi",
+      "searchHint": "Kaverin nimi",
       "nameLabel": "Nimi",
       "usersFound": "{{count}} käyttäjää löytyi",
       "friendBadge": "Kaveri!",
@@ -419,7 +415,7 @@
       "hideTeeSign": "Piilota väyläkyltti-välilehti"
     },
     "alcConverter": {
-      "title": "Oluelaskin",
+      "title": "Kaljalaskin",
       "beer": {
         "long": "Iso (0,5l)",
         "strong": "Vahva (>5.0%)",
@@ -443,9 +439,9 @@
       "backhand": "Rystyheitto",
       "forehand": "Kämmenheitto",
       "wrongHand": "Väärä käsi",
-      "roller": "Rullari",
-      "backhandRoller": "Rystyrullari",
-      "forehandRoller": "Kämmenrullari",
+      "roller": "Rolleri",
+      "backhandRoller": "Rystyrolleri",
+      "forehandRoller": "Kämmenrolleri",
       "tomahawk": "Tomahawk",
       "grenade": "Kranaatti",
       "hyzer": "Hyzer",
@@ -456,8 +452,8 @@
       "putter": "Putteri",
       "midrange": "Midari",
       "driver": "Draiveri",
-      "overstable": "Overstabiili",
-      "understable": "Understabiili",
+      "overstable": "Ylivakaa",
+      "understable": "Alivakaa",
       "yourChoice": "Vapaavalinta"
     }
   },
@@ -466,14 +462,14 @@
       "100Malmis": "100x Niitty",
       "HoleInOne": "Hole in one",
       "winAllHoles": "Supermestari",
-      "0Pars": "Ei pareja",
+      "0Pars": "Ei PAReja",
       "GoldenBox": "Kultainen boksi"
     },
     "descriptions": {
       "100Malmis": "\"Aina vaan malmikseen...\"",
       "HoleInOne": "Hole in one",
-      "winAllHoles": "Ei muuta kuin voittoa",
-      "0Pars": "Nolla paria, yritä kovemmin!",
+      "winAllHoles": "Voittoa voiton perään",
+      "0Pars": "Nolla par:ia, yritä kovemmin!",
       "GoldenBox": "Miksi minun pitää aina heittää ekana?"
     }
   },
