@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, View } from "react-native";
 import { Avatar, Button, Checkbox, IconButton, Text, useTheme } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import AddFriend from './AddFriend';
 import ErrorScreen from './ErrorScreen';
 import Loading from './Loading';
@@ -30,6 +31,7 @@ export type Friend = {
     name: string,
 }
 const FriendsList = (props: FriendListProps) => {
+    const { t } = useTranslation();
     const { friends, loading, error, removeFriend, addFriend } = useFriends();
     const [addFriendModal, setAddFriendModal] = useState(false);
     const [showCreateFriendView, setShowCreateFriendView] = useState(false);
@@ -81,18 +83,18 @@ const FriendsList = (props: FriendListProps) => {
 
             <Header bottomSize={20} setSpacing={setHeaderSpacing}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-                    <Text variant="headlineSmall" style={tyyli.headline}>Friends</Text>
+                    <Text variant="headlineSmall" style={tyyli.headline}>{t('components.friendsList.title')}</Text>
                     {selectedFriends.length > 0 && props.multiSelect && (
-                        <Text style={{ color: 'white' }}>({selectedFriends.length} selected)</Text>)}
+                        <Text style={{ color: 'white' }}>{t('components.friendsList.selectedCount', { count: selectedFriends.length })}</Text>)}
                 </View>
                 <Spacer size={10} />
                 <SplitContainer spaceAround>
-                    <HeaderButton icon="account-plus-outline" onPress={() => setAddFriendModal(true)}>Add friend</HeaderButton>
-                    <HeaderButton icon="baby-face-outline" onPress={() => setShowCreateFriendView(true)}>Create friend</HeaderButton>
+                    <HeaderButton icon="account-plus-outline" onPress={() => setAddFriendModal(true)}>{t('components.friendsList.addFriend')}</HeaderButton>
+                    <HeaderButton icon="baby-face-outline" onPress={() => setShowCreateFriendView(true)}>{t('components.friendsList.createFriend')}</HeaderButton>
                 </SplitContainer>
 
             </Header>
-            {loading ? <Loading loadingText="Loading friends..." /> : (
+            {loading ? <Loading loadingText={t('components.friendsList.loadingFriends')} /> : (
                 <FlatList
                     style={tyyli.lista}
                     contentContainerStyle={{ paddingTop: headerSpacing * 2 - 15, paddingBottom: headerSpacing * 2 }}
@@ -117,7 +119,7 @@ const FriendsList = (props: FriendListProps) => {
                     buttonColor={Color(theme.colors.primary).alpha(0.9).toString()}
                     onPress={handleOkClick}
                 >
-                    Add players to game
+                    {t('components.friendsList.addPlayersToGame')}
                 </Button>
                 : null}
         </View>

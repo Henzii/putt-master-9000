@@ -1,15 +1,17 @@
 import React from 'react';
 import { StyleSheet, Text, View } from "react-native";
+import { useTranslation } from 'react-i18next';
 import useMe from '../../../hooks/useMe';
 import SplitContainer from '../../../components/ThemedComponents/SplitContainer';
 
 const LoggedIn = () => {
+    const { t } = useTranslation();
     const me = useMe();
 
     return (
             <SplitContainer>
                 <View>
-                    <Text style={styles.text}>Welcome</Text>
+                    <Text style={styles.text}>{t('screens.frontpage.welcome')}</Text>
                     <Text style={styles.name}>{me?.me?.name}</Text>
                 </View>
             </SplitContainer>

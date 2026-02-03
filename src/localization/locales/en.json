@@ -1,6 +1,142 @@
 {
+  "common": {
+    "ok": "Ok",
+    "cancel": "Cancel",
+    "yes": "Yes",
+    "no": "No",
+    "save": "Save",
+    "add": "Add",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "loading": "Loading...",
+    "error": "Error",
+    "close": "Close",
+    "next": "Next",
+    "change": "Change",
+    "create": "Create",
+    "join": "Join",
+    "leave": "Leave",
+    "submit": "Submit",
+    "name": "Name",
+    "optional": "Optional",
+    "holes": "Holes",
+    "par": "Par"
+  },
   "screens": {
+    "frontpage": {
+      "newGame": "New Game",
+      "oldGames": "Old games",
+      "courses": "Courses",
+      "friends": "Friends",
+      "stats": "Stats",
+      "achievements": "Achievements",
+      "group": "Group",
+      "settings": "Settings",
+      "website": "Website",
+      "distance": "Distance",
+      "feedback": "Feedback",
+      "logout": "Logout",
+      "connectingToServer": "Connecting to server...",
+      "sessionFailed": "Session failed",
+      "sessionFixSuggestion": "Some things you might want to try to fix this error:",
+      "clearSession": "Clear session",
+      "reloadApp": "Reload the app",
+      "signUp": "Sign up!",
+      "playersCount": "Players",
+      "holesCompleted": "Holes",
+      "continue": "Continue"
+    },
+    "main": {
+      "emptyNotification": "Received an empty notification???"
+    },
+    "firstTime": {
+      "welcomeTitle": "Welcome to FuDisc!",
+      "newUserIntro": "Looks like you are new here. Before you can start playing, you need to create an account. It'll only take a minute!",
+      "existingAccountInfo": "If you already have an account, you can go directly to the login screen. Or if you're in a hurry, you can just randomize everything and get started right away.",
+      "toLoginScreen": "To the login screen!",
+      "shutUpLetMeIn": "Shut up and let me in",
+      "createProperAccount": "I want to create a proper account",
+      "usernameTitle": "Username",
+      "usernameHelp": "Pick a unique username. Other players can find you with this. Also use this name to login to the website (fudisc.henzi.fi). This name can be changed afterwards on the website.",
+      "usernameAlreadyTaken": "already taken!",
+      "passwordTitle": "Password",
+      "passwordHelp": "Enter a password. This password is used to login to the app and the website.",
+      "passwordTooShort": "Password too short!",
+      "passwordsDontMatch": "Passwords don't match!",
+      "verifyPassword": "Verify password",
+      "emailTitle": "Email (Optional)",
+      "emailHelp": "Email is only used for password recovery and notifications. It is not mandatory, so it' okay to leave it empty.",
+      "signUpComplete": "That's it! You can now start playing.",
+      "backToStart": "Back to start",
+      "errorSigningUp": "Error when signing up",
+      "welcomeToFudisc": "Welcome to FuDisc, {{name}}!"
+    },
     "game": {
+      "newGame": "New Game",
+      "selectCourse": "Select course",
+      "changeCourse": "Change course",
+      "selectPlayers": "Select Players",
+      "addPlayers": "Add players",
+      "gameSettings": "Settings",
+      "createGame": "Create game",
+      "gameOver": "Game over!",
+      "startNewGame": "Start a new game",
+      "errorOccurred": "Error just happened!",
+      "notLoggedIn": "You are not logged in?",
+      "groupCompetitionDisabled": "Group competition disabled, not part of any group",
+      "isGroupCompetition": "Is a group competition game",
+      "groupCompetitionInfo": "This switch marks the game as a group competition. Points will be awarded to players belonging to the group{{groupName}}.",
+      "groupJoinInfo": "If you're not part of any group, select \"Groups\" from the main view to join one.",
+      "bHcMultiplier": "bHC Multiplier",
+      "bHcMultiplierInfo": "Adjust the beer handicap for this game. The beer handicap is 0.5 throws per beer.",
+      "bHcMultiplierCalc": "The new beer handicap (bHC) value is calculated as 0.5 multiplied by the selected multiplier, giving throws per beer.",
+      "tableHeaderName": "Name",
+      "tableHeaderGames": "Games",
+      "tableHeaderBest": "Best",
+      "tableHeaderHc": "HC",
+      "tabs": {
+        "scorecard": "Scorecard",
+        "teeSign": "Tee sign",
+        "summary": "Summary",
+        "throwStyle": "Throw Style",
+        "beers": "Beers",
+        "setup": "Setup"
+      },
+      "subscriptionFailed": "Subscription failed. The game data is not updated in real time.",
+      "gameCreated": "New game created!",
+      "gameCreationFailed": "Failed to create a game!",
+      "setup": {
+        "info": "Info",
+        "started": "Started",
+        "closed": "Closed",
+        "duration": "Duration",
+        "closeConfirmTitle": "Are you sure?",
+        "closeConfirmMessage": "After closing the game you will no longer be able to enter scores or drink beer",
+        "gameClosed": "Game closed",
+        "errorOccurred": "Something went wrong :(",
+        "gameAbandoned": "Game abandoned",
+        "reopenConfirmTitle": "Are you sure",
+        "reopenConfirmMessage": "Everything will be deleted",
+        "endGame": "End game",
+        "stopDrinkingMessage": "Stop drinking and close the game.",
+        "reopen": "Reopen",
+        "reopenMessage": "Reopen the game. Other players will be notified of your cheating attempt.",
+        "mainMenu": "Main menu",
+        "mainMenuMessage": "Unload the game and return to main menu",
+        "discardGame": "Discard game",
+        "discardMessage": "If the game is finished, only your scorecard will be burned in hell.",
+        "gameId": "Game ID:",
+        "noSubscription": "No subscription"
+      },
+      "beers": {
+        "title": "Beers",
+        "whaat": "Whaaaat?!",
+        "calculator": "Beer calculator"
+      },
+      "statsbar": {
+        "template": "Best: {{best}}, Avg: {{average}}"
+      },
       "holeMap": {
         "noImageTitle": "No Tee Sign Image",
         "noImageText": "Take a photo of the tee sign to add it here",
@@ -10,10 +146,345 @@
         "imageLoading": "Loading image...",
         "failedToLoad": "Failed to load image.",
         "uploadedBy": "Uploaded by"
+      },
+      "throwStyle": {
+        "title": "Randomize throw styles",
+        "individualThrowStyles": "Assign a throw style to each player individually.",
+        "player": "Player",
+        "disc": "Disc",
+        "style": "Style",
+        "startRandomizing": "Start randomizing",
+        "stopRandomizing": "Shut the fuck up!"
       }
+    },
+    "stats": {
+      "myStats": "My stats",
+      "userStats": "{{name}}'s stats",
+      "spyFriend": "Spy a friend",
+      "noCourseSelected": "No course selected. Select a course to view layout specific stats.",
+      "selectCourse": "Select course",
+      "changeCourse": "Change course",
+      "errorOccurred": "Error just happened",
+      "noData": "No data...",
+      "holesData": "Holes data",
+      "noDataAvailable": "No data available",
+      "activity": {
+        "error": "Error!",
+        "loadingFailed": "Loading past activity failed :/",
+        "year": "Year {{year}}",
+        "last12Months": "Last 12 months",
+        "totalGames": "Total of {{games}} games between {{from}} - {{to}}"
+      },
+      "labels": {
+        "total": "Total",
+        "best": "Best",
+        "average": "Average",
+        "eagles": "Eagles",
+        "birdies": "Birdies",
+        "pars": "Pars",
+        "bogeys": "Bogeys",
+        "doubleBogeys": "2x Bogeys",
+        "others": "Others"
+      },
+      "bestPoolGame": {
+        "title": "Masters of the universe",
+        "info": "Shows best played game on selected layout with a pool size of n.",
+        "poolLabel": "Show best game for pool size: ",
+        "noData": "No data :P",
+        "eligibleGames": "Eligible games found: ",
+        "date": "Date:",
+        "players": "Players:",
+        "totalScore": "Total score:",
+        "totalPar": "Total par:",
+        "totalAdjusted": "+/- Total:",
+        "adjustedAdjusted": "+/- Adjusted:",
+        "playersTitle": "Players"
+      }
+    },
+    "achievements": {
+      "myAchievements": "My achievements",
+      "userAchievements": "{{name}}'s achievements",
+      "noAchievements": "No achievements yet!",
+      "errorLoading": "Does not compute"
+    },
+    "settings": {
+      "friendsTitle": "Friends",
+      "blockFriendRequests": "Block other users from adding you as a friend",
+      "changePasswordTitle": "Change password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "passwordTooShort": "Password too short!",
+      "passwordTooShortInfo": "Your password should be at least 5 characters",
+      "passwordNoMatch": "No match!",
+      "passwordsDontMatch": "Passwords don't match!",
+      "passwordChanged": "Password changed!",
+      "passwordChangeFailed": "Error! Password not changed! :/",
+      "deleteAccountTitle": "Delete account",
+      "deleteAccountInfo": "Delete your account permanently. Deleted accounts can not be restored afterwards.",
+      "deleteAccountConfirmInfo": "To delete your account, type {{name}} in the input field below and press Delete account.",
+      "accountDeleted": "Account deleted",
+      "infoTitle": "Info",
+      "version": "version",
+      "build": "build",
+      "accountType": "account type",
+      "displayUnitsTitle": "Display units",
+      "metric": "Metric",
+      "imperial": "Imperial"
+    },
+    "feedback": {
+      "title": "Leave feedback",
+      "subject": "Subject",
+      "subjectPlaceholder": "Enter feedback subject",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email (optional)",
+      "message": "Message",
+      "messagePlaceholder": "Enter your feedback here",
+      "submitButton": "Leave feedback",
+      "sendFailed": "Failed to send feedback. Please try again later.",
+      "thankYouTitle": "Thanks for the feedback!",
+      "thankYouMessage": "Your feedback has been received. We might get back to you if you left your email address."
+    },
+    "oldGames": {
+      "title": "Games",
+      "totalRounds": "Total {{count}} rounds",
+      "loadingGames": "Loading games...",
+      "fetchingMore": "Fetching more...",
+      "showOnlyGroupGames": "Show only group games"
+    },
+    "distance": {
+      "listTab": "List",
+      "measureTab": "Measure",
+      "newMeasurementAdded": "New measurement added",
+      "measurementDeleted": "Measurement deleted",
+      "somethingWentWrong": "Something went wrong",
+      "list": {
+        "title": "Saved measurements",
+        "noMeasurements": "No saved measurements"
+      },
+      "measure": {
+        "startingPoint": "Starting point",
+        "landingPoint": "Landing point",
+        "unlock": "Unlock",
+        "lock": "Lock",
+        "distance": "Distance",
+        "addToList": "Add to List",
+        "latitude": "Lat:",
+        "longitude": "Lon:",
+        "accuracy": "Acc:"
+      }
+    },
+    "group": {
+      "title": "Group",
+      "notInGroup": "Not in a group",
+      "notInGroupInfo": "Set a group name to connect with your friends. This links you all together in the same group, so you can compare scores and compete with each other. You'll be able to view your group's results and competition standings on the website.",
+      "membersTitle": "Members",
+      "enterGroupName": "Enter group name",
+      "websiteTitle": "Website",
+      "websiteInfo": "Group standing, scores etc. can be found on the the website",
+      "leaveGroupTitle": "Leave group",
+      "leaveGroupInfo": "Leaving a group will remove you from the group and you will not be able to see the group's results or standings anymore.",
+      "leaveGroupButton": "Leave Group",
+      "leaveGroupConfirmTitle": "Leave group",
+      "leaveGroupConfirmMessage": "Are you sure you want to leave the group? If you decide to join back later, you will be treated as a new member and the previous results will not be included in your standings.",
+      "joinedGroup": "You have joined the group {{name}}",
+      "leftGroup": "You have left the group",
+      "groupNotSet": "Error! Group not set :(",
+      "somethingNotWorking": "Something is not working properly ..."
+    }
+  },
+  "components": {
+    "login": {
+      "title": "Login",
+      "usernameLabel": "Username",
+      "passwordLabel": "Password",
+      "loginButton": "Login",
+      "welcomeMessage": "Welcome, {{name}}",
+      "wrongCredentials": "Wrong username or password"
+    },
+    "signUp": {
+      "title": "Signup",
+      "titleFriend": "Signup a friend",
+      "friendSignUpInfo1": "You are creating an account for a friend. Instead of creating accounts for everyone, you should force your friends to use Fudisc.",
+      "friendSignUpInfo2": "Created friend will be added to your friends list automatically.",
+      "usernameTitle": "Username",
+      "usernameLabel": "Username",
+      "passwordTitle": "Password",
+      "passwordLabel": "Password",
+      "confirmPasswordLabel": "Confirm password",
+      "emailTitle": "Email",
+      "signUpButton": "Sign up!",
+      "nameTooShort": "Name too short!",
+      "passwordTooShort": "Password too short. Min 5 letters.",
+      "passwordsDontMatch": "Passwords don't match!",
+      "accountCreated": "Account created for {{name}}.",
+      "nowFriends": "You're now friends with {{name}}.",
+      "failedToAddFriend": "Failed to add {{name}} as friend.",
+      "createUserError": "Error when creating user! {{message}}"
+    },
+    "addCourse": {
+      "editTitle": "Edit Course",
+      "addTitle": "Add Course",
+      "nameLabel": "Name",
+      "courseName": "Course name",
+      "locationTitle": "Location",
+      "setCoordinatesManually": "Set coordinates manually",
+      "latLabel": "Lat",
+      "longLabel": "Long",
+      "gpsAccuracy": "GPS accruacy: {{value}}m",
+      "gpsLoading": "GPS Loading...",
+      "selectLocationFromMap": "Select location from map",
+      "setCoordinatesManuallyHint": "Set coordinates manually"
+    },
+    "addLayout": {
+      "editTitle": "Edit layout",
+      "addTitle": "Add layout",
+      "layoutName": "Layout name",
+      "numberOfHoles": "Number of holes",
+      "markAsObsolete": "Mark layout as obsolete",
+      "holesTitle": "Holes",
+      "holeNumber": "Hole #{{number}}",
+      "nameOptional": "Name (optional)",
+      "holeSummary": "{{holes}} Holes, par {{par}}"
+    },
+    "addFriend": {
+      "title": "Add friend",
+      "searchHint": "Who's your daddy",
+      "nameLabel": "Name",
+      "usersFound": "{{count}} users found",
+      "friendBadge": "Friend!",
+      "itsMe": "It's a me!"
+    },
+    "friendsList": {
+      "title": "Friends",
+      "selectedCount": "({{count}} selected)",
+      "addFriend": "Add friend",
+      "createFriend": "Create friend",
+      "loadingFriends": "Loading friends...",
+      "addPlayersToGame": "Add players to game"
+    },
+    "selectCourse": {
+      "selectLayout": "Select layout",
+      "addCourse": "Add Course",
+      "loadingCourses": "Loading courses...",
+      "noMore": "No more... No más...",
+      "addLayout": "Add layout",
+      "layoutCount_one": "{{count}} layout",
+      "layoutCount_other": "{{count}} layouts",
+      "layouts": "Layouts",
+      "away": "away",
+      "holesAndPar": "{{holes}} holes, par {{par}}",
+      "obsolete": "OBSOLETE",
+      "editCourse": "Edit course",
+      "deleteCourse": "Delete course",
+      "courseDeleted": "Course deleted",
+      "courseNotDeleted": "Course was not deleted!",
+      "failedToLoadCourses": "Failed to load courses",
+      "gpsLoading": "GPS Loading",
+      "layoutsAndDistance": "{{count}} layouts, {{distance}} away",
+      "deleteConfirmTitle": "Are you sure?",
+      "deleteConfirmMessage": "Do you really want to delete this course? It cannot be undone later",
+      "select": "Select",
+      "menu": {
+        "editCourse": "Edit course",
+        "deleteCourse": "Delete course"
+      },
+      "map": {
+        "failedToLoad": "Failed to load courses",
+        "gpsLoading": "GPS Loading"
+      }
+    },
+    "errorScreen": {
+      "title": "Error",
+      "backToFrontpage": "Back to the frontpage"
+    },
+    "loading": {
+      "defaultText": "Loading...",
+      "serverSleeping": "Server seems to be sleeping...",
+      "wakeUp": "Wake up you stupid piece of shit!",
+      "somethingWrong": "Hmm.. something might be wrong 🤔",
+      "tryTurningOff": "Have you tried turning it off and on again?"
+    },
+    "localSettings": {
+      "sortHc": "Sort summary by HC",
+      "sortBox": "Sort scorecards by box order",
+      "autoAdvance": "Auto select first unfinished hole",
+      "hideStatsBars": "Hide stats from scorecards",
+      "hidePlusMinus": "Hide +/- from scorecards",
+      "prohibition": "Prohibition",
+      "randomThrowStyle": "Random throw styles",
+      "hideTeeSign": "Hide tee sign tab"
+    },
+    "alcConverter": {
+      "title": "Beerculator",
+      "beer": {
+        "long": "Long (0,5l)",
+        "strong": "Strong (>5.0%)",
+        "longAndStrong": "Long & Strong"
+      },
+      "wine": {
+        "title": "Wine (dl)"
+      },
+      "other": {
+        "normal": "Normal (0,33l)"
+      },
+      "total": "Total",
+      "beers": "beers"
+    },
+    "toolbar": {
+      "title": "FuDisc"
+    }
+  },
+  "game": {
+    "throwStyles": {
+      "backhand": "Backhand",
+      "forehand": "Forehand",
+      "wrongHand": "Wrong hand",
+      "roller": "Roller",
+      "backhandRoller": "Backhand roller",
+      "forehandRoller": "Forehand roller",
+      "tomahawk": "Tomahawk",
+      "grenade": "Grenade",
+      "hyzer": "Hyzer",
+      "anhyzer": "Anhyzer",
+      "yourChoice": "Your choice"
+    },
+    "discTypes": {
+      "putter": "Putter",
+      "midrange": "Midrange",
+      "driver": "Driver",
+      "overstable": "Overstable",
+      "understable": "Understable",
+      "yourChoice": "Your choice"
+    }
+  },
+  "achievements": {
+    "titles": {
+      "100Malmis": "100x Niitty",
+      "HoleInOne": "Hole in one",
+      "winAllHoles": "Super winner",
+      "0Pars": "No pars",
+      "GoldenBox": "Golden box"
+    },
+    "descriptions": {
+      "100Malmis": "\"Aina vaan malmikseen...\"",
+      "HoleInOne": "Hole in one",
+      "winAllHoles": "Nothing but winning",
+      "0Pars": "Zero pars, try harder!",
+      "GoldenBox": "Why do I always have to throw first?"
     }
   },
   "errors": {
-    "noCameraPermission": "Camera permission is required to take photos."
+    "noCameraPermission": "Camera permission is required to take photos.",
+    "genericError": "Something went wrong",
+    "scoreNotSaved": "Error! Result might not have been saved :/"
+  },
+  "notifications": {
+    "friendAdded": "Friend added! Well done!",
+    "friendAddFailed": "Unable to make friends with {{name}}. User either blocks friend requests or the request failed for some other reason.",
+    "friendRemoved": "Removed {{name}} from your friends list!",
+    "friendRemoveFailed": "Failed to remove friend!",
+    "removeFriendTitle": "Byebye friend",
+    "removeFriendMessage": "Friends are replaceable but disc golf is for life!\n\nReally remove {{name}}?",
+    "removeFriendConfirm": "Do it"
   }
 }

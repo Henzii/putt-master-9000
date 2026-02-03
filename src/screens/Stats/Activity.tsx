@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import { View, Text, Dimensions } from "react-native";
+import { useTranslation } from 'react-i18next';
 import { GET_ACTIVITY } from '../../graphql/queries';
 import Loading from '../../components/Loading';
 import { BarChart } from 'react-native-chart-kit';
@@ -29,6 +30,7 @@ type Props = {
 }
 
 const Activity = ({selectedUser}: Props) => {
+    const { t } = useTranslation();
     const [selectedYear, setSelectedYear] = useState<number>();
     const { data, error, loading } = useQuery<ActivityResponse>(GET_ACTIVITY, {
         variables: {
@@ -43,7 +45,7 @@ const Activity = ({selectedUser}: Props) => {
     }
 
     if (error) {
-        return <><Text style={{ fontWeight: 'bold' }}>Error!</Text><Text>Loading past activity failed :/</Text></>;
+        return <><Text style={{ fontWeight: 'bold' }}>{t('screens.stats.activity.error')}</Text><Text>{t('screens.stats.activity.loadingFailed')}</Text></>;
     }
 
     const chartData = {
@@ -56,10 +58,10 @@ const Activity = ({selectedUser}: Props) => {
     const currentYear = new Date().getFullYear();
 
     const years: {label: string, value: number | undefined}[] = Array
-        .from({length: currentYear - 2022 + 1}, (_, i) => ({label: `Year ${2022 + i}`, value: 2022 + i}));
+        .from({length: currentYear - 2022 + 1}, (_, i) => ({label: t('screens.stats.activity.year', {year: 2022 + i}), value: 2022 + i}));
 
     const selectorOptions = years.concat(
-        {label: 'Last 12 months', value: undefined}
+        {label: t('screens.stats.activity.last12Months'), value: undefined}
     );
 
 
@@ -83,7 +85,7 @@ const Activity = ({selectedUser}: Props) => {
                 showValuesOnTopOfBars
             />
             <Text style={{padding: 5}}>
-                Total of {data?.getPastActivity.months.reduce((acc, curr) => acc + curr.games, 0)} games between {data?.getPastActivity.from} - {data?.getPastActivity.to}
+                {t('screens.stats.activity.totalGames', {games: data?.getPastActivity.months.reduce((acc, curr) => acc + curr.games, 0), from: data?.getPastActivity.from, to: data?.getPastActivity.to})}
             </Text>
         </View>
     );

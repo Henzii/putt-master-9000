@@ -6,12 +6,14 @@ import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { addNotification } from "../reducers/notificationReducer";
 import { Alert } from "react-native";
+import { useTranslation } from 'react-i18next';
 
 type QueryResponse = {
     getMe: User;
 }
 
 export const useFriends = () => {
+    const { t } = useTranslation();
     const { data, error, loading } = useQuery<QueryResponse>(GET_ME_WITH_FRIENDS, {fetchPolicy: 'cache-and-network'});
     const [removeFriendMutation] = useMutation(REMOVE_FRIEND, { refetchQueries: [{ query: GET_ME_WITH_FRIENDS }] });
     const [addFriendMutation] = useMutation(ADD_FRIEND, { refetchQueries: [{ query: GET_ME_WITH_FRIENDS }] });
@@ -20,33 +22,33 @@ export const useFriends = () => {
     const addFriend = useCallback(async (friendName: string) => {
         const res = await addFriendMutation({ variables: { friendName} });
         if (res.data.addFriend) {
-            dispatch(addNotification('Friend added! Well done!', 'success'));
+            dispatch(addNotification(t('notifications.friendAdded'), 'success'));
         } else {
-            dispatch(addNotification(`Unable to make friends with ${friendName}. User either blocks friend requests or the request failed for some other reason.`, 'alert'));
+            dispatch(addNotification(t('notifications.friendAddFailed', { name: friendName }), 'alert'));
         }
-    }, [addFriendMutation, dispatch]);
+    }, [addFriendMutation, dispatch, t]);
 
     const removeFriend = useCallback(async (friendId: string | number, friendName?: string) => {
         const handleRemoveFriend = () => {
             try {
                 removeFriendMutation({ variables: { friendId } });
-                dispatch(addNotification(`Removed ${friendName || 'friend'} from your friends list!`, 'info'));
+                dispatch(addNotification(t('notifications.friendRemoved', { name: friendName || 'friend' }), 'info'));
             } catch (error) {
-                dispatch(addNotification(`Failed to remove friend!`, 'alert'));
+                dispatch(addNotification(t('notifications.friendRemoveFailed'), 'alert'));
             }
         };
         Alert.alert(
-            'Byebye friend',
-            `Friends are replaceable but disc golf is for life!\n\nReally remove ${friendName}?`,
+            t('notifications.removeFriendTitle'),
+            t('notifications.removeFriendMessage', { name: friendName }),
             [
-                { text: 'Cancel' },
+                { text: t('common.cancel') },
                 {
-                    text: 'Do it',
+                    text: t('notifications.removeFriendConfirm'),
                     onPress: handleRemoveFriend
                 }
             ]
         );
-    }, [removeFriendMutation]);
+    }, [removeFriendMutation, dispatch, t]);
 
     return {
         friends: data?.getMe.friends || [],

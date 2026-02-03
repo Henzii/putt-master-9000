@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Text } from 'react-native-paper';
 import SelectCourses from '@components/SelectCourse/SelectCourse';
 import StatsView from './StatsView';
@@ -20,6 +21,7 @@ import Stack from '@components/Stack';
 import HeaderButton from '@components/RoundedHeader/HeaderButton';
 
 const Stats = () => {
+    const { t } = useTranslation();
     const [selectedUser, setSelectedUser] = useState<User>();
     const [showSelectCourse, setShowSelectCourse] = useState(false);
     const [showSelectFriend, setShowSelectFriend] = useState(false);
@@ -51,11 +53,11 @@ const Stats = () => {
             <Header setSpacing={setHeaderSpacing} bottomSize={20}>
             <Stack gap={20} direction='column' justifyContent="space-between" maxWidth="100%">
                 <Text variant="titleLarge" style={{color: '#fff'}} numberOfLines={2}>
-                    {selectedUser ? `${selectedUser.name}'s stats` : 'My stats'}
+                    {selectedUser ? t('screens.stats.userStats', { name: selectedUser.name }) : t('screens.stats.myStats')}
                 </Text>
                 <Stack direction='row' justifyContent='space-between'>
-                    <HeaderButton onPress={() => setShowSelectFriend(true)} icon="incognito">Spy a friend</HeaderButton>
-                    {selectedUser && <HeaderButton onPress={() => setSelectedUser(undefined)}>My stats</HeaderButton>}
+                    <HeaderButton onPress={() => setShowSelectFriend(true)} icon="incognito">{t('screens.stats.spyFriend')}</HeaderButton>
+                    {selectedUser && <HeaderButton onPress={() => setSelectedUser(undefined)}>{t('screens.stats.myStats')}</HeaderButton>}
                 </Stack>
             </Stack>
             </Header>
@@ -66,15 +68,15 @@ const Stats = () => {
                 {selectedCourse ? (
                     <>
                         <View style={{paddingHorizontal: 10}}>
-                            <Button icon="golf" onPress={() => setShowSelectCourse(true)} mode="outlined">Change course</Button>
+                            <Button icon="golf" onPress={() => setShowSelectCourse(true)} mode="outlined">{t('screens.stats.changeCourse')}</Button>
                         </View>
                         <StatsView selectedCourse={selectedCourse} selectedUser={selectedUser ?? me} />
                     </>
                 ) : (
                     <Container>
-                        <Text>No course selected. Select a course to view layout specific stats.</Text>
+                        <Text>{t('screens.stats.noCourseSelected')}</Text>
                         <Spacer />
-                        <Button icon="golf" onPress={() => setShowSelectCourse(true)} mode="contained">Select course</Button>
+                        <Button icon="golf" onPress={() => setShowSelectCourse(true)} mode="contained">{t('screens.stats.selectCourse')}</Button>
                     </Container>
                 )}
             </Container>

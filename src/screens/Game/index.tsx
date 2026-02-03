@@ -22,25 +22,37 @@ import useMe from '../../hooks/useMe';
 import ThrowStyle from './ThrowStyle';
 import HoleMap from './HoleMap';
 import { useGameStore } from 'src/zustand/gameStore';
+import { useTranslation } from 'react-i18next';
 
-const NAV_ROUTES = [
-    { key: 'gameRoute', title: 'Scorecard', focusedIcon: 'card-account-details', unfocusedIcon: 'card-account-details-outline' },
-    { key: 'mapRoute', title: 'Tee sign', focusedIcon: 'sign-text', unfocusedIcon: 'sign-text' },
-    { key: 'summaryRoute', title: 'Summary', focusedIcon: 'view-list', unfocusedIcon: 'view-list-outline' },
-    { key: 'throwStyleRoute', title: 'Throw Style', focusedIcon: 'dice-3', unfocusedIcon: 'dice-3-outline' },
-    { key: 'beerRoute', title: 'Beers', focusedIcon: 'beer', unfocusedIcon: 'beer-outline' },
-    { key: 'setupRoute', title: 'Setup', focusedIcon: 'cog', unfocusedIcon: 'cog-outline' },
+const NAV_ROUTES_CONFIG = [
+    { key: 'gameRoute', titleKey: 'screens.game.tabs.scorecard', focusedIcon: 'card-account-details', unfocusedIcon: 'card-account-details-outline' },
+    { key: 'mapRoute', titleKey: 'screens.game.tabs.teeSign', focusedIcon: 'sign-text', unfocusedIcon: 'sign-text' },
+    { key: 'summaryRoute', titleKey: 'screens.game.tabs.summary', focusedIcon: 'view-list', unfocusedIcon: 'view-list-outline' },
+    { key: 'throwStyleRoute', titleKey: 'screens.game.tabs.throwStyle', focusedIcon: 'dice-3', unfocusedIcon: 'dice-3-outline' },
+    { key: 'beerRoute', titleKey: 'screens.game.tabs.beers', focusedIcon: 'beer', unfocusedIcon: 'beer-outline' },
+    { key: 'setupRoute', titleKey: 'screens.game.tabs.setup', focusedIcon: 'cog', unfocusedIcon: 'cog-outline' },
 ];
 
-const findIndexOfRoute = (key: string, routes: typeof NAV_ROUTES): number =>
+const findIndexOfRoute = (key: string, routes: any[]): number =>
     routes.findIndex(route => route.key === key);
 
 export default function GameContainer() {
     /*
         HOOKS
     */
+    const { t } = useTranslation();
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const [setGameId, clearGameStore] = useGameStore(state => [state.setGameId, state.clear]);
+
+    const NAV_ROUTES = NAV_ROUTES_CONFIG.map(route => ({
+        ...route,
+        title: t(route.titleKey)
+    })).filter(route => {
+        if (route.key === 'beerRoute') return true;
+        if (route.key === 'mapRoute') return true;
+        if (route.key === 'throwStyleRoute') return true;
+        return true;
+    });
 
     const { gameId } = gameData ?? {};
     const { me } = useMe();
@@ -64,7 +76,7 @@ export default function GameContainer() {
         (error) => {
             // eslint-disable-next-line no-console
             console.log(error);
-            dispatch(addNotification('Subscription failed. The game data is not updated in real time.', "warning"));
+            dispatch(addNotification(t('screens.game.subscriptionFailed'), "warning"));
         },
         { query: GAME_SUBSCRIPTION, variables: { gameId: gameId }, dependency: gameId }
     );
@@ -139,10 +151,10 @@ export default function GameContainer() {
             });
             dispatch(newGame(newGameId));
             setGameId(newGameId);
-            dispatch(addNotification('New game created!', 'success'));
+            dispatch(addNotification(t('screens.game.gameCreated'), 'success'));
             setNavIndex(0);
         } catch {
-            dispatch(addNotification('Failed to create a game!', 'alert'));
+            dispatch(addNotification(t('screens.game.gameCreationFailed'), 'alert'));
         }
     };
     // Jos peliä ei ole ladattu -> createGame, tai jos erroreita tai loading tms...

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, View, Text, ViewStyle, StyleProp } from "react-native";
 import { Button, Headline, IconButton, Switch, TextInput } from 'react-native-paper';
 import FriendsList from '../../components/FriendsList';
@@ -30,6 +31,7 @@ type CreateGameProps = {
 }
 
 const CreateGame = (props: CreateGameProps) => {
+    const { t } = useTranslation();
     const [newGameData, setNewGameData] = useState<NewGameData>({ course: undefined, layout: undefined, players: [] });
     const user = useSelector((state: RootState) => state.user);
     const [selectCourse, setSelectCourse] = useState(false);
@@ -100,28 +102,28 @@ const CreateGame = (props: CreateGameProps) => {
     };
 
     if (!user.isLoggedIn) {
-        return <ErrorScreen errorMessage='You are not logged in?' />;
+        return <ErrorScreen errorMessage={t('screens.game.notLoggedIn')} />;
     }
 
-    if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} title="Select course" onBackAction={() => setSelectCourse(false)} showTraffic={false} />;
+    if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} title={t('screens.game.selectCourse')} onBackAction={() => setSelectCourse(false)} showTraffic={false} />;
     if (addFriend) return <FriendsList onClick={handleAddFriend} hideRemoveButton multiSelect onBackAction={() => setAddFriend(false)} />;
 
     const tyyli = createStyle();
     const { course, layout } = newGameData;
     return (
         <Container withScrollView noFlex fullHeight>
-            <Headline>New Game</Headline>
+            <Headline>{t('screens.game.newGame')}</Headline>
             <Spacer size={10} />
-            <NumberedTitle number='1' title={course ? `${course.name} / ${layout?.name}` : 'Select course'} />
+            <NumberedTitle number='1' title={course ? `${course.name} / ${layout?.name}` : t('screens.game.selectCourse')} />
             <Spacer size={10} />
             {course ? (
                 <>
                     <View style={tyyli.courseContainer}>
-                        <Text style={tyyli.courseText}>Holes</Text>
+                        <Text style={tyyli.courseText}>{t('common.holes')}</Text>
                         <Text style={tyyli.courseText}>{newGameData.layout?.holes || '-'}</Text>
                     </View>
                     <View style={tyyli.courseContainer}>
-                        <Text style={tyyli.courseText}>Par</Text>
+                        <Text style={tyyli.courseText}>{t('common.par')}</Text>
                         <Text style={tyyli.courseText}>{newGameData.layout?.par || '-'}</Text>
                     </View>
                     <Spacer />
@@ -132,17 +134,17 @@ const CreateGame = (props: CreateGameProps) => {
                 </>
             ) : null}
             <Button style={tyyli.button} onPress={handleSetSelectCourse} mode={newGameData.course ? 'outlined' : 'contained'}>
-                {newGameData.course ? 'Change course' : 'Select course'}
+                {newGameData.course ? t('screens.game.changeCourse') : t('screens.game.selectCourse')}
             </Button>
             <Divider margin={30} />
 
-            <NumberedTitle number='2' title='Select Players' />
+            <NumberedTitle number='2' title={t('screens.game.selectPlayers')} />
             <Spacer />
             <View style={tableStyle.table}>
-                <Text style={tableStyle.headerName}>Name</Text>
-                <Text style={tableStyle.headerRest}>Games</Text>
-                <Text style={tableStyle.headerRest}>Best</Text>
-                <Text style={tableStyle.headerRest}>HC</Text>
+                <Text style={tableStyle.headerName}>{t('screens.game.tableHeaderName')}</Text>
+                <Text style={tableStyle.headerRest}>{t('screens.game.tableHeaderGames')}</Text>
+                <Text style={tableStyle.headerRest}>{t('screens.game.tableHeaderBest')}</Text>
+                <Text style={tableStyle.headerRest}>{t('screens.game.tableHeaderHc')}</Text>
                 <Text style={{ flex: 1.2 }}></Text>
             </View>
             <>
@@ -161,20 +163,20 @@ const CreateGame = (props: CreateGameProps) => {
                 })}
             </>
             <Spacer />
-            <Button style={tyyli.button} compact mode={newGameData.players.length > 1 ? 'outlined' : 'contained'} onPress={handleShowFriendsList}>Add players</Button>
+            <Button style={tyyli.button} compact mode={newGameData.players.length > 1 ? 'outlined' : 'contained'} onPress={handleShowFriendsList}>{t('screens.game.addPlayers')}</Button>
             <Divider />
-            <NumberedTitle number="3" title="Settings" accordion>
+            <NumberedTitle number="3" title={t('screens.game.gameSettings')} accordion>
                 <View>
-                    {!user.groupName && (<Text style={tyyli.errorText}>Group competition disabled, not part of any group</Text>)}
+                    {!user.groupName && (<Text style={tyyli.errorText}>{t('screens.game.groupCompetitionDisabled')}</Text>)}
                     <SplitContainer>
                         <View style={tyyli.infoText}>
-                            <Text>Is a group competition game</Text>
+                            <Text>{t('screens.game.isGroupCompetition')}</Text>
                             <InfoDialog>
                                 <Text>
-                                    This switch marks the game as a group competition. Points will be awarded to players belonging to the group {user.groupName ? ` ${user.groupName}` : ''}.
+                                    {t('screens.game.groupCompetitionInfo', { groupName: user.groupName ? ` ${user.groupName}` : '' })}
                                 </Text>
                                 <Text>
-                                    If you&apos;re not part of any group, select &quot;Groups&quot; from the main view to join one.
+                                    {t('screens.game.groupJoinInfo')}
                                 </Text>
                             </InfoDialog>
                         </View>
@@ -186,13 +188,13 @@ const CreateGame = (props: CreateGameProps) => {
                     </SplitContainer>
                     <SplitContainer>
                         <View style={tyyli.infoText}>
-                            <Text>bHC Multiplier</Text>
+                            <Text>{t('screens.game.bHcMultiplier')}</Text>
                             <InfoDialog>
                                 <Text>
-                                    Adjust the beer handicap for this game. The beer handicap is 0.5 throws per beer.
+                                    {t('screens.game.bHcMultiplierInfo')}
                                 </Text>
                                 <Text>
-                                    The new beer handicap (bHC) value is calculated as 0.5 multiplied by the selected multiplier, giving throws per beer.
+                                    {t('screens.game.bHcMultiplierCalc')}
                                 </Text>
                             </InfoDialog>
                         </View>
@@ -206,7 +208,7 @@ const CreateGame = (props: CreateGameProps) => {
                 </View>
             </NumberedTitle>
             <Divider />
-            <NumberedTitle number='4' title="Create game" />
+            <NumberedTitle number='4' title={t('screens.game.createGame')} />
             <Spacer />
             <View style={tyyli.bottomButtons}>
                 <Button
@@ -215,9 +217,9 @@ const CreateGame = (props: CreateGameProps) => {
                     disabled={(!newGameData.course || !newGameData.layout || newGameData.players.length < 1 || props.loading || (newGameData.bHcMultiplier !== undefined && isNaN(Number(newGameData.bHcMultiplier))))}
                     loading={props.loading}
                 >
-                    Create
+                    {t('common.create')}
                 </Button>
-                <Button mode='outlined' onPress={props.onCancel}>Cancel</Button>
+                <Button mode='outlined' onPress={props.onCancel}>{t('common.cancel')}</Button>
             </View>
         </Container>
     );

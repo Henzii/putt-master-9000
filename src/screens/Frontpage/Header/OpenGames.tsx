@@ -2,6 +2,7 @@ import React from 'react';
 import { Game } from '../../../types/game';
 import { View, Text, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import SplitContainer from '../../../components/ThemedComponents/SplitContainer';
 import Spacer from '../../../components/ThemedComponents/Spacer';
 import { useNavigate } from 'react-router-native';
@@ -13,6 +14,7 @@ type OpenGamesProps = {
 }
 
 const OpenGames = ({ openGames }: OpenGamesProps) => {
+    const { t } = useTranslation();
     const nav = useNavigate();
 
     if (!openGames.length) return null;
@@ -20,7 +22,7 @@ const OpenGames = ({ openGames }: OpenGamesProps) => {
         return (
             <View style={styles.info}>
                 <SplitContainer>
-                    <Text>You have {openGames.length} unfinished games</Text>
+                    <Text>{t('screens.frontpage.unfinishedGames', { count: openGames.length })}</Text>
                 </SplitContainer>
             </View>
         );
@@ -38,7 +40,7 @@ const OpenGames = ({ openGames }: OpenGamesProps) => {
         <>
             <SplitContainer>
                 <Text style={styles.mainText}>{game.course}</Text>
-                <Text style={styles.secText}>{game.scorecards.length} players</Text>
+                <Text style={styles.secText}>{t('screens.frontpage.playersCount', { count: game.scorecards.length })}</Text>
             </SplitContainer>
             <SplitContainer>
                 <Text style={styles.secText}>{game.layout}</Text>
@@ -46,11 +48,11 @@ const OpenGames = ({ openGames }: OpenGamesProps) => {
             </SplitContainer>
             <SplitContainer>
                 <View />
-                <Text style={styles.secText}>{`${completedHoles} / ${game.holes}`} completed</Text>
+                <Text style={styles.secText}>{t('screens.frontpage.holesCompleted', { completed: completedHoles, total: game.holes })}</Text>
             </SplitContainer>
             <Spacer />
             <View style={{ flexDirection: 'row' }}>
-                <Button icon="reload" style={styles.continueButton} textColor="black" onPress={handleContinueGame}>Continue</Button>
+                <Button icon="reload" style={styles.continueButton} textColor="black" onPress={handleContinueGame}>{t('screens.frontpage.continue')}</Button>
             </View>
         </>
     );

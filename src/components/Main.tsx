@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
 import { BackHandler } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import ToolBar from './ToolBar';
 
 import { Routes, Route, useNavigate } from 'react-router-native';
@@ -81,7 +82,7 @@ export default function App() {
         });
 
         const notificListener = addNotificationReceivedListener(notification => {
-            dispatch(addNotification(notification.request.content.body || 'Received an empty notification???', 'info'));
+            dispatch(addNotification(notification.request.content.body || t('screens.main.emptyNotification'), 'info'));
         });
 
         const backhandler = BackHandler.addEventListener('hardwareBackPress', handleBack);

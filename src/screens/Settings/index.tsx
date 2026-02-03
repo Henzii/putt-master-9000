@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Title } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import Container from '../../components/ThemedComponents/Container';
 import Divider from '../../components/ThemedComponents/Divider';
 import appInfo from '../../../app.json';
@@ -17,6 +18,7 @@ import DeleteAccount from './DeleteAccount';
 import Units from './Units';
 
 const Settings = () => {
+    const { t } = useTranslation();
     const { me, updateSettings, logout } = useMe();
     const navi = useNavigate();
     const [deleteAccountMutation] = useMutation(DELETE_ACCOUNT);
@@ -37,22 +39,22 @@ const Settings = () => {
             // Kirjaudutaan ulos
             logout();
             navi('/');
-            dispatch(addNotification("Account deleted", "success"));
+            dispatch(addNotification(t('screens.settings.accountDeleted'), "success"));
         }
     };
     const handlePasswordChange = async (newPassword: string) => {
         if (await updateSettings({ password: newPassword })) {
-            dispatch(addNotification('Password changed!', 'success'));
+            dispatch(addNotification(t('screens.settings.passwordChanged'), 'success'));
         } else {
-            dispatch(addNotification('Error! Password not changed! :/', 'alert'));
+            dispatch(addNotification(t('screens.settings.passwordChangeFailed'), 'alert'));
         }
     };
 
     return (
         <Container noPadding withScrollView noFlex>
-            <Title style={{ marginTop: 10, marginLeft: 15 }}>Friends</Title>
+            <Title style={{ marginTop: 10, marginLeft: 15 }}>{t('screens.settings.friendsTitle')}</Title>
 
-            <SingleSwitch testID="blockFriendRequestsSwitch" onPress={handleBlockFriendsChange} value={me?.blockFriendRequests} text="Block other users from adding you as a friend" noBorder />
+            <SingleSwitch testID="blockFriendRequestsSwitch" onPress={handleBlockFriendsChange} value={me?.blockFriendRequests} text={t('screens.settings.blockFriendRequests')} noBorder />
             {/* Not fully implemented
                 <SingleSwitch onPress={handleBlockStatsSharingChange} value={me?.blockStatsSharing} text="Block friends from seeing my stats" noBorder />
             */}
@@ -66,11 +68,11 @@ const Settings = () => {
             </View>
             <Divider />
             <View style={tyyli.section}>
-                <Title>Info</Title>
-                <InfoText text1="version" text2={appInfo.expo.version} />
-                <InfoText text1="build" text2={appInfo.expo.android.versionCode.toString()} />
+                <Title>{t('screens.settings.infoTitle')}</Title>
+                <InfoText text1={t('screens.settings.version')} text2={appInfo.expo.version} />
+                <InfoText text1={t('screens.settings.build')} text2={appInfo.expo.android.versionCode.toString()} />
                 {(me?.accountType && me.accountType !== AccountType.PLEB) && (
-                    <InfoText text1="account type" text2={me?.accountType ?? 'N/A'} />
+                    <InfoText text1={t('screens.settings.accountType')} text2={me?.accountType ?? 'N/A'} />
                 )}
             </View>
             <Divider />

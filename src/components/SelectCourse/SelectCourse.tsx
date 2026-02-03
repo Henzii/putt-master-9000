@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { View, StyleSheet, FlatList } from "react-native";
 import { Modal, Searchbar, Portal, useTheme, IconButton, Text } from "react-native-paper";
 import useCourses from "../../hooks/useCourses";
@@ -26,6 +27,7 @@ type SelectCoursesProps = {
     onBackAction?: () => void
 }
 const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, showTraffic }: SelectCoursesProps) => {
+    const { t } = useTranslation();
     const [displaySearchBar, setDisplaySearchBar] = useState(false);
     const [displayAddCourse, setDisplayAddCourse] = useState(false);
     const [displayMap, setDisplayMap] = useState(false);
@@ -116,10 +118,10 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
             </Portal>
             <Header setSpacing={setHeaderSpacing} bottomSize={30}>
                 {title ? <Text variant="headlineSmall" style={styles.title}>
-                    {(expandedCourse ? 'Select layout' : title)}
+                    {(expandedCourse ? t('components.selectCourse.selectLayout') : title)}
                 </Text> : null}
                 <SplitContainer>
-                    <HeaderButton icon="plus" onPress={handleAddCourseClick} testID="AddCourseButton">Add Course</HeaderButton>
+                    <HeaderButton icon="plus" onPress={handleAddCourseClick} testID="AddCourseButton">{t('components.selectCourse.addCourse')}</HeaderButton>
                     <View>
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                             <IconButton icon="magnify" onPress={handleClickSearch} mode="contained" containerColor={colors.tertiary} />
@@ -139,7 +141,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
                 ) : null}
             </Header>
             {!courses && loading ? (
-                <Loading loadingText="Loading courses..." />
+                <Loading loadingText={t('components.selectCourse.loadingCourses')} />
             ) : (
                 <FlatList
                     ref={ref}
@@ -151,7 +153,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
                     ListFooterComponent={
                         (loading)
                             ? <Loading noFullScreen loadingText="" />
-                            : <Text style={{ color: 'rgba(0,0,0,0.2)' }}>    No more... No más...</Text>
+                            : <Text style={{ color: 'rgba(0,0,0,0.2)' }}>    {t('components.selectCourse.noMore')}</Text>
                     }
                     onEndReached={fetchMore}
                     onEndReachedThreshold={0.1}

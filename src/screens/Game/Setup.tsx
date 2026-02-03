@@ -16,8 +16,10 @@ import { GET_OLD_GAMES } from '../../graphql/queries';
 import { format, fromUnixTime, differenceInMinutes, minutesToHours, differenceInDays } from 'date-fns';
 import Spacer from '../../components/ThemedComponents/Spacer';
 import LocalSettings from '../../components/LocalSettings';
+import { useTranslation } from 'react-i18next';
 
 const Setup = () => {
+    const { t } = useTranslation();
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
     const dispatch = useDispatch();
     const navi = useNavigate();
@@ -27,20 +29,20 @@ const Setup = () => {
     const game = gameHook.data;
     const handleGameEnd = async () => {
         Alert.alert(
-            'Are you sure?',
-            'After closing the game you will no longer be able to enter scores or drink beer',
+            t('screens.game.setup.closeConfirmTitle'),
+            t('screens.game.setup.closeConfirmMessage'),
             [
                 {
-                    text: 'Cancel',
+                    text: t('common.cancel'),
                     onPress: () => null
                 },
                 {
                     text: 'Do it!',
                     onPress: async () => {
                         if (await gameHook.closeGame()) {
-                            dispatch(addNotification('Game closed', 'success'));
+                            dispatch(addNotification(t('screens.game.setup.gameClosed'), 'success'));
                         } else {
-                            dispatch(addNotification('Something went wrong :(', 'alert'));
+                            dispatch(addNotification(t('screens.game.setup.errorOccurred'), 'alert'));
                         }
                     }
                 },
@@ -51,7 +53,7 @@ const Setup = () => {
         const res = await abandonGameMutation({ variables: { gameId: gameData.gameId } });
         if (res.data.abandonGame) {
             dispatch(unloadGame());
-            dispatch(addNotification('Game abandoned', 'success'));
+            dispatch(addNotification(t('screens.game.setup.gameAbandoned'), 'success'));
         } else {
             dispatch(addNotification('Something went wrong!', 'alert'));
         }
@@ -66,15 +68,15 @@ const Setup = () => {
     };
     const verifyAbandonGame = () => {
         Alert.alert(
-            'Are you sure',
-            'Everything will be deleted',
+            t('screens.game.setup.reopenConfirmTitle'),
+            t('screens.game.setup.reopenConfirmMessage'),
             [
                 {
-                    text: 'Cancel',
+                    text: t('common.cancel'),
                     onPress: () => null
                 },
                 {
-                    text: 'Yes!',
+                    text: t('common.yes'),
                     onPress: handleAbandonGame
                 },
             ]
@@ -94,18 +96,18 @@ const Setup = () => {
     return (
         <Container withScrollView noPadding>
             <Container verticalPadding>
-                <Title>Info</Title>
-                <Paragraph>Started          {startDateFormatted}</Paragraph>
-                <Paragraph>Closed           {endDateFormatted}</Paragraph>
-                <Paragraph>Duration        {durationString}</Paragraph>
+                <Title>{t('screens.game.setup.info')}</Title>
+                <Paragraph>{t('screens.game.setup.started')}          {startDateFormatted}</Paragraph>
+                <Paragraph>{t('screens.game.setup.closed')}           {endDateFormatted}</Paragraph>
+                <Paragraph>{t('screens.game.setup.duration')}        {durationString}</Paragraph>
             </Container>
             <Divider />
             {game.isOpen && (
                 <>
                     <Container verticalPadding>
-                        <Title>End game</Title>
+                        <Title>{t('screens.game.setup.endGame')}</Title>
                         <Paragraph>
-                            Stop drinking and close the game.
+                            {t('screens.game.setup.stopDrinkingMessage')}
                         </Paragraph>
                         <Spacer />
                         <Button
@@ -113,7 +115,7 @@ const Setup = () => {
                             style={tyyli.nappi}
                             onPress={handleGameEnd}
                             disabled={!game.isOpen}
-                        >End game
+                        >{t('screens.game.setup.endGame')}
                         </Button>
                     </Container>
                     <Divider />
@@ -122,41 +124,41 @@ const Setup = () => {
             {!game.isOpen && differenceInDays(new Date(), endDate || new Date()) < 30 &&  (
                 <>
                     <Container verticalPadding>
-                        <Title>Reopen</Title>
+                        <Title>{t('screens.game.setup.reopen')}</Title>
                         <Paragraph>
-                            Reopen the game. Other players will be notified of your cheating attempt.
+                            {t('screens.game.setup.reopenMessage')}
                         </Paragraph>
                         <Spacer />
-                        <Button mode="contained" buttonColor="orange" style={tyyli.nappi} onPress={handleReopen}>Reopen</Button>
+                        <Button mode="contained" buttonColor="orange" style={tyyli.nappi} onPress={handleReopen}>{t('screens.game.setup.reopen')}</Button>
                     </Container>
                     <Divider />
                 </>
             )}
             <Container verticalPadding>
-                <Title>Main menu</Title>
+                <Title>{t('screens.game.setup.mainMenu')}</Title>
                 <Paragraph>
-                    Unload the game and return to main menu
+                    {t('screens.game.setup.mainMenuMessage')}
                 </Paragraph>
                 <Spacer />
                 <Button
                     onPress={handleQuitGame}
                     mode='contained'
                     style={tyyli.nappi}
-                >Quit</Button>
+                >{t('common.leave')}</Button>
             </Container>
             <Divider />
             <LocalSettings />
             <Divider />
             <Container verticalPadding>
                 <Paragraph>
-                    If the game is finished, only your scorecard will be burned in hell.
+                    {t('screens.game.setup.discardMessage')}
                 </Paragraph>
                 <Spacer />
-                <Button style={tyyli.nappi} mode='contained' buttonColor='darkred' onPress={verifyAbandonGame}>Discard game</Button>
+                <Button style={tyyli.nappi} mode='contained' buttonColor='darkred' onPress={verifyAbandonGame}>{t('screens.game.setup.discardGame')}</Button>
             </Container>
             <Divider />
             <Paragraph style={{ color: 'gray' }}>
-                Game ID: {gameData.gameId} {gameData.noSubscription && ' / No subscription'}
+                {t('screens.game.setup.gameId')} {gameData.gameId} {gameData.noSubscription && ` / ${t('screens.game.setup.noSubscription')}`}
             </Paragraph>
         </Container>
     );
