@@ -229,7 +229,11 @@
       "accountType": "account type",
       "displayUnitsTitle": "Display units",
       "metric": "Metric",
-      "imperial": "Imperial"
+      "imperial": "Imperial",
+      "languageTitle": "Language",
+      "languageAuto": "Automatic",
+      "languageEnglish": "English",
+      "languageFinnish": "Suomi"
     },
     "feedback": {
       "title": "Leave feedback",

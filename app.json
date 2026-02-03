@@ -59,7 +59,8 @@
           "resizeMode": "cover",
           "imageWidth": 200
         }
-      ]
+      ],
+      "expo-localization"
     ],
     "runtimeVersion": {
       "policy": "sdkVersion"

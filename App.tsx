@@ -13,7 +13,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ErrorBoundary from 'react-native-error-boundary';
 import BSOD from './src/components/BSOD';
 
-import './src/localization/i18n';
+import { initializeLanguage } from './src/localization/i18n';
 
 import * as SplashScreen from 'expo-splash-screen';
 import ThemeProvider from 'src/context/ThemeProvider';
@@ -21,10 +21,12 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   useEffect(() => {
-    const timeout = setTimeout(async () => {
+    const prepare = async () => {
+      await initializeLanguage();
       await SplashScreen.hideAsync();
-    }, 1000);
+    };
 
+    const timeout = setTimeout(prepare, 1000);
     return () => clearTimeout(timeout);
   }, []);
 

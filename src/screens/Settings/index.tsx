@@ -16,6 +16,7 @@ import { SingleSwitch } from '../../components/LocalSettings';
 import { AccountType } from '../../types/user';
 import DeleteAccount from './DeleteAccount';
 import Units from './Units';
+import Language from './Language';
 
 const Settings = () => {
     const { t } = useTranslation();
@@ -65,6 +66,10 @@ const Settings = () => {
             <Divider />
             <View style={tyyli.section}>
                 <Units />
+            </View>
+            <Divider />
+            <View style={tyyli.section}>
+                <Language />
             </View>
             <Divider />
             <View style={tyyli.section}>

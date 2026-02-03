@@ -229,7 +229,11 @@
       "accountType": "tilityyppi",
       "displayUnitsTitle": "Näyttöyksiköt",
       "metric": "Metrijärjestelmä",
-      "imperial": "Imperiaalijärjestelmä"
+      "imperial": "Imperiaalijärjestelmä",
+      "languageTitle": "Kieli",
+      "languageAuto": "Automaattinen",
+      "languageEnglish": "English",
+      "languageFinnish": "Suomi"
     },
     "feedback": {
       "title": "Jätä palautetta",
