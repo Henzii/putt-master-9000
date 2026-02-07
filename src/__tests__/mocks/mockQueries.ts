@@ -68,10 +68,7 @@ export default [
         },
         result: {
             data: {
-                login: {
-                    token: 'mockedToken',
-                    user: mockedUsers[0]
-                }
+                login: 'mockedToken'
             }
         }
     }

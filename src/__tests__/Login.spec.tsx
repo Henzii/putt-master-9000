@@ -30,12 +30,10 @@ describe('<Login />', () => {
 
         await waitFor(() => expect(mockDispatch).toHaveBeenCalled());
 
-        expect(mockDispatch.mock.calls[1][0].payload?.loginToken?.token).toBe('mockedToken');
+        expect(mockDispatch.mock.calls[1][0].payload?.loginToken).toBe('mockedToken');
         expect(AsyncStorage.setItem).toHaveBeenCalledWith(
             'token',
-            expect.objectContaining({
-                token: 'mockedToken',
-            })
+            'mockedToken'
         );
 
     });
