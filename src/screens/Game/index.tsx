@@ -33,7 +33,7 @@ const NAV_ROUTES_CONFIG = [
     { key: 'setupRoute', titleKey: 'screens.game.tabs.setup', focusedIcon: 'cog', unfocusedIcon: 'cog-outline' },
 ] as const;
 
-const findIndexOfRoute = (key: string, routes: any[]): number =>
+const findIndexOfRoute = (key: string, routes: {key: string}[]): number =>
     routes.findIndex(route => route.key === key);
 
 export default function GameContainer() {

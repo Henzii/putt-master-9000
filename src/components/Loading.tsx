@@ -36,7 +36,7 @@ const Loading = ({loadingText, noFullScreen=false, showTexts, changeTextAfter = 
             }, changeTextAfter);
         }
         return () => clearInterval(textInterval);
-    }, [textsToUse]);
+    }, [textsToUse, showTexts, changeTextAfter]);
 
     const tyylit = [
         tyyli.container,

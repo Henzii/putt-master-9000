@@ -22,8 +22,14 @@ SplashScreen.preventAutoHideAsync();
 export default function App() {
   useEffect(() => {
     const prepare = async () => {
-      await initializeLanguage();
-      await SplashScreen.hideAsync();
+      try {
+        await initializeLanguage();
+      } catch {
+        // eslint-disable-next-line no-console
+        console.log('Failed to load language resources');
+      } finally {
+        await SplashScreen.hideAsync();
+      }
     };
 
     const timeout = setTimeout(prepare, 1000);
