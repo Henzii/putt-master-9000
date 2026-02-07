@@ -3,16 +3,19 @@ import AlcConverter from '../components/AlcConverter';
 import { render, fireEvent } from '@testing-library/react-native';
 
 import { defaultValues as dv } from '../components/AlcConverter';
+import MockWrappper from './mocks/MockWrapper';
 
 jest.useFakeTimers();
 
+const Component = () => <MockWrappper><AlcConverter /></MockWrappper>;
+
 describe('<AlcConverter />', () => {
     it('renders', () => {
-        const puu = render(<AlcConverter />).toJSON();
+        const puu = render(<Component />).toJSON();
         expect(puu).toMatchSnapshot();
     });
     it('counter works properly', () => {
-        const { getByTestId } = render(<AlcConverter />);
+        const { getByTestId } = render(<Component />);
         const result = getByTestId('beers');
         // Alussa 0
         expect(result.children.join('')).toContain('0 beers');

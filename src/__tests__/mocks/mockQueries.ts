@@ -1,4 +1,4 @@
-import { UPDATE_MY_SETTINGS } from "../../graphql/mutation";
+import { LOGIN, UPDATE_MY_SETTINGS } from "../../graphql/mutation";
 import { GET_ME, GET_ME_WITH_FRIENDS, SEARCH_USER } from "../../graphql/queries";
 import mockedUsers from "./mockedUsers";
 
@@ -55,6 +55,22 @@ export default [
                         {id: 'mockedTakenUsername', name: 'takenusername', blockFriendRequests: false}
                     ],
                     hasMore: false
+                }
+            }
+        }
+    }, {
+        request: {
+            query: LOGIN,
+            variables: {
+                user: 'Testeri',
+                password: 'abcd123'
+            }
+        },
+        result: {
+            data: {
+                login: {
+                    token: 'mockedToken',
+                    user: mockedUsers[0]
                 }
             }
         }
