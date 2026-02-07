@@ -2,7 +2,7 @@ import React from 'react';
 
 import { render, waitFor } from '@testing-library/react-native';
 import { Portal, Provider } from 'react-native-paper';
-import Wrapper from './mocks/ApolloMockWrapper';
+import Wrapper from './mocks/MockWrapper';
 import FriendsList from '../components/FriendsList';
 import mockedUsers from './mocks/mockedUsers';
 import { theme } from '../utils/theme';

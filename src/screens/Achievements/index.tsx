@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { IconButton, Text, useTheme } from "react-native-paper";
@@ -13,6 +14,7 @@ import Stack from '@components/Stack';
 import Spacer from '@components/ThemedComponents/Spacer';
 
 const Achievements = () => {
+    const { t } = useTranslation();
     const { data, loading, error } = useQuery<{ getMe?: User }>(GET_ACHIEVEMENTS, { fetchPolicy: 'no-cache' });
     const [showSelectFriendView, setShowSelectFriendView] = useState(false);
     const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
@@ -36,7 +38,7 @@ const Achievements = () => {
         return <Loading />;
     }
     if (error || !data?.getMe?.achievements) {
-        return <ErrorScreen errorMessage="Does not compute" />;
+        return <ErrorScreen errorMessage={t('screens.achievements.errorLoading')} />;
     }
 
     if (showSelectFriendView) {
@@ -50,7 +52,7 @@ const Achievements = () => {
             <Header setSpacing={setHeaderSpacing} bottomSize={20}>
                 <Stack gap={20} direction='row' justifyContent="space-between" alignItems='center' maxWidth="100%">
                     <Text variant="headlineSmall" style={styles.headerText} numberOfLines={2}>
-                        {selectedFriend ? `${selectedFriend.name}'s achievements` : 'My achievements'}
+                        {selectedFriend ? t('screens.achievements.userAchievements', { name: selectedFriend.name }) : t('screens.achievements.myAchievements')}
                     </Text>
                     <IconButton onPress={handleSpyButtonPress} icon={selectedFriend ? 'account' : 'incognito'} containerColor={colors.tertiary} iconColor={colors.primary} />
                 </Stack>
@@ -68,7 +70,7 @@ const Achievements = () => {
                         />
                     ))}
                     {achievements?.length === 0 && (
-                        <Text style={{ textAlign: 'center', width: '100%' }}>No achievements yet!</Text>
+                        <Text style={{ textAlign: 'center', width: '100%' }}>{t('screens.achievements.noAchievements')}</Text>
                     )}
                 </View>
                 <Spacer />

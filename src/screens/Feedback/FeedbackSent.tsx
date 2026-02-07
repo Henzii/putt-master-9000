@@ -1,16 +1,18 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Headline, Paragraph } from "react-native-paper";
 import Container from "../../components/ThemedComponents/Container";
 import Spacer from '../../components/ThemedComponents/Spacer';
 import { useNavigate } from 'react-router-native';
 
 const FeedbackSent = ({onReset}: {onReset: () => void}) => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     return (
         <Container>
-            <Headline>Feedback sent</Headline>
+            <Headline>{t('screens.feedback.thankYouTitle')}</Headline>
             <Paragraph>
-                Thank you for your feedback! We appreciate your input and will review it shortly.
+                {t('screens.feedback.thankYouMessage')}
             </Paragraph>
             <Spacer size={20} />
             <Button mode="contained-tonal" onPress={onReset}>Send another</Button>

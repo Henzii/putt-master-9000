@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Headline, TextInput } from "react-native-paper";
+import { useTranslation } from 'react-i18next';
 import Container from "./ThemedComponents/Container";
 
 type DrinkInputProps = {
@@ -47,6 +48,7 @@ export const defaultValues = {
 };
 
 export default function AlcConverter() {
+    const { t } = useTranslation();
     const [drinks, setDrinks] = useState(defaultValues);
     const beers = useMemo(() => {
         const sum = Object.values(drinks).reduce((prev: number, curr) => {
@@ -61,30 +63,30 @@ export default function AlcConverter() {
     };
     return (
         <Container noPadding withScrollView>
-            <Headline>Beerculator</Headline>
+            <Headline>{t('components.alcConverter.title')}</Headline>
             <View style={styles.row}>
-                <Text style={styles.text}>Long (0,5l)</Text>
+                <Text style={styles.text}>{t('components.alcConverter.beer.long')}</Text>
                 <DrinkInput drinkName="long" handleChange={handleChange} testID="long" />
             </View>
             <View style={styles.row}>
-                <Text style={styles.text}>Strong (&gt;5.0%)</Text>
+                <Text style={styles.text}>{t('components.alcConverter.beer.strong')}</Text>
                 <DrinkInput drinkName="strong" handleChange={handleChange} testID="strong" />
             </View>
             <View style={styles.row}>
-                <Text style={styles.text}>Long &amp; Strong</Text>
+                <Text style={styles.text}>{t('components.alcConverter.beer.longAndStrong')}</Text>
                 <DrinkInput drinkName="longstrong" handleChange={handleChange} testID="longandstrong" />
             </View>
             <View style={styles.row}>
-                <Text style={styles.text}>Wine (dl)</Text>
+                <Text style={styles.text}>{t('components.alcConverter.wine.title')}</Text>
                 <DrinkInput drinkName="wine" handleChange={handleChange} testID="wine" />
             </View>
             <View style={styles.row}>
-                <Text style={styles.text}>Normal (0,33l)</Text>
+                <Text style={styles.text}>{t('components.alcConverter.other.normal')}</Text>
                 <DrinkInput drinkName="normal" handleChange={handleChange} testID="normal" />
             </View>
             <View style={[{ marginTop: 20 }, styles.row]}>
-                <Text style={styles.text}>Total</Text>
-                <Text testID="beers">{beers} beers</Text>
+                <Text style={styles.text}>{t('components.alcConverter.total')}</Text>
+                <Text testID="beers">{beers} {t('components.alcConverter.beers')}</Text>
             </View>
 
         </Container>

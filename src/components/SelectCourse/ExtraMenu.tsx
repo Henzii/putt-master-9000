@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { extractApolloErrorMessage } from '../../utils/apollo';
 import { addNotification } from '../../reducers/notificationReducer';
 import { GET_COURSES } from '../../graphql/queries';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     course: Course
@@ -16,6 +17,7 @@ type Props = {
 }
 
 const ExtraMenu = ({course, onEditCoursePress}: Props) => {
+    const { t } = useTranslation();
     const [visible, setVisible] = useState(false);
     const [anchor, setAnchor] = useState({x: 0, y: 0});
     const [deleteCourse] = useMutation(DELETE_COURSE);
@@ -61,8 +63,8 @@ const ExtraMenu = ({course, onEditCoursePress}: Props) => {
                     onDismiss={() => setVisible(false)}
                     anchor={anchor}
                 >
-                    <Menu.Item title="Edit course" onPress={handleEditCourse} />
-                    <Menu.Item title="Delete course" onPress={handleDeleteCourse} />
+                    <Menu.Item title={t('components.selectCourse.menu.editCourse')} onPress={handleEditCourse} />
+                    <Menu.Item title={t('components.selectCourse.menu.deleteCourse')} onPress={handleDeleteCourse} />
                 </Menu>
             </View>
             </View>

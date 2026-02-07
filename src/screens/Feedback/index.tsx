@@ -8,8 +8,10 @@ import { useMutation } from '@apollo/client';
 import { SEND_FEEDBACK } from '../../graphql/mutation';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../../reducers/notificationReducer';
+import { useTranslation } from 'react-i18next';
 
 const Feedback = () => {
+    const { t } = useTranslation();
     const me = useSession();
     const [subject, setSubject] = useState('');
     const [text, setText] = useState('');
@@ -28,7 +30,7 @@ const Feedback = () => {
             });
             setFeedbackSent(true);
         } catch (e) {
-            dispatch(addNotification('Failed to send feedback. Please try again later.', 'alert'));
+            dispatch(addNotification(t('screens.feedback.sendFailed'), 'alert'));
         } finally {
             setSubject('');
             setText('');
@@ -41,40 +43,40 @@ const Feedback = () => {
 
     return (
         <Container>
-            <Headline>Leave feedback</Headline>
+            <Headline>{t('screens.feedback.title')}</Headline>
             <Spacer />
-            <Title>Subject</Title>
+            <Title>{t('screens.feedback.subject')}</Title>
             <TextInput
                 mode="outlined"
-                placeholder="Enter feedback subject"
+                placeholder={t('screens.feedback.subjectPlaceholder')}
                 value={subject}
                 onChangeText={setSubject}
             />
             <Spacer />
             <Title>
-                Email
+                {t('screens.feedback.email')}
             </Title>
             <TextInput
                 mode="outlined"
                 defaultValue={me.email}
-                placeholder='Enter your email (optional)'
+                placeholder={t('screens.feedback.emailPlaceholder')}
             />
             <Spacer />
-            <Title>Message</Title>
+            <Title>{t('screens.feedback.message')}</Title>
             <TextInput
                 mode="outlined"
                 multiline
                 value={text}
                 onChangeText={setText}
                 numberOfLines={10}
-                placeholder="Enter your feedback here"
+                placeholder={t('screens.feedback.messagePlaceholder')}
             />
             <Spacer />
             <Button
                 mode="contained"
                 disabled={!subject || !text}
                 onPress={handleFeedbackSubmission}
-            >Leave feedback</Button>
+            >{t('screens.feedback.submitButton')}</Button>
         </Container>
     );
 };

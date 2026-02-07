@@ -1,7 +1,7 @@
 import React from "react";
 import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import Settings from "../screens/Settings";
-import Wrapper from "./mocks/ApolloMockWrapper";
+import Wrapper from "./mocks/MockWrapper";
 import LocalSettingsProvider from "@components/LocalSettingsProvider";
 
 jest.useFakeTimers();

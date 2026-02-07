@@ -1,13 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View, Dimensions } from 'react-native';
 import { ActivityIndicator, Caption } from 'react-native-paper';
-
-const texts = [
-    'Server seems to be sleeping...',
-    'Wake up you stupid piece of shit!',
-    'Hmm.. something might be wrong 🤔',
-    'Have you tried turning it off and on again?'
-];
+import { useTranslation } from 'react-i18next';
 
 type LoadingProps = {
     loadingText?: string,
@@ -17,21 +11,32 @@ type LoadingProps = {
     changeTextAfter?: number,
     customTexts?: string[]
 }
-const Loading = ({loadingText = 'Loading...', noFullScreen=false, showTexts, changeTextAfter = 10000, customTexts = texts}: LoadingProps) => {
+const Loading = ({loadingText, noFullScreen=false, showTexts, changeTextAfter = 10000, customTexts}: LoadingProps) => {
+    const { t } = useTranslation();
     const textIndex = useRef(-1);
     const [customText, setCustomText] = useState('');
+
+    const defaultTexts = [
+        t('components.loading.serverSleeping'),
+        t('components.loading.wakeUp'),
+        t('components.loading.somethingWrong'),
+        t('components.loading.tryTurningOff')
+    ];
+
+    const textsToUse = customTexts ?? defaultTexts;
+    const displayLoadingText = loadingText ?? t('components.loading.defaultText');
     useEffect(() => {
         let textInterval: ReturnType<typeof setInterval>;
         if (showTexts) {
             textInterval = setInterval(() => {
-                if (textIndex.current < texts.length-1) {
+                if (textIndex.current < textsToUse.length-1) {
                     textIndex.current++;
-                    setCustomText(customTexts[textIndex.current]);
+                    setCustomText(textsToUse[textIndex.current]);
                 }
             }, changeTextAfter);
         }
         return () => clearInterval(textInterval);
-    }, []);
+    }, [textsToUse, showTexts, changeTextAfter]);
 
     const tyylit = [
         tyyli.container,
@@ -42,7 +47,7 @@ const Loading = ({loadingText = 'Loading...', noFullScreen=false, showTexts, cha
     return (
         <View style={tyylit}>
             <ActivityIndicator animating size={'large'} testID="progress" />
-            <Caption style={tyyli.teksti}>{showTexts && textIndex.current >= 0 ? customText : loadingText}</Caption>
+            <Caption style={tyyli.teksti}>{showTexts && textIndex.current >= 0 ? customText : displayLoadingText}</Caption>
         </View>
     );
 };

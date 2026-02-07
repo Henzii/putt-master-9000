@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useQuery } from "@apollo/client";
 import { View, Text, StyleSheet } from "react-native";
+import { useTranslation } from 'react-i18next';
 import { Headline, Title } from "react-native-paper";
 import ErrorScreen from "../../components/ErrorScreen";
 import InfoCard from "../../components/InfoCard";
@@ -28,6 +29,7 @@ type StatsViewProps = {
 
 }
 export default function StatsView({ selectedCourse, selectedUser }: StatsViewProps) {
+    const { t } = useTranslation();
     const [selectedHole, setSelectedHole] = useState(0);
     const [chartScoresCount, setChartScoresCount] = useState('All');
     const stats = useStats(selectedCourse.layout.id as string, [selectedUser.id as string], 'cache-and-network', selectedUser.id);
@@ -50,22 +52,22 @@ export default function StatsView({ selectedCourse, selectedUser }: StatsViewPro
         return <Loading />;
     }
     if (error) {
-        return <ErrorScreen errorMessage="Error just happened" />;
+        return <ErrorScreen errorMessage={t('screens.stats.errorOccurred')} />;
     }
     if (!data.getHc?.length) {
-        return <View><Text> No data...</Text></View>;
+        return <View><Text>{t('screens.stats.noData')}</Text></View>;
     }
     return (
         <Container noPadding>
             <Container>
-                <Headline>{`${selectedUser.name}'s`} stats</Headline>
+                <Headline>{`${selectedUser.name}'s`} {t('screens.frontpage.stats')}</Headline>
                 <Title>
                     {selectedCourse?.course.name + ' / ' + selectedCourse?.layout.name}
                 </Title>
                 <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-                    <InfoCard title="Games" text={data.getHc[0].games} />
-                    <InfoCard title="Best" text={Math.min(...scores).toString()} />
-                    <InfoCard title="Average" text={
+                    <InfoCard title={t('screens.game.tableHeaderGames')} text={data.getHc[0].games} />
+                    <InfoCard title={t('screens.stats.labels.best')} text={Math.min(...scores).toString()} />
+                    <InfoCard title={t('screens.stats.labels.average')} text={
                         (Math.round((scores.reduce((p: number, c: number) => p + c, 0) / scores.length * 100)) / 100)
                             .toString()}
                     />
@@ -85,7 +87,7 @@ export default function StatsView({ selectedCourse, selectedUser }: StatsViewPro
                                 );
                             })
                     } />
-                    <InfoCard title="HC" text={data.getHc[0].hc} />
+                    <InfoCard title={t('screens.game.tableHeaderHc')} text={data.getHc[0].hc} />
                 </View>
                 <Spacer size={15} />
                 <SelectButtonGroup selectedDefault={chartScoresCount} onSelect={setChartScoresCount}>
@@ -97,7 +99,7 @@ export default function StatsView({ selectedCourse, selectedUser }: StatsViewPro
             <LineChart par={0} data={scoresToDisplay} />
             <Spacer size={15} />
             <Divider />
-            <Headline style={{ marginLeft: 25 }}>Holes data</Headline>
+            <Headline style={{ marginLeft: 25 }}>{t('screens.stats.holesData')}</Headline>
             <Spacer />
             <BarChart stats={stats.getHolesStats(selectedUser.id as string)} holes={selectedCourse.layout.holes} />
             <Spacer size={15} />
@@ -111,20 +113,20 @@ export default function StatsView({ selectedCourse, selectedUser }: StatsViewPro
             />
             <Container>
                 {!statsForHole
-                    ? <Title>No data available</Title>
+                    ? <Title>{t('screens.stats.noDataAvailable')}</Title>
                     : <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                        <InfoCard text={statsForHole.count} title="Total" />
-                        <InfoCard text={statsForHole.best} title="Best" />
-                        <InfoCard text={statsForHole.average} title="Average" />
-                        <InfoCard text={statsForHole.eagle} title="Eagles" />
-                        <InfoCard text={statsForHole.birdie} title="Birdies" />
-                        <InfoCard text={statsForHole.par} title="Pars" />
-                        <InfoCard text={statsForHole.bogey} title="Bogeys" />
-                        <InfoCard text={statsForHole.doubleBogey} title="2x Bogeys" />
+                        <InfoCard text={statsForHole.count} title={t('screens.stats.labels.total')} />
+                        <InfoCard text={statsForHole.best} title={t('screens.stats.labels.best')} />
+                        <InfoCard text={statsForHole.average} title={t('screens.stats.labels.average')} />
+                        <InfoCard text={statsForHole.eagle} title={t('screens.stats.labels.eagles')} />
+                        <InfoCard text={statsForHole.birdie} title={t('screens.stats.labels.birdies')} />
+                        <InfoCard text={statsForHole.par} title={t('screens.stats.labels.pars')} />
+                        <InfoCard text={statsForHole.bogey} title={t('screens.stats.labels.bogeys')} />
+                        <InfoCard text={statsForHole.doubleBogey} title={t('screens.stats.labels.doubleBogeys')} />
                         <InfoCard text={ // Ääääääääääääääääääääääääääää
                             statsForHole.count - statsForHole.eagle - statsForHole.birdie - statsForHole.par -
                             statsForHole.bogey - statsForHole.doubleBogey
-                        } title="Others" />
+                        } title={t('screens.stats.labels.others')} />
                     </View>
                 }
             </Container>

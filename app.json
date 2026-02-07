@@ -2,7 +2,7 @@
   "expo": {
     "name": "FuDisc",
     "slug": "putt-master-9000",
-    "version": "10.4.2",
+    "version": "10.5.0",
     "icon": "./assets/adaptive-icon.png",
     "orientation": "portrait",
     "extra": {
@@ -32,7 +32,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.henzisoft.puttmaster9000",
-      "versionCode": 123,
+      "versionCode": 124,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
@@ -59,7 +59,8 @@
           "resizeMode": "cover",
           "imageWidth": 200
         }
-      ]
+      ],
+      "expo-localization"
     ],
     "runtimeVersion": {
       "policy": "sdkVersion"

@@ -54,7 +54,8 @@
     "react-router-native": "^6.1.1",
     "redux": "^5.0.0",
     "username-generator": "^1.1.0",
-    "zustand": "^5.0.8"
+    "zustand": "^5.0.8",
+    "expo-localization": "~16.1.6"
   },
   "devDependencies": {
     "@apollo/react-testing": "^4.0.0",

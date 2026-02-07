@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from "react-native";
+import { useTranslation } from 'react-i18next';
 import { scoreColors } from '../../../utils/theme';
 import type { SingleStats } from '../../../types/stats';
 
@@ -13,6 +14,7 @@ const displayStats = [
 type Indexed = Record<string, number | string>
 
 export default function Statsbar({statsCard, viewWidth}: {statsCard?: SingleStats, viewWidth: number }) {
+    const { t } = useTranslation();
     if (!statsCard) {
         return null;
     }
@@ -35,7 +37,7 @@ export default function Statsbar({statsCard, viewWidth}: {statsCard?: SingleStat
     };
     return (
         <View style={tyyli.bottomView}>
-            <Text style={{paddingLeft: 15}}>Best: {statsCard.best}, Avg: {statsCard.average}</Text>
+            <Text style={{paddingLeft: 15}}>{t('screens.game.statsbar.template', {best: statsCard.best, average: statsCard.average})}</Text>
             <View style={tyyli.main}>
             {createBars()}
             </View>

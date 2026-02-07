@@ -10,6 +10,7 @@ import { getDistanceFromLatLonInMeters } from "src/utils/distance";
 import { Point as PointType, MeasuredThrow } from "src/types/throws";
 import { useDistanceUnit } from "@hooks/useDistanceUnit";
 import { useMeasurementsStore } from "src/zustand/measurementsStore";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   onAddMeasuredThrow: (
@@ -18,6 +19,7 @@ type Props = {
 };
 
 const Measure: FC<Props> = ({ onAddMeasuredThrow }) => {
+  const { t } = useTranslation();
   const gps = useGPS();
   const [fromLocation, toLocation, setFromLocation, setToLocation] =
     useMeasurementsStore((state) => [
@@ -82,13 +84,13 @@ const Measure: FC<Props> = ({ onAddMeasuredThrow }) => {
           gap={5}
           justifyContent="space-between"
         >
-          <Point point={fromLocation} gps={gps} title="Starting point" />
+          <Point point={fromLocation} gps={gps} title={t('screens.distance.measure.startingPoint')} />
           <Button
             onPress={handleSetLocation(setFromLocation, !!fromLocation)}
             mode={fromLocation ? "outlined" : "contained"}
             icon={fromLocation ? "lock" : "lock-open"}
           >
-            {fromLocation ? "Unlock" : "Lock"}
+            {fromLocation ? t('screens.distance.measure.unlock') : t('screens.distance.measure.lock')}
           </Button>
         </Stack>
         <Stack
@@ -97,18 +99,18 @@ const Measure: FC<Props> = ({ onAddMeasuredThrow }) => {
           gap={5}
           justifyContent="space-between"
         >
-          <Point point={toLocation} gps={gps} title="Landing point" />
+          <Point point={toLocation} gps={gps} title={t('screens.distance.measure.landingPoint')} />
           <Button
             mode={toLocation ? "outlined" : "contained"}
             icon={toLocation ? "lock" : "lock-open"}
             onPress={handleSetLocation(setToLocation, Boolean(toLocation))}
           >
-            {toLocation ? "Unlock" : "Lock"}
+            {toLocation ? t('screens.distance.measure.unlock') : t('screens.distance.measure.lock')}
           </Button>
         </Stack>
         <Spacer />
         <Stack alignItems="center">
-          <Text variant="displayMedium">Distance</Text>
+          <Text variant="displayMedium">{t('screens.distance.measure.distance')}</Text>
           <Text variant="displaySmall">{localizedDistance}</Text>
         </Stack>
         <Spacer />
@@ -117,7 +119,7 @@ const Measure: FC<Props> = ({ onAddMeasuredThrow }) => {
           disabled={distance < 10 || !fromLocation || !toLocation}
           onPress={handleAddMeasurement}
         >
-          Add to List
+          {t('screens.distance.measure.addToList')}
         </Button>
       </Stack>
     </View>
@@ -129,6 +131,7 @@ const Point: FC<{
   gps: ReturnType<typeof useGPS>;
   title: string;
 }> = ({ point, gps, title }) => {
+  const { t } = useTranslation();
   const [lat, lon] = point?.coordinates ?? [gps.lat ?? 0, gps.lon ?? 0];
 
   const acc = point?.acc ?? gps.acc ?? 0;
@@ -139,9 +142,9 @@ const Point: FC<{
   return (
     <Stack style={{ flex: 0 }}>
       <Text variant="titleMedium">{title}</Text>
-      <Text>Lat: {lat}</Text>
-      <Text>Lon: {lon}</Text>
-      <Text style={accStyle}>Acc: {acc?.toFixed(2) || "-"}</Text>
+      <Text>{t('screens.distance.measure.latitude')} {lat}</Text>
+      <Text>{t('screens.distance.measure.longitude')} {lon}</Text>
+      <Text style={accStyle}>{t('screens.distance.measure.accuracy')} {acc?.toFixed(2) || "-"}</Text>
     </Stack>
   );
 };

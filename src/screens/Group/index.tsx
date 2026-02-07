@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, Linking, StyleSheet, View } from "react-native";
 import { Button, Chip, Headline, Paragraph, TextInput, Title } from "react-native-paper";
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../utils/store';
 import Container from '../../components/ThemedComponents/Container';
@@ -15,6 +16,7 @@ import { setUser } from '../../reducers/userReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Group = () => {
+    const { t } = useTranslation();
     const user = useSelector((state: RootState) => state.user);
     const { data, loading, error, refetch } = useQuery(GET_GROUP_MEMBERS, {});
     const updateSettings = useUpdateSettings();
@@ -23,12 +25,12 @@ const Group = () => {
     const handleGroupChange = async (groupName: string) => {
         if (!user.isLoggedIn) return;
         if (!await updateSettings({ variables: { groupName } })) {
-            dispatch(addNotification('Error! Group not set :(', 'alert'));
+            dispatch(addNotification(t('screens.group.groupNotSet'), 'alert'));
         } else {
             if (groupName) {
-                dispatch(addNotification(`You have joined the group ${groupName}`, 'success'));
+                dispatch(addNotification(t('screens.group.joinedGroup', { name: groupName }), 'success'));
             } else {
-                dispatch(addNotification('You have left the group', 'warning'));
+                dispatch(addNotification(t('screens.group.leftGroup'), 'warning'));
             }
 
             dispatch(setUser({ ...user, groupName }));
@@ -41,7 +43,7 @@ const Group = () => {
         Linking.openURL(`https://fudisc.henzi.fi/login?token=${token}`);
     };
 
-    if (!user.isLoggedIn || error) return <ErrorScreen errorMessage="Something is not working properly ..." />;
+    if (!user.isLoggedIn || error) return <ErrorScreen errorMessage={t('screens.group.somethingNotWorking')} />;
 
     if (loading) {
         return <Loading />;
@@ -55,7 +57,7 @@ const Group = () => {
                 <>
                     <Headline>{groupName}</Headline>
                     <Spacer />
-                    <Title>Members</Title>
+                    <Title>{t('screens.group.membersTitle')}</Title>
                     <Spacer />
                     <View style={styles.container}>
                         {data.getGroupMembers.map((member: { id: string, name: string }) => (
@@ -68,11 +70,9 @@ const Group = () => {
                 </>
             ) : (
                 <>
-                    <Headline>Not in a group</Headline>
+                    <Headline>{t('screens.group.notInGroup')}</Headline>
                     <Paragraph>
-                        Set a group name to connect with your friends. This links you all together in the same group,
-                        so you can compare scores and compete with each other. You&apos;ll be able to view your group&apos;s
-                        results and competition standings on the website.
+                        {t('screens.group.notInGroupInfo')}
                     </Paragraph>
                 </>
             )}
@@ -81,8 +81,8 @@ const Group = () => {
                 <JoinGroup onJoinGroup={handleGroupChange} />
             </>)}
             <Spacer />
-            <Title>Website</Title>
-            <Paragraph>Group standing, scores etc. can be found on the the website</Paragraph>
+            <Title>{t('screens.group.websiteTitle')}</Title>
+            <Paragraph>{t('screens.group.websiteInfo')}</Paragraph>
             <Button onPress={handleOpenWebsite} mode="text">https://fudisc.henzi.fi</Button>
             {groupName && <LeaveGroup onLeaveGroup={() => handleGroupChange('')} />}
         </Container>
@@ -90,18 +90,19 @@ const Group = () => {
 };
 
 const LeaveGroup = ({ onLeaveGroup }: { onLeaveGroup: () => void }) => {
+    const { t } = useTranslation();
     const handleLeaveGroupClick = () => {
         Alert.alert(
-            'Leave group',
-            'Are you sure you want to leave the group? If you decide to join back later, you will be treated as a new member and the previous results will not be included in your standings.',
+            t('screens.group.leaveGroupTitle'),
+            t('screens.group.leaveGroupConfirmMessage'),
             [
                 {
-                    text: 'Leave Group',
+                    text: t('screens.group.leaveGroupButton'),
                     onPress: () => {
                         onLeaveGroup();
                     },
                 },
-                { text: 'Cancel', isPreferred: true},
+                { text: t('common.cancel'), isPreferred: true},
             ],
             { cancelable: true }
         );
@@ -109,29 +110,29 @@ const LeaveGroup = ({ onLeaveGroup }: { onLeaveGroup: () => void }) => {
 
     return (
         <>
-            <Title>Leave group</Title>
+            <Title>{t('screens.group.leaveGroupTitle')}</Title>
             <Paragraph>
-                Leaving a group will remove you from the group and you will not be able to see the group&apos;s results
-                or standings anymore.
+                {t('screens.group.leaveGroupInfo')}
             </Paragraph>
             <Spacer />
-            <Button onPress={handleLeaveGroupClick} mode="contained">Leave Group</Button>
+            <Button onPress={handleLeaveGroupClick} mode="contained">{t('screens.group.leaveGroupButton')}</Button>
         </>
     );
 };
 
 const JoinGroup = ({ onJoinGroup }: { onJoinGroup: (groupName: string) => void }) => {
+    const { t } = useTranslation();
     const [groupName, setGroupName] = useState('');
     return (
         <>
-            <Title>Enter group name</Title>
+            <Title>{t('screens.group.enterGroupName')}</Title>
             <TextInput
                 value={groupName}
                 onChangeText={setGroupName}
                 mode="outlined"
             />
             <Spacer />
-            <Button onPress={() => onJoinGroup(groupName)} mode="contained">Join</Button>
+            <Button onPress={() => onJoinGroup(groupName)} mode="contained">{t('common.join')}</Button>
         </>
     );
 };

@@ -10,6 +10,7 @@ import { MeasuredThrow } from "src/types/throws";
 import { formattedDate } from "src/utils/dates";
 import { useDistanceUnit } from "@hooks/useDistanceUnit";
 import MapDisplay from "./MapDisplay";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   throws: MeasuredThrow[];
@@ -17,6 +18,7 @@ type Props = {
 };
 
 const List: FC<Props> = ({ throws, onDelete }) => {
+  const { t } = useTranslation();
   const [selectedThrowId, setSelectedThrowId] = useState<MeasuredThrow>();
 
   if (selectedThrowId) {
@@ -33,7 +35,7 @@ const List: FC<Props> = ({ throws, onDelete }) => {
 
   return (
     <Container withScrollView>
-      <Text variant="headlineSmall">Saved measurements</Text>
+      <Text variant="headlineSmall">{t('screens.distance.list.title')}</Text>
       <Spacer />
       <Stack direction="column" gap={10}>
         {throws.length > 0 ? (
@@ -49,7 +51,7 @@ const List: FC<Props> = ({ throws, onDelete }) => {
             );
           })
         ) : (
-          <Text>No saved measurements</Text>
+          <Text>{t('screens.distance.list.noMeasurements')}</Text>
         )}
       </Stack>
     </Container>

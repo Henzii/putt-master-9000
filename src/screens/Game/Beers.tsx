@@ -14,9 +14,10 @@ import { gameData } from '../../reducers/gameDataReducer';
 import AlcConverter from '../../components/AlcConverter';
 import Divider from '../../components/ThemedComponents/Divider';
 import { Scorecard } from '../../types/game';
+import { useTranslation } from 'react-i18next';
 
 const Beers = () => {
-
+    const { t } = useTranslation();
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
 
     const gameId = gameData.gameId;
@@ -37,7 +38,7 @@ const Beers = () => {
     if (!data && loading) {
         return <Loading />;
     } else if (!data || error) {
-        return <ErrorScreen errorMessage='Whaaaat?!' />;
+        return <ErrorScreen errorMessage={t('screens.game.beers.whaat')} />;
     }
     return (
         <Container withScrollView>
@@ -53,7 +54,7 @@ const Beers = () => {
                             style={{ marginTop: 20 }}
                             onPress={() => setConverterOpen(false)}
                         >
-                            Close
+                            {t('common.close')}
                         </Button>
                         <Button
                             style={{ right: -37, top: -15, zIndex: 999, position: 'absolute' }}
@@ -67,11 +68,11 @@ const Beers = () => {
                     </Container>
                 </Modal>
             </Portal>
-            <Headline>Beers</Headline>
+            <Headline>{t('screens.game.beers.title')}</Headline>
             <View style={tyylit.inputContainer}>
                 {data.scorecards.map(sc => <SingleJuoppo disabled={!data.isOpen} sc={sc} key={sc.user.id} onChange={handleBeersChange} />)}
             </View>
-            <Button mode='outlined' onPress={() => setConverterOpen(true)}>Beer calculator</Button>
+            <Button mode='outlined' onPress={() => setConverterOpen(true)}>{t('screens.game.beers.calculator')}</Button>
             <Divider />
             <Paragraph style={{ fontStyle: 'italic' }}>
                 {poem.poem}

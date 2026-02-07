@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Headline, Paragraph, ProgressBar, TextInput, Title } from 'react-native-paper';
 import Container from '../../components/ThemedComponents/Container';
 import UsernameGenerator from 'username-generator';
@@ -25,6 +26,7 @@ const PROGRESS_BAR_STEPS = [
 ];
 
 export default function FirstTime() {
+    const { t } = useTranslation();
     const [searchUser] = useLazyQuery(SEARCH_USER);
 
     const username = useTextInput({ callBackDelay: 300, defaultValue: '' }, async (value) => {
@@ -32,7 +34,7 @@ export default function FirstTime() {
             const response = await searchUser({ variables: { search: value.toLowerCase() } });
             const userExists = response.data.searchUser?.users?.some((user: { name: string }) => user.name.toLowerCase() === value.toLowerCase());
             if (userExists) {
-                setErrors({ ...errors, userName: 'already taken!' });
+                setErrors({ ...errors, userName: t('screens.firstTime.usernameAlreadyTaken') });
             } else {
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 const { userName, ...rest } = errors;
@@ -75,20 +77,20 @@ export default function FirstTime() {
                     }
                 });
                 await AsyncStorage.setItem('token', token.data?.createUser);
-                dispatch(addNotification(`Welcome to FuDisc, ${username.value}!`, 'success'));
+                dispatch(addNotification(t('screens.firstTime.welcomeToFudisc', { name: username.value }), 'success'));
                 navi("/");
             } catch {
-                dispatch(addNotification('Error when signing up', 'alert'));
+                dispatch(addNotification(t('screens.firstTime.errorSigningUp'), 'alert'));
             }
         }
     };
     const validateForm = () => {
         const newErrors: Errors = {};
         if (password1.length < 8) {
-            newErrors.password1 = "Password too short!";
+            newErrors.password1 = t('screens.firstTime.passwordTooShort');
         }
         if (password1 !== password2) {
-            newErrors.password2 = "Passwords don't match!";
+            newErrors.password2 = t('screens.firstTime.passwordsDontMatch');
         }
         setErrors(newErrors);
     };
@@ -97,33 +99,32 @@ export default function FirstTime() {
         <Container withScrollView>
             <ProgressBar progress={PROGRESS_BAR_STEPS[step]} />
             <Spacer />
-            <Headline>Welcome to FuDisc!</Headline>
+            <Headline>{t('screens.firstTime.welcomeTitle')}</Headline>
             {step === 0 && (
                 <>
                     <Paragraph>
-                        Looks like you are new here. Before you can start playing, you need to create an account. It&apos;ll only take a minute!
+                        {t('screens.firstTime.newUserIntro')}
                     </Paragraph>
                     <Paragraph>
-                        If you already have an account, you can go directly to the login screen. Or if you&apos;re in a hurry, you can just randomize everything and get started right away.
+                        {t('screens.firstTime.existingAccountInfo')}
                     </Paragraph>
                     <Spacer />
-                    <Button mode="contained-tonal" onPress={() => navi('/')} >To the login screen!</Button>
+                    <Button mode="contained-tonal" onPress={() => navi('/')} >{t('screens.firstTime.toLoginScreen')}</Button>
                     <Spacer size={5} />
-                    <Button mode="outlined" onPress={handleSignUp}>Shut up and let me in</Button>
+                    <Button mode="outlined" onPress={handleSignUp}>{t('screens.firstTime.shutUpLetMeIn')}</Button>
                     <Spacer size={15} />
-                    <Button mode="contained" onPress={() => setStep(1)} testID="create-account">I want to create a proper account</Button>
+                    <Button mode="contained" onPress={() => setStep(1)} testID="create-account">{t('screens.firstTime.createProperAccount')}</Button>
                 </>
             )}
             {step === 1 && (
                 <>
-                    <Title>Username</Title>
+                    <Title>{t('screens.firstTime.usernameTitle')}</Title>
                     <Paragraph>
-                        Pick a unique username. Other players can find you with this. Also use this name to login
-                        to the website (fudisc.henzi.fi). This name can be changed afterwards on the website.
+                        {t('screens.firstTime.usernameHelp')}
                     </Paragraph>
                     <Spacer />
                     <TextInput
-                        label={`Username${errors.userName ? ` - ${errors.userName}` : ''}`}
+                        label={`${t('screens.firstTime.usernameTitle')}${errors.userName ? ` - ${errors.userName}` : ''}`}
                         autoComplete='off'
                         mode="outlined"
                         testID='username'
@@ -138,19 +139,19 @@ export default function FirstTime() {
                         onPress={() => setStep(2)}
                         testID="nextStep"
                     >
-                        Next
+                        {t('common.next')}
                     </Button>
                 </>
             )}
             {step === 2 && (
                 <>
-                    <Title>Password</Title>
+                    <Title>{t('screens.firstTime.passwordTitle')}</Title>
                     <Paragraph>
-                        Enter a password. This password is used to login to the app and the website.
+                        {t('screens.firstTime.passwordHelp')}
                     </Paragraph>
                     <Spacer />
                     <TextInput
-                        label={`Password${errors.password1 ? ` - ${errors.password1}` : ''}`}
+                        label={`${t('screens.firstTime.passwordTitle')}${errors.password1 ? ` - ${errors.password1}` : ''}`}
                         autoComplete='off'
                         mode="outlined"
                         testID="password1"
@@ -162,7 +163,7 @@ export default function FirstTime() {
                     />
                     <Spacer size={3} />
                     <TextInput
-                        label={`Verify password${errors.password2 ? ` - ${errors.password2}` : ''}`}
+                        label={`${t('screens.firstTime.verifyPassword')}${errors.password2 ? ` - ${errors.password2}` : ''}`}
                         autoComplete='off'
                         onBlur={validateForm}
                         error={'password2' in errors}

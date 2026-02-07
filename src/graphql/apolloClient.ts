@@ -7,7 +7,7 @@ import { getMainDefinition } from "@apollo/client/utilities";
 
 const PRODUCTION_URI = "https://fudisc-server.henzi.fi";
 const PREVIEW_URI = "https://fudisc-server.henzi.fi";
-const DEVELOPMENT_URI = "http://192.168.1.2:4000";
+const DEVELOPMENT_URI = "http://172.27.96.35:4000";
 
 export const getAPIUrl = async () => {
   const localMode =
@@ -32,7 +32,7 @@ const wsLink = new GraphQLWsLink(
         Authorization: token ? `bearer ${token}` : "",
       };
     },
-  })
+  }),
 );
 
 const authLink = setContext(async (_root: unknown, { headers }) => {
@@ -56,7 +56,7 @@ const splitLink = split(
     );
   },
   wsLink,
-  authLink.concat(httpLink)
+  authLink.concat(httpLink),
 );
 
 export const client = new ApolloClient({

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from "react-native";
 import { ActivityIndicator, IconButton, Text, TextInput, useTheme } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import { SEARCH_USER } from '../graphql/queries';
 import useTextInput from '../hooks/useTextInput';
 import { useLazyQuery } from '@apollo/client';
@@ -23,6 +24,7 @@ type QueryResponse = {
 }
 
 const AddFriend = ({ onClose, onAddFriend, friends }: AddFriendProps) => {
+    const { t } = useTranslation();
     const [searchUsers, { data, loading }] = useLazyQuery<QueryResponse>(SEARCH_USER);
     const { colors } = useTheme();
     const { id } = useSession();
@@ -44,17 +46,17 @@ const AddFriend = ({ onClose, onAddFriend, friends }: AddFriendProps) => {
     return (
         <View style={tyyli.container}>
             <Stack direction="row" justifyContent="space-between" alignItems='center'>
-                <Text variant="headlineSmall">Add friend</Text>
+                <Text variant="headlineSmall">{t('components.addFriend.title')}</Text>
                 <IconButton icon="close" onPress={onClose} />
             </Stack>
-            <Text variant="titleSmall">Who&apos;s your daddy</Text>
+            <Text variant="titleSmall">{t('components.addFriend.searchHint')}</Text>
             <TextInput
                 autoComplete='off'
                 {...searchTextInput}
                 mode='outlined'
-                label='Name'
+                label={t('components.addFriend.nameLabel')}
             />
-            {loading ? <ActivityIndicator /> : users.length > 0 && <Text>{users.length} users found</Text>}
+            {loading ? <ActivityIndicator /> : users.length > 0 && <Text>{t('components.addFriend.usersFound', { count: users.length })}</Text>}
             <Spacer />
             <ScrollView>
                 <Stack gap={8}>
@@ -64,8 +66,8 @@ const AddFriend = ({ onClose, onAddFriend, friends }: AddFriendProps) => {
                         return (
                             <View key={user.id} style={tyyli.user}>
                                 <Text variant="labelLarge" style={tyyli.name}>{user.name}</Text>
-                                {isFriend && <Text style={tyyli.badge}>Friend!</Text>}
-                                {user.id === id && <Text style={tyyli.badge}>It&apos;s a me!</Text>}
+                                {isFriend && <Text style={tyyli.badge}>{t('components.addFriend.friendBadge')}</Text>}
+                                {user.id === id && <Text style={tyyli.badge}>{t('components.addFriend.itsMe')}</Text>}
                                 {!isFriend && user.id !== id && (
                                     <IconButton
                                         icon="account-plus"

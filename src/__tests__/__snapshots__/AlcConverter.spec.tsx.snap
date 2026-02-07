@@ -651,7 +651,8 @@ exports[`<AlcConverter /> renders 1`] = `
         testID="beers"
       >
         0
-         beers
+         
+        beers
       </Text>
     </View>
   </View>

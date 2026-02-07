@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import useGPS from "../../hooks/useGPS";
 import ErrorScreen from "../ErrorScreen";
 import { useLazyQuery } from '@apollo/client';
@@ -19,6 +20,7 @@ type Props = {
 }
 
 const SelectCourseMap = ({ onClose, onSelectLayout }: Props) => {
+    const { t } = useTranslation();
     const { loading, lon = 0, lat = 0, ready } = useGPS();
     const [region, setRegion] = useState<Region>();
     const [selectedCourseId, setSelectedCourseId] = useState<string | number>();
@@ -61,7 +63,7 @@ const SelectCourseMap = ({ onClose, onSelectLayout }: Props) => {
     };
 
     if (queryError) {
-        return <ErrorScreen errorMessage="Failed to load courses" />;
+        return <ErrorScreen errorMessage={t('components.selectCourse.map.failedToLoad')} />;
     }
 
     const courses = data?.getCourses.courses ?? previousData?.getCourses.courses ?? [];
@@ -107,24 +109,26 @@ const SelectCourseMap = ({ onClose, onSelectLayout }: Props) => {
 };
 
 const GPSLoading = () => {
+    const { t } = useTranslation();
     return (
         <View style={styles.gpsLoading}>
             <ActivityIndicator />
-            <Text>GPS Loading</Text>
+            <Text>{t('components.selectCourse.map.gpsLoading')}</Text>
         </View>
     );
 };
 
 const CourseInfo = ({ course, onSelect }: { course: Course, onSelect: (name: string) => void }) => {
+    const { t } = useTranslation();
     const distanceString = useDistanceUnit(course.distance.meters);
     return (
         <View style={styles.courseInfo}>
             <SplitContainer>
                 <View>
                     <Text style={styles.courseName}>{course.name}</Text>
-                    <Text>{course.layouts.length} layouts, {distanceString} away</Text>
+                    <Text>{t('components.selectCourse.layoutsAndDistance', {count: course.layouts.length, distance: distanceString})}</Text>
                 </View>
-                <Button mode="outlined" onPress={() => onSelect(course.name)}>Select</Button>
+                <Button mode="outlined" onPress={() => onSelect(course.name)}>{t('components.selectCourse.select')}</Button>
             </SplitContainer>
         </View>
     );

@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, AppState, ScrollView } from 'react-native';
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import PlayerScorecard from './Scorecard';
 import { Dimensions } from 'react-native';
 import RoundTabs from '../../components/RoundTabs';
@@ -16,6 +17,7 @@ import type { Scorecard } from '../../types/game';
 import { useGameStore } from 'src/zustand/gameStore';
 
 export default function Game() {
+    const { t } = useTranslation();
     const [selectedRound, setSelectedRound] = useGameStore(state => [state.selectedRound, state.setSelectedRound]);
     const [scorecards, setScorecards] = useState<Scorecard[]>([]);
     const gameData = useSelector((state: RootState) => state.gameData) as gameData;
@@ -89,7 +91,7 @@ export default function Game() {
 
     if (!data) return <Loading />;
     if (error) {
-        return <ErrorScreen errorMessage={`Error just happened!`} />;
+        return <ErrorScreen errorMessage={t('screens.game.errorOccurred')} />;
     }
     if (!data.isOpen) {
         return <ClosedGame />;
@@ -149,6 +151,7 @@ export default function Game() {
     );
 }
 const ClosedGame = () => {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
 
     // Uusi peli -> poistetaan pelin tiedot redux-storesta jolloin createGame näkymä avautuu
@@ -157,8 +160,8 @@ const ClosedGame = () => {
     };
     return (
         <Container style={peliStyles.gameover}>
-            <Title style={peliStyles.gameoverText}>Game over!</Title>
-            <Button onPress={handleButtonClick}>Start a new game</Button>
+            <Title style={peliStyles.gameoverText}>{t('screens.game.gameOver')}</Title>
+            <Button onPress={handleButtonClick}>{t('screens.game.startNewGame')}</Button>
         </Container>
     );
 };

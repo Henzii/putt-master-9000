@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, Text } from "react-native";
 import { Button, Caption, Headline, IconButton, Switch, TextInput, Title } from "react-native-paper";
+import { useTranslation } from 'react-i18next';
 import Divider from './ThemedComponents/Divider';
 import { Layout, NewLayout } from '../types/course';
 
 const AddLayout = ({ onCancel, onAdd, layout }: AddLayoutProps) => {
+    const { t } = useTranslation();
     const [holes, setHoles] = useState<number | undefined>(layout?.holes);
     const [pars, setPars] = useState<number[]>(layout?.pars || []);
     const [names, setNames] = useState(layout?.names ?? []);
@@ -58,26 +60,26 @@ const AddLayout = ({ onCancel, onAdd, layout }: AddLayoutProps) => {
 
     return (
         <ScrollView contentContainerStyle={{ paddingBottom: 40, }} style={tyyli.main}>
-            <Headline>{isEditMode ? 'Edit' : 'Add'} layout</Headline>
-            <Caption>Layout name</Caption>
+            <Headline>{isEditMode ? t('components.addLayout.editTitle') : t('components.addLayout.addTitle')}</Headline>
+            <Caption>{t('components.addLayout.layoutName')}</Caption>
             <TextInput autoComplete='off' value={name} onChangeText={(value) => setName(value)} disabled={deprecated} />
-            <Caption>Number of holes</Caption>
+            <Caption>{t('components.addLayout.numberOfHoles')}</Caption>
             <TextInput autoComplete='off' keyboardType='numeric' value={(holes || '') + ''} onChangeText={handleHolesChange} disabled={deprecated} />
             {isEditMode && (
                 <View style={tyyli.deprecatedSwitch}>
                     <Switch value={deprecated} onChange={() => setDeprecated(value => !value)} />
-                    <Text>Mark layout as obsolete</Text>
+                    <Text>{t('components.addLayout.markAsObsolete')}</Text>
                 </View>
             )}
             <Divider />
-            <Title>Holes</Title>
+            <Title>{t('components.addLayout.holesTitle')}</Title>
             <HolesPars pars={pars} onParChange={handleParChange} onNameChange={handleNameChange} names={names} deprecated={deprecated} />
             <Text>
-                {holes || 0} Holes, par {pars.reduce((p, c) => p + c, 0)}
+                {t('components.addLayout.holeSummary', { holes: holes || 0, par: pars.reduce((p, c) => p + c, 0) })}
             </Text>
             <View style={tyyli.buttonsContainer}>
-                <Button onPress={handleAdd} icon="check"  mode='contained'>{layout ? 'Save' : 'Add'}</Button>
-                <Button onPress={handleCancel} icon="cancel" mode='outlined'>Cancel</Button>
+                <Button onPress={handleAdd} icon="check"  mode='contained'>{layout ? t('common.save') : t('common.add')}</Button>
+                <Button onPress={handleCancel} icon="cancel" mode='outlined'>{t('common.cancel')}</Button>
             </View>
         </ScrollView>
     );
@@ -92,15 +94,16 @@ type HoleParsProps = {
 }
 
 const HolesPars = ({ onParChange, pars, onNameChange, names, deprecated }: HoleParsProps) => {
+    const { t } = useTranslation();
     const returni = [];
     for (let i = 0; i < pars.length; i++) {
         if (pars[i] === undefined) continue;
         returni.push(
             <View key={`HolesParsKey${i}`} style={tyyli.singleHole}>
-                <Text>Hole #{i + 1}</Text>
+                <Text>{t('components.addLayout.holeNumber', { number: i + 1 })}</Text>
                 <TextInput
                     value={names?.[i] || ''}
-                    label="Name (optional)"
+                    label={t('components.addLayout.nameOptional')}
                     mode="outlined"
                     dense
                     style={{ marginLeft: 10 }}

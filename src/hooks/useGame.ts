@@ -2,6 +2,7 @@ import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { SET_SCORE, CLOSE_GAME, SET_BEERS } from "../graphql/mutation";
 import { GET_GAME, GET_LAYOUT } from "../graphql/queries";
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { cacheUpdateUserScores } from '../utils/gameCahcheUpdates';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../reducers/notificationReducer';
@@ -20,6 +21,7 @@ const useGame = (gameId: string) => {
     const [setBeersMutation] = useMutation(SET_BEERS);
     const [setScoreMutation] = useMutation<{setScore: Game}>(SET_SCORE, {errorPolicy: 'all'});
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (data?.getGame.layout_id) {
@@ -50,7 +52,7 @@ const useGame = (gameId: string) => {
             });
             return true;
         } catch (e) {
-            dispatch(addNotification(`Error! Result might not have been saved :/`, 'alert'));
+            dispatch(addNotification(t('errors.scoreNotSaved'), 'alert'));
             return false;
         }
     };

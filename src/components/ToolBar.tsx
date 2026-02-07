@@ -5,8 +5,10 @@ import { Appbar, useTheme } from 'react-native-paper';
 import { useLocation, useNavigate } from 'react-router-native';
 import { useBackButton } from './BackButtonProvider';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 
 export default function ToolBar() {
+    const { t } = useTranslation();
     const [counter, setCounter] = useState(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
     const location = useLocation();
@@ -37,7 +39,7 @@ export default function ToolBar() {
                 icon={!onMainScreen ? 'arrow-left' : ''}
                 iconColor='white'
                 onPress={!onMainScreen ? backButton.goBack : undefined} />
-            <Appbar.Content title="FuDisc" onTouchStart={handleTitlePress} titleStyle={styles.title} />
+            <Appbar.Content title={t('components.toolbar.title')} onTouchStart={handleTitlePress} titleStyle={styles.title} />
         </Appbar>
     );
 }

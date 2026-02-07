@@ -4,6 +4,7 @@ import { FlatList, StyleSheet, View, } from "react-native";
 import { IconButton, Searchbar, Switch, Text, useTheme } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-native';
+import { useTranslation } from 'react-i18next';
 import { GET_OLD_GAMES } from '../../graphql/queries';
 import { newGame } from '../../reducers/gameDataReducer';
 import Loading from '../../components/Loading';
@@ -25,6 +26,7 @@ type GamesQueryResponse = {
 const GAMES_LIMIT = 20;
 
 const OldGames = () => {
+    const { t } = useTranslation();
     const [showSearchBar, setShowSearchBar] = useState(false);
     const setGameId = useGameStore(state => state.setGameId);
     const [filterText, setFilterText] = useState('');
@@ -80,9 +82,9 @@ const OldGames = () => {
             <Header setSpacing={setHeaderSpacing} bottomSize={20}>
                 <SplitContainer style={{ flexWrap: 'wrap' }}>
                     <View>
-                        <Text variant="headlineSmall" style={styles.header}>Games</Text>
+                        <Text variant="headlineSmall" style={styles.header}>{t('screens.oldGames.title')}</Text>
                         <Text style={styles.header}>
-                            Total {data?.getGames.count ?? '--'} rounds
+                            {t('screens.oldGames.totalRounds', { count: data?.getGames.count ?? 0 })}
                         </Text>
                     </View>
                     <IconButton icon="magnify" mode="contained-tonal" containerColor={colors.tertiary} onPress={() => setShowSearchBar(val => !val)} />
@@ -91,13 +93,13 @@ const OldGames = () => {
                 {Boolean(user?.groupName) && (
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                         <Switch value={showOnlyGroupGames} onValueChange={setShowOnlyGroupGames} color={colors.tertiary} />
-                        <Text style={styles.header}>Show only group games</Text>
+                        <Text style={styles.header}>{t('screens.oldGames.showOnlyGroupGames')}</Text>
                     </View>
                 )}
                 {showSearchBar && <Searchbar {...filter} autoComplete='off' autoFocus traileringIcon="close" onTraileringIconPress={() => setShowSearchBar(false)} />}
 
             </Header>
-            {loading && !games ? <Loading loadingText="Loading games..." /> : (
+            {loading && !games ? <Loading loadingText={t('screens.oldGames.loadingGames')} /> : (
                 <FlatList
                     data={games}
                     renderItem={({ item }) => <GameItem myId={(user?.id ?? '').toString()} game={item} onClick={handleGameActivation} />}
@@ -105,7 +107,7 @@ const OldGames = () => {
                     ItemSeparatorComponent={Separator}
                     onEndReachedThreshold={1}
                     onEndReached={fetchMoreGames}
-                    ListFooterComponent={(loading ? <Loading noFullScreen loadingText='Fetching more...' /> : undefined)}
+                    ListFooterComponent={(loading ? <Loading noFullScreen loadingText={t('screens.oldGames.fetchingMore')} /> : undefined)}
                 />
             )}
         </View>

@@ -1,6 +1,142 @@
 {
+  "common": {
+    "ok": "Ok",
+    "cancel": "Peruuta",
+    "yes": "Kyllä",
+    "no": "Ei",
+    "save": "Tallenna",
+    "add": "Lisää",
+    "delete": "Poista",
+    "edit": "Muokkaa",
+    "back": "Takaisin",
+    "loading": "Ladataan...",
+    "error": "Virhe",
+    "close": "Sulje",
+    "next": "Seuraava",
+    "change": "Vaihda",
+    "create": "Luo",
+    "join": "Liity",
+    "leave": "Poistu",
+    "submit": "Lähetä",
+    "name": "Nimi",
+    "optional": "Valinnainen",
+    "holes": "Väylät",
+    "par": "Par"
+  },
   "screens": {
+    "frontpage": {
+      "newGame": "Uusi peli",
+      "oldGames": "Vanhat pelit",
+      "courses": "Radat",
+      "friends": "Kaverit",
+      "stats": "Tilastot",
+      "achievements": "Saavutukset",
+      "group": "Ryhmä",
+      "settings": "Asetukset",
+      "website": "Verkkosivut",
+      "distance": "Etäisyys",
+      "feedback": "Palaute",
+      "logout": "Kirjaudu ulos",
+      "connectingToServer": "Yhdistetään palvelimeen...",
+      "sessionFailed": "Istunto epäonnistui",
+      "sessionFixSuggestion": "Joitain asioita, joita voit kokeilla korjataksesi tämän virheen:",
+      "clearSession": "Tyhjennä istunto",
+      "reloadApp": "Lataa sovellus uudelleen",
+      "signUp": "Rekisteröidy!",
+      "playersCount": "Pelaajat",
+      "holesCompleted": "Väylät",
+      "continue": "Jatka"
+    },
+    "main": {
+      "emptyNotification": "Vastaanotettiin tyhjä ilmoitus???"
+    },
+    "firstTime": {
+      "welcomeTitle": "Tervetuloa FuDisciin!",
+      "newUserIntro": "Näyttää siltä, että olet täällä ensimmäistä kertaa. Ennen kuin voit aloittaa pelaamisen, sinun täytyy luoda tili. Se vie vain hetken!",
+      "existingAccountInfo": "Jos sinulla on jo tili, voit siirtyä suoraan kirjautumisnäkymään. Tai jos sinulla on kiire, voit arpoa kaiken ja päästä alkuun heti.",
+      "toLoginScreen": "Kirjautumisnäkymään!",
+      "shutUpLetMeIn": "Turpa kii ja päästä mut sisään",
+      "createProperAccount": "Haluan luoda uuden tilin",
+      "usernameTitle": "Käyttäjänimi",
+      "usernameHelp": "Valitse uniikki käyttäjänimi. Muut pelaajat voivat löytää sinut tällä nimellä. Käytä tätä nimeä myös kirjautuaksesi verkkosivuille (fudisc.henzi.fi). Nimen voi vaihtaa myöhemmin verkkosivuilla.",
+      "usernameAlreadyTaken": "jo käytössä!",
+      "passwordTitle": "Salasana",
+      "passwordHelp": "Syötä salasana. Tätä salasanaa käytetään kirjautumiseen sovellukseen ja verkkosivuille.",
+      "passwordTooShort": "Salasana liian lyhyt!",
+      "passwordsDontMatch": "Salasanat eivät täsmää!",
+      "verifyPassword": "Vahvista salasana",
+      "emailTitle": "Sähköposti (valinnainen)",
+      "emailHelp": "Sähköpostia käytetään vain salasanan palautukseen ja ilmoituksiin. Se ei ole pakollinen, joten voit jättää sen tyhjäksi.",
+      "signUpComplete": "Siinä se! Nyt voit aloittaa pelaamisen.",
+      "backToStart": "Takaisin alkuun",
+      "errorSigningUp": "Virhe rekisteröitymisessä",
+      "welcomeToFudisc": "Tervetuloa FuDisciin, {{name}}!"
+    },
     "game": {
+      "newGame": "Uusi peli",
+      "selectCourse": "Valitse rata",
+      "changeCourse": "Vaihda rata",
+      "selectPlayers": "Valitse pelaajat",
+      "addPlayers": "Lisää pelaajia",
+      "gameSettings": "Asetukset",
+      "createGame": "Luo peli",
+      "gameOver": "Peli on päättynyt!",
+      "startNewGame": "Aloita uusi peli",
+      "errorOccurred": "Tapahtui virhe!",
+      "notLoggedIn": "Et ole kirjautunut sisään?",
+      "groupCompetitionDisabled": "Ryhmäkilpailu pois käytöstä, et kuulu mihinkään ryhmään",
+      "isGroupCompetition": "Ryhmäkilpailupeli",
+      "groupCompetitionInfo": "Tämä vipu merkitsee pelin ryhmäkilpailuksi. Pisteitä jaetaan ryhmään {{groupName}} kuuluville pelaajille.",
+      "groupJoinInfo": "Jos et kuulu mihinkään ryhmään, valitse \"Ryhmät\" päävalikosta liittyäksesi.",
+      "bHcMultiplier": "bHC-kerroin",
+      "bHcMultiplierInfo": "Säädä kaljatasoitusta tälle pelille. Kaljatasuri on 0,5 heittoa per olut.",
+      "bHcMultiplierCalc": "Uusi kaljatasuri (bHC) lasketaan kertomalla 0,5 valitulla kertoimella, antaen heittoja per bisse.",
+      "tableHeaderName": "Nimi",
+      "tableHeaderGames": "Pelit",
+      "tableHeaderBest": "Paras",
+      "tableHeaderHc": "HC",
+      "tabs": {
+        "scorecard": "Tuloskortti",
+        "teeSign": "Väyläkyltti",
+        "summary": "Yhteenveto",
+        "throwStyle": "Heittotyyli",
+        "beers": "Oluet",
+        "setup": "Asetukset"
+      },
+      "subscriptionFailed": "Tilaus epäonnistui. Pelidataa ei päivitetä reaaliajassa.",
+      "gameCreated": "Uusi peli luotu!",
+      "gameCreationFailed": "Pelin luominen epäonnistui!",
+      "setup": {
+        "info": "Tiedot",
+        "started": "Aloitettu",
+        "closed": "Suljettu",
+        "duration": "Kesto",
+        "closeConfirmTitle": "Oletko varma?",
+        "closeConfirmMessage": "Pelin sulkemisen jälkeen et voi enää syöttää pisteitä tai juoda olutta",
+        "gameClosed": "Peli suljettu",
+        "errorOccurred": "Jotain meni pieleen :(",
+        "gameAbandoned": "Peli hylätty",
+        "reopenConfirmTitle": "Oletko varma",
+        "reopenConfirmMessage": "Kaikki poistetaan",
+        "endGame": "Lopeta peli",
+        "stopDrinkingMessage": "Lopeta juominen ja sulje peli.",
+        "reopen": "Avaa uudelleen",
+        "reopenMessage": "Avaa peli uudelleen. Muut pelaajat saavat ilmoituksen petoksestasi.",
+        "mainMenu": "Päävalikko",
+        "mainMenuMessage": "Poista peli ja palaa päävalikkoon",
+        "discardGame": "Hylkää peli",
+        "discardMessage": "Jos peli on päättynyt, vain oma tulokorttisi poltetaan helvetin tulessa.",
+        "gameId": "Pelin ID:",
+        "noSubscription": "Ei tilausta"
+      },
+      "beers": {
+        "title": "Oluet",
+        "whaat": "Mitä?!",
+        "calculator": "Kaljalaskin"
+      },
+      "statsbar": {
+        "template": "Paras: {{best}}, Keskiarvo: {{average}}"
+      },
       "holeMap": {
         "noImageTitle": "Ei väyläkylttiä",
         "noImageText": "Ota kuva väyläkyltiltä lisätäksesi sen tähän",
@@ -10,10 +146,345 @@
         "imageLoading": "Kuvaa ladataan...",
         "failedToLoad": "Kuvan lataus epäonnistui.",
         "uploadedBy": "Lähettänyt"
+      },
+      "throwStyle": {
+        "title": "Arvo heittotyylit",
+        "individualThrowStyles": "Määritä heittotyyli jokaiselle pelaajalle erikseen.",
+        "player": "Pelaaja",
+        "disc": "Kiekko",
+        "style": "Tyyli",
+        "startRandomizing": "Aloita arpominen",
+        "stopRandomizing": "Turpa kiinni!"
       }
+    },
+    "stats": {
+      "myStats": "Omat tilastot",
+      "userStats": "{{name}}n tilastot",
+      "spyFriend": "Vakoile kaveria",
+      "noCourseSelected": "Rataa ei valittu. Valitse rata nähdäksesi ratakohtaiset tilastot.",
+      "selectCourse": "Valitse rata",
+      "changeCourse": "Vaihda rata",
+      "errorOccurred": "Tapahtui virhe",
+      "noData": "Ei dataa...",
+      "holesData": "Väylien data",
+      "noDataAvailable": "Dataa ei saatavilla",
+      "activity": {
+        "error": "Virhe!",
+        "loadingFailed": "Tilastojen lataus epäonnistui :/",
+        "year": "Vuosi {{year}}",
+        "last12Months": "Viimeiset 12 kuukautta",
+        "totalGames": "Yhteensä {{games}} peliä {{from}} - {{to}}"
+      },
+      "labels": {
+        "total": "Yhteensä",
+        "best": "Paras",
+        "average": "Keskiarvo",
+        "eagles": "Kotkat",
+        "birdies": "Pirkot",
+        "pars": "Paarit",
+        "bogeys": "Boogiet",
+        "doubleBogeys": "Kaksois bogey",
+        "others": "Muut"
+      },
+      "bestPoolGame": {
+        "title": "Maailman parhaat",
+        "info": "Näyttää parhaan pelatun pelin valitulla radalla n:n suuruisella pelaajamäärällä.",
+        "poolLabel": "Näytä paras peli pelaajamäärälle: ",
+        "noData": "Ei dataa :P",
+        "eligibleGames": "Kelpoisia pelejä löytyi: ",
+        "date": "Päivämäärä:",
+        "players": "Pelaajat:",
+        "totalScore": "Kokonaispistemäärä:",
+        "totalPar": "Kokonais par:",
+        "totalAdjusted": "+/- Yhteensä:",
+        "adjustedAdjusted": "+/- Mukautettu:",
+        "playersTitle": "Pelaajat"
+      }
+    },
+    "achievements": {
+      "myAchievements": "Omat saavutukset",
+      "userAchievements": "{{name}}n saavutukset",
+      "noAchievements": "Ei saavutuksia vielä!",
+      "errorLoading": "Ei toimi"
+    },
+    "settings": {
+      "friendsTitle": "Kaverit",
+      "blockFriendRequests": "Estä muita käyttäjiä lisäämästä sinua kaveriksi",
+      "changePasswordTitle": "Vaihda salasana",
+      "newPassword": "Uusi salasana",
+      "confirmPassword": "Vahvista salasana",
+      "passwordTooShort": "Salasana liian lyhyt!",
+      "passwordTooShortInfo": "Salasanan tulee olla vähintään 5 merkkiä",
+      "passwordNoMatch": "Ei täsmää!",
+      "passwordsDontMatch": "Salasanat eivät täsmää!",
+      "passwordChanged": "Salasana vaihdettu!",
+      "passwordChangeFailed": "Virhe! Salasanaa ei vaihdettu! :/",
+      "deleteAccountTitle": "Poista tili",
+      "deleteAccountInfo": "Poista tilisi pysyvästi. Poistettuja tilejä ei voi palauttaa.",
+      "deleteAccountConfirmInfo": "Poistaaksesi tilisi, kirjoita {{name}} alla olevaan kenttään ja paina Poista tili.",
+      "accountDeleted": "Tili poistettu",
+      "infoTitle": "Tiedot",
+      "version": "versio",
+      "build": "build",
+      "accountType": "tilityyppi",
+      "displayUnitsTitle": "Näyttöyksiköt",
+      "metric": "Metrijärjestelmä",
+      "imperial": "Imperiaalijärjestelmä"
+    },
+    "feedback": {
+      "title": "Jätä palautetta",
+      "subject": "Aihe",
+      "subjectPlaceholder": "Kirjoita palautteen aihe",
+      "email": "Sähköposti",
+      "emailPlaceholder": "Kirjoita sähköpostisi (valinnainen)",
+      "message": "Viesti",
+      "messagePlaceholder": "Kirjoita palautteesi tähän",
+      "submitButton": "Lähetä palaute",
+      "sendFailed": "Palautteen lähetys epäonnistui. Yritä myöhemmin uudelleen.",
+      "thankYouTitle": "Kiitos palautteesta!",
+      "thankYouMessage": "Palautteesi on vastaanotettu. Saatamme ottaa yhteyttä, jos jätit sähköpostiosoitteesi."
+    },
+    "oldGames": {
+      "title": "Pelit",
+      "totalRounds": "Yhteensä {{count}} kierrosta",
+      "loadingGames": "Ladataan pelejä...",
+      "fetchingMore": "Haetaan lisää...",
+      "showOnlyGroupGames": "Näytä vain ryhmäpelit"
+    },
+    "distance": {
+      "listTab": "Lista",
+      "measureTab": "Mittaa",
+      "newMeasurementAdded": "Uusi mittaus lisätty",
+      "measurementDeleted": "Mittaus poistettu",
+      "somethingWentWrong": "Jotain meni pieleen",
+      "list": {
+        "title": "Tallennetut mittaukset",
+        "noMeasurements": "Ei tallennettuja mittauksia"
+      },
+      "measure": {
+        "startingPoint": "Lähtöpiste",
+        "landingPoint": "Laskeutumispiste",
+        "unlock": "Avaa",
+        "lock": "Lukitse",
+        "distance": "Etäisyys",
+        "addToList": "Lisää listaan",
+        "latitude": "Lat:",
+        "longitude": "Long:",
+        "accuracy": "Tark:"
+      }
+    },
+    "group": {
+      "title": "Ryhmä",
+      "notInGroup": "Et kuulu ryhmään",
+      "notInGroupInfo": "Aseta ryhmän nimi yhdistääksesi kavereidesi kanssa. Tämä linkittää teidät kaikki samaan ryhmään, jotta voitte vertailla tuloksia ja kilpailla keskenänne. Voitte nähdä ryhmänne tulokset ja kilpailutilanteet verkkosivuilla.",
+      "membersTitle": "Jäsenet",
+      "enterGroupName": "Syötä ryhmän nimi",
+      "websiteTitle": "Verkkosivut",
+      "websiteInfo": "Ryhmän tilanne, tulokset jne. löytyvät verkkosivuilta",
+      "leaveGroupTitle": "Poistu ryhmästä",
+      "leaveGroupInfo": "Ryhmästä poistuminen poistaa sinut ryhmästä etkä enää näe ryhmän tuloksia tai tilannetta.",
+      "leaveGroupButton": "Poistu ryhmästä",
+      "leaveGroupConfirmTitle": "Poistu ryhmästä",
+      "leaveGroupConfirmMessage": "Haluatko varmasti poistua ryhmästä? Jos päätät liittyä takaisin myöhemmin, sinua kohdellaan uutena jäsenenä eikä aiempia tuloksia sisällytetä tilastoihisi.",
+      "joinedGroup": "Olet liittynyt ryhmään {{name}}",
+      "leftGroup": "Olet poistunut ryhmästä",
+      "groupNotSet": "Virhe! Ryhmää ei asetettu :(",
+      "somethingNotWorking": "Jokin ei toimi kunnolla ..."
+    }
+  },
+  "components": {
+    "login": {
+      "title": "Kirjaudu",
+      "usernameLabel": "Käyttäjänimi",
+      "passwordLabel": "Salasana",
+      "loginButton": "Kirjaudu",
+      "welcomeMessage": "Tervetuloa, {{name}}",
+      "wrongCredentials": "Väärä käyttäjänimi tai salasana"
+    },
+    "signUp": {
+      "title": "Rekisteröidy",
+      "titleFriend": "Rekisteröi kaveri",
+      "friendSignUpInfo1": "Olet luomassa tiliä kaverillesi. Sen sijaan, että luot tilejä kaikille, sinun pitäisi pakottaa kaverisi käyttämään Fudiscia.",
+      "friendSignUpInfo2": "Luotu kaveri lisätään automaattisesti kaverilistallesi.",
+      "usernameTitle": "Käyttäjänimi",
+      "usernameLabel": "Käyttäjänimi",
+      "passwordTitle": "Salasana",
+      "passwordLabel": "Salasana",
+      "confirmPasswordLabel": "Vahvista salasana",
+      "emailTitle": "Sähköposti",
+      "signUpButton": "Rekisteröidy!",
+      "nameTooShort": "Nimi liian lyhyt!",
+      "passwordTooShort": "Salasana liian lyhyt. Vähintään 5 merkkiä.",
+      "passwordsDontMatch": "Salasanat eivät täsmää!",
+      "accountCreated": "Tili luotu käyttäjälle {{name}}.",
+      "nowFriends": "Olet nyt kaveri {{name}}n kanssa.",
+      "failedToAddFriend": "{{name}}n lisääminen kaveriksi epäonnistui.",
+      "createUserError": "Virhe käyttäjän luonnissa! {{message}}"
+    },
+    "addCourse": {
+      "editTitle": "Muokkaa rataa",
+      "addTitle": "Lisää rata",
+      "nameLabel": "Nimi",
+      "courseName": "Radan nimi",
+      "locationTitle": "Sijainti",
+      "setCoordinatesManually": "Aseta koordinaatit manuaalisesti",
+      "latLabel": "Lat",
+      "longLabel": "Long",
+      "gpsAccuracy": "GPS-tarkkuus: {{value}}m",
+      "gpsLoading": "GPS latautuu...",
+      "selectLocationFromMap": "Valitse sijainti kartalta",
+      "setCoordinatesManuallyHint": "Aseta koordinaatit manuaalisesti"
+    },
+    "addLayout": {
+      "editTitle": "Muokkaa layoutia",
+      "addTitle": "Lisää layout",
+      "layoutName": "Layoutin nimi",
+      "numberOfHoles": "Väylien määrä",
+      "markAsObsolete": "Merkitse layout vanhentuneeksi",
+      "holesTitle": "Väylät",
+      "holeNumber": "Väylä #{{number}}",
+      "nameOptional": "Nimi (valinnainen)",
+      "holeSummary": "{{holes}} väylää, par {{par}}"
+    },
+    "addFriend": {
+      "title": "Lisää kaveri",
+      "searchHint": "Kaverin nimi",
+      "nameLabel": "Nimi",
+      "usersFound": "{{count}} käyttäjää löytyi",
+      "friendBadge": "Kaveri!",
+      "itsMe": "Se olen minä!"
+    },
+    "friendsList": {
+      "title": "Kaverit",
+      "selectedCount": "({{count}} valittu)",
+      "addFriend": "Lisää kaveri",
+      "createFriend": "Luo kaveri",
+      "loadingFriends": "Ladataan kavereita...",
+      "addPlayersToGame": "Lisää pelaajat peliin"
+    },
+    "selectCourse": {
+      "selectLayout": "Valitse layout",
+      "addCourse": "Lisää rata",
+      "loadingCourses": "Ladataan ratoja...",
+      "noMore": "Ei enempää... No más...",
+      "addLayout": "Lisää layout",
+      "layoutCount_one": "{{count}} layout",
+      "layoutCount_other": "{{count}} layoutia",
+      "layouts": "Layoutit",
+      "away": "päässä",
+      "holesAndPar": "{{holes}} väylää, par {{par}}",
+      "obsolete": "VANHENTUNUT",
+      "editCourse": "Muokkaa rataa",
+      "deleteCourse": "Poista rata",
+      "courseDeleted": "Rata poistettu",
+      "courseNotDeleted": "Rataa ei poistettu!",
+      "failedToLoadCourses": "Ratojen lataus epäonnistui",
+      "gpsLoading": "GPS latautuu",
+      "layoutsAndDistance": "{{count}} layoutia, {{distance}} päässä",
+      "deleteConfirmTitle": "Oletko varma?",
+      "deleteConfirmMessage": "Haluatko varmasti poistaa tämän radan? Sitä ei voi palauttaa myöhemmin",
+      "select": "Valitse",
+      "menu": {
+        "editCourse": "Muokkaa rataa",
+        "deleteCourse": "Poista rata"
+      },
+      "map": {
+        "failedToLoad": "Ratojen lataus epäonnistui",
+        "gpsLoading": "GPS latautuu"
+      }
+    },
+    "errorScreen": {
+      "title": "Virhe",
+      "backToFrontpage": "Takaisin etusivulle"
+    },
+    "loading": {
+      "defaultText": "Ladataan...",
+      "serverSleeping": "Palvelin näyttää nukkuvan...",
+      "wakeUp": "Herää senkin typerä paskiainen!",
+      "somethingWrong": "Hmm.. jotain saattaa olla vialla 🤔",
+      "tryTurningOff": "Oletko kokeillut sammuttaa ja käynnistää uudelleen?"
+    },
+    "localSettings": {
+      "sortHc": "Järjestä yhteenveto HC:n mukaan",
+      "sortBox": "Järjestä tuloskortit heittojärjestyksen mukaan",
+      "autoAdvance": "Valitse automaattisesti ensimmäinen keskeneräinen väylä",
+      "hideStatsBars": "Piilota tilastot tuloskorteista",
+      "hidePlusMinus": "Piilota +/- tuloskorteista",
+      "prohibition": "Kieltolaki",
+      "randomThrowStyle": "Satunnaiset heittotyylit",
+      "hideTeeSign": "Piilota väyläkyltti-välilehti"
+    },
+    "alcConverter": {
+      "title": "Kaljalaskin",
+      "beer": {
+        "long": "Iso (0,5l)",
+        "strong": "Vahva (>5.0%)",
+        "longAndStrong": "Iso & Vahva"
+      },
+      "wine": {
+        "title": "Viini (dl)"
+      },
+      "other": {
+        "normal": "Normaali (0,33l)"
+      },
+      "total": "Yhteensä",
+      "beers": "olutta"
+    },
+    "toolbar": {
+      "title": "FuDisc"
+    }
+  },
+  "game": {
+    "throwStyles": {
+      "backhand": "Rystyheitto",
+      "forehand": "Kämmenheitto",
+      "wrongHand": "Väärä käsi",
+      "roller": "Rolleri",
+      "backhandRoller": "Rystyrolleri",
+      "forehandRoller": "Kämmenrolleri",
+      "tomahawk": "Tomahawk",
+      "grenade": "Kranaatti",
+      "hyzer": "Hyzer",
+      "anhyzer": "Anhyzer",
+      "yourChoice": "Vapaavalinta"
+    },
+    "discTypes": {
+      "putter": "Putteri",
+      "midrange": "Midari",
+      "driver": "Draiveri",
+      "overstable": "Ylivakaa",
+      "understable": "Alivakaa",
+      "yourChoice": "Vapaavalinta"
+    }
+  },
+  "achievements": {
+    "titles": {
+      "100Malmis": "100x Niitty",
+      "HoleInOne": "Hole in one",
+      "winAllHoles": "Supermestari",
+      "0Pars": "Ei PAReja",
+      "GoldenBox": "Kultainen boksi"
+    },
+    "descriptions": {
+      "100Malmis": "\"Aina vaan malmikseen...\"",
+      "HoleInOne": "Hole in one",
+      "winAllHoles": "Voittoa voiton perään",
+      "0Pars": "Nolla par:ia, yritä kovemmin!",
+      "GoldenBox": "Miksi minun pitää aina heittää ekana?"
     }
   },
   "errors": {
-    "noCameraPermission": "Kameran käyttöoikeus vaaditaan kuvien ottamiseen."
+    "noCameraPermission": "Kameran käyttöoikeus vaaditaan kuvien ottamiseen.",
+    "genericError": "Jotain meni pieleen",
+    "scoreNotSaved": "Virhe! Tulosta ei ehkä tallennettu :/"
+  },
+  "notifications": {
+    "friendAdded": "Kaveri lisätty! Hienoa!",
+    "friendAddFailed": "Kaveruus {{name}}n kanssa ei onnistu. Käyttäjä joko estää kaveripyynnöt tai pyyntö epäonnistui muusta syystä.",
+    "friendRemoved": "{{name}} poistettu kaverilistaltasi!",
+    "friendRemoveFailed": "Kaverin poistaminen epäonnistui!",
+    "removeFriendTitle": "Hei hei kaveri",
+    "removeFriendMessage": "Kaverit ovat korvattavissa mutta frisbeegolf on ikuista!\n\nHaluatko varmasti poistaa {{name}}n?",
+    "removeFriendConfirm": "Tee se"
   }
 }

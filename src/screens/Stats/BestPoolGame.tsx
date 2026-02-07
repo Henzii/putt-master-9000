@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from "react-native";
 import { Chip, Headline, Paragraph, TextInput, Title } from "react-native-paper";
+import { useTranslation } from 'react-i18next';
 import Spacer from '../../components/ThemedComponents/Spacer';
 import useTextInput from '../../hooks/useTextInput';
 import { useQuery } from '@apollo/client';
@@ -25,6 +26,7 @@ type BestPoolResponse = {
 }
 
 const BestPoolGame = ({layoutId}: Props) => {
+    const { t } = useTranslation();
     const [numberOfPlayers, setNumberOfPlayers] = useState(4);
     const {data, loading} = useQuery<BestPoolResponse>(BEST_POOL, {
         variables: {layoutId, players: numberOfPlayers},
@@ -52,45 +54,45 @@ const BestPoolGame = ({layoutId}: Props) => {
 
     return (
         <View>
-            <Headline>Masters of the universe</Headline>
+            <Headline>{t('screens.stats.bestPoolGame.title')}</Headline>
             <Paragraph>
-                Shows best played game on selected layout with a pool size of n.
+                {t('screens.stats.bestPoolGame.info')}
             </Paragraph>
             <View style={styles.input}>
-                <Text>Show best game for pool size: </Text>
+                <Text>{t('screens.stats.bestPoolGame.poolLabel')}</Text>
                 <TextInput {...input} dense mode="outlined" />
             </View>
             <Spacer size={5} />
             {!gameData ? (
-                loading ? <Loading /> : <Text>No data :P</Text>
+                loading ? <Loading /> : <Text>{t('screens.stats.bestPoolGame.noData')}</Text>
             ) : (
                 <View>
                     <View style={styles.infoContainer}>
-                        <Text>Eligible games found: </Text><Text style={styles.infoValue}> {gameData.gamesCount}</Text>
+                        <Text>{t('screens.stats.bestPoolGame.eligibleGames')}</Text><Text style={styles.infoValue}> {gameData.gamesCount}</Text>
                     </View>
                     <Spacer size={5} />
                     <Title>{gameData.game.course} / {gameData.game.layout}</Title>
                     <View style={styles.infoContainer}>
-                        <Text style={styles.infoText}>Date:</Text><Text style={styles.infoValue}>{parseDate(gameData.game.startTime ?? 0)}</Text>
+                        <Text style={styles.infoText}>{t('screens.stats.bestPoolGame.date')}</Text><Text style={styles.infoValue}>{parseDate(gameData.game.startTime ?? 0)}</Text>
                     </View>
                     <View style={styles.infoContainer}>
-                        <Text style={styles.infoText}>Players:</Text><Text style={styles.infoValue}>{gameData.game.scorecards.length}</Text>
+                        <Text style={styles.infoText}>{t('screens.stats.bestPoolGame.players')}</Text><Text style={styles.infoValue}>{gameData.game.scorecards.length}</Text>
                     </View>
                     <View style={styles.infoContainer}>
-                        <Text style={styles.infoText}>Total score:</Text><Text style={styles.infoValue}>{gameData.totalScore}</Text>
+                        <Text style={styles.infoText}>{t('screens.stats.bestPoolGame.totalScore')}</Text><Text style={styles.infoValue}>{gameData.totalScore}</Text>
                     </View>
                     <View style={styles.infoContainer}>
-                        <Text style={styles.infoText}>Total par:</Text><Text style={styles.infoValue}>{gameData.totalPar}</Text>
+                        <Text style={styles.infoText}>{t('screens.stats.bestPoolGame.totalPar')}</Text><Text style={styles.infoValue}>{gameData.totalPar}</Text>
                     </View>
                     <View style={styles.infoContainer}>
-                        <Text style={styles.infoText}>+/- Total:</Text><Text style={styles.infoValue}>{gameData.totalScore - gameData.totalPar}</Text>
+                        <Text style={styles.infoText}>{t('screens.stats.bestPoolGame.totalAdjusted')}</Text><Text style={styles.infoValue}>{gameData.totalScore - gameData.totalPar}</Text>
                     </View>
                     <Spacer size={5} />
                     <View style={styles.infoContainer}>
-                        <Text style={[styles.infoText, styles.largeText]}>+/- Adjusted:</Text><Text style={[styles.infoValue, styles.largeText]}>{(gameData.totalScore - gameData.totalPar) / gameData.game.scorecards.length}</Text>
+                        <Text style={[styles.infoText, styles.largeText]}>{t('screens.stats.bestPoolGame.adjustedAdjusted')}</Text><Text style={[styles.infoValue, styles.largeText]}>{(gameData.totalScore - gameData.totalPar) / gameData.game.scorecards.length}</Text>
                     </View>
                     <Spacer size={5} />
-                    <Title>Players</Title>
+                    <Title>{t('screens.stats.bestPoolGame.playersTitle')}</Title>
                     <Spacer size={5} />
                     <View style={styles.playersContainer}>
                         {gameData.game.scorecards.map(sc => <Chip icon="account" key={sc.user.name}>{sc.user.name} ({sc.plusminus})</Chip>)}

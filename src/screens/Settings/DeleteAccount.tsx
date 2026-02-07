@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, Paragraph, TextInput, Title } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import useMe from '../../hooks/useMe';
 import Spacer from '../../components/ThemedComponents/Spacer';
 
@@ -8,6 +9,7 @@ type Props = {
     handleDeleteAccount: () => void
 }
 const DeleteAccount = ({handleDeleteAccount}: Props) => {
+    const { t } = useTranslation();
     const {me} = useMe();
     const [showConfirm, setShowConfirm] = useState(false);
     const [nameInput, setNameInput] = useState('');
@@ -19,18 +21,17 @@ const DeleteAccount = ({handleDeleteAccount}: Props) => {
     };
     return (
         <View style={styles.container}>
-            <Title>Delete account</Title>
+            <Title>{t('screens.settings.deleteAccountTitle')}</Title>
             {showConfirm ? (
                 <View>
                     <Paragraph>
-                        To delete your account, type <Text style={{fontWeight: "800"}}>{me?.name.toLowerCase()}</Text> in the input field below
-                        and press Delete account.
+                        {t('screens.settings.deleteAccountConfirmInfo', { name: me?.name.toLowerCase() })}
                     </Paragraph>
                     <TextInput mode='outlined' autoFocus dense value={nameInput} onChangeText={setNameInput} />
                 </View>
             ) : (
                 <Paragraph>
-                    Delete your account permanently. Deleted accounts can not be restored afterwards.
+                    {t('screens.settings.deleteAccountInfo')}
                 </Paragraph>
             )}
             <Spacer />
@@ -40,7 +41,7 @@ const DeleteAccount = ({handleDeleteAccount}: Props) => {
                 onPress={handleDeleteClick}
                 disabled={showConfirm && nameInput !== me?.name.toLowerCase()}
             >
-                Delete account
+                {t('screens.settings.deleteAccountTitle')}
             </Button>
         </View>
     );

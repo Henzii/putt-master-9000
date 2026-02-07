@@ -9,6 +9,7 @@ import { addNotification } from '../reducers/notificationReducer';
 import { useNavigate } from 'react-router-native';
 import Container from './ThemedComponents/Container';
 import { GET_ME_WITH_FRIENDS } from '../graphql/queries';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     onClose?: () => void
@@ -16,6 +17,7 @@ type Props = {
 }
 
 const SignUp = ({onClose, isFriendSignUp}: Props) => {
+    const { t } = useTranslation();
     const [userData, setUserData] = useState({
         name: '',
         password: '',
@@ -29,15 +31,15 @@ const SignUp = ({onClose, isFriendSignUp}: Props) => {
 
     const handleSignUp = async () => {
         if (userData.name.length < 4) {
-            Alert.alert('Error', 'Name too short!');
+            Alert.alert(t('common.error'), t('components.signUp.nameTooShort'));
             return;
         }
         if (userData.password.length < 5) {
-            Alert.alert('Error', 'Password too short. Min 5 letters.');
+            Alert.alert(t('common.error'), t('components.signUp.passwordTooShort'));
             return;
         }
         if (userData.password !== userData.password2) {
-            Alert.alert('Error', 'Passwords don\'t match!');
+            Alert.alert(t('common.error'), t('components.signUp.passwordsDontMatch'));
             return;
         }
         try {
@@ -49,16 +51,16 @@ const SignUp = ({onClose, isFriendSignUp}: Props) => {
                 }
             });
             if (isFriendSignUp) {
-                dispatch(addNotification(`Account created for ${userData.name}.`, 'success'));
+                dispatch(addNotification(t('components.signUp.accountCreated', { name: userData.name }), 'success'));
                 try {
                     await addFriendMutation({
                         variables: {
                             friendName: userData.name.toLowerCase(),
                         }
                     });
-                    dispatch(addNotification(`You're now friends with ${userData.name}.`, 'info'));
+                    dispatch(addNotification(t('components.signUp.nowFriends', { name: userData.name }), 'info'));
                 } catch {
-                    dispatch(addNotification(`Failed to add ${userData.name} as friend.`, 'alert'));
+                    dispatch(addNotification(t('components.signUp.failedToAddFriend', { name: userData.name }), 'alert'));
                 } finally{
                     onClose?.();
                 }
@@ -68,31 +70,30 @@ const SignUp = ({onClose, isFriendSignUp}: Props) => {
             }
 
         } catch (e) {
-            dispatch(addNotification('Error when creating user! ' + (e as Error).message));
+            dispatch(addNotification(t('components.signUp.createUserError', { message: (e as Error).message })));
         }
     };
     return (
         <Container withScrollView style={tyyli.main}>
-            <Title>Signup{(isFriendSignUp ? ' a friend' : '')}</Title>
+            <Title>{isFriendSignUp ? t('components.signUp.titleFriend') : t('components.signUp.title')}</Title>
             {(isFriendSignUp) &&
                 <>
                     <Paragraph>
-                        You are creating an account for a friend. Instead of creating accounts for everyone, you should force
-                        your friends to use Fudisc.
+                        {t('components.signUp.friendSignUpInfo1')}
                     </Paragraph>
                     <Paragraph>
-                        Created friend will be added to your friends list automatically.
+                        {t('components.signUp.friendSignUpInfo2')}
                     </Paragraph>
                 </>}
-            <Subheading style={tyyli.subheading}>Username</Subheading>
-            <TextInput value={userData.name} autoComplete='off' mode='outlined' label="Username" onChangeText={(value) => setUserData({ ...userData, name: value })} />
-            <Subheading style={tyyli.subheading}>Password</Subheading>
-            <TextInput value={userData.password} autoComplete='off' mode='outlined' label="Password" secureTextEntry onChangeText={(val) => setUserData({ ...userData, password: val })} />
-            <TextInput value={userData.password2} autoComplete='off' mode='outlined' label="Confirm password" secureTextEntry onChangeText={(val) => setUserData({ ...userData, password2: val })} />
-            <Subheading style={tyyli.subheading}>Email</Subheading>
-            <Text>Optional</Text>
-            <TextInput value={userData.email} autoComplete='off' mode='outlined' label="Email" onChangeText={(val) => setUserData({ ...userData, email: val })} />
-            <Button style={tyyli.nappi} onPress={handleSignUp} mode='contained'>Sign up!</Button>
+            <Subheading style={tyyli.subheading}>{t('components.signUp.usernameTitle')}</Subheading>
+            <TextInput value={userData.name} autoComplete='off' mode='outlined' label={t('components.signUp.usernameLabel')} onChangeText={(value) => setUserData({ ...userData, name: value })} />
+            <Subheading style={tyyli.subheading}>{t('components.signUp.passwordTitle')}</Subheading>
+            <TextInput value={userData.password} autoComplete='off' mode='outlined' label={t('components.signUp.passwordLabel')} secureTextEntry onChangeText={(val) => setUserData({ ...userData, password: val })} />
+            <TextInput value={userData.password2} autoComplete='off' mode='outlined' label={t('components.signUp.confirmPasswordLabel')} secureTextEntry onChangeText={(val) => setUserData({ ...userData, password2: val })} />
+            <Subheading style={tyyli.subheading}>{t('components.signUp.emailTitle')}</Subheading>
+            <Text>{t('common.optional')}</Text>
+            <TextInput value={userData.email} autoComplete='off' mode='outlined' label={t('screens.feedback.email')} onChangeText={(val) => setUserData({ ...userData, email: val })} />
+            <Button style={tyyli.nappi} onPress={handleSignUp} mode='contained'>{t('components.signUp.signUpButton')}</Button>
         </Container>
     );
 };

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleProp, Text, TextStyle } from 'react-native';
 
 type Props = {
@@ -8,19 +9,20 @@ type Props = {
 }
 
 const RandomItem = ({ items, isRunning, style }: Props) => {
-    const [randomDisc, setRandomDisc] = useState('');
+    const { t } = useTranslation();
+    const [randomKey, setRandomKey] = useState('');
     useEffect(() => {
         if (isRunning) {
             const intervalId = setInterval(() => {
                 const randomIndex = Math.floor(Math.random() * items.length);
-                setRandomDisc(items[randomIndex]);
+                setRandomKey(items[randomIndex]);
             }, 100);
 
             return () => clearInterval(intervalId);
         }
     }, [isRunning]);
     return (
-        <Text style={style}>{randomDisc}</Text>
+        <Text style={style}>{randomKey ? t(randomKey as any) : ''}</Text>
     );
 };
 
