@@ -19,7 +19,7 @@ const FrontpageHeader = ({openGames = [], setSpacing}: Props) => {
     const showLoggedIn = !showOpenGames && !showUpdate;
 
     return (
-        <Header setSpacing={setSpacing}>
+        <Header setSpacing={setSpacing} bottomSize={showLoggedIn ? 30 : undefined}>
             {showOpenGames ? <OpenGames openGames={openGames} /> : null}
             {showUpdate ? <UpdateAvailable /> : null}
             {showLoggedIn ? <LoggedIn /> : null}
