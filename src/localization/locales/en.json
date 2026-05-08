@@ -36,6 +36,7 @@
       "settings": "Settings",
       "website": "Website",
       "distance": "Distance",
+      "weeklies": "Weeklies",
       "feedback": "Feedback",
       "logout": "Logout",
       "connectingToServer": "Connecting to server...",
@@ -281,6 +282,16 @@
         "longitude": "Lon:",
         "accuracy": "Acc:"
       }
+    },
+    "weeklies": {
+      "title": "Weeklies near me",
+      "description": "Competitions within {{range}} with 10+ players",
+      "selectRange": "Select range",
+      "country": "Country",
+      "players": "{{count}} players",
+      "noResults": "No competitions found nearby",
+      "gpsError": "Could not get your location",
+      "gpsLoading": "Waiting for GPS..."
     },
     "group": {
       "title": "Group",

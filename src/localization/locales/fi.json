@@ -35,6 +35,7 @@
       "settings": "Asetukset",
       "website": "Verkkosivut",
       "distance": "Etäisyys",
+      "weeklies": "Viikkokisat",
       "feedback": "Palaute",
       "logout": "Kirjaudu ulos",
       "connectingToServer": "Yhdistetään palvelimeen...",
@@ -272,6 +273,16 @@
         "longitude": "Long:",
         "accuracy": "Tark:"
       }
+    },
+    "weeklies": {
+      "title": "Viikkokisat lähellä",
+      "description": "Kilpailut {{range}} säteellä, joissa yli 10 pelaajaa",
+      "selectRange": "Valitse hakusäde",
+      "country": "Maa",
+      "players": "{{count}} pelaajaa",
+      "noResults": "Ei kilpailuja lähialueella",
+      "gpsError": "Sijainnin haku epäonnistui",
+      "gpsLoading": "Odotetaan GPS:ää..."
     },
     "group": {
       "title": "Ryhmä",

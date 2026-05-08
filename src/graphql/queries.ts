@@ -269,6 +269,20 @@ export const GET_GROUP_MEMBERS = gql`
   ${CORE_SAFE_USER_INFO}
 `;
 
+export const GET_WEEKLIES_NEAR_ME = gql`
+  query GetWeekliesNearMe($coordinates: [Float!]!, $maxDistance: Int, $date: String, $countryCode: String) {
+    getWeekliesNearMe(coordinates: $coordinates, maxDistance: $maxDistance, date: $date, countryCode: $countryCode) {
+      id
+      name
+      date
+      time
+      playerCount
+      courseName
+      courseId
+    }
+  }
+`;
+
 export const GET_USER_WITH_THROWS = gql`
   query {
     getMe {

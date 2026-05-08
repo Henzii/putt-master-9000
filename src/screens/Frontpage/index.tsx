@@ -31,6 +31,7 @@ import www from '@icons/www.png';
 import feedback from '@icons/feedback.png';
 import group from '@icons/group.png';
 import distance from '@icons/distance.png';
+import weeklies from '@icons/place.png';
 
 const Frontpage = () => {
     const { t } = useTranslation();
@@ -101,6 +102,7 @@ const Frontpage = () => {
                     <NavIcon title={t('screens.frontpage.settings')} to="/settings" icon={settings} />
                     <NavIcon title={t('screens.frontpage.website')} to="/" icon={www} onClick={handleOpenWebsite} />
                     <NavIcon title={t('screens.frontpage.distance')} to="/distance" icon={distance} />
+                    <NavIcon title={t('screens.frontpage.weeklies')} to="/weeklies" icon={weeklies} />
                     <NavIcon title={t('screens.frontpage.feedback')} to="feedback" icon={feedback} />
                     <NavIcon title={t('screens.frontpage.logout')} to="/" icon={signout} onClick={() => session.clear()} />
                 </View>
