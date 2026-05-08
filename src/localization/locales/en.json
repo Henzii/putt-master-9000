@@ -28,14 +28,21 @@
       "welcome": "Welcome back!",
       "newGame": "New Game",
       "oldGames": "Old games",
+      "oldGamesDescription": "Browse old and unfinished games",
       "courses": "Courses",
+      "coursesDescription": "View, create and edit courses and layouts",
       "friends": "Friends",
       "stats": "Stats",
       "achievements": "Achievements",
       "group": "Group",
+      "groupDescription": "Join or manage your group",
       "settings": "Settings",
       "website": "Website",
       "distance": "Distance",
+      "distanceDescription": "Measure and track throw distances",
+      "new": "New",
+      "weeklies": "Weeklies",
+      "weekliesDescription": "Find weekly competitions near you",
       "feedback": "Feedback",
       "logout": "Logout",
       "connectingToServer": "Connecting to server...",
@@ -281,6 +288,16 @@
         "longitude": "Lon:",
         "accuracy": "Acc:"
       }
+    },
+    "weeklies": {
+      "title": "Weeklies near me",
+      "description": "Competitions within {{range}} with 10+ players",
+      "selectRange": "Select range",
+      "country": "Country",
+      "players": "{{count}} players",
+      "noResults": "No competitions found nearby",
+      "gpsError": "Could not get your location",
+      "gpsLoading": "Waiting for GPS..."
     },
     "group": {
       "title": "Group",

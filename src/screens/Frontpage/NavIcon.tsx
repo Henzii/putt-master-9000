@@ -7,6 +7,8 @@ type NavIconProps = {
     icon: ImageSourcePropType
     title: string
     to: string
+    description?: string
+    badge?: string
     iconColor?: string
     onClick?: () => void
     placeholder?: boolean
@@ -18,18 +20,26 @@ const NavIcon = (props : NavIconProps) => {
     const { colors } = useTheme();
 
     if (props.placeholder) {
-        return <View style={{width: styles.icon.width + (styles.iconContainer.padding * 2)}} />;
+        return null;
     }
 
-    const {title, to, icon, iconColor, onClick} = props;
+    const {title, to, icon, iconColor, onClick, description, badge} = props;
 
     return (
-        <Link style={styles.container} to={to} onPress={onClick} underlayColor="none" onPressIn={() => setPressed(true)} onPressOut={() => setPressed(false)}>
-            <View>
-                <View style={[styles.iconContainer, pressed && {elevation: 0, backgroundColor: colors.tertiary}]}>
+        <Link style={[styles.container, pressed && {backgroundColor: colors.surfaceVariant}]} to={to} onPress={onClick} underlayColor="none" onPressIn={() => setPressed(true)} onPressOut={() => setPressed(false)}>
+            <View style={styles.inner}>
+                <View style={styles.iconContainer}>
                     <Image source={icon} style={styles.icon} tintColor={iconColor} />
                 </View>
-                <Text style={styles.text}>{title}</Text>
+                <View style={styles.textContainer}>
+                    <Text style={styles.text}>{title}</Text>
+                    {description && <Text style={styles.description}>{description}</Text>}
+                </View>
+                {badge && (
+                    <View style={[styles.badge, {backgroundColor: colors.primary}]}>
+                        <Text style={[styles.badgeText, {color: colors.onPrimary}]}>{badge}</Text>
+                    </View>
+                )}
             </View>
         </Link>
     );
@@ -37,24 +47,53 @@ const NavIcon = (props : NavIconProps) => {
 
 const styles = StyleSheet.create({
     container: {
-    },
-    iconContainer: {
-        borderRadius: 2,
         backgroundColor: '#ffffff',
+        borderRadius: 6,
         elevation: 2,
         borderWidth: 1,
         borderColor: '#eeeeee',
-        padding: 15,
+        marginHorizontal: 12,
+        marginVertical: 4,
+    },
+    inner: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 13,
+        paddingHorizontal: 16,
+        gap: 20,
+    },
+    iconContainer: {
+        width: 52,
+        height: 52,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     icon: {
-        height: 70,
-        width: 70,
+        height: 48,
+        width: 48,
+    },
+    textContainer: {
+        flex: 1,
     },
     text: {
-        marginVertical: 5,
-        textAlign: 'center',
-        fontWeight: "600"
-    }
+        fontSize: 20,
+        fontWeight: '600',
+    },
+    description: {
+        fontSize: 13,
+        color: '#888',
+        marginTop: 3,
+    },
+    badge: {
+        borderRadius: 10,
+        paddingHorizontal: 8,
+        paddingVertical: 3,
+    },
+    badgeText: {
+        fontSize: 11,
+        fontWeight: '700',
+        textTransform: 'uppercase',
+    },
 });
 
 export default NavIcon;

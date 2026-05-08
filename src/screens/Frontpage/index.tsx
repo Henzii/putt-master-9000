@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Linking, ScrollView } from "react-native";
-import { Button, Paragraph, useTheme } from 'react-native-paper';
+import { Button, Divider, List, Paragraph, useTheme } from 'react-native-paper';
 import { Link, useNavigate } from 'react-router-native';
 import { useTranslation } from 'react-i18next';
 import Loading from '@components/Loading';
@@ -24,13 +24,7 @@ import maali from '@icons/checklist.png';
 import courses from '@icons/place.png';
 import friends from '@icons/friends.png';
 import stats from '@icons/stats.png';
-import settings from '@icons/settings.png';
-import achievement from '@icons/achievement.png';
-import signout from '@icons/sign-out.png';
-import www from '@icons/www.png';
-import feedback from '@icons/feedback.png';
-import group from '@icons/group.png';
-import distance from '@icons/distance.png';
+import weeklies from '@icons/place.png';
 
 const Frontpage = () => {
     const { t } = useTranslation();
@@ -53,6 +47,7 @@ const Frontpage = () => {
             }
         })();
     }, [session]);
+
     if (session.state === SESSION_STATE.LOADING) {
         return (
             <Loading loadingText={t('screens.frontpage.connectingToServer')} showTexts />
@@ -89,22 +84,68 @@ const Frontpage = () => {
         <View style={styles.container}>
             <FrontpageHeader openGames={ongoingGames} setSpacing={setSpacing} />
             <ScrollView>
-                <Spacer size={spacing - 20} />
+                <Spacer size={spacing-10} />
                 <View style={styles.iconsContainer}>
                     <NavIcon title={t('screens.frontpage.newGame')} to="/game?force" icon={play} />
-                    <NavIcon title={t('screens.frontpage.oldGames')} to="/games" icon={maali} />
-                    <NavIcon title={t('screens.frontpage.courses')} to="/courses" icon={courses} />
+                    <NavIcon title={t('screens.frontpage.oldGames')} to="/games" icon={maali} description={t('screens.frontpage.oldGamesDescription')} />
+                    <NavIcon title={t('screens.frontpage.courses')} to="/courses" icon={courses} description={t('screens.frontpage.coursesDescription')} />
                     <NavIcon title={t('screens.frontpage.friends')} to="/friends" icon={friends} />
                     <NavIcon title={t('screens.frontpage.stats')} to="/stats" icon={stats} />
-                    <NavIcon title={t('screens.frontpage.achievements')} to="/achievements" icon={achievement} />
-                    <NavIcon title={t('screens.frontpage.group')} to="/group" icon={group} />
-                    <NavIcon title={t('screens.frontpage.settings')} to="/settings" icon={settings} />
-                    <NavIcon title={t('screens.frontpage.website')} to="/" icon={www} onClick={handleOpenWebsite} />
-                    <NavIcon title={t('screens.frontpage.distance')} to="/distance" icon={distance} />
-                    <NavIcon title={t('screens.frontpage.feedback')} to="feedback" icon={feedback} />
-                    <NavIcon title={t('screens.frontpage.logout')} to="/" icon={signout} onClick={() => session.clear()} />
+                    <NavIcon title={t('screens.frontpage.weeklies')} to="/weeklies" icon={weeklies} description={t('screens.frontpage.weekliesDescription')} />
                 </View>
-                    <Spacer size={80} />
+                <Spacer size={16} />
+                <Divider />
+                <List.Item
+                    title={t('screens.frontpage.achievements')}
+                    left={(p) => <List.Icon {...p} icon="trophy-outline" />}
+                    right={(p) => <List.Icon {...p} icon="chevron-right" />}
+                    onPress={() => navi('/achievements')}
+                />
+                <Divider />
+                <List.Item
+                    title={t('screens.frontpage.group')}
+                    description={t('screens.frontpage.groupDescription')}
+                    left={(p) => <List.Icon {...p} icon="account-group-outline" />}
+                    right={(p) => <List.Icon {...p} icon="chevron-right" />}
+                    onPress={() => navi('/group')}
+                />
+                <Divider />
+                <List.Item
+                    title={t('screens.frontpage.distance')}
+                    description={t('screens.frontpage.distanceDescription')}
+                    left={(p) => <List.Icon {...p} icon="tape-measure" />}
+                    right={(p) => <List.Icon {...p} icon="chevron-right" />}
+                    onPress={() => navi('/distance')}
+                />
+                <Divider />
+                <List.Item
+                    title={t('screens.frontpage.settings')}
+                    left={(p) => <List.Icon {...p} icon="cog-outline" />}
+                    right={(p) => <List.Icon {...p} icon="chevron-right" />}
+                    onPress={() => navi('/settings')}
+                />
+                <Divider />
+                <List.Item
+                    title={t('screens.frontpage.website')}
+                    left={(p) => <List.Icon {...p} icon="web" />}
+                    right={(p) => <List.Icon {...p} icon="open-in-new" />}
+                    onPress={handleOpenWebsite}
+                />
+                <Divider />
+                <List.Item
+                    title={t('screens.frontpage.feedback')}
+                    left={(p) => <List.Icon {...p} icon="message-outline" />}
+                    right={(p) => <List.Icon {...p} icon="chevron-right" />}
+                    onPress={() => navi('/feedback')}
+                />
+                <Divider />
+                <List.Item
+                    title={t('screens.frontpage.logout')}
+                    left={(p) => <List.Icon {...p} icon="logout" />}
+                    onPress={() => session.clear()}
+                    titleStyle={styles.logoutText}
+                />
+                <Spacer size={80} />
             </ScrollView>
         </View>
     );
@@ -112,15 +153,14 @@ const Frontpage = () => {
 
 const createStyles = (colors: MD3Colors) => StyleSheet.create({
     container: {
+        flex: 1,
         backgroundColor: colors.surface,
     },
     iconsContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-evenly',
-        gap: 10,
-        paddingHorizontal: 5,
-    }
+    },
+    logoutText: {
+        color: colors.error,
+    },
 });
 
 export default Frontpage;
