@@ -4,7 +4,21 @@ import { useDispatch } from "react-redux";
 import { addNotification } from "../reducers/notificationReducer";
 import { GPShookReturn } from "../types/gps";
 
-const useGPS = (distanceInterval = 1) : GPShookReturn => {
+type GPSOptions = {
+  distanceInterval?: number;
+  updateInterval?: number;
+  updateLocation?: boolean
+}
+
+/**
+ * # useGPS
+ * Returns the current GPS location of the device, along with loading and error states.
+ * ## options
+ * @param updateLocation Whether to actively watch the location or just get the last known location. Default is true (actively watch).
+ * @param distanceInterval Minimum change (in meters) in position to trigger an update. Default is 1 meter.
+ * @param updateInterval Minimum time (in milliseconds) between updates. Default is 500 ms.
+ */
+const useGPS = (options?: GPSOptions) : GPShookReturn => {
   const [currentLocation, setCurrentLocation] =
     useState<ExpoLocation.LocationObjectCoords | null>(null);
   const [lastKnownLocation, setLastKnownLocation] =
@@ -22,8 +36,8 @@ const useGPS = (distanceInterval = 1) : GPShookReturn => {
       GPSSubscription.current = await ExpoLocation.watchPositionAsync(
         {
           accuracy: ExpoLocation.Accuracy.High,
-          timeInterval: 500,
-          distanceInterval: distanceInterval ?? 1
+          timeInterval: options?.updateInterval ?? 500,
+          distanceInterval: options?.distanceInterval ?? 1
         },
         (loc) => {
           setCurrentLocation(loc.coords);
