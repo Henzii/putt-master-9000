@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Linking, ScrollView } from "react-native";
+import { View, StyleSheet, Linking, ScrollView, Image } from "react-native";
 import { Button, Divider, List, Paragraph, useTheme } from 'react-native-paper';
 import { Link, useNavigate } from 'react-router-native';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +24,15 @@ import maali from '@icons/checklist.png';
 import courses from '@icons/place.png';
 import friends from '@icons/friends.png';
 import stats from '@icons/stats.png';
-import weeklies from '@icons/place.png';
+import weeklies from '@icons/weeklies.png';
+
+import group from '@icons/group.png';
+import achievements from '@icons/achievement.png';
+import distance from '@icons/distance.png';
+import settings from '@icons/settings.png';
+import website from '@icons/www.png';
+import feedback from '@icons/feedback.png';
+import logout from '@icons/sign-out.png';
 
 const Frontpage = () => {
     const { t } = useTranslation();
@@ -89,15 +97,20 @@ const Frontpage = () => {
                     <NavIcon title={t('screens.frontpage.newGame')} to="/game?force" icon={play} />
                     <NavIcon title={t('screens.frontpage.oldGames')} to="/games" icon={maali} description={t('screens.frontpage.oldGamesDescription')} />
                     <NavIcon title={t('screens.frontpage.courses')} to="/courses" icon={courses} description={t('screens.frontpage.coursesDescription')} />
-                    <NavIcon title={t('screens.frontpage.friends')} to="/friends" icon={friends} />
                     <NavIcon title={t('screens.frontpage.stats')} to="/stats" icon={stats} />
                     <NavIcon title={t('screens.frontpage.weeklies')} to="/weeklies" icon={weeklies} description={t('screens.frontpage.weekliesDescription')} />
                 </View>
                 <Spacer size={16} />
                 <Divider />
                 <List.Item
+                    title={t('screens.frontpage.friends')}
+                    left={() => <Image source={friends} style={styles.listItemIcon} />}
+                    right={(p) => <List.Icon {...p} icon="chevron-right" />}
+                    onPress={() => navi('/friends')}
+                />
+                <List.Item
                     title={t('screens.frontpage.achievements')}
-                    left={(p) => <List.Icon {...p} icon="trophy-outline" />}
+                    left={() => <Image source={achievements} style={styles.listItemIcon} />}
                     right={(p) => <List.Icon {...p} icon="chevron-right" />}
                     onPress={() => navi('/achievements')}
                 />
@@ -105,7 +118,7 @@ const Frontpage = () => {
                 <List.Item
                     title={t('screens.frontpage.group')}
                     description={t('screens.frontpage.groupDescription')}
-                    left={(p) => <List.Icon {...p} icon="account-group-outline" />}
+                    left={() => <Image source={group} style={styles.listItemIcon} />}
                     right={(p) => <List.Icon {...p} icon="chevron-right" />}
                     onPress={() => navi('/group')}
                 />
@@ -113,35 +126,35 @@ const Frontpage = () => {
                 <List.Item
                     title={t('screens.frontpage.distance')}
                     description={t('screens.frontpage.distanceDescription')}
-                    left={(p) => <List.Icon {...p} icon="tape-measure" />}
+                    left={() => <Image source={distance} style={styles.listItemIcon} />}
                     right={(p) => <List.Icon {...p} icon="chevron-right" />}
                     onPress={() => navi('/distance')}
                 />
                 <Divider />
                 <List.Item
                     title={t('screens.frontpage.settings')}
-                    left={(p) => <List.Icon {...p} icon="cog-outline" />}
+                    left={() => <Image source={settings} style={styles.listItemIcon} />}
                     right={(p) => <List.Icon {...p} icon="chevron-right" />}
                     onPress={() => navi('/settings')}
                 />
                 <Divider />
                 <List.Item
                     title={t('screens.frontpage.website')}
-                    left={(p) => <List.Icon {...p} icon="web" />}
+                    left={() => <Image source={website} style={styles.listItemIcon} />}
                     right={(p) => <List.Icon {...p} icon="open-in-new" />}
                     onPress={handleOpenWebsite}
                 />
                 <Divider />
                 <List.Item
                     title={t('screens.frontpage.feedback')}
-                    left={(p) => <List.Icon {...p} icon="message-outline" />}
+                    left={() => <Image source={feedback} style={styles.listItemIcon} />}
                     right={(p) => <List.Icon {...p} icon="chevron-right" />}
                     onPress={() => navi('/feedback')}
                 />
                 <Divider />
                 <List.Item
                     title={t('screens.frontpage.logout')}
-                    left={(p) => <List.Icon {...p} icon="logout" />}
+                    left={() => <Image source={logout} style={styles.listItemIcon} />}
                     onPress={() => session.clear()}
                     titleStyle={styles.logoutText}
                 />
@@ -161,6 +174,12 @@ const createStyles = (colors: MD3Colors) => StyleSheet.create({
     logoutText: {
         color: colors.error,
     },
+    listItemIcon: {
+        width: 30,
+        height: 30,
+        alignSelf: 'center',
+        marginLeft: 12,
+    }
 });
 
 export default Frontpage;
