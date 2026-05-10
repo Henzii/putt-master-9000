@@ -77,13 +77,13 @@ const useGPS = (options?: GPSOptions) : GPShookReturn => {
         }
 
         if (useLastKnownLocation) {
-          getLastKnownLocation();
+          await getLastKnownLocation();
         }
 
         if (updateLocation) {
-          watchLocation();
+          await watchLocation();
         } else {
-          getLocationOnce();
+          await getLocationOnce();
         }
 
       } catch (e) {
@@ -95,7 +95,7 @@ const useGPS = (options?: GPSOptions) : GPShookReturn => {
     return () => {
       GPSSubscription.current?.remove();
     };
-  }, []);
+  }, [updateLocation, distanceInterval, updateInterval, useLastKnownLocation, dispatch]);
 
   const location = currentLocation ?? lastKnownLocation;
 
