@@ -29,7 +29,7 @@ const Weeklies = () => {
     const [sheetOpen, setSheetOpen] = useState(false);
     const [countryCode, setCountryCode] = useState<string | null>(null);
     const geocodingDone = useRef(false);
-    const gps = useGPS({updateLocation: false});
+    const gps = useGPS({updateLocation: false, useLastKnownLocation: false});
     const settings = useSettings();
     const isImperial = settings.getBoolValue('ImperialUnits');
 

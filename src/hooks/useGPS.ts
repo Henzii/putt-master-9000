@@ -8,6 +8,7 @@ type GPSOptions = {
   distanceInterval?: number;
   updateInterval?: number;
   updateLocation?: boolean
+  useLastKnownLocation?: boolean;
 }
 
 /**
@@ -17,8 +18,11 @@ type GPSOptions = {
  * @param updateLocation Whether to actively watch the location or just get the last known location. Default is true (actively watch).
  * @param distanceInterval Minimum change (in meters) in position to trigger an update. Default is 1 meter.
  * @param updateInterval Minimum time (in milliseconds) between updates. Default is 500 ms.
+ * @param useLastKnownLocation Whether to use the last known location first. Reduces the loading times. Default is true.
  */
 const useGPS = (options?: GPSOptions) : GPShookReturn => {
+  const {updateLocation = true, distanceInterval = 1, updateInterval = 500, useLastKnownLocation = true} = options ?? {};
+
   const [currentLocation, setCurrentLocation] =
     useState<ExpoLocation.LocationObjectCoords | null>(null);
   const [lastKnownLocation, setLastKnownLocation] =
@@ -36,14 +40,22 @@ const useGPS = (options?: GPSOptions) : GPShookReturn => {
       GPSSubscription.current = await ExpoLocation.watchPositionAsync(
         {
           accuracy: ExpoLocation.Accuracy.High,
-          timeInterval: options?.updateInterval ?? 500,
-          distanceInterval: options?.distanceInterval ?? 1
+          timeInterval: updateInterval,
+          distanceInterval: distanceInterval
         },
         (loc) => {
           setCurrentLocation(loc.coords);
         }
       );
     };
+
+    const getLocationOnce = async () => {
+      const locs = await ExpoLocation.getCurrentPositionAsync({
+        accuracy: ExpoLocation.Accuracy.High,
+      });
+      setCurrentLocation(locs.coords);
+    };
+
     const getLastKnownLocation = async () => {
       const loc = await ExpoLocation.getLastKnownPositionAsync({});
       if (loc) {
@@ -63,8 +75,17 @@ const useGPS = (options?: GPSOptions) : GPShookReturn => {
           );
           return;
         }
-        getLastKnownLocation();
-        watchLocation();
+
+        if (useLastKnownLocation) {
+          getLastKnownLocation();
+        }
+
+        if (updateLocation) {
+          watchLocation();
+        } else {
+          getLocationOnce();
+        }
+
       } catch (e) {
         setError((e as Error).message);
       }
