@@ -59,11 +59,14 @@
     },
     "firstTime": {
       "welcomeTitle": "Tervetuloa FuDisciin!",
-      "newUserIntro": "Näyttää siltä, että olet täällä ensimmäistä kertaa. Ennen kuin voit aloittaa pelaamisen, sinun täytyy luoda tili. Se vie vain hetken!",
-      "existingAccountInfo": "Jos sinulla on jo tili, voit siirtyä suoraan kirjautumisnäkymään. Tai jos sinulla on kiire, voit arpoa kaiken ja päästä alkuun heti.",
-      "toLoginScreen": "Kirjautumisnäkymään!",
+      "newUserIntro": "Aloita nopeasti satunnaisella käyttäjällä tai luo täydellinen FuDisc-profiili, jotta edistymisesi tallentuu.",
+      "existingAccountInfo": "Jos sinulla on jo tili, siirry kirjautumissivulle. Jos unohdit salasanasi, käytä alla olevaa palautuslinkkiä.",
+      "toLoginScreen": "Siirry kirjautumiseen",
+      "forgotPassword": "Unohditko salasanasi?",
+      "createAccountInfo": "Luo oikea tili, jossa voit valita käyttäjänimen, asettaa sähköpostin ja salasanan.",
       "shutUpLetMeIn": "Turpa kii ja päästä mut sisään",
-      "createProperAccount": "Haluan luoda uuden tilin",
+      "shutUpLetMeInInfo": "Luo nopeasti oikea FuDisc-tili. Käyttäjänimen voit vaihtaa myöhemmin verkkosivuilla.",
+      "createProperAccount": "Luo tili",
       "usernameTitle": "Käyttäjänimi",
       "usernameHelp": "Valitse uniikki käyttäjänimi. Muut pelaajat voivat löytää sinut tällä nimellä. Käytä tätä nimeä myös kirjautuaksesi verkkosivuille (fudisc.henzi.fi). Nimen voi vaihtaa myöhemmin verkkosivuilla.",
       "usernameAlreadyTaken": "jo käytössä!",
@@ -316,7 +319,8 @@
       "passwordLabel": "Salasana",
       "loginButton": "Kirjaudu",
       "welcomeMessage": "Tervetuloa, {{name}}",
-      "wrongCredentials": "Väärä käyttäjänimi tai salasana"
+      "wrongCredentials": "Väärä käyttäjänimi tai salasana",
+      "forgotPassword": "Unohditko salasanasi?"
     },
     "signUp": {
       "title": "Rekisteröidy",

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Linking } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Button, Headline, Paragraph, ProgressBar, TextInput, Title } from 'react-native-paper';
+import { Button, ProgressBar, Text, TextInput } from 'react-native-paper';
 import Container from '../../components/ThemedComponents/Container';
 import UsernameGenerator from 'username-generator';
 import Spacer from '../../components/ThemedComponents/Spacer';
@@ -99,29 +100,45 @@ export default function FirstTime() {
         <Container withScrollView>
             <ProgressBar progress={PROGRESS_BAR_STEPS[step]} />
             <Spacer />
-            <Headline>{t('screens.firstTime.welcomeTitle')}</Headline>
             {step === 0 && (
                 <>
-                    <Paragraph>
+                    <Text variant="headlineMedium">Welcome to FuDisc</Text>
+                    <Text variant="bodyMedium">
                         {t('screens.firstTime.newUserIntro')}
-                    </Paragraph>
-                    <Paragraph>
+                    </Text>
+                    <Spacer size={10} />
+                    <Text variant="headlineSmall">Already have an account</Text>
+                    <Text variant="bodyMedium">
                         {t('screens.firstTime.existingAccountInfo')}
-                    </Paragraph>
+                    </Text>
                     <Spacer />
                     <Button mode="contained-tonal" onPress={() => navi('/')} >{t('screens.firstTime.toLoginScreen')}</Button>
                     <Spacer size={5} />
-                    <Button mode="outlined" onPress={handleSignUp}>{t('screens.firstTime.shutUpLetMeIn')}</Button>
+                    <Button mode="text" icon="open-in-new" onPress={() => Linking.openURL('https://fudisc.henzi.fi/restore')}>
+                        {t('screens.firstTime.forgotPassword')}
+                    </Button>
                     <Spacer size={15} />
+                    <Text variant="headlineSmall">Create an account</Text>
+                    <Text variant="bodyMedium">
+                        {t('screens.firstTime.createAccountInfo')}
+                    </Text>
+                    <Spacer />
                     <Button mode="contained" onPress={() => setStep(1)} testID="create-account">{t('screens.firstTime.createProperAccount')}</Button>
+                    <Spacer size={15} />
+                    <Text variant="headlineSmall">{t('screens.firstTime.shutUpLetMeIn')}</Text>
+                    <Text variant="bodyMedium">
+                        {t('screens.firstTime.shutUpLetMeInInfo')}
+                    </Text>
+                    <Spacer />
+                    <Button mode="outlined" onPress={handleSignUp}>{t('screens.firstTime.shutUpLetMeIn')}</Button>
                 </>
             )}
             {step === 1 && (
                 <>
-                    <Title>{t('screens.firstTime.usernameTitle')}</Title>
-                    <Paragraph>
+                    <Text variant="headlineSmall">{t('screens.firstTime.usernameTitle')}</Text>
+                    <Text variant="bodyMedium">
                         {t('screens.firstTime.usernameHelp')}
-                    </Paragraph>
+                    </Text>
                     <Spacer />
                     <TextInput
                         label={`${t('screens.firstTime.usernameTitle')}${errors.userName ? ` - ${errors.userName}` : ''}`}
@@ -145,10 +162,10 @@ export default function FirstTime() {
             )}
             {step === 2 && (
                 <>
-                    <Title>{t('screens.firstTime.passwordTitle')}</Title>
-                    <Paragraph>
+                    <Text variant="headlineSmall">{t('screens.firstTime.passwordTitle')}</Text>
+                    <Text variant="bodyMedium">
                         {t('screens.firstTime.passwordHelp')}
-                    </Paragraph>
+                    </Text>
                     <Spacer />
                     <TextInput
                         label={`${t('screens.firstTime.passwordTitle')}${errors.password1 ? ` - ${errors.password1}` : ''}`}
@@ -182,10 +199,10 @@ export default function FirstTime() {
                 </>)}
             {step === 3 && (
                 <>
-                    <Title>Email (Optional)</Title>
-                    <Paragraph>
+                    <Text variant="headlineSmall">Email (Optional)</Text>
+                    <Text variant="bodyMedium">
                         Email is only used for password recovery and notifications. It is not mandatory, so it&apos; okay to leave it empty.
-                    </Paragraph>
+                    </Text>
                     <TextInput
                         label="Email"
                         autoComplete='off'
@@ -195,9 +212,9 @@ export default function FirstTime() {
                         onChangeText={(text) => setEmail(text)}
                     />
                     <Spacer />
-                    <Paragraph>
+                    <Text variant="bodyMedium">
                         That&apos;s it! You can now start playing.
-                    </Paragraph>
+                    </Text>
                     <Spacer />
                     <Button mode="contained" disabled={Object.keys(errors).length > 0} onPress={handleSignUp} testID="signup">Sign up!</Button>
                     <Spacer size={5} />

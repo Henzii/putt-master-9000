@@ -77,6 +77,10 @@ const Frontpage = () => {
             <Container>
                 <Login />
                 <Link to="/signUp"><Button>{t('screens.frontpage.signUp')}</Button></Link>
+                <Button onPress={() => Linking.openURL(`https://fudisc.henzi.fi/restore`)} icon="open-in-new" contentStyle={{flexDirection: 'row-reverse'}}>
+                    {t('components.login.forgotPassword')}
+                </Button>
+
                 {process.env.NODE_ENV === 'development' && (
                     <>
                         <Link to="/firstTime"><Button>FirstTime</Button></Link>
