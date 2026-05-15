@@ -5,9 +5,13 @@ import * as Localization from "expo-localization";
 
 import en from "./locales/en.json";
 import fi from "./locales/fi.json";
+import sv from "./locales/sv.json";
+import et from "./locales/et.json";
+import pl from "./locales/pl.json";
+import de from "./locales/de.json";
 
 // Constants
-export const SUPPORTED_LANGUAGES = ["en", "fi"] as const;
+export const SUPPORTED_LANGUAGES = ["en", "fi", "sv", "et", "pl", "de"] as const;
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 export const LANGUAGE_STORAGE_KEY = "userLanguage";
 export const AUTO_LANGUAGE = "auto";
@@ -16,6 +20,10 @@ i18n.use(initReactI18next).init({
   resources: {
     en: { translation: en },
     fi: { translation: fi },
+    sv: { translation: sv },
+    et: { translation: et },
+    pl: { translation: pl },
+    de: { translation: de },
   },
   defaultNS: "translation",
   fallbackLng: "en",

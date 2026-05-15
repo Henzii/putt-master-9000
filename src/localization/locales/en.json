@@ -64,11 +64,15 @@
     },
     "firstTime": {
       "welcomeTitle": "Welcome to FuDisc!",
-      "newUserIntro": "Looks like you are new here. Before you can start playing, you need to create an account. It'll only take a minute!",
-      "existingAccountInfo": "If you already have an account, you can go directly to the login screen. Or if you're in a hurry, you can just randomize everything and get started right away.",
-      "toLoginScreen": "To the login screen!",
+      "alreadyHaveAccount": "Already have an account",
+      "newUserIntro": "Start with a quick guest-style account or create a full FuDisc profile to keep your progress safe.",
+      "existingAccountInfo": "If you already have an account, go to the login screen. If you forgot your password, use the restore link below.",
+      "toLoginScreen": "Log in",
+      "forgotPassword": "Forgot your password?",
+      "createAccountInfo": "Create a proper account where you can pick your username, set your email, and choose your password.",
       "shutUpLetMeIn": "Shut up and let me in",
-      "createProperAccount": "I want to create a proper account",
+      "shutUpLetMeInInfo": "Create a randomized FuDisc account instantly. You can change your username, email, and password later.",
+      "createProperAccount": "Create an account",
       "usernameTitle": "Username",
       "usernameHelp": "Pick a unique username. Other players can find you with this. Also use this name to login to the website (fudisc.henzi.fi). This name can be changed afterwards on the website.",
       "usernameAlreadyTaken": "already taken!",
@@ -245,7 +249,11 @@
       "languageTitle": "Language",
       "languageAuto": "Automatic",
       "languageEnglish": "English",
-      "languageFinnish": "Suomi"
+      "languageFinnish": "Suomi",
+      "languageSwedish": "Svenska",
+      "languageEstonian": "Eesti",
+      "languagePolish": "Polski",
+      "languageGerman": "Deutsch"
     },
     "feedback": {
       "title": "Leave feedback",
@@ -325,7 +333,8 @@
       "passwordLabel": "Password",
       "loginButton": "Login",
       "welcomeMessage": "Welcome, {{name}}",
-      "wrongCredentials": "Wrong username or password"
+      "wrongCredentials": "Wrong username or password",
+      "forgotPassword": "Forgot password?"
     },
     "signUp": {
       "title": "Signup",

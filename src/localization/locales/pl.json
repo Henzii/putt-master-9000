@@ -1,0 +1,525 @@
+{
+  "common": {
+    "ok": "Ok",
+    "cancel": "Anuluj",
+    "yes": "Tak",
+    "no": "Nie",
+    "save": "Zapisz",
+    "add": "Dodaj",
+    "delete": "Usuń",
+    "edit": "Edytuj",
+    "back": "Wstecz",
+    "loading": "Ładowanie...",
+    "error": "Błąd",
+    "close": "Zamknij",
+    "next": "Następny",
+    "change": "Zmień",
+    "create": "Utwórz",
+    "join": "Dołącz",
+    "leave": "Opuść",
+    "submit": "Wyślij",
+    "name": "Nazwa",
+    "optional": "Opcjonalnie",
+    "holes": "Doły",
+    "par": "Par"
+  },
+  "screens": {
+    "frontpage": {
+      "welcome": "Witaj ponownie!",
+      "newGame": "Nowa gra",
+      "oldGames": "Stare gry",
+      "oldGamesDescription": "Przeglądaj stare i niedokończone gry",
+      "courses": "Pola",
+      "coursesDescription": "Wyświetlaj, twórz i edytuj pola i układy",
+      "friends": "Przyjaciele",
+      "stats": "Statystyki",
+      "achievements": "Osiągnięcia",
+      "group": "Grupa",
+      "groupDescription": "Dołącz lub zarządzaj swoją grupą",
+      "settings": "Ustawienia",
+      "website": "Strona internetowa",
+      "distance": "Odległość",
+      "distanceDescription": "Mierz i śledź odległości rzutów",
+      "new": "Nowy",
+      "weeklies": "Tygodniowe",
+      "weekliesDescription": "Znajdź tygodniowe konkurencje w pobliżu",
+      "feedback": "Opinia",
+      "logout": "Wyloguj się",
+      "connectingToServer": "Łączenie z serwerem...",
+      "sessionFailed": "Sesja nie powiodła się",
+      "sessionFixSuggestion": "Kilka rzeczy, które możesz spróbować, aby naprawić ten błąd:",
+      "clearSession": "Wyczyść sesję",
+      "reloadApp": "Przeładuj aplikację",
+      "signUp": "Zarejestruj się!",
+      "playersCount": "{{count}} graczy",
+      "holesCompleted": "{{completed}}/{{total}} doły",
+      "unfinishedGames": "{{count}} niedokończonych gier",
+      "updateAvailable": "Dostępna aktualizacja",
+      "updateMessage": "Nowa wersja aplikacji jest dostępna. Zaktualizuj teraz, aby uzyskać najnowsze funkcje i poprawki błędów.",
+      "updateNow": "Zaktualizuj teraz",
+      "continue": "Kontynuuj"
+    },
+    "main": {
+      "emptyNotification": "Otrzymano puste powiadomienie???"
+    },
+    "firstTime": {
+      "welcomeTitle": "Witaj w FuDisc!",
+      "alreadyHaveAccount": "Masz już konto?",
+      "newUserIntro": "Zacznij od szybkiego konta gościa lub utwórz pełny profil FuDisc, aby bezpiecznie przechowywać swoje postępy.",
+      "existingAccountInfo": "Jeśli już masz konto, przejdź do ekranu logowania. Jeśli zapomniałeś hasła, użyj linku przywracającego poniżej.",
+      "toLoginScreen": "Zaloguj się",
+      "forgotPassword": "Zapomniane hasło?",
+      "createAccountInfo": "Utwórz właściwe konto, w którym możesz wybrać swoją nazwę użytkownika, ustawić e-mail i wybrać hasło.",
+      "shutUpLetMeIn": "Zamknij się i wpuść mnie",
+      "shutUpLetMeInInfo": "Utwórz losowe konto FuDisc natychmiast. Możesz zmienić swoją nazwę użytkownika, e-mail i hasło później.",
+      "createProperAccount": "Utwórz konto",
+      "usernameTitle": "Nazwa użytkownika",
+      "usernameHelp": "Wybierz unikalną nazwę użytkownika. Inni gracze mogą Cię znaleźć dzięki niej. Użyj tej nazwy, aby zalogować się do witryny (fudisc.henzi.fi). Tę nazwę można zmienić później na stronie.",
+      "usernameAlreadyTaken": "już zajęta!",
+      "passwordTitle": "Hasło",
+      "passwordHelp": "Wpisz hasło. To hasło jest używane do logowania się w aplikacji i na stronie.",
+      "passwordTooShort": "Hasło za krótkie!",
+      "passwordsDontMatch": "Hasła się nie zgadzają!",
+      "verifyPassword": "Weryfikuj hasło",
+      "emailTitle": "E-mail (opcjonalnie)",
+      "emailHelp": "E-mail jest używany tylko do odzyskiwania hasła i powiadomień. Nie jest obowiązkowy, więc możesz go pominąć.",
+      "signUpComplete": "To wszystko! Możesz teraz zacząć grać.",
+      "backToStart": "Powrót na początek",
+      "errorSigningUp": "Błąd podczas rejestracji",
+      "welcomeToFudisc": "Witaj w FuDisc, {{name}}!"
+    },
+    "game": {
+      "newGame": "Nowa gra",
+      "selectCourse": "Wybierz pole",
+      "changeCourse": "Zmień pole",
+      "selectPlayers": "Wybierz graczy",
+      "addPlayers": "Dodaj graczy",
+      "gameSettings": "Ustawienia",
+      "createGame": "Utwórz grę",
+      "gameOver": "Koniec gry!",
+      "startNewGame": "Zacznij nową grę",
+      "errorOccurred": "Właśnie pojawił się błąd!",
+      "notLoggedIn": "Nie jesteś zalogowany?",
+      "groupCompetitionDisabled": "Konkurencja grupowa wyłączona, nie należysz do żadnej grupy",
+      "isGroupCompetition": "Jest konkurencją grupową",
+      "groupCompetitionInfo": "Ten przełącznik oznacza grę jako konkurencję grupową. Punkty będą przyznawane graczom należącym do grupy {{groupName}}.",
+      "groupJoinInfo": "Jeśli nie należysz do żadnej grupy, wybierz \"Grupy\" z widoku głównego, aby dołączyć.",
+      "bHcMultiplier": "Mnożnik bHC",
+      "bHcMultiplierInfo": "Dostosuj handicap piwa do tej gry. Handicap piwa to 0,5 rzutu na piwo.",
+      "bHcMultiplierCalc": "Nowa wartość handicap piwa (bHC) jest obliczana jako 0,5 pomnożone przez wybrany mnożnik, co daje rzuty na piwo.",
+      "tableHeaderName": "Nazwa",
+      "tableHeaderGames": "Gry",
+      "tableHeaderBest": "Najlepszy",
+      "tableHeaderHc": "HC",
+      "tabs": {
+        "scorecard": "Karta wyników",
+        "teeSign": "Znak przy ansie",
+        "summary": "Podsumowanie",
+        "throwStyle": "Styl rzutu",
+        "beers": "Piwa",
+        "setup": "Ustawienie"
+      },
+      "subscriptionFailed": "Subskrypcja nie powiodła się. Dane gry nie są aktualizowane w czasie rzeczywistym.",
+      "gameCreated": "Nowa gra utworzona!",
+      "gameCreationFailed": "Nie udało się utworzyć gry!",
+      "setup": {
+        "info": "Info",
+        "started": "Rozpoczęta",
+        "closed": "Zamknięta",
+        "duration": "Czas trwania",
+        "closeConfirmTitle": "Jesteś pewny?",
+        "closeConfirmMessage": "Po zamknięciu gry nie będziesz już mógł wprowadzać wyników ani pić piwa",
+        "gameClosed": "Gra zamknięta",
+        "errorOccurred": "Coś poszło nie tak :(",
+        "gameAbandoned": "Gra porzucona",
+        "reopenConfirmTitle": "Jesteś pewny",
+        "reopenConfirmMessage": "Wszystko zostanie usunięte",
+        "endGame": "Zakończy grę",
+        "stopDrinkingMessage": "Przestań pić i zamknij grę.",
+        "reopen": "Otwórz ponownie",
+        "reopenMessage": "Otwórz grę ponownie. Inni gracze będą powiadomieni o Twojej próbie oszustwa.",
+        "mainMenu": "Menu główne",
+        "mainMenuMessage": "Rozładuj grę i wróć do menu głównego",
+        "discardGame": "Odrzuć grę",
+        "discardMessage": "Jeśli gra się skończy, tylko Twoja karta wyników zostanie spalona w piekle.",
+        "gameId": "ID gry:",
+        "noSubscription": "Brak subskrypcji"
+      },
+      "beers": {
+        "title": "Piwa",
+        "whaat": "Co?!",
+        "calculator": "Kalkulator piwa"
+      },
+      "statsbar": {
+        "template": "Najlepszy: {{best}}, Śr: {{average}}"
+      },
+      "holeMap": {
+        "noImageTitle": "Brak obrazu znaku przy ansie",
+        "noImageText": "Zrób zdjęcie znaku przy ansie, aby dodać je tutaj",
+        "takePhoto": "Zrób zdjęcie",
+        "uploadFromGallery": "Prześlij z galerii",
+        "imageUploading": "Przesyłanie obrazu...",
+        "imageLoading": "Ładowanie obrazu...",
+        "failedToLoad": "Nie udało się załadować obrazu.",
+        "uploadedBy": "Przesłane przez"
+      },
+      "throwStyle": {
+        "title": "Randomizuj style rzutów",
+        "individualThrowStyles": "Przypisz styl rzutu każdemu graczowi indywidualnie.",
+        "player": "Gracz",
+        "disc": "Dysk",
+        "style": "Styl",
+        "startRandomizing": "Zacznij randomizować",
+        "stopRandomizing": "Zamknij się!"
+      }
+    },
+    "stats": {
+      "myStats": "Moje statystyki",
+      "userStats": "Statystyki {{name}}",
+      "spyFriend": "Szpieguj przyjaciela",
+      "noCourseSelected": "Nie wybrano pola. Wybierz pole, aby wyświetlić statystyki specyficzne dla układu.",
+      "selectCourse": "Wybierz pole",
+      "changeCourse": "Zmień pole",
+      "errorOccurred": "Właśnie pojawił się błąd",
+      "noData": "Brak danych...",
+      "holesData": "Dane doły",
+      "noDataAvailable": "Brak dostępnych danych",
+      "activity": {
+        "error": "Błąd!",
+        "loadingFailed": "Ładowanie poprzedniej aktywności nie powiodło się :/",
+        "year": "Rok {{year}}",
+        "last12Months": "Ostatnie 12 miesięcy",
+        "totalGames": "Łącznie {{games}} gier między {{from}} - {{to}}"
+      },
+      "labels": {
+        "total": "Całkowity",
+        "best": "Najlepszy",
+        "average": "Średnia",
+        "eagles": "Orły",
+        "birdies": "Ptaki",
+        "pars": "Pary",
+        "bogeys": "Bogey",
+        "doubleBogeys": "2x Bogey",
+        "others": "Inne"
+      },
+      "bestPoolGame": {
+        "title": "Mistrzowie wszechświata",
+        "info": "Pokazuje najlepszą grę grywaną na wybranym układzie z wielkością puli n.",
+        "poolLabel": "Pokaż najlepszą grę dla wielkości puli: ",
+        "noData": "Brak danych :P",
+        "eligibleGames": "Znaleziono kwalifikujące się gry: ",
+        "date": "Data:",
+        "players": "Gracze:",
+        "totalScore": "Całkowity wynik:",
+        "totalPar": "Całkowity par:",
+        "totalAdjusted": "+/- Całkowity:",
+        "adjustedAdjusted": "+/- Dostosowany:",
+        "playersTitle": "Gracze"
+      }
+    },
+    "achievements": {
+      "myAchievements": "Moje osiągnięcia",
+      "userAchievements": "Osiągnięcia {{name}}",
+      "noAchievements": "Jeszcze brak osiągnięć!",
+      "errorLoading": "Nie oblicza"
+    },
+    "settings": {
+      "friendsTitle": "Przyjaciele",
+      "blockFriendRequests": "Blokuj innym użytkownikom dodawanie Cię jako przyjaciela",
+      "changePasswordTitle": "Zmień hasło",
+      "newPassword": "Nowe hasło",
+      "confirmPassword": "Potwierdź hasło",
+      "passwordTooShort": "Hasło za krótkie!",
+      "passwordTooShortInfo": "Twoje hasło powinno mieć co najmniej 5 znaków",
+      "passwordNoMatch": "Brak dopasowania!",
+      "passwordsDontMatch": "Hasła się nie zgadzają!",
+      "passwordChanged": "Hasło zmienione!",
+      "passwordChangeFailed": "Błąd! Hasło nie zmieniono! :/",
+      "deleteAccountTitle": "Usuń konto",
+      "deleteAccountInfo": "Usuń swoje konto na stałe. Usunięte konta nie mogą być przywrócone później.",
+      "deleteAccountConfirmInfo": "Aby usunąć swoje konto, wpisz {{name}} w polu poniżej i naciśnij Usuń konto.",
+      "accountDeleted": "Konto usunięte",
+      "infoTitle": "Info",
+      "version": "wersja",
+      "build": "budowa",
+      "accountType": "typ konta",
+      "displayUnitsTitle": "Jednostki wyświetlania",
+      "metric": "Metryka",
+      "imperial": "Imperialny",
+      "languageTitle": "Język",
+      "languageAuto": "Automatyczny",
+      "languageEnglish": "English",
+      "languageFinnish": "Suomi",
+      "languageSwedish": "Svenska",
+      "languageEstonian": "Eesti",
+      "languagePolish": "Polski",
+      "languageGerman": "Deutsch"
+    },
+    "feedback": {
+      "title": "Prześlij opinię",
+      "subject": "Temat",
+      "subjectPlaceholder": "Wpisz temat opinii",
+      "email": "E-mail",
+      "emailPlaceholder": "Wpisz swój e-mail (opcjonalnie)",
+      "message": "Wiadomość",
+      "messagePlaceholder": "Wpisz tutaj swoją opinię",
+      "submitButton": "Prześlij opinię",
+      "sendFailed": "Nie udało się wysłać opinii. Spróbuj ponownie później.",
+      "thankYouTitle": "Dziękujemy za opinię!",
+      "thankYouMessage": "Twoja opinia została odebrana. Możemy do Ciebie wrócić, jeśli podałeś swój adres e-mail."
+    },
+    "oldGames": {
+      "title": "Gry",
+      "totalRounds": "Łącznie {{count}} rund",
+      "loadingGames": "Ładowanie gier...",
+      "fetchingMore": "Pobieranie więcej...",
+      "showOnlyGroupGames": "Pokaż tylko gry grupowe"
+    },
+    "distance": {
+      "listTab": "Lista",
+      "measureTab": "Mierz",
+      "newMeasurementAdded": "Dodano nowy pomiar",
+      "measurementDeleted": "Pomiar usunięty",
+      "somethingWentWrong": "Coś poszło nie tak",
+      "list": {
+        "title": "Zapisane pomiary",
+        "noMeasurements": "Brak zapisanych pomiarów"
+      },
+      "measure": {
+        "startingPoint": "Punkt wyjścia",
+        "landingPoint": "Punkt lądowania",
+        "unlock": "Odblokuj",
+        "lock": "Blokada",
+        "distance": "Odległość",
+        "addToList": "Dodaj do listy",
+        "latitude": "Szer:",
+        "longitude": "Dł:",
+        "accuracy": "Dokładność:"
+      }
+    },
+    "weeklies": {
+      "title": "Tygodniowe blisko mnie",
+      "description": "Konkurencje w {{range}} z 10+ gracze",
+      "selectRange": "Wybierz zakres",
+      "country": "Kraj",
+      "players": "{{count}} graczy",
+      "noResults": "Brak konkurencji w pobliżu",
+      "gpsError": "Nie udało się uzyskać Twojej lokalizacji",
+      "gpsLoading": "Czekanie na GPS..."
+    },
+    "group": {
+      "title": "Grupa",
+      "notInGroup": "Nie w grupie",
+      "notInGroupInfo": "Ustaw nazwę grupy, aby połączyć się ze swoimi przyjaciółmi. To łączy was wszystkich razem w tej samej grupie, dzięki czemu możecie porównywać wyniki i konkurować ze sobą. Będziesz mógł wyświetlić wyniki i klasyfikację konkurencji grupy na stronie.",
+      "membersTitle": "Członkowie",
+      "enterGroupName": "Wpisz nazwę grupy",
+      "websiteTitle": "Strona internetowa",
+      "websiteInfo": "Klasyfikacja grupy, wyniki itp. znajdują się na stronie",
+      "leaveGroupTitle": "Opuść grupę",
+      "leaveGroupInfo": "Opuszczenie grupy usunie Cię z grupy i nie będziesz już mógł widzieć wyników lub klasyfikacji grupy.",
+      "leaveGroupButton": "Opuść grupę",
+      "leaveGroupConfirmTitle": "Opuść grupę",
+      "leaveGroupConfirmMessage": "Czy na pewno chcesz opuścić grupę? Jeśli zdecydujesz się dołączyć ponownie, będziesz traktowany jako nowy członek, a poprzednie wyniki nie będą uwzględniać w Twojej klasyfikacji.",
+      "joinedGroup": "Dołączyłeś do grupy {{name}}",
+      "leftGroup": "Opuściłeś grupę",
+      "groupNotSet": "Błąd! Grupa nie ustawiona :(",
+      "somethingNotWorking": "Coś nie działa prawidłowo ..."
+    }
+  },
+  "components": {
+    "login": {
+      "title": "Zaloguj się",
+      "usernameLabel": "Nazwa użytkownika",
+      "passwordLabel": "Hasło",
+      "loginButton": "Zaloguj się",
+      "welcomeMessage": "Witaj, {{name}}",
+      "wrongCredentials": "Błędna nazwa użytkownika lub hasło",
+      "forgotPassword": "Zapomniane hasło?"
+    },
+    "signUp": {
+      "title": "Rejestracja",
+      "titleFriend": "Zarejestruj przyjaciela",
+      "friendSignUpInfo1": "Tworzysz konto dla przyjaciela. Zamiast tworzyć konta dla wszystkich, powinieneś zmusić swoich przyjaciół do korzystania z Fudisc.",
+      "friendSignUpInfo2": "Utworzony przyjaciel zostanie automatycznie dodany do Twojej listy przyjaciół.",
+      "usernameTitle": "Nazwa użytkownika",
+      "usernameLabel": "Nazwa użytkownika",
+      "passwordTitle": "Hasło",
+      "passwordLabel": "Hasło",
+      "confirmPasswordLabel": "Potwierdź hasło",
+      "emailTitle": "E-mail",
+      "signUpButton": "Zarejestruj się!",
+      "nameTooShort": "Nazwa za krótka!",
+      "passwordTooShort": "Hasło za krótkie. Min 5 liter.",
+      "passwordsDontMatch": "Hasła się nie zgadzają!",
+      "accountCreated": "Konto utworzone dla {{name}}.",
+      "nowFriends": "Teraz jesteś przyjacielem {{name}}.",
+      "failedToAddFriend": "Nie udało się dodać {{name}} jako przyjaciela.",
+      "createUserError": "Błąd przy tworzeniu użytkownika! {{message}}"
+    },
+    "addCourse": {
+      "editTitle": "Edytuj pole",
+      "addTitle": "Dodaj pole",
+      "nameLabel": "Nazwa",
+      "courseName": "Nazwa pola",
+      "locationTitle": "Lokalizacja",
+      "setCoordinatesManually": "Ustaw współrzędne ręcznie",
+      "latLabel": "Szer",
+      "longLabel": "Dł",
+      "gpsAccuracy": "Dokładność GPS: {{value}}m",
+      "gpsLoading": "GPS ładuje...",
+      "selectLocationFromMap": "Wybierz lokalizację z mapy",
+      "setCoordinatesManuallyHint": "Ustaw współrzędne ręcznie"
+    },
+    "addLayout": {
+      "editTitle": "Edytuj układ",
+      "addTitle": "Dodaj układ",
+      "layoutName": "Nazwa układu",
+      "numberOfHoles": "Liczba doły",
+      "markAsObsolete": "Oznacz układ jako przestarzały",
+      "holesTitle": "Doły",
+      "holeNumber": "Dół #{{number}}",
+      "nameOptional": "Nazwa (opcjonalnie)",
+      "holeSummary": "{{holes}} doły, par {{par}}"
+    },
+    "addFriend": {
+      "title": "Dodaj przyjaciela",
+      "searchHint": "Kto jest twoim tatusiem",
+      "nameLabel": "Nazwa",
+      "usersFound": "{{count}} użytkowników znaleziono",
+      "friendBadge": "Przyjaciel!",
+      "itsMe": "To ja!"
+    },
+    "friendsList": {
+      "title": "Przyjaciele",
+      "selectedCount": "({{count}} wybranych)",
+      "addFriend": "Dodaj przyjaciela",
+      "createFriend": "Utwórz przyjaciela",
+      "loadingFriends": "Ładowanie przyjaciół...",
+      "addPlayersToGame": "Dodaj graczy do gry"
+    },
+    "selectCourse": {
+      "selectLayout": "Wybierz układ",
+      "addCourse": "Dodaj pole",
+      "loadingCourses": "Ładowanie pól...",
+      "noMore": "Nie więcej... No más...",
+      "addLayout": "Dodaj układ",
+      "layoutCount_one": "{{count}} układ",
+      "layoutCount_other": "{{count}} układy",
+      "layouts": "Układy",
+      "away": "daleko",
+      "holesAndPar": "{{holes}} doły, par {{par}}",
+      "obsolete": "PRZESTARZAŁY",
+      "editCourse": "Edytuj pole",
+      "deleteCourse": "Usuń pole",
+      "courseDeleted": "Pole usunięte",
+      "courseNotDeleted": "Pole nie usunięte!",
+      "failedToLoadCourses": "Nie udało się załadować pól",
+      "gpsLoading": "GPS ładuje",
+      "layoutsAndDistance": "{{count}} układy, {{distance}} daleko",
+      "deleteConfirmTitle": "Jesteś pewny?",
+      "deleteConfirmMessage": "Czy na pewno chcesz usunąć to pole? Nie można tego cofnąć później",
+      "select": "Wybierz",
+      "menu": {
+        "editCourse": "Edytuj pole",
+        "deleteCourse": "Usuń pole"
+      },
+      "map": {
+        "failedToLoad": "Nie udało się załadować pól",
+        "gpsLoading": "GPS ładuje"
+      }
+    },
+    "errorScreen": {
+      "title": "Błąd",
+      "backToFrontpage": "Powrót do strony głównej"
+    },
+    "loading": {
+      "defaultText": "Ładowanie...",
+      "serverSleeping": "Serwer wydaje się spać...",
+      "wakeUp": "Wybudź tę głupią maszynę!",
+      "somethingWrong": "Hmm.. coś może być nie tak 🤔",
+      "tryTurningOff": "Czy spróbowałeś wyłączyć i włączyć to ponownie?"
+    },
+    "localSettings": {
+      "sortHc": "Sortuj podsumowanie po HC",
+      "sortBox": "Sortuj karty wyników po kolejności pudełka",
+      "autoAdvance": "Automatycznie wybierz pierwszy niedokończony dół",
+      "hideStatsBars": "Ukryj statystyki z kart wyników",
+      "hidePlusMinus": "Ukryj +/- z kart wyników",
+      "prohibition": "Zakaz",
+      "randomThrowStyle": "Losowe style rzutów",
+      "hideTeeSign": "Ukryj kartę ze znakiem przy ansie"
+    },
+    "alcConverter": {
+      "title": "Kalkulator piwa",
+      "beer": {
+        "long": "Duże (0,5l)",
+        "strong": "Mocne (>5,0%)",
+        "longAndStrong": "Duże & Mocne"
+      },
+      "wine": {
+        "title": "Wino (dl)"
+      },
+      "other": {
+        "normal": "Normalne (0,33l)"
+      },
+      "total": "Razem",
+      "beers": "piwa"
+    },
+    "toolbar": {
+      "title": "FuDisc"
+    }
+  },
+  "game": {
+    "throwStyles": {
+      "backhand": "Backhand",
+      "forehand": "Forehand",
+      "wrongHand": "Zła ręka",
+      "roller": "Roller",
+      "backhandRoller": "Backhand roller",
+      "forehandRoller": "Forehand roller",
+      "tomahawk": "Tomahawk",
+      "grenade": "Granat",
+      "hyzer": "Hyzer",
+      "anhyzer": "Anhyzer",
+      "yourChoice": "Twój wybór"
+    },
+    "discTypes": {
+      "putter": "Putter",
+      "midrange": "Midrange",
+      "driver": "Driver",
+      "overstable": "Nadstabilny",
+      "understable": "Niedostabilny",
+      "yourChoice": "Twój wybór"
+    }
+  },
+  "achievements": {
+    "titles": {
+      "100Malmis": "100x Niitty",
+      "HoleInOne": "Hole in one",
+      "winAllHoles": "Super zwycięzca",
+      "0Pars": "Brak parów",
+      "GoldenBox": "Złote pudełko"
+    },
+    "descriptions": {
+      "100Malmis": "\"Aina vaan malmikseen...\"",
+      "HoleInOne": "Hole in one",
+      "winAllHoles": "Nic tylko wygrywanie",
+      "0Pars": "Zero parów, spróbuj ciężej!",
+      "GoldenBox": "Dlaczego zawsze muszę rzucać pierwszy?"
+    }
+  },
+  "errors": {
+    "noCameraPermission": "Wymagane uprawnienie do aparatu, aby robić zdjęcia.",
+    "genericError": "Coś poszło nie tak",
+    "scoreNotSaved": "Błąd! Wynik może nie zostać zapisany :/"
+  },
+  "notifications": {
+    "friendAdded": "Przyjaciel dodany! Dobra robota!",
+    "friendAddFailed": "Nie udało się zostać przyjacielem z {{name}}. Użytkownik blokuje żądania przyjaźni lub żądanie z jakiegoś innego powodu nie powiodło się.",
+    "friendRemoved": "Usunął {{name}} ze swojej listy przyjaciół!",
+    "friendRemoveFailed": "Nie udało się usunąć przyjaciela!",
+    "removeFriendTitle": "Żegnaj przyjacielu",
+    "removeFriendMessage": "Przyjaciele są wymienni, ale discgolf to na całe życie!\n\nNaprawdę usunąć {{name}}?",
+    "removeFriendConfirm": "Zrób to"
+  }
+}

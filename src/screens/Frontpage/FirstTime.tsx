@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Headline, Paragraph, ProgressBar, TextInput, Title } from 'react-native-paper';
+import { Button, ProgressBar, Text, TextInput } from 'react-native-paper';
 import Container from '../../components/ThemedComponents/Container';
 import UsernameGenerator from 'username-generator';
 import Spacer from '../../components/ThemedComponents/Spacer';
@@ -13,6 +13,7 @@ import { SEARCH_USER } from '../../graphql/queries';
 import { addNotification } from '../../reducers/notificationReducer';
 import { useDispatch } from 'react-redux';
 import useTextInput from '../../hooks/useTextInput';
+import WebLinkButton from '@components/WebLinkButton';
 
 type Errors = {
     [key: string]: string
@@ -99,29 +100,45 @@ export default function FirstTime() {
         <Container withScrollView>
             <ProgressBar progress={PROGRESS_BAR_STEPS[step]} />
             <Spacer />
-            <Headline>{t('screens.firstTime.welcomeTitle')}</Headline>
             {step === 0 && (
                 <>
-                    <Paragraph>
+                    <Text variant="headlineMedium">{t('screens.firstTime.welcomeTitle')}</Text>
+                    <Text variant="bodyMedium">
                         {t('screens.firstTime.newUserIntro')}
-                    </Paragraph>
-                    <Paragraph>
+                    </Text>
+                    <Spacer size={10} />
+                    <Text variant="headlineSmall">{t('screens.firstTime.alreadyHaveAccount')}</Text>
+                    <Text variant="bodyMedium">
                         {t('screens.firstTime.existingAccountInfo')}
-                    </Paragraph>
+                    </Text>
                     <Spacer />
                     <Button mode="contained-tonal" onPress={() => navi('/')} >{t('screens.firstTime.toLoginScreen')}</Button>
                     <Spacer size={5} />
-                    <Button mode="outlined" onPress={handleSignUp}>{t('screens.firstTime.shutUpLetMeIn')}</Button>
+                    <WebLinkButton path="restore">
+                        {t('screens.firstTime.forgotPassword')}
+                    </WebLinkButton>
                     <Spacer size={15} />
+                    <Text variant="headlineSmall">{t('screens.firstTime.createProperAccount')}</Text>
+                    <Text variant="bodyMedium">
+                        {t('screens.firstTime.createAccountInfo')}
+                    </Text>
+                    <Spacer />
                     <Button mode="contained" onPress={() => setStep(1)} testID="create-account">{t('screens.firstTime.createProperAccount')}</Button>
+                    <Spacer size={15} />
+                    <Text variant="headlineSmall">{t('screens.firstTime.shutUpLetMeIn')}</Text>
+                    <Text variant="bodyMedium">
+                        {t('screens.firstTime.shutUpLetMeInInfo')}
+                    </Text>
+                    <Spacer />
+                    <Button mode="outlined" onPress={handleSignUp}>{t('screens.firstTime.shutUpLetMeIn')}</Button>
                 </>
             )}
             {step === 1 && (
                 <>
-                    <Title>{t('screens.firstTime.usernameTitle')}</Title>
-                    <Paragraph>
+                    <Text variant="headlineSmall">{t('screens.firstTime.usernameTitle')}</Text>
+                    <Text variant="bodyMedium">
                         {t('screens.firstTime.usernameHelp')}
-                    </Paragraph>
+                    </Text>
                     <Spacer />
                     <TextInput
                         label={`${t('screens.firstTime.usernameTitle')}${errors.userName ? ` - ${errors.userName}` : ''}`}
@@ -145,10 +162,10 @@ export default function FirstTime() {
             )}
             {step === 2 && (
                 <>
-                    <Title>{t('screens.firstTime.passwordTitle')}</Title>
-                    <Paragraph>
+                    <Text variant="headlineSmall">{t('screens.firstTime.passwordTitle')}</Text>
+                    <Text variant="bodyMedium">
                         {t('screens.firstTime.passwordHelp')}
-                    </Paragraph>
+                    </Text>
                     <Spacer />
                     <TextInput
                         label={`${t('screens.firstTime.passwordTitle')}${errors.password1 ? ` - ${errors.password1}` : ''}`}
@@ -178,16 +195,16 @@ export default function FirstTime() {
                         disabled={'password1' in errors || 'password2' in errors}
                         onPress={() => setStep(3)}
                         testID="nextStep"
-                    >Next</Button>
+                    >{t('common.next')}</Button>
                 </>)}
             {step === 3 && (
                 <>
-                    <Title>Email (Optional)</Title>
-                    <Paragraph>
-                        Email is only used for password recovery and notifications. It is not mandatory, so it&apos; okay to leave it empty.
-                    </Paragraph>
+                    <Text variant="headlineSmall">{t('screens.firstTime.emailTitle')}</Text>
+                    <Text variant="bodyMedium">
+                        {t('screens.firstTime.emailHelp')}
+                    </Text>
                     <TextInput
-                        label="Email"
+                        label={t('screens.firstTime.emailTitle')}
                         autoComplete='off'
                         mode="outlined"
                         dense
@@ -195,13 +212,13 @@ export default function FirstTime() {
                         onChangeText={(text) => setEmail(text)}
                     />
                     <Spacer />
-                    <Paragraph>
-                        That&apos;s it! You can now start playing.
-                    </Paragraph>
+                    <Text variant="bodyMedium">
+                        {t('screens.firstTime.signUpComplete')}
+                    </Text>
                     <Spacer />
-                    <Button mode="contained" disabled={Object.keys(errors).length > 0} onPress={handleSignUp} testID="signup">Sign up!</Button>
+                    <Button mode="contained" disabled={Object.keys(errors).length > 0} onPress={handleSignUp} testID="signup">{t('screens.frontpage.signUp')}</Button>
                     <Spacer size={5} />
-                    <Button mode="contained-tonal" onPress={() => setStep(0)}>Back to start</Button>
+                    <Button mode="contained-tonal" onPress={() => setStep(0)}>{t('screens.firstTime.backToStart')}</Button>
                 </>
             )
             }

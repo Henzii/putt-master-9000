@@ -1,660 +1,670 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<AlcConverter /> renders 1`] = `
-<RCTScrollView
-  contentContainerStyle={
-    [
-      undefined,
-      undefined,
-      undefined,
-      false,
-      {
-        "padding": 0,
-      },
-      undefined,
-      undefined,
-    ]
+<View
+  collapsable={false}
+  pointerEvents="box-none"
+  style={
+    {
+      "flex": 1,
+    }
   }
 >
-  <View>
-    <Text
-      style={
-        [
-          {
-            "color": "rgba(28, 27, 31, 1)",
-          },
-          {
-            "textAlign": "left",
-          },
+  <RCTScrollView
+    contentContainerStyle={
+      [
+        undefined,
+        undefined,
+        undefined,
+        false,
+        {
+          "padding": 0,
+        },
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <View>
+      <Text
+        style={
           [
+            {
+              "color": "rgb(25, 28, 27)",
+            },
             {
               "textAlign": "left",
             },
-            {
-              "color": "rgba(28, 27, 31, 0.87)",
-              "writingDirection": "ltr",
-            },
             [
               {
-                "fontSize": 24,
-                "letterSpacing": 0,
-                "lineHeight": 32,
-                "marginVertical": 2,
+                "textAlign": "left",
               },
-              undefined,
+              {
+                "color": "rgba(25, 28, 27, 0.87)",
+                "writingDirection": "ltr",
+              },
+              [
+                {
+                  "fontSize": 24,
+                  "letterSpacing": 0,
+                  "lineHeight": 32,
+                  "marginVertical": 2,
+                },
+                undefined,
+              ],
             ],
-          ],
-        ]
-      }
-    >
-      Beerculator
-    </Text>
-    <View
-      style={
-        {
-          "alignItems": "center",
-          "display": "flex",
-          "flexDirection": "row",
-        }
-      }
-    >
-      <Text
-        style={
-          {
-            "minWidth": 120,
-          }
+          ]
         }
       >
-        Long (0,5l)
+        Beerculator
       </Text>
       <View
         style={
-          {
-            "width": 100,
-          }
-        }
-      >
-        <View
-          pointerEvents="none"
-          style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 6,
-              },
-              {
-                "top": 0,
-              },
-              {
-                "backgroundColor": "rgba(255, 251, 254, 1)",
-                "borderColor": "rgba(121, 116, 126, 1)",
-                "borderRadius": 4,
-                "borderWidth": 1,
-              },
-              undefined,
-            ]
-          }
-          testID="text-input-outline"
-        />
-        <View
-          style={
-            [
-              {
-                "flexGrow": 1,
-                "paddingBottom": 0,
-              },
-              {
-                "minHeight": 48,
-                "paddingTop": 0,
-              },
-            ]
-          }
-        >
-          <TextInput
-            autoComplete="off"
-            cursorColor="rgba(103, 80, 164, 1)"
-            editable={true}
-            keyboardType="numeric"
-            maxFontSizeMultiplier={1.5}
-            multiline={false}
-            onBlur={[Function]}
-            onChangeText={[Function]}
-            onFocus={[Function]}
-            onLayout={[Function]}
-            placeholderTextColor="transparent"
-            selectionColor="rgba(103, 80, 164, 1)"
-            style={
-              [
-                {
-                  "flexGrow": 1,
-                  "margin": 0,
-                },
-                {
-                  "height": 48,
-                },
-                {
-                  "paddingBottom": 0,
-                  "paddingTop": 0,
-                },
-                {
-                  "color": "rgba(28, 27, 31, 1)",
-                  "fontFamily": "System",
-                  "fontSize": 16,
-                  "fontWeight": undefined,
-                  "letterSpacing": 0.15,
-                  "lineHeight": undefined,
-                  "minWidth": 65,
-                  "paddingHorizontal": 16,
-                  "textAlign": "left",
-                  "textAlignVertical": "center",
-                },
-                undefined,
-                [
-                  {},
-                ],
-                undefined,
-              ]
-            }
-            testID="long"
-            underlineColorAndroid="transparent"
-          />
-        </View>
-      </View>
-    </View>
-    <View
-      style={
-        {
-          "alignItems": "center",
-          "display": "flex",
-          "flexDirection": "row",
-        }
-      }
-    >
-      <Text
-        style={
-          {
-            "minWidth": 120,
-          }
-        }
-      >
-        Strong (&gt;5.0%)
-      </Text>
-      <View
-        style={
-          {
-            "width": 100,
-          }
-        }
-      >
-        <View
-          pointerEvents="none"
-          style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 6,
-              },
-              {
-                "top": 0,
-              },
-              {
-                "backgroundColor": "rgba(255, 251, 254, 1)",
-                "borderColor": "rgba(121, 116, 126, 1)",
-                "borderRadius": 4,
-                "borderWidth": 1,
-              },
-              undefined,
-            ]
-          }
-          testID="text-input-outline"
-        />
-        <View
-          style={
-            [
-              {
-                "flexGrow": 1,
-                "paddingBottom": 0,
-              },
-              {
-                "minHeight": 48,
-                "paddingTop": 0,
-              },
-            ]
-          }
-        >
-          <TextInput
-            autoComplete="off"
-            cursorColor="rgba(103, 80, 164, 1)"
-            editable={true}
-            keyboardType="numeric"
-            maxFontSizeMultiplier={1.5}
-            multiline={false}
-            onBlur={[Function]}
-            onChangeText={[Function]}
-            onFocus={[Function]}
-            onLayout={[Function]}
-            placeholderTextColor="transparent"
-            selectionColor="rgba(103, 80, 164, 1)"
-            style={
-              [
-                {
-                  "flexGrow": 1,
-                  "margin": 0,
-                },
-                {
-                  "height": 48,
-                },
-                {
-                  "paddingBottom": 0,
-                  "paddingTop": 0,
-                },
-                {
-                  "color": "rgba(28, 27, 31, 1)",
-                  "fontFamily": "System",
-                  "fontSize": 16,
-                  "fontWeight": undefined,
-                  "letterSpacing": 0.15,
-                  "lineHeight": undefined,
-                  "minWidth": 65,
-                  "paddingHorizontal": 16,
-                  "textAlign": "left",
-                  "textAlignVertical": "center",
-                },
-                undefined,
-                [
-                  {},
-                ],
-                undefined,
-              ]
-            }
-            testID="strong"
-            underlineColorAndroid="transparent"
-          />
-        </View>
-      </View>
-    </View>
-    <View
-      style={
-        {
-          "alignItems": "center",
-          "display": "flex",
-          "flexDirection": "row",
-        }
-      }
-    >
-      <Text
-        style={
-          {
-            "minWidth": 120,
-          }
-        }
-      >
-        Long & Strong
-      </Text>
-      <View
-        style={
-          {
-            "width": 100,
-          }
-        }
-      >
-        <View
-          pointerEvents="none"
-          style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 6,
-              },
-              {
-                "top": 0,
-              },
-              {
-                "backgroundColor": "rgba(255, 251, 254, 1)",
-                "borderColor": "rgba(121, 116, 126, 1)",
-                "borderRadius": 4,
-                "borderWidth": 1,
-              },
-              undefined,
-            ]
-          }
-          testID="text-input-outline"
-        />
-        <View
-          style={
-            [
-              {
-                "flexGrow": 1,
-                "paddingBottom": 0,
-              },
-              {
-                "minHeight": 48,
-                "paddingTop": 0,
-              },
-            ]
-          }
-        >
-          <TextInput
-            autoComplete="off"
-            cursorColor="rgba(103, 80, 164, 1)"
-            editable={true}
-            keyboardType="numeric"
-            maxFontSizeMultiplier={1.5}
-            multiline={false}
-            onBlur={[Function]}
-            onChangeText={[Function]}
-            onFocus={[Function]}
-            onLayout={[Function]}
-            placeholderTextColor="transparent"
-            selectionColor="rgba(103, 80, 164, 1)"
-            style={
-              [
-                {
-                  "flexGrow": 1,
-                  "margin": 0,
-                },
-                {
-                  "height": 48,
-                },
-                {
-                  "paddingBottom": 0,
-                  "paddingTop": 0,
-                },
-                {
-                  "color": "rgba(28, 27, 31, 1)",
-                  "fontFamily": "System",
-                  "fontSize": 16,
-                  "fontWeight": undefined,
-                  "letterSpacing": 0.15,
-                  "lineHeight": undefined,
-                  "minWidth": 65,
-                  "paddingHorizontal": 16,
-                  "textAlign": "left",
-                  "textAlignVertical": "center",
-                },
-                undefined,
-                [
-                  {},
-                ],
-                undefined,
-              ]
-            }
-            testID="longandstrong"
-            underlineColorAndroid="transparent"
-          />
-        </View>
-      </View>
-    </View>
-    <View
-      style={
-        {
-          "alignItems": "center",
-          "display": "flex",
-          "flexDirection": "row",
-        }
-      }
-    >
-      <Text
-        style={
-          {
-            "minWidth": 120,
-          }
-        }
-      >
-        Wine (dl)
-      </Text>
-      <View
-        style={
-          {
-            "width": 100,
-          }
-        }
-      >
-        <View
-          pointerEvents="none"
-          style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 6,
-              },
-              {
-                "top": 0,
-              },
-              {
-                "backgroundColor": "rgba(255, 251, 254, 1)",
-                "borderColor": "rgba(121, 116, 126, 1)",
-                "borderRadius": 4,
-                "borderWidth": 1,
-              },
-              undefined,
-            ]
-          }
-          testID="text-input-outline"
-        />
-        <View
-          style={
-            [
-              {
-                "flexGrow": 1,
-                "paddingBottom": 0,
-              },
-              {
-                "minHeight": 48,
-                "paddingTop": 0,
-              },
-            ]
-          }
-        >
-          <TextInput
-            autoComplete="off"
-            cursorColor="rgba(103, 80, 164, 1)"
-            editable={true}
-            keyboardType="numeric"
-            maxFontSizeMultiplier={1.5}
-            multiline={false}
-            onBlur={[Function]}
-            onChangeText={[Function]}
-            onFocus={[Function]}
-            onLayout={[Function]}
-            placeholderTextColor="transparent"
-            selectionColor="rgba(103, 80, 164, 1)"
-            style={
-              [
-                {
-                  "flexGrow": 1,
-                  "margin": 0,
-                },
-                {
-                  "height": 48,
-                },
-                {
-                  "paddingBottom": 0,
-                  "paddingTop": 0,
-                },
-                {
-                  "color": "rgba(28, 27, 31, 1)",
-                  "fontFamily": "System",
-                  "fontSize": 16,
-                  "fontWeight": undefined,
-                  "letterSpacing": 0.15,
-                  "lineHeight": undefined,
-                  "minWidth": 65,
-                  "paddingHorizontal": 16,
-                  "textAlign": "left",
-                  "textAlignVertical": "center",
-                },
-                undefined,
-                [
-                  {},
-                ],
-                undefined,
-              ]
-            }
-            testID="wine"
-            underlineColorAndroid="transparent"
-          />
-        </View>
-      </View>
-    </View>
-    <View
-      style={
-        {
-          "alignItems": "center",
-          "display": "flex",
-          "flexDirection": "row",
-        }
-      }
-    >
-      <Text
-        style={
-          {
-            "minWidth": 120,
-          }
-        }
-      >
-        Normal (0,33l)
-      </Text>
-      <View
-        style={
-          {
-            "width": 100,
-          }
-        }
-      >
-        <View
-          pointerEvents="none"
-          style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 6,
-              },
-              {
-                "top": 0,
-              },
-              {
-                "backgroundColor": "rgba(255, 251, 254, 1)",
-                "borderColor": "rgba(121, 116, 126, 1)",
-                "borderRadius": 4,
-                "borderWidth": 1,
-              },
-              undefined,
-            ]
-          }
-          testID="text-input-outline"
-        />
-        <View
-          style={
-            [
-              {
-                "flexGrow": 1,
-                "paddingBottom": 0,
-              },
-              {
-                "minHeight": 48,
-                "paddingTop": 0,
-              },
-            ]
-          }
-        >
-          <TextInput
-            autoComplete="off"
-            cursorColor="rgba(103, 80, 164, 1)"
-            editable={true}
-            keyboardType="numeric"
-            maxFontSizeMultiplier={1.5}
-            multiline={false}
-            onBlur={[Function]}
-            onChangeText={[Function]}
-            onFocus={[Function]}
-            onLayout={[Function]}
-            placeholderTextColor="transparent"
-            selectionColor="rgba(103, 80, 164, 1)"
-            style={
-              [
-                {
-                  "flexGrow": 1,
-                  "margin": 0,
-                },
-                {
-                  "height": 48,
-                },
-                {
-                  "paddingBottom": 0,
-                  "paddingTop": 0,
-                },
-                {
-                  "color": "rgba(28, 27, 31, 1)",
-                  "fontFamily": "System",
-                  "fontSize": 16,
-                  "fontWeight": undefined,
-                  "letterSpacing": 0.15,
-                  "lineHeight": undefined,
-                  "minWidth": 65,
-                  "paddingHorizontal": 16,
-                  "textAlign": "left",
-                  "textAlignVertical": "center",
-                },
-                undefined,
-                [
-                  {},
-                ],
-                undefined,
-              ]
-            }
-            testID="normal"
-            underlineColorAndroid="transparent"
-          />
-        </View>
-      </View>
-    </View>
-    <View
-      style={
-        [
-          {
-            "marginTop": 20,
-          },
           {
             "alignItems": "center",
             "display": "flex",
             "flexDirection": "row",
-          },
-        ]
-      }
-    >
-      <Text
-        style={
-          {
-            "minWidth": 120,
           }
         }
       >
-        Total
-      </Text>
-      <Text
-        testID="beers"
+        <Text
+          style={
+            {
+              "minWidth": 120,
+            }
+          }
+        >
+          Long (0,5l)
+        </Text>
+        <View
+          style={
+            {
+              "width": 100,
+            }
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              [
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 6,
+                },
+                {
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "rgb(251, 253, 249)",
+                  "borderColor": "rgb(112, 121, 116)",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                },
+                undefined,
+              ]
+            }
+            testID="text-input-outline"
+          />
+          <View
+            style={
+              [
+                {
+                  "flexGrow": 1,
+                  "paddingBottom": 0,
+                },
+                {
+                  "minHeight": 48,
+                  "paddingTop": 0,
+                },
+              ]
+            }
+          >
+            <TextInput
+              autoComplete="off"
+              cursorColor="rgb(0, 108, 83)"
+              editable={true}
+              keyboardType="numeric"
+              maxFontSizeMultiplier={1.5}
+              multiline={false}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              onLayout={[Function]}
+              placeholderTextColor="transparent"
+              selectionColor="rgb(0, 108, 83)"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "margin": 0,
+                  },
+                  {
+                    "height": 48,
+                  },
+                  {
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                  },
+                  {
+                    "color": "rgb(25, 28, 27)",
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": undefined,
+                    "letterSpacing": 0.15,
+                    "lineHeight": undefined,
+                    "minWidth": 65,
+                    "paddingHorizontal": 16,
+                    "textAlign": "left",
+                    "textAlignVertical": "center",
+                  },
+                  undefined,
+                  [
+                    {},
+                  ],
+                  undefined,
+                ]
+              }
+              testID="long"
+              underlineColorAndroid="transparent"
+            />
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "display": "flex",
+            "flexDirection": "row",
+          }
+        }
       >
-        0
-         
-        beers
-      </Text>
+        <Text
+          style={
+            {
+              "minWidth": 120,
+            }
+          }
+        >
+          Strong (&gt;5.0%)
+        </Text>
+        <View
+          style={
+            {
+              "width": 100,
+            }
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              [
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 6,
+                },
+                {
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "rgb(251, 253, 249)",
+                  "borderColor": "rgb(112, 121, 116)",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                },
+                undefined,
+              ]
+            }
+            testID="text-input-outline"
+          />
+          <View
+            style={
+              [
+                {
+                  "flexGrow": 1,
+                  "paddingBottom": 0,
+                },
+                {
+                  "minHeight": 48,
+                  "paddingTop": 0,
+                },
+              ]
+            }
+          >
+            <TextInput
+              autoComplete="off"
+              cursorColor="rgb(0, 108, 83)"
+              editable={true}
+              keyboardType="numeric"
+              maxFontSizeMultiplier={1.5}
+              multiline={false}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              onLayout={[Function]}
+              placeholderTextColor="transparent"
+              selectionColor="rgb(0, 108, 83)"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "margin": 0,
+                  },
+                  {
+                    "height": 48,
+                  },
+                  {
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                  },
+                  {
+                    "color": "rgb(25, 28, 27)",
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": undefined,
+                    "letterSpacing": 0.15,
+                    "lineHeight": undefined,
+                    "minWidth": 65,
+                    "paddingHorizontal": 16,
+                    "textAlign": "left",
+                    "textAlignVertical": "center",
+                  },
+                  undefined,
+                  [
+                    {},
+                  ],
+                  undefined,
+                ]
+              }
+              testID="strong"
+              underlineColorAndroid="transparent"
+            />
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "display": "flex",
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "minWidth": 120,
+            }
+          }
+        >
+          Long & Strong
+        </Text>
+        <View
+          style={
+            {
+              "width": 100,
+            }
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              [
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 6,
+                },
+                {
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "rgb(251, 253, 249)",
+                  "borderColor": "rgb(112, 121, 116)",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                },
+                undefined,
+              ]
+            }
+            testID="text-input-outline"
+          />
+          <View
+            style={
+              [
+                {
+                  "flexGrow": 1,
+                  "paddingBottom": 0,
+                },
+                {
+                  "minHeight": 48,
+                  "paddingTop": 0,
+                },
+              ]
+            }
+          >
+            <TextInput
+              autoComplete="off"
+              cursorColor="rgb(0, 108, 83)"
+              editable={true}
+              keyboardType="numeric"
+              maxFontSizeMultiplier={1.5}
+              multiline={false}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              onLayout={[Function]}
+              placeholderTextColor="transparent"
+              selectionColor="rgb(0, 108, 83)"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "margin": 0,
+                  },
+                  {
+                    "height": 48,
+                  },
+                  {
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                  },
+                  {
+                    "color": "rgb(25, 28, 27)",
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": undefined,
+                    "letterSpacing": 0.15,
+                    "lineHeight": undefined,
+                    "minWidth": 65,
+                    "paddingHorizontal": 16,
+                    "textAlign": "left",
+                    "textAlignVertical": "center",
+                  },
+                  undefined,
+                  [
+                    {},
+                  ],
+                  undefined,
+                ]
+              }
+              testID="longandstrong"
+              underlineColorAndroid="transparent"
+            />
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "display": "flex",
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "minWidth": 120,
+            }
+          }
+        >
+          Wine (dl)
+        </Text>
+        <View
+          style={
+            {
+              "width": 100,
+            }
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              [
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 6,
+                },
+                {
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "rgb(251, 253, 249)",
+                  "borderColor": "rgb(112, 121, 116)",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                },
+                undefined,
+              ]
+            }
+            testID="text-input-outline"
+          />
+          <View
+            style={
+              [
+                {
+                  "flexGrow": 1,
+                  "paddingBottom": 0,
+                },
+                {
+                  "minHeight": 48,
+                  "paddingTop": 0,
+                },
+              ]
+            }
+          >
+            <TextInput
+              autoComplete="off"
+              cursorColor="rgb(0, 108, 83)"
+              editable={true}
+              keyboardType="numeric"
+              maxFontSizeMultiplier={1.5}
+              multiline={false}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              onLayout={[Function]}
+              placeholderTextColor="transparent"
+              selectionColor="rgb(0, 108, 83)"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "margin": 0,
+                  },
+                  {
+                    "height": 48,
+                  },
+                  {
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                  },
+                  {
+                    "color": "rgb(25, 28, 27)",
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": undefined,
+                    "letterSpacing": 0.15,
+                    "lineHeight": undefined,
+                    "minWidth": 65,
+                    "paddingHorizontal": 16,
+                    "textAlign": "left",
+                    "textAlignVertical": "center",
+                  },
+                  undefined,
+                  [
+                    {},
+                  ],
+                  undefined,
+                ]
+              }
+              testID="wine"
+              underlineColorAndroid="transparent"
+            />
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "display": "flex",
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "minWidth": 120,
+            }
+          }
+        >
+          Normal (0,33l)
+        </Text>
+        <View
+          style={
+            {
+              "width": 100,
+            }
+          }
+        >
+          <View
+            pointerEvents="none"
+            style={
+              [
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 6,
+                },
+                {
+                  "top": 0,
+                },
+                {
+                  "backgroundColor": "rgb(251, 253, 249)",
+                  "borderColor": "rgb(112, 121, 116)",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                },
+                undefined,
+              ]
+            }
+            testID="text-input-outline"
+          />
+          <View
+            style={
+              [
+                {
+                  "flexGrow": 1,
+                  "paddingBottom": 0,
+                },
+                {
+                  "minHeight": 48,
+                  "paddingTop": 0,
+                },
+              ]
+            }
+          >
+            <TextInput
+              autoComplete="off"
+              cursorColor="rgb(0, 108, 83)"
+              editable={true}
+              keyboardType="numeric"
+              maxFontSizeMultiplier={1.5}
+              multiline={false}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              onLayout={[Function]}
+              placeholderTextColor="transparent"
+              selectionColor="rgb(0, 108, 83)"
+              style={
+                [
+                  {
+                    "flexGrow": 1,
+                    "margin": 0,
+                  },
+                  {
+                    "height": 48,
+                  },
+                  {
+                    "paddingBottom": 0,
+                    "paddingTop": 0,
+                  },
+                  {
+                    "color": "rgb(25, 28, 27)",
+                    "fontFamily": "System",
+                    "fontSize": 16,
+                    "fontWeight": undefined,
+                    "letterSpacing": 0.15,
+                    "lineHeight": undefined,
+                    "minWidth": 65,
+                    "paddingHorizontal": 16,
+                    "textAlign": "left",
+                    "textAlignVertical": "center",
+                  },
+                  undefined,
+                  [
+                    {},
+                  ],
+                  undefined,
+                ]
+              }
+              testID="normal"
+              underlineColorAndroid="transparent"
+            />
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          [
+            {
+              "marginTop": 20,
+            },
+            {
+              "alignItems": "center",
+              "display": "flex",
+              "flexDirection": "row",
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            {
+              "minWidth": 120,
+            }
+          }
+        >
+          Total
+        </Text>
+        <Text
+          testID="beers"
+        >
+          0
+           
+          beers
+        </Text>
+      </View>
     </View>
-  </View>
-</RCTScrollView>
+  </RCTScrollView>
+</View>
 `;

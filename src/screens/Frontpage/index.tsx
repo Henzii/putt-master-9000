@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Linking, ScrollView, Image } from "react-native";
+import { View, StyleSheet, ScrollView, Image } from "react-native";
 import { Button, Divider, List, Paragraph, useTheme } from 'react-native-paper';
 import { Link, useNavigate } from 'react-router-native';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +13,6 @@ import { GET_OLD_GAMES } from '../../graphql/queries';
 import firstTimeLaunched from '../../utils/firstTimeLaunched';
 import NavIcon from './NavIcon';
 import Spacer from '@components/ThemedComponents/Spacer';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SESSION_STATE, useSession } from '../../hooks/useSession';
 import * as ExpoUpdates from 'expo-updates';
 import FrontpageHeader from './Header/Header';
@@ -33,6 +32,7 @@ import settings from '@icons/settings.png';
 import website from '@icons/www.png';
 import feedback from '@icons/feedback.png';
 import logout from '@icons/sign-out.png';
+import WebLinkButton, { openWebsite } from '@components/WebLinkButton';
 
 const Frontpage = () => {
     const { t } = useTranslation();
@@ -42,11 +42,6 @@ const Frontpage = () => {
     const {colors} = useTheme();
     const styles = createStyles(colors);
     const session = useSession();
-
-    const handleOpenWebsite = async () => {
-        const token = await AsyncStorage.getItem('token');
-        Linking.openURL(`https://fudisc.henzi.fi/login?token=${token}`);
-    };
 
     useEffect(() => {
         (async function IIFE() {
@@ -77,6 +72,10 @@ const Frontpage = () => {
             <Container>
                 <Login />
                 <Link to="/signUp"><Button>{t('screens.frontpage.signUp')}</Button></Link>
+                <WebLinkButton path="restore">
+                    {t('components.login.forgotPassword')}
+                </WebLinkButton>
+
                 {process.env.NODE_ENV === 'development' && (
                     <>
                         <Link to="/firstTime"><Button>FirstTime</Button></Link>
@@ -142,7 +141,7 @@ const Frontpage = () => {
                     title={t('screens.frontpage.website')}
                     left={() => <Image source={website} style={styles.listItemIcon} />}
                     right={(p) => <List.Icon {...p} icon="open-in-new" />}
-                    onPress={handleOpenWebsite}
+                    onPress={() => openWebsite({path: "login", withToken: true})}
                 />
                 <Divider />
                 <List.Item
