@@ -1,0 +1,524 @@
+{
+  "common": {
+    "ok": "Ok",
+    "cancel": "Tühista",
+    "yes": "Jah",
+    "no": "Ei",
+    "save": "Salvesta",
+    "add": "Lisa",
+    "delete": "Kustuta",
+    "edit": "Muuda",
+    "back": "Tagasi",
+    "loading": "Laadimine...",
+    "error": "Viga",
+    "close": "Sulge",
+    "next": "Järgmine",
+    "change": "Muuda",
+    "create": "Loo",
+    "join": "Liitu",
+    "leave": "Lahku",
+    "submit": "Saada",
+    "name": "Nimi",
+    "optional": "Valikuline",
+    "holes": "Augud",
+    "par": "Par"
+  },
+  "screens": {
+    "frontpage": {
+      "welcome": "Tere tulemast tagasi!",
+      "newGame": "Uus mäng",
+      "oldGames": "Vanad mängud",
+      "oldGamesDescription": "Lehitse vanad ja lõpetamata mängud",
+      "courses": "Väljad",
+      "coursesDescription": "Vaata, loo ja muuda välju ja paigutusi",
+      "friends": "Sõbrad",
+      "stats": "Statistika",
+      "achievements": "Saavutused",
+      "group": "Grupp",
+      "groupDescription": "Liitu oma grupiiga või halda seda",
+      "settings": "Seaded",
+      "website": "Veebisait",
+      "distance": "Kaugus",
+      "distanceDescription": "Mõõda ja jälgi heite kauguseid",
+      "new": "Uus",
+      "weeklies": "Nädalalased",
+      "weekliesDescription": "Otsi nädalalaseid võistlusi sinule lähedal",
+      "feedback": "Tagasiside",
+      "logout": "Logi välja",
+      "connectingToServer": "Ühendumine serveriga...",
+      "sessionFailed": "Seanss ebaõnnestus",
+      "sessionFixSuggestion": "Mõned asjad, mida võid proovida selle vea parandamiseks:",
+      "clearSession": "Tühjenda seanss",
+      "reloadApp": "Laadi rakendus uuesti",
+      "signUp": "Registreeru!",
+      "playersCount": "{{count}} mängijat",
+      "holesCompleted": "{{completed}}/{{total}} augu",
+      "unfinishedGames": "{{count}} lõpetamata mängu",
+      "updateAvailable": "Uuendus saadaval",
+      "updateMessage": "Rakenduse uus versioon on saadaval. Uuenda kohe, et saada uusimad funktsioonid ja veaparandused.",
+      "updateNow": "Uuenda nüüd",
+      "continue": "Jätka"
+    },
+    "main": {
+      "emptyNotification": "Saadi tühi teatis???"
+    },
+    "firstTime": {
+      "welcomeTitle": "Tere tulemast FuDiscisse!",
+      "newUserIntro": "Alusta kiire külaliskontoga või loo täielik FuDisc profiil, et hoida oma edusamme turvaliselt.",
+      "existingAccountInfo": "Kui sul juba on konto, mine sisselogimise ekraanile. Kui unustasid parooli, kasuta allolevat taastamise linki.",
+      "toLoginScreen": "Logi sisse",
+      "forgotPassword": "Unustasid parooli?",
+      "createAccountInfo": "Loo korralik konto, kus saad valida kasutajanime, seada e-posti ja valida parooli.",
+      "shutUpLetMeIn": "Sule suu ja lase mul sisse",
+      "shutUpLetMeInInfo": "Loo juhuslik FuDisc konto kohe. Saad oma kasutajanime, e-posti ja parooli hiljem muuta.",
+      "createProperAccount": "Loo konto",
+      "usernameTitle": "Kasutajanimi",
+      "usernameHelp": "Vali kordumatu kasutajanimi. Teised mängijad saavad sind selle järgi leida. Kasuta seda nime ka veebisaidile sisselogimiseks (fudisc.henzi.fi). Seda nime saab veebisaidil hiljem muuta.",
+      "usernameAlreadyTaken": "juba võetud!",
+      "passwordTitle": "Parool",
+      "passwordHelp": "Sisesta parool. Seda parooli kasutatakse rakendusesse ja veebisaidile sisselogimiseks.",
+      "passwordTooShort": "Parool liiga lühike!",
+      "passwordsDontMatch": "Paroolid ei ühti!",
+      "verifyPassword": "Kinnita parool",
+      "emailTitle": "E-post (valikuline)",
+      "emailHelp": "E-posti kasutatakse ainult parooli taastamiseks ja märguannete jaoks. See pole kohustuslik, nii et võid jätta tühjaks.",
+      "signUpComplete": "Valmis! Võid nüüd hakata mängima.",
+      "backToStart": "Tagasi algusesse",
+      "errorSigningUp": "Viga registreerimisel",
+      "welcomeToFudisc": "Tere tulemast FuDiscisse, {{name}}!"
+    },
+    "game": {
+      "newGame": "Uus mäng",
+      "selectCourse": "Vali väli",
+      "changeCourse": "Muuda välja",
+      "selectPlayers": "Vali mängijad",
+      "addPlayers": "Lisa mängijaid",
+      "gameSettings": "Seaded",
+      "createGame": "Loo mäng",
+      "gameOver": "Mäng läbi!",
+      "startNewGame": "Alusta uut mängu",
+      "errorOccurred": "Ilmnes just viga!",
+      "notLoggedIn": "Sa pole sisse logitud?",
+      "groupCompetitionDisabled": "Grupi võistlus keelatud, sa ei ole ühegi grupi liige",
+      "isGroupCompetition": "On grupi võistlus",
+      "groupCompetitionInfo": "See lüliti märgib mängu grupi võistlusena. Punkte antakse mängijatele, kes kuuluvad gruppi {{groupName}}.",
+      "groupJoinInfo": "Kui sa ei ole ühegi grupi liige, vali \"Grupid\" peavaatelt, et liituda.",
+      "bHcMultiplier": "bHC kordaja",
+      "bHcMultiplierInfo": "Kohandage õlle handicapi selle mängu jaoks. Õlle handicap on 0,5 heiteid õlle kohta.",
+      "bHcMultiplierCalc": "Uus õlle handicapi (bHC) väärtus arvutatakse 0,5-ga korrutatud valitud kordaja, andes heited õlle kohta.",
+      "tableHeaderName": "Nimi",
+      "tableHeaderGames": "Mängud",
+      "tableHeaderBest": "Parim",
+      "tableHeaderHc": "HC",
+      "tabs": {
+        "scorecard": "Tulemuste leht",
+        "teeSign": "Tee märk",
+        "summary": "Kokkuvõte",
+        "throwStyle": "Heite stiil",
+        "beers": "Õlled",
+        "setup": "Seadistus"
+      },
+      "subscriptionFailed": "Tellimus ebaõnnestus. Mängu andmed ei uuendu reaalajas.",
+      "gameCreated": "Uus mäng loodud!",
+      "gameCreationFailed": "Mängu loomine ebaõnnestus!",
+      "setup": {
+        "info": "Info",
+        "started": "Alustatud",
+        "closed": "Suletud",
+        "duration": "Kestus",
+        "closeConfirmTitle": "Oled kindel?",
+        "closeConfirmMessage": "Pärast mängu sulgemist ei saa enam tulemusi sisestada ega õlut juua",
+        "gameClosed": "Mäng suletud",
+        "errorOccurred": "Midagi läks viltu :(",
+        "gameAbandoned": "Mäng hülatud",
+        "reopenConfirmTitle": "Oled kindel",
+        "reopenConfirmMessage": "Kõik kustutatakse",
+        "endGame": "Lõpeta mäng",
+        "stopDrinkingMessage": "Lõpeta joomine ja sulge mäng.",
+        "reopen": "Ava uuesti",
+        "reopenMessage": "Ava mäng uuesti. Teised mängijad saavad teada teie petmise katsest.",
+        "mainMenu": "Peamenüü",
+        "mainMenuMessage": "Tühjenda mäng ja naase peamenüüsse",
+        "discardGame": "Hülga mäng",
+        "discardMessage": "Kui mäng lõpeb, polaaritab teie tulemuste leht ainult põrgusse.",
+        "gameId": "Mängu ID:",
+        "noSubscription": "Pole tellimust"
+      },
+      "beers": {
+        "title": "Õlled",
+        "whaat": "Mis?!",
+        "calculator": "Õllekalkulaator"
+      },
+      "statsbar": {
+        "template": "Parim: {{best}}, Keskmine: {{average}}"
+      },
+      "holeMap": {
+        "noImageTitle": "Pole tee märgi pilti",
+        "noImageText": "Tee tee märgi foto, et lisada see siia",
+        "takePhoto": "Tee foto",
+        "uploadFromGallery": "Lae galeriist üles",
+        "imageUploading": "Pildi üleslaadimine...",
+        "imageLoading": "Pildi laadimine...",
+        "failedToLoad": "Pildi laadimine ebaõnnestus.",
+        "uploadedBy": "Laadinud"
+      },
+      "throwStyle": {
+        "title": "Satuestandardiseerige heitestiile",
+        "individualThrowStyles": "Määrake igale mängijale eraldi heite stiil.",
+        "player": "Mängija",
+        "disc": "Ketas",
+        "style": "Stiil",
+        "startRandomizing": "Alusta satestamist",
+        "stopRandomizing": "Sule suu!"
+      }
+    },
+    "stats": {
+      "myStats": "Minu statistika",
+      "userStats": "{{name}} statistika",
+      "spyFriend": "Spioneerige sõpra",
+      "noCourseSelected": "Väli valimata. Vali väli paigutusespetsiifilise statistika kuvamiseks.",
+      "selectCourse": "Vali väli",
+      "changeCourse": "Muuda välja",
+      "errorOccurred": "Ilmnes just viga",
+      "noData": "Andmeid pole...",
+      "holesData": "Aukude andmed",
+      "noDataAvailable": "Andmeid pole saadaval",
+      "activity": {
+        "error": "Viga!",
+        "loadingFailed": "Varasema tegevuse laadimine ebaõnnestus :/",
+        "year": "Aasta {{year}}",
+        "last12Months": "Viimased 12 kuud",
+        "totalGames": "Kokku {{games}} mängu {{from}} - {{to}} vahel"
+      },
+      "labels": {
+        "total": "Kokku",
+        "best": "Parim",
+        "average": "Keskmine",
+        "eagles": "Kotised",
+        "birdies": "Linnud",
+        "pars": "Parid",
+        "bogeys": "Bogeys",
+        "doubleBogeys": "2x Bogeys",
+        "others": "Muud"
+      },
+      "bestPoolGame": {
+        "title": "Universumi meistrid",
+        "info": "Näitab valitud paigutuse kõige paremini mängitud mängu n suuruse basseini suurusega.",
+        "poolLabel": "Näita parima mängu basseini suuruse jaoks: ",
+        "noData": "Andmeid pole :P",
+        "eligibleGames": "Leitud sobivaid mänge: ",
+        "date": "Kuupäev:",
+        "players": "Mängijad:",
+        "totalScore": "Kokku skoor:",
+        "totalPar": "Kokku par:",
+        "totalAdjusted": "+/- Kokku:",
+        "adjustedAdjusted": "+/- Kohandatud:",
+        "playersTitle": "Mängijad"
+      }
+    },
+    "achievements": {
+      "myAchievements": "Minu saavutused",
+      "userAchievements": "{{name}} saavutused",
+      "noAchievements": "Veel saavutusi pole!",
+      "errorLoading": "Ei arvuta"
+    },
+    "settings": {
+      "friendsTitle": "Sõbrad",
+      "blockFriendRequests": "Blokeeri teistel kasutajatel sind sõbrana lisada",
+      "changePasswordTitle": "Muuda parooli",
+      "newPassword": "Uus parool",
+      "confirmPassword": "Kinnita parool",
+      "passwordTooShort": "Parool liiga lühike!",
+      "passwordTooShortInfo": "Sinu parool peab olema vähemalt 5 märki",
+      "passwordNoMatch": "Pole vaste!",
+      "passwordsDontMatch": "Paroolid ei ühti!",
+      "passwordChanged": "Parool muudetud!",
+      "passwordChangeFailed": "Viga! Parooli ei muudetud! :/",
+      "deleteAccountTitle": "Kustuta konto",
+      "deleteAccountInfo": "Kustuta oma konto jäädavalt. Kustutatud kontosid hiljem ei saa taastada.",
+      "deleteAccountConfirmInfo": "Oma konto kustutamiseks sisesta {{name}} allolevale sisestusväljale ja klõpsa Kustuta konto.",
+      "accountDeleted": "Konto kustutatud",
+      "infoTitle": "Info",
+      "version": "versioon",
+      "build": "koost",
+      "accountType": "konto tüüp",
+      "displayUnitsTitle": "Kuvamise ühikud",
+      "metric": "Meetriline",
+      "imperial": "Keiserlik",
+      "languageTitle": "Keel",
+      "languageAuto": "Automaatne",
+      "languageEnglish": "English",
+      "languageFinnish": "Suomi",
+      "languageSwedish": "Svenska",
+      "languageEstonian": "Eesti",
+      "languagePolish": "Polski",
+      "languageGerman": "Deutsch"
+    },
+    "feedback": {
+      "title": "Jäta tagasiside",
+      "subject": "Teema",
+      "subjectPlaceholder": "Sisesta tagasiside teema",
+      "email": "E-post",
+      "emailPlaceholder": "Sisesta oma e-post (valikuline)",
+      "message": "Sõnum",
+      "messagePlaceholder": "Sisesta siin oma tagasiside",
+      "submitButton": "Jäta tagasiside",
+      "sendFailed": "Tagasiside saatmine ebaõnnestus. Proovi hiljem uuesti.",
+      "thankYouTitle": "Tänan tagasiside eest!",
+      "thankYouMessage": "Sinu tagasiside on vastu võetud. Võime sinuga ühendust võtta, kui jätsid oma e-posti aadressi."
+    },
+    "oldGames": {
+      "title": "Mängud",
+      "totalRounds": "Kokku {{count}} rindu",
+      "loadingGames": "Mängude laadimine...",
+      "fetchingMore": "Rohkem laadimist...",
+      "showOnlyGroupGames": "Näita ainult grupi mänge"
+    },
+    "distance": {
+      "listTab": "Loend",
+      "measureTab": "Mõõda",
+      "newMeasurementAdded": "Uus mõõtmine lisatud",
+      "measurementDeleted": "Mõõtmine kustutatud",
+      "somethingWentWrong": "Midagi läks viltu",
+      "list": {
+        "title": "Salvestatud mõõtmised",
+        "noMeasurements": "Salvestatud mõõtmisi pole"
+      },
+      "measure": {
+        "startingPoint": "Alguspunkt",
+        "landingPoint": "Maandumispunkt",
+        "unlock": "Avaa lukk",
+        "lock": "Lukusta",
+        "distance": "Kaugus",
+        "addToList": "Lisa loendisse",
+        "latitude": "Laius:",
+        "longitude": "Pikkus:",
+        "accuracy": "Täpsus:"
+      }
+    },
+    "weeklies": {
+      "title": "Nädalalased minu lähedal",
+      "description": "Võistlused {{range}} raadius 10+ mängijaga",
+      "selectRange": "Vali vahemik",
+      "country": "Riik",
+      "players": "{{count}} mängijat",
+      "noResults": "Lähedal võistlusi ei leitud",
+      "gpsError": "Teie asukohta ei saanud saada",
+      "gpsLoading": "Oodates GPS-i..."
+    },
+    "group": {
+      "title": "Grupp",
+      "notInGroup": "Pole grupis",
+      "notInGroupInfo": "Määra grupi nimi, et ühenduda oma sõpradega. See seob teid kõiki samasse gruppi, et saaksite tulemusi võrrelda ja omavahel konkureerida. Saad grupi tulemusi ja võistluste võistluspaikasid veebisaidil vaadata.",
+      "membersTitle": "Liikmed",
+      "enterGroupName": "Sisesta grupi nimi",
+      "websiteTitle": "Veebisait",
+      "websiteInfo": "Grupi paremus, skoorid jne asuvad veebisaidil",
+      "leaveGroupTitle": "Lahku gruppist",
+      "leaveGroupInfo": "Grupi lahkumine eemaldata sind grupist ja sa ei saa enam näha grupi tulemusi ega paremuselist.",
+      "leaveGroupButton": "Lahku gruppist",
+      "leaveGroupConfirmTitle": "Lahku gruppist",
+      "leaveGroupConfirmMessage": "Kas oled kindel, et tahad grupi lahkuda? Kui otsustad hiljem uuesti liituda, käsitletakse sind uue liikmena ja varasemad tulemused ei kaasata sinu parematusse.",
+      "joinedGroup": "Oled liitunud grupiga {{name}}",
+      "leftGroup": "Oled lahkunud grupist",
+      "groupNotSet": "Viga! Grupp pole seadistatud :(",
+      "somethingNotWorking": "Midagi ei tööta õigesti ..."
+    }
+  },
+  "components": {
+    "login": {
+      "title": "Logi sisse",
+      "usernameLabel": "Kasutajanimi",
+      "passwordLabel": "Parool",
+      "loginButton": "Logi sisse",
+      "welcomeMessage": "Tere tulemast, {{name}}",
+      "wrongCredentials": "Vale kasutajanimi või parool",
+      "forgotPassword": "Unustasid parooli?"
+    },
+    "signUp": {
+      "title": "Registreerimine",
+      "titleFriend": "Registreeri sõber",
+      "friendSignUpInfo1": "Looed kontot sõbrale. Kõigile kontosid loomise asemel peaksid oma sõprasid Fudisc kasutamisele sundima.",
+      "friendSignUpInfo2": "Loodud sõber lisatakse automaatselt sinu sõbrade loendisse.",
+      "usernameTitle": "Kasutajanimi",
+      "usernameLabel": "Kasutajanimi",
+      "passwordTitle": "Parool",
+      "passwordLabel": "Parool",
+      "confirmPasswordLabel": "Kinnita parool",
+      "emailTitle": "E-post",
+      "signUpButton": "Registreeru!",
+      "nameTooShort": "Nimi liiga lühike!",
+      "passwordTooShort": "Parool liiga lühike. Vähemalt 5 tähte.",
+      "passwordsDontMatch": "Paroolid ei ühti!",
+      "accountCreated": "Konto loodud {{name}} jaoks.",
+      "nowFriends": "Oled nüüd {{name}} sõber.",
+      "failedToAddFriend": "{{name}} sõbrana lisamine ebaõnnestus.",
+      "createUserError": "Viga kasutaja loomisel! {{message}}"
+    },
+    "addCourse": {
+      "editTitle": "Muuda välja",
+      "addTitle": "Lisa väli",
+      "nameLabel": "Nimi",
+      "courseName": "Välja nimi",
+      "locationTitle": "Asukoht",
+      "setCoordinatesManually": "Määra koordinaadid käsitsi",
+      "latLabel": "Laiuskraad",
+      "longLabel": "Pikkuskraad",
+      "gpsAccuracy": "GPS täpsus: {{value}}m",
+      "gpsLoading": "GPS laadub...",
+      "selectLocationFromMap": "Vali asukoht kaardilt",
+      "setCoordinatesManuallyHint": "Määra koordinaadid käsitsi"
+    },
+    "addLayout": {
+      "editTitle": "Muuda paigutust",
+      "addTitle": "Lisa paigutus",
+      "layoutName": "Paigutuse nimi",
+      "numberOfHoles": "Aukude arv",
+      "markAsObsolete": "Märgi paigutus aegunuks",
+      "holesTitle": "Augud",
+      "holeNumber": "Auk #{{number}}",
+      "nameOptional": "Nimi (valikuline)",
+      "holeSummary": "{{holes}} augu, par {{par}}"
+    },
+    "addFriend": {
+      "title": "Lisa sõber",
+      "searchHint": "Kes on sinu isa",
+      "nameLabel": "Nimi",
+      "usersFound": "{{count}} kasutajat leitud",
+      "friendBadge": "Sõber!",
+      "itsMe": "See olen mina!"
+    },
+    "friendsList": {
+      "title": "Sõbrad",
+      "selectedCount": "({{count}} valitud)",
+      "addFriend": "Lisa sõber",
+      "createFriend": "Loo sõber",
+      "loadingFriends": "Sõprade laadimine...",
+      "addPlayersToGame": "Lisa mängijaid mängu"
+    },
+    "selectCourse": {
+      "selectLayout": "Vali paigutus",
+      "addCourse": "Lisa väli",
+      "loadingCourses": "Väljade laadimine...",
+      "noMore": "Enam pole... No más...",
+      "addLayout": "Lisa paigutus",
+      "layoutCount_one": "{{count}} paigutus",
+      "layoutCount_other": "{{count}} paigutust",
+      "layouts": "Paigutused",
+      "away": "eemal",
+      "holesAndPar": "{{holes}} augu, par {{par}}",
+      "obsolete": "AEGUNUD",
+      "editCourse": "Muuda välja",
+      "deleteCourse": "Kustuta väli",
+      "courseDeleted": "Väli kustutatud",
+      "courseNotDeleted": "Välja ei kustutatud!",
+      "failedToLoadCourses": "Väljade laadimine ebaõnnestus",
+      "gpsLoading": "GPS laadub",
+      "layoutsAndDistance": "{{count}} paigutust, {{distance}} eemal",
+      "deleteConfirmTitle": "Oled kindel?",
+      "deleteConfirmMessage": "Kas tahad tõesti selle välja kustutada? Hiljem ei saa seda tagasi võtta",
+      "select": "Vali",
+      "menu": {
+        "editCourse": "Muuda välja",
+        "deleteCourse": "Kustuta väli"
+      },
+      "map": {
+        "failedToLoad": "Väljade laadimine ebaõnnestus",
+        "gpsLoading": "GPS laadub"
+      }
+    },
+    "errorScreen": {
+      "title": "Viga",
+      "backToFrontpage": "Tagasi pealehekulele"
+    },
+    "loading": {
+      "defaultText": "Laadimine...",
+      "serverSleeping": "Server näib olevat magama...",
+      "wakeUp": "Ärata selle rumalate masina!",
+      "somethingWrong": "Hmm.. midagi võib olla valesti 🤔",
+      "tryTurningOff": "Kas oled proovinud selle välja lülitada ja sisse lülitada?"
+    },
+    "localSettings": {
+      "sortHc": "Sorteerida kokkuvõte HC järgi",
+      "sortBox": "Sorteerida tulemuste lehti kastijärjekorra järgi",
+      "autoAdvance": "Vali esimene lõpetamata auk automaatselt",
+      "hideStatsBars": "Peida statistika tulemuste lehelt",
+      "hidePlusMinus": "Peida +/- tulemuste lehelt",
+      "prohibition": "Keeld",
+      "randomThrowStyle": "Juhuslikud heitestiile",
+      "hideTeeSign": "Peida tee märgi vaheleht"
+    },
+    "alcConverter": {
+      "title": "Õlle kalkulaator",
+      "beer": {
+        "long": "Suur (0,5l)",
+        "strong": "Tugev (>5,0%)",
+        "longAndStrong": "Suur & Tugev"
+      },
+      "wine": {
+        "title": "Vein (dl)"
+      },
+      "other": {
+        "normal": "Tavaline (0,33l)"
+      },
+      "total": "Kokku",
+      "beers": "õlled"
+    },
+    "toolbar": {
+      "title": "FuDisc"
+    }
+  },
+  "game": {
+    "throwStyles": {
+      "backhand": "Backhand",
+      "forehand": "Forehand",
+      "wrongHand": "Vale käsi",
+      "roller": "Roller",
+      "backhandRoller": "Backhand roller",
+      "forehandRoller": "Forehand roller",
+      "tomahawk": "Tomahawk",
+      "grenade": "Granaat",
+      "hyzer": "Hyzer",
+      "anhyzer": "Anhyzer",
+      "yourChoice": "Sinu valik"
+    },
+    "discTypes": {
+      "putter": "Putter",
+      "midrange": "Keskmine vahemik",
+      "driver": "Draiver",
+      "overstable": "Üle-stabiilne",
+      "understable": "Ala-stabiilne",
+      "yourChoice": "Sinu valik"
+    }
+  },
+  "achievements": {
+    "titles": {
+      "100Malmis": "100x Niitty",
+      "HoleInOne": "Hole in one",
+      "winAllHoles": "Suurepärane võitja",
+      "0Pars": "Paare pole",
+      "GoldenBox": "Kuldne karp"
+    },
+    "descriptions": {
+      "100Malmis": "\"Aina vaan malmikseen...\"",
+      "HoleInOne": "Hole in one",
+      "winAllHoles": "Ainult võitmist",
+      "0Pars": "Null paari, proovi kõvemalt!",
+      "GoldenBox": "Miks pean ma alati esimesena heitlema?"
+    }
+  },
+  "errors": {
+    "noCameraPermission": "Fotode tegemiseks on vaja kaamerapealust.",
+    "genericError": "Midagi läks viltu",
+    "scoreNotSaved": "Viga! Tulemusi võib ei olnud salvestatud :/"
+  },
+  "notifications": {
+    "friendAdded": "Sõber lisatud! Hästi tehtud!",
+    "friendAddFailed": "{{name}} sõbra lisamine ebaõnnestus. Kasutaja blokeerib kas sõbrataotlusi või taotlus ebaõnnestus mingil muul põhjusel.",
+    "friendRemoved": "Eemaldas {{name}} oma sõbrade loendist!",
+    "friendRemoveFailed": "Sõbra eemaldamise ebaõnnestus!",
+    "removeFriendTitle": "Hästi aega, sõber",
+    "removeFriendMessage": "Sõbrad on asendatavad, kuid discgolf on eluks!\n\nTõesti eemaldada {{name}}?",
+    "removeFriendConfirm": "Tee seda"
+  }
+}

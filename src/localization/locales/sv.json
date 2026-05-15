@@ -1,0 +1,524 @@
+{
+  "common": {
+    "ok": "Ok",
+    "cancel": "Avbryt",
+    "yes": "Ja",
+    "no": "Nej",
+    "save": "Spara",
+    "add": "Lägg till",
+    "delete": "Ta bort",
+    "edit": "Redigera",
+    "back": "Tillbaka",
+    "loading": "Laddar...",
+    "error": "Fel",
+    "close": "Stäng",
+    "next": "Nästa",
+    "change": "Ändra",
+    "create": "Skapa",
+    "join": "Anslut",
+    "leave": "Lämna",
+    "submit": "Skicka",
+    "name": "Namn",
+    "optional": "Valfritt",
+    "holes": "Hål",
+    "par": "Par"
+  },
+  "screens": {
+    "frontpage": {
+      "welcome": "Välkommen tillbaka!",
+      "newGame": "Nytt spel",
+      "oldGames": "Gamla spel",
+      "oldGamesDescription": "Bläddra genom gamla och oavslutade spel",
+      "courses": "Banor",
+      "coursesDescription": "Visa, skapa och redigera banor och layouter",
+      "friends": "Vänner",
+      "stats": "Statistik",
+      "achievements": "Prestationer",
+      "group": "Grupp",
+      "groupDescription": "Anslut eller hantera din grupp",
+      "settings": "Inställningar",
+      "website": "Webbplats",
+      "distance": "Distans",
+      "distanceDescription": "Mäta och spåra kastdistanser",
+      "new": "Ny",
+      "weeklies": "Veckovisa",
+      "weekliesDescription": "Hitta veckovisa tävlingar nära dig",
+      "feedback": "Feedback",
+      "logout": "Logga ut",
+      "connectingToServer": "Ansluter till servern...",
+      "sessionFailed": "Sessionen misslyckades",
+      "sessionFixSuggestion": "Några saker du kan prova för att åtgärda detta fel:",
+      "clearSession": "Rensa session",
+      "reloadApp": "Ladda om appen",
+      "signUp": "Registrera dig!",
+      "playersCount": "{{count}} spelare",
+      "holesCompleted": "{{completed}}/{{total}} hål",
+      "unfinishedGames": "{{count}} oavslutade spel",
+      "updateAvailable": "Uppdatering tillgänglig",
+      "updateMessage": "En ny version av appen är tillgänglig. Uppdatera nu för att få de senaste funktionerna och felkorrigeringar.",
+      "updateNow": "Uppdatera nu",
+      "continue": "Fortsätt"
+    },
+    "main": {
+      "emptyNotification": "Mottog ett tomt meddelande???"
+    },
+    "firstTime": {
+      "welcomeTitle": "Välkommen till FuDisc!",
+      "newUserIntro": "Börja med ett snabbt gästkonto eller skapa en fullständig FuDisc-profil för att hålla dina framsteg säkra.",
+      "existingAccountInfo": "Om du redan har ett konto, gå till inloggningsskärmen. Om du glömde ditt lösenord, använd återställningslänken nedan.",
+      "toLoginScreen": "Logga in",
+      "forgotPassword": "Glömt ditt lösenord?",
+      "createAccountInfo": "Skapa ett ordentligt konto där du kan välja ditt användarnamn, ange din e-post och välj ditt lösenord.",
+      "shutUpLetMeIn": "Lämna mig ifred och släpp in mig",
+      "shutUpLetMeInInfo": "Skapa ett slumpmässigt FuDisc-konto omedelbar. Du kan ändra ditt användarnamn, e-post och lösenord senare.",
+      "createProperAccount": "Skapa ett konto",
+      "usernameTitle": "Användarnamn",
+      "usernameHelp": "Välj ett unikt användarnamn. Andra spelare kan hitta dig med det här. Använd också detta namn för att logga in på webbplatsen (fudisc.henzi.fi). Det här namnet kan ändras senare på webbplatsen.",
+      "usernameAlreadyTaken": "redan tagen!",
+      "passwordTitle": "Lösenord",
+      "passwordHelp": "Ange ett lösenord. Det här lösenordet används för att logga in på appen och webbplatsen.",
+      "passwordTooShort": "Lösenord för kort!",
+      "passwordsDontMatch": "Lösenorden matchar inte!",
+      "verifyPassword": "Verifiera lösenord",
+      "emailTitle": "E-post (valfritt)",
+      "emailHelp": "E-post används endast för lösenordsåterställning och meddelanden. Det är inte obligatoriskt, så det är okej att lämna det tomt.",
+      "signUpComplete": "Det är allt! Du kan nu börja spela.",
+      "backToStart": "Tillbaka till början",
+      "errorSigningUp": "Fel vid registrering",
+      "welcomeToFudisc": "Välkommen till FuDisc, {{name}}!"
+    },
+    "game": {
+      "newGame": "Nytt spel",
+      "selectCourse": "Välj bana",
+      "changeCourse": "Ändra bana",
+      "selectPlayers": "Välj spelare",
+      "addPlayers": "Lägg till spelare",
+      "gameSettings": "Inställningar",
+      "createGame": "Skapa spel",
+      "gameOver": "Spelet är över!",
+      "startNewGame": "Starta ett nytt spel",
+      "errorOccurred": "Ett fel inträffade precis!",
+      "notLoggedIn": "Du är inte inloggad?",
+      "groupCompetitionDisabled": "Grupptävling inaktiverad, inte medlem i någon grupp",
+      "isGroupCompetition": "Är en grupptävling",
+      "groupCompetitionInfo": "Den här växeln markerar spelet som en grupptävling. Poäng tilldelas spelare som tillhör gruppen {{groupName}}.",
+      "groupJoinInfo": "Om du inte är medlem i någon grupp, välj \"Grupper\" från huvudvyn för att ansluta dig.",
+      "bHcMultiplier": "bHC-multiplikator",
+      "bHcMultiplierInfo": "Justera ölhandicap för detta spel. Ölhandicap är 0,5 kast per öl.",
+      "bHcMultiplierCalc": "Det nya ölhandicap (bHC) värdet beräknas som 0,5 multiplicerat med den valda multiplikatorn, vilket ger kast per öl.",
+      "tableHeaderName": "Namn",
+      "tableHeaderGames": "Spel",
+      "tableHeaderBest": "Bäst",
+      "tableHeaderHc": "HC",
+      "tabs": {
+        "scorecard": "Resultattabell",
+        "teeSign": "Tee-skylt",
+        "summary": "Sammanfattning",
+        "throwStyle": "Kastteknik",
+        "beers": "Öl",
+        "setup": "Inställning"
+      },
+      "subscriptionFailed": "Prenumeration misslyckades. Speldatan uppdateras inte i realtid.",
+      "gameCreated": "Nytt spel skapat!",
+      "gameCreationFailed": "Misslyckades att skapa ett spel!",
+      "setup": {
+        "info": "Info",
+        "started": "Startad",
+        "closed": "Stängd",
+        "duration": "Varaktighet",
+        "closeConfirmTitle": "Är du säker?",
+        "closeConfirmMessage": "Efter att du har stängt spelet kan du inte längre ange poäng eller dricka öl",
+        "gameClosed": "Spelet stängt",
+        "errorOccurred": "Något gick fel :(",
+        "gameAbandoned": "Spelet övergett",
+        "reopenConfirmTitle": "Är du säker",
+        "reopenConfirmMessage": "Allt kommer att raderas",
+        "endGame": "Avsluta spel",
+        "stopDrinkingMessage": "Sluta dricka och stäng spelet.",
+        "reopen": "Öppna igen",
+        "reopenMessage": "Öppna spelet igen. Andra spelare kommer att meddelas om ditt fusköp.",
+        "mainMenu": "Huvudmeny",
+        "mainMenuMessage": "Avlasta spelet och återgå till huvudmenyn",
+        "discardGame": "Kassera spel",
+        "discardMessage": "Om spelet är slut, kommer bara din resultattabell att brännas i helvetet.",
+        "gameId": "Spel-ID:",
+        "noSubscription": "Ingen prenumeration"
+      },
+      "beers": {
+        "title": "Öl",
+        "whaat": "Vad?!",
+        "calculator": "Ölräknare"
+      },
+      "statsbar": {
+        "template": "Bäst: {{best}}, Genomsn: {{average}}"
+      },
+      "holeMap": {
+        "noImageTitle": "Ingen tee-skyltbild",
+        "noImageText": "Ta en foto av tee-skylten för att lägga till den här",
+        "takePhoto": "Ta foto",
+        "uploadFromGallery": "Ladda upp från galleriet",
+        "imageUploading": "Laddar upp bild...",
+        "imageLoading": "Laddar bild...",
+        "failedToLoad": "Misslyckades att ladda bild.",
+        "uploadedBy": "Uppladdad av"
+      },
+      "throwStyle": {
+        "title": "Randomisera kasttekniker",
+        "individualThrowStyles": "Tilldela en kastteknik till varje spelare individuellt.",
+        "player": "Spelare",
+        "disc": "Disc",
+        "style": "Stil",
+        "startRandomizing": "Börja randomisera",
+        "stopRandomizing": "Håll käften!"
+      }
+    },
+    "stats": {
+      "myStats": "Min statistik",
+      "userStats": "{{name}}s statistik",
+      "spyFriend": "Spionera på en vän",
+      "noCourseSelected": "Ingen bana vald. Välj en bana för att visa layoutspecifik statistik.",
+      "selectCourse": "Välj bana",
+      "changeCourse": "Ändra bana",
+      "errorOccurred": "Ett fel inträffade precis",
+      "noData": "Ingen data...",
+      "holesData": "Håls data",
+      "noDataAvailable": "Ingen data tillgänglig",
+      "activity": {
+        "error": "Fel!",
+        "loadingFailed": "Misslyckades att ladda tidigare aktivitet :/",
+        "year": "År {{year}}",
+        "last12Months": "Senaste 12 månader",
+        "totalGames": "Totalt {{games}} spel mellan {{from}} - {{to}}"
+      },
+      "labels": {
+        "total": "Totalt",
+        "best": "Bäst",
+        "average": "Genomsnitt",
+        "eagles": "Örnar",
+        "birdies": "Birdies",
+        "pars": "Pars",
+        "bogeys": "Bogeys",
+        "doubleBogeys": "2x Bogeys",
+        "others": "Övrigt"
+      },
+      "bestPoolGame": {
+        "title": "Mästare i universum",
+        "info": "Visar bäst spelat spel på vald layout med en poolstorlek på n.",
+        "poolLabel": "Visa bästa spel för poolstorlek: ",
+        "noData": "Ingen data :P",
+        "eligibleGames": "Godkända spel hittade: ",
+        "date": "Datum:",
+        "players": "Spelare:",
+        "totalScore": "Totalt poäng:",
+        "totalPar": "Totalt par:",
+        "totalAdjusted": "+/- Totalt:",
+        "adjustedAdjusted": "+/- Justerat:",
+        "playersTitle": "Spelare"
+      }
+    },
+    "achievements": {
+      "myAchievements": "Mina prestationer",
+      "userAchievements": "{{name}}s prestationer",
+      "noAchievements": "Inga prestationer än!",
+      "errorLoading": "Beräknar inte"
+    },
+    "settings": {
+      "friendsTitle": "Vänner",
+      "blockFriendRequests": "Blockera andra användare från att lägga till dig som vän",
+      "changePasswordTitle": "Ändra lösenord",
+      "newPassword": "Nytt lösenord",
+      "confirmPassword": "Bekräfta lösenord",
+      "passwordTooShort": "Lösenord för kort!",
+      "passwordTooShortInfo": "Ditt lösenord bör vara minst 5 tecken",
+      "passwordNoMatch": "Ingen matchning!",
+      "passwordsDontMatch": "Lösenorden matchar inte!",
+      "passwordChanged": "Lösenord ändrat!",
+      "passwordChangeFailed": "Fel! Lösenord ändrades inte! :/",
+      "deleteAccountTitle": "Ta bort konto",
+      "deleteAccountInfo": "Ta bort ditt konto permanent. Borttagna konton kan inte återställas senare.",
+      "deleteAccountConfirmInfo": "För att ta bort ditt konto, skriv {{name}} i inmatningsfältet nedan och tryck på Ta bort konto.",
+      "accountDeleted": "Konto borttaget",
+      "infoTitle": "Info",
+      "version": "version",
+      "build": "bygga",
+      "accountType": "kontotyp",
+      "displayUnitsTitle": "Visningsenheter",
+      "metric": "Metrisk",
+      "imperial": "Imperial",
+      "languageTitle": "Språk",
+      "languageAuto": "Automatisk",
+      "languageEnglish": "English",
+      "languageFinnish": "Suomi",
+      "languageSwedish": "Svenska",
+      "languageEstonian": "Eesti",
+      "languagePolish": "Polski",
+      "languageGerman": "Deutsch"
+    },
+    "feedback": {
+      "title": "Lämna feedback",
+      "subject": "Ämne",
+      "subjectPlaceholder": "Ange feedbackämne",
+      "email": "E-post",
+      "emailPlaceholder": "Ange din e-post (valfritt)",
+      "message": "Meddelande",
+      "messagePlaceholder": "Ange din feedback här",
+      "submitButton": "Lämna feedback",
+      "sendFailed": "Misslyckades att skicka feedback. Försök igen senare.",
+      "thankYouTitle": "Tack för feedback!",
+      "thankYouMessage": "Din feedback har mottagits. Vi kan komma tillbaka till dig om du lämnade din e-postadress."
+    },
+    "oldGames": {
+      "title": "Spel",
+      "totalRounds": "Totalt {{count}} rundor",
+      "loadingGames": "Laddar spel...",
+      "fetchingMore": "Hämtar mer...",
+      "showOnlyGroupGames": "Visa endast gruppspel"
+    },
+    "distance": {
+      "listTab": "Lista",
+      "measureTab": "Mäta",
+      "newMeasurementAdded": "Ny mätning tillagd",
+      "measurementDeleted": "Mätning borttagen",
+      "somethingWentWrong": "Något gick fel",
+      "list": {
+        "title": "Sparade mätningar",
+        "noMeasurements": "Inga sparade mätningar"
+      },
+      "measure": {
+        "startingPoint": "Startpunkt",
+        "landingPoint": "Landningspunkt",
+        "unlock": "Låsa upp",
+        "lock": "Lås",
+        "distance": "Distans",
+        "addToList": "Lägg till i lista",
+        "latitude": "Lat:",
+        "longitude": "Lon:",
+        "accuracy": "Noggrannhet:"
+      }
+    },
+    "weeklies": {
+      "title": "Veckovisa nära mig",
+      "description": "Tävlingar inom {{range}} med 10+ spelare",
+      "selectRange": "Välj räckvidd",
+      "country": "Land",
+      "players": "{{count}} spelare",
+      "noResults": "Inga tävlingar hittade i närheten",
+      "gpsError": "Kunde inte få din plats",
+      "gpsLoading": "Väntar på GPS..."
+    },
+    "group": {
+      "title": "Grupp",
+      "notInGroup": "Inte i en grupp",
+      "notInGroupInfo": "Ange ett gruppnamn för att ansluta till dina vänner. Detta länkar er alla tillsammans i samma grupp, så att ni kan jämföra poäng och tävla med varandra. Du kommer att kunna se gruppens resultat och tävlingsställning på webbplatsen.",
+      "membersTitle": "Medlemmar",
+      "enterGroupName": "Ange gruppnamn",
+      "websiteTitle": "Webbplats",
+      "websiteInfo": "Gruppställning, poäng osv. finns på webbplatsen",
+      "leaveGroupTitle": "Lämna grupp",
+      "leaveGroupInfo": "Om du lämnar en grupp tas du bort från gruppen och du kan inte längre se gruppens resultat eller ställning.",
+      "leaveGroupButton": "Lämna grupp",
+      "leaveGroupConfirmTitle": "Lämna grupp",
+      "leaveGroupConfirmMessage": "Är du säker på att du vill lämna gruppen? Om du senare beslutar att ansluta dig igen, behandlas du som en ny medlem och tidigare resultat inkluderas inte i din ställning.",
+      "joinedGroup": "Du har anslutit dig till gruppen {{name}}",
+      "leftGroup": "Du har lämnat gruppen",
+      "groupNotSet": "Fel! Grupp inte inställd :(",
+      "somethingNotWorking": "Något fungerar inte korrekt ..."
+    }
+  },
+  "components": {
+    "login": {
+      "title": "Logga in",
+      "usernameLabel": "Användarnamn",
+      "passwordLabel": "Lösenord",
+      "loginButton": "Logga in",
+      "welcomeMessage": "Välkommen, {{name}}",
+      "wrongCredentials": "Fel användarnamn eller lösenord",
+      "forgotPassword": "Glömt lösenord?"
+    },
+    "signUp": {
+      "title": "Registrering",
+      "titleFriend": "Registrera en vän",
+      "friendSignUpInfo1": "Du skapar ett konto för en vän. Istället för att skapa konton för alla bör du tvinga dina vänner att använda Fudisc.",
+      "friendSignUpInfo2": "Skapad vän läggs automatiskt till i din vänlista.",
+      "usernameTitle": "Användarnamn",
+      "usernameLabel": "Användarnamn",
+      "passwordTitle": "Lösenord",
+      "passwordLabel": "Lösenord",
+      "confirmPasswordLabel": "Bekräfta lösenord",
+      "emailTitle": "E-post",
+      "signUpButton": "Registrera dig!",
+      "nameTooShort": "Namn för kort!",
+      "passwordTooShort": "Lösenord för kort. Min 5 bokstäver.",
+      "passwordsDontMatch": "Lösenorden matchar inte!",
+      "accountCreated": "Konto skapat för {{name}}.",
+      "nowFriends": "Du är nu vänner med {{name}}.",
+      "failedToAddFriend": "Misslyckades att lägga till {{name}} som vän.",
+      "createUserError": "Fel när användare skapades! {{message}}"
+    },
+    "addCourse": {
+      "editTitle": "Redigera bana",
+      "addTitle": "Lägg till bana",
+      "nameLabel": "Namn",
+      "courseName": "Bananamn",
+      "locationTitle": "Plats",
+      "setCoordinatesManually": "Ange koordinater manuellt",
+      "latLabel": "Lat",
+      "longLabel": "Lon",
+      "gpsAccuracy": "GPS-noggrannhet: {{value}}m",
+      "gpsLoading": "GPS laddar...",
+      "selectLocationFromMap": "Välj plats från kartan",
+      "setCoordinatesManuallyHint": "Ange koordinater manuellt"
+    },
+    "addLayout": {
+      "editTitle": "Redigera layout",
+      "addTitle": "Lägg till layout",
+      "layoutName": "Layoutnamn",
+      "numberOfHoles": "Antal hål",
+      "markAsObsolete": "Markera layout som föråldrad",
+      "holesTitle": "Hål",
+      "holeNumber": "Hål #{{number}}",
+      "nameOptional": "Namn (valfritt)",
+      "holeSummary": "{{holes}} hål, par {{par}}"
+    },
+    "addFriend": {
+      "title": "Lägg till vän",
+      "searchHint": "Vem är din pappa",
+      "nameLabel": "Namn",
+      "usersFound": "{{count}} användare hittade",
+      "friendBadge": "Vän!",
+      "itsMe": "Det är jag!"
+    },
+    "friendsList": {
+      "title": "Vänner",
+      "selectedCount": "({{count}} valda)",
+      "addFriend": "Lägg till vän",
+      "createFriend": "Skapa vän",
+      "loadingFriends": "Laddar vänner...",
+      "addPlayersToGame": "Lägg till spelare i spelet"
+    },
+    "selectCourse": {
+      "selectLayout": "Välj layout",
+      "addCourse": "Lägg till bana",
+      "loadingCourses": "Laddar banor...",
+      "noMore": "Inget mer... No más...",
+      "addLayout": "Lägg till layout",
+      "layoutCount_one": "{{count}} layout",
+      "layoutCount_other": "{{count}} layouter",
+      "layouts": "Layouter",
+      "away": "bort",
+      "holesAndPar": "{{holes}} hål, par {{par}}",
+      "obsolete": "FÖRÅLDRAD",
+      "editCourse": "Redigera bana",
+      "deleteCourse": "Ta bort bana",
+      "courseDeleted": "Bana borttagen",
+      "courseNotDeleted": "Bana togs inte bort!",
+      "failedToLoadCourses": "Misslyckades att ladda banor",
+      "gpsLoading": "GPS laddar",
+      "layoutsAndDistance": "{{count}} layouter, {{distance}} bort",
+      "deleteConfirmTitle": "Är du säker?",
+      "deleteConfirmMessage": "Vill du verkligen ta bort den här banan? Det kan inte ångras senare",
+      "select": "Välj",
+      "menu": {
+        "editCourse": "Redigera bana",
+        "deleteCourse": "Ta bort bana"
+      },
+      "map": {
+        "failedToLoad": "Misslyckades att ladda banor",
+        "gpsLoading": "GPS laddar"
+      }
+    },
+    "errorScreen": {
+      "title": "Fel",
+      "backToFrontpage": "Tillbaka till framsidan"
+    },
+    "loading": {
+      "defaultText": "Laddar...",
+      "serverSleeping": "Servern verkar sova...",
+      "wakeUp": "Väck upp din dumma dator!",
+      "somethingWrong": "Hmm.. något kan vara fel 🤔",
+      "tryTurningOff": "Har du försökt stänga av det och sätta på det igen?"
+    },
+    "localSettings": {
+      "sortHc": "Sortera sammanfattning efter HC",
+      "sortBox": "Sortera resultattabeller efter boxordning",
+      "autoAdvance": "Välj automatiskt första oavslutade hål",
+      "hideStatsBars": "Dölj statistik från resultattabeller",
+      "hidePlusMinus": "Dölj +/- från resultattabeller",
+      "prohibition": "Förbjudelse",
+      "randomThrowStyle": "Slumpmässiga kasttekniker",
+      "hideTeeSign": "Dölj tee-skylt-flik"
+    },
+    "alcConverter": {
+      "title": "Ölräknare",
+      "beer": {
+        "long": "Stor (0,5l)",
+        "strong": "Stark (>5,0%)",
+        "longAndStrong": "Stor & Stark"
+      },
+      "wine": {
+        "title": "Vin (dl)"
+      },
+      "other": {
+        "normal": "Vanlig (0,33l)"
+      },
+      "total": "Totalt",
+      "beers": "öl"
+    },
+    "toolbar": {
+      "title": "FuDisc"
+    }
+  },
+  "game": {
+    "throwStyles": {
+      "backhand": "Backhand",
+      "forehand": "Forehand",
+      "wrongHand": "Fel hand",
+      "roller": "Roller",
+      "backhandRoller": "Backhand roller",
+      "forehandRoller": "Forehand roller",
+      "tomahawk": "Tomahawk",
+      "grenade": "Granat",
+      "hyzer": "Hyzer",
+      "anhyzer": "Anhyzer",
+      "yourChoice": "Ditt val"
+    },
+    "discTypes": {
+      "putter": "Putter",
+      "midrange": "Mellansektion",
+      "driver": "Driver",
+      "overstable": "Överstabil",
+      "understable": "Understabil",
+      "yourChoice": "Ditt val"
+    }
+  },
+  "achievements": {
+    "titles": {
+      "100Malmis": "100x Niitty",
+      "HoleInOne": "Hole in one",
+      "winAllHoles": "Super vinnare",
+      "0Pars": "Inga pars",
+      "GoldenBox": "Gyllene lådan"
+    },
+    "descriptions": {
+      "100Malmis": "\"Aina vaan malmikseen...\"",
+      "HoleInOne": "Hole in one",
+      "winAllHoles": "Ingenting än att vinna",
+      "0Pars": "Noll pars, försök hårdare!",
+      "GoldenBox": "Varför måste jag alltid kasta först?"
+    }
+  },
+  "errors": {
+    "noCameraPermission": "Kamerabehörighet krävs för att ta foton.",
+    "genericError": "Något gick fel",
+    "scoreNotSaved": "Fel! Resultatet kanske inte sparades :/"
+  },
+  "notifications": {
+    "friendAdded": "Vän tillagd! Bra jobbat!",
+    "friendAddFailed": "Kunde inte bli vän med {{name}}. Användaren blockerar antingen vänn-förfrågningar eller förfrågan misslyckades av någon annan anledning.",
+    "friendRemoved": "Tog bort {{name}} från din vänlista!",
+    "friendRemoveFailed": "Misslyckades att ta bort vän!",
+    "removeFriendTitle": "Hejdå vän",
+    "removeFriendMessage": "Vänner är utbytbara men discgolf är för livet!\n\nTa verkligen bort {{name}}?",
+    "removeFriendConfirm": "Gör det"
+  }
+}

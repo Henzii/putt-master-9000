@@ -248,7 +248,11 @@
       "languageTitle": "Language",
       "languageAuto": "Automatic",
       "languageEnglish": "English",
-      "languageFinnish": "Suomi"
+      "languageFinnish": "Suomi",
+      "languageSwedish": "Svenska",
+      "languageEstonian": "Eesti",
+      "languagePolish": "Polski",
+      "languageGerman": "Deutsch"
     },
     "feedback": {
       "title": "Leave feedback",
