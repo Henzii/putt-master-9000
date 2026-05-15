@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 import mockAsyncStorage from '@react-native-async-storage/async-storage/jest/async-storage-mock';
+import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
+
 
 /*
     package.json:
@@ -23,3 +25,6 @@ jest.mock('react-redux', () => ({
 jest.mock('graphql-ws', () => ({
     createClient: () => null
 }));
+
+
+jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
