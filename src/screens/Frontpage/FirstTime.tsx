@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Linking } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Button, ProgressBar, Text, TextInput } from 'react-native-paper';
 import Container from '../../components/ThemedComponents/Container';
@@ -14,6 +13,7 @@ import { SEARCH_USER } from '../../graphql/queries';
 import { addNotification } from '../../reducers/notificationReducer';
 import { useDispatch } from 'react-redux';
 import useTextInput from '../../hooks/useTextInput';
+import WebLinkButton from '@components/WebLinkButton';
 
 type Errors = {
     [key: string]: string
@@ -114,9 +114,9 @@ export default function FirstTime() {
                     <Spacer />
                     <Button mode="contained-tonal" onPress={() => navi('/')} >{t('screens.firstTime.toLoginScreen')}</Button>
                     <Spacer size={5} />
-                    <Button mode="text" icon="open-in-new" onPress={() => Linking.openURL('https://fudisc.henzi.fi/restore')}>
+                    <WebLinkButton path="restore">
                         {t('screens.firstTime.forgotPassword')}
-                    </Button>
+                    </WebLinkButton>
                     <Spacer size={15} />
                     <Text variant="headlineSmall">Create an account</Text>
                     <Text variant="bodyMedium">

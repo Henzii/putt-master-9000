@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Linking, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { Button, Chip, Headline, Paragraph, TextInput, Title } from "react-native-paper";
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +13,7 @@ import ErrorScreen from '../../components/ErrorScreen';
 import { useUpdateSettings } from '../../hooks/useUpdateSettings';
 import { addNotification } from '../../reducers/notificationReducer';
 import { setUser } from '../../reducers/userReducer';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import WebLinkButton from '@components/WebLinkButton';
 
 const Group = () => {
     const { t } = useTranslation();
@@ -36,11 +36,6 @@ const Group = () => {
             dispatch(setUser({ ...user, groupName }));
             refetch();
         }
-    };
-
-    const handleOpenWebsite = async () => {
-        const token = await AsyncStorage.getItem('token');
-        Linking.openURL(`https://fudisc.henzi.fi/login?token=${token}`);
     };
 
     if (!user.isLoggedIn || error) return <ErrorScreen errorMessage={t('screens.group.somethingNotWorking')} />;
@@ -83,7 +78,7 @@ const Group = () => {
             <Spacer />
             <Title>{t('screens.group.websiteTitle')}</Title>
             <Paragraph>{t('screens.group.websiteInfo')}</Paragraph>
-            <Button onPress={handleOpenWebsite} mode="text">https://fudisc.henzi.fi</Button>
+            <WebLinkButton />
             {groupName && <LeaveGroup onLeaveGroup={() => handleGroupChange('')} />}
         </Container>
     );

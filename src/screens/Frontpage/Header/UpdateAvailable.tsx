@@ -1,21 +1,20 @@
 import React from 'react';
-import { View, Text, StyleSheet, Linking } from 'react-native';
-import { Button } from 'react-native-paper';
+import { View, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import Spacer from '../../../components/ThemedComponents/Spacer';
+import WebLinkButton from '@components/WebLinkButton';
 
 const UpdateAvailable = () => {
     const { t } = useTranslation();
-    const handleButtonClick = () => {
-        Linking.openURL('market://details?id=com.henzisoft.puttmaster9000');
-    };
     return (
         <>
                 <Text style={styles.header}>{t('screens.frontpage.updateAvailable')}</Text>
                 <Text style={styles.text}>{t('screens.frontpage.updateMessage')}</Text>
                 <Spacer />
                 <View style={{flexDirection: 'row'}}>
-                    <Button style={styles.button} onPress={handleButtonClick}>{t('screens.frontpage.updateNow')}</Button>
+                    <WebLinkButton style={styles.button} url="market://details?id=com.henzisoft.puttmaster9000">
+                        {t('screens.frontpage.updateNow')}
+                    </WebLinkButton>
                 </View>
         </>
     );
