@@ -72,6 +72,7 @@ const Language: FC = () => {
               style={{ flex: 1 }}
               icon="chevron-down"
               contentStyle={{flexDirection: "row-reverse" }}
+              testID="languageMenuButton"
             >
               {getPreferenceLabel(preference)}
             </Button>
