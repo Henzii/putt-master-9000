@@ -64,6 +64,7 @@
     },
     "firstTime": {
       "welcomeTitle": "Willkommen bei FuDisc!",
+      "alreadyHaveAccount": "Haben Sie bereits ein Konto?",
       "newUserIntro": "Beginnen Sie mit einem schnellen Gastkonto oder erstellen Sie ein vollständiges FuDisc-Profil, um Ihren Fortschritt sicher zu speichern.",
       "existingAccountInfo": "Wenn Sie bereits ein Konto haben, gehen Sie zum Anmeldebildschirm. Wenn Sie Ihr Passwort vergessen haben, verwenden Sie den Wiederherstellungslink unten.",
       "toLoginScreen": "Anmelden",

@@ -102,12 +102,12 @@ export default function FirstTime() {
             <Spacer />
             {step === 0 && (
                 <>
-                    <Text variant="headlineMedium">Welcome to FuDisc</Text>
+                    <Text variant="headlineMedium">{t('screens.firstTime.welcomeTitle')}</Text>
                     <Text variant="bodyMedium">
                         {t('screens.firstTime.newUserIntro')}
                     </Text>
                     <Spacer size={10} />
-                    <Text variant="headlineSmall">Already have an account</Text>
+                    <Text variant="headlineSmall">{t('screens.firstTime.alreadyHaveAccount')}</Text>
                     <Text variant="bodyMedium">
                         {t('screens.firstTime.existingAccountInfo')}
                     </Text>
@@ -118,7 +118,7 @@ export default function FirstTime() {
                         {t('screens.firstTime.forgotPassword')}
                     </WebLinkButton>
                     <Spacer size={15} />
-                    <Text variant="headlineSmall">Create an account</Text>
+                    <Text variant="headlineSmall">{t('screens.firstTime.createProperAccount')}</Text>
                     <Text variant="bodyMedium">
                         {t('screens.firstTime.createAccountInfo')}
                     </Text>
@@ -195,16 +195,16 @@ export default function FirstTime() {
                         disabled={'password1' in errors || 'password2' in errors}
                         onPress={() => setStep(3)}
                         testID="nextStep"
-                    >Next</Button>
+                    >{t('common.next')}</Button>
                 </>)}
             {step === 3 && (
                 <>
-                    <Text variant="headlineSmall">Email (Optional)</Text>
+                    <Text variant="headlineSmall">{t('screens.firstTime.emailTitle')}</Text>
                     <Text variant="bodyMedium">
-                        Email is only used for password recovery and notifications. It is not mandatory, so it&apos; okay to leave it empty.
+                        {t('screens.firstTime.emailHelp')}
                     </Text>
                     <TextInput
-                        label="Email"
+                        label={t('screens.firstTime.emailTitle')}
                         autoComplete='off'
                         mode="outlined"
                         dense
@@ -213,12 +213,12 @@ export default function FirstTime() {
                     />
                     <Spacer />
                     <Text variant="bodyMedium">
-                        That&apos;s it! You can now start playing.
+                        {t('screens.firstTime.signUpComplete')}
                     </Text>
                     <Spacer />
-                    <Button mode="contained" disabled={Object.keys(errors).length > 0} onPress={handleSignUp} testID="signup">Sign up!</Button>
+                    <Button mode="contained" disabled={Object.keys(errors).length > 0} onPress={handleSignUp} testID="signup">{t('screens.frontpage.signUp')}</Button>
                     <Spacer size={5} />
-                    <Button mode="contained-tonal" onPress={() => setStep(0)}>Back to start</Button>
+                    <Button mode="contained-tonal" onPress={() => setStep(0)}>{t('screens.firstTime.backToStart')}</Button>
                 </>
             )
             }

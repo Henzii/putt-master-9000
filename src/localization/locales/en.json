@@ -64,6 +64,7 @@
     },
     "firstTime": {
       "welcomeTitle": "Welcome to FuDisc!",
+      "alreadyHaveAccount": "Already have an account",
       "newUserIntro": "Start with a quick guest-style account or create a full FuDisc profile to keep your progress safe.",
       "existingAccountInfo": "If you already have an account, go to the login screen. If you forgot your password, use the restore link below.",
       "toLoginScreen": "Log in",

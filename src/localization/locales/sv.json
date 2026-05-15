@@ -64,6 +64,7 @@
     },
     "firstTime": {
       "welcomeTitle": "Välkommen till FuDisc!",
+      "alreadyHaveAccount": "Har du redan ett konto?",
       "newUserIntro": "Börja med ett snabbt gästkonto eller skapa en fullständig FuDisc-profil för att hålla dina framsteg säkra.",
       "existingAccountInfo": "Om du redan har ett konto, gå till inloggningsskärmen. Om du glömde ditt lösenord, använd återställningslänken nedan.",
       "toLoginScreen": "Logga in",

@@ -59,6 +59,7 @@
     },
     "firstTime": {
       "welcomeTitle": "Tervetuloa FuDisciin!",
+      "alreadyHaveAccount": "Onko sinulla jo tili?",
       "newUserIntro": "Aloita nopeasti satunnaisella käyttäjällä tai luo täydellinen FuDisc-profiili, jotta edistymisesi tallentuu.",
       "existingAccountInfo": "Jos sinulla on jo tili, siirry kirjautumissivulle. Jos unohdit salasanasi, käytä alla olevaa palautuslinkkiä.",
       "toLoginScreen": "Siirry kirjautumiseen",

@@ -64,6 +64,7 @@
     },
     "firstTime": {
       "welcomeTitle": "Tere tulemast FuDiscisse!",
+      "alreadyHaveAccount": "Kas sul on juba konto?",
       "newUserIntro": "Alusta kiire külaliskontoga või loo täielik FuDisc profiil, et hoida oma edusamme turvaliselt.",
       "existingAccountInfo": "Kui sul juba on konto, mine sisselogimise ekraanile. Kui unustasid parooli, kasuta allolevat taastamise linki.",
       "toLoginScreen": "Logi sisse",
