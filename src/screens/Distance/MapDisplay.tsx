@@ -26,6 +26,7 @@ const MapDisplay: FC<Props> = ({ measuredThrow, onClose }) => {
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.mapView}
+        mapType="satellite"
         zoomControlEnabled
         showsUserLocation
         showsMyLocationButton
@@ -37,6 +38,8 @@ const MapDisplay: FC<Props> = ({ measuredThrow, onClose }) => {
         }}
       >
         <Polyline
+          strokeColor="#f1ef57"
+          strokeWidth={6}
           coordinates={[
             {
               latitude: measuredThrow.startingPoint.coordinates[0],
