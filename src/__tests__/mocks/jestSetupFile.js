@@ -28,3 +28,12 @@ jest.mock('graphql-ws', () => ({
 
 
 jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+
+jest.mock('@expo/vector-icons', () => {
+  return {
+    MaterialCommunityIcons: 'MaterialCommunityIcons',
+    MaterialIcons: 'MaterialIcons',
+    Ionicons: 'Ionicons',
+    FontAwesome: 'FontAwesome',
+  };
+});

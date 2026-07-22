@@ -273,39 +273,22 @@ exports[`<FriendList /> should render properly 1`] = `
                           >
                             <Text
                               accessibilityElementsHidden={true}
-                              allowFontScaling={false}
                               importantForAccessibility="no-hide-descendants"
                               pointerEvents="none"
                               selectable={false}
                               style={
                                 [
                                   {
+                                    "backgroundColor": "transparent",
+                                  },
+                                  {
                                     "color": "rgb(0, 108, 83)",
                                     "fontSize": 18,
                                   },
-                                  [
-                                    {
-                                      "lineHeight": 18,
-                                      "transform": [
-                                        {
-                                          "scaleX": 1,
-                                        },
-                                      ],
-                                    },
-                                    {
-                                      "backgroundColor": "transparent",
-                                    },
-                                  ],
-                                  {
-                                    "fontFamily": "material-community",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "normal",
-                                  },
-                                  {},
                                 ]
                               }
                             >
-                              󰠁
+                              □
                             </Text>
                           </View>
                           <Text
@@ -474,39 +457,22 @@ exports[`<FriendList /> should render properly 1`] = `
                           >
                             <Text
                               accessibilityElementsHidden={true}
-                              allowFontScaling={false}
                               importantForAccessibility="no-hide-descendants"
                               pointerEvents="none"
                               selectable={false}
                               style={
                                 [
                                   {
+                                    "backgroundColor": "transparent",
+                                  },
+                                  {
                                     "color": "rgb(0, 108, 83)",
                                     "fontSize": 18,
                                   },
-                                  [
-                                    {
-                                      "lineHeight": 18,
-                                      "transform": [
-                                        {
-                                          "scaleX": 1,
-                                        },
-                                      ],
-                                    },
-                                    {
-                                      "backgroundColor": "transparent",
-                                    },
-                                  ],
-                                  {
-                                    "fontFamily": "material-community",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "normal",
-                                  },
-                                  {},
                                 ]
                               }
                             >
-                              󰹽
+                              □
                             </Text>
                           </View>
                           <Text
@@ -913,39 +879,22 @@ exports[`<FriendList /> should render properly 1`] = `
                         >
                           <Text
                             accessibilityElementsHidden={true}
-                            allowFontScaling={false}
                             importantForAccessibility="no-hide-descendants"
                             pointerEvents="none"
                             selectable={false}
                             style={
                               [
                                 {
+                                  "backgroundColor": "transparent",
+                                },
+                                {
                                   "color": "darkred",
                                   "fontSize": 24,
                                 },
-                                [
-                                  {
-                                    "lineHeight": 24,
-                                    "transform": [
-                                      {
-                                        "scaleX": 1,
-                                      },
-                                    ],
-                                  },
-                                  {
-                                    "backgroundColor": "transparent",
-                                  },
-                                ],
-                                {
-                                  "fontFamily": "material-community",
-                                  "fontStyle": "normal",
-                                  "fontWeight": "normal",
-                                },
-                                {},
                               ]
                             }
                           >
-                            󰩺
+                            □
                           </Text>
                         </View>
                       </View>
@@ -1201,39 +1150,22 @@ exports[`<FriendList /> should render properly 1`] = `
                         >
                           <Text
                             accessibilityElementsHidden={true}
-                            allowFontScaling={false}
                             importantForAccessibility="no-hide-descendants"
                             pointerEvents="none"
                             selectable={false}
                             style={
                               [
                                 {
+                                  "backgroundColor": "transparent",
+                                },
+                                {
                                   "color": "darkred",
                                   "fontSize": 24,
                                 },
-                                [
-                                  {
-                                    "lineHeight": 24,
-                                    "transform": [
-                                      {
-                                        "scaleX": 1,
-                                      },
-                                    ],
-                                  },
-                                  {
-                                    "backgroundColor": "transparent",
-                                  },
-                                ],
-                                {
-                                  "fontFamily": "material-community",
-                                  "fontStyle": "normal",
-                                  "fontWeight": "normal",
-                                },
-                                {},
                               ]
                             }
                           >
-                            󰩺
+                            □
                           </Text>
                         </View>
                       </View>
@@ -1424,39 +1356,22 @@ exports[`<FriendList /> should render properly 1`] = `
                   >
                     <Text
                       accessibilityElementsHidden={true}
-                      allowFontScaling={false}
                       importantForAccessibility="no-hide-descendants"
                       pointerEvents="none"
                       selectable={false}
                       style={
                         [
                           {
+                            "backgroundColor": "transparent",
+                          },
+                          {
                             "color": "rgb(64, 73, 68)",
                             "fontSize": 24,
                           },
-                          [
-                            {
-                              "lineHeight": 24,
-                              "transform": [
-                                {
-                                  "scaleX": 1,
-                                },
-                              ],
-                            },
-                            {
-                              "backgroundColor": "transparent",
-                            },
-                          ],
-                          {
-                            "fontFamily": "material-community",
-                            "fontStyle": "normal",
-                            "fontWeight": "normal",
-                          },
-                          {},
                         ]
                       }
                     >
-                      󰅖
+                      □
                     </Text>
                   </View>
                 </View>
