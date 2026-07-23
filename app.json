@@ -60,7 +60,8 @@
           "imageWidth": 200
         }
       ],
-      "expo-localization"
+      "expo-localization",
+      "expo-font"
     ],
     "runtimeVersion": {
       "policy": "sdkVersion"
