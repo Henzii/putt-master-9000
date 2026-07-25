@@ -17,10 +17,12 @@ import { AccountType } from '../../types/user';
 import DeleteAccount from './DeleteAccount';
 import Units from './Units';
 import Language from './Language';
+import { useLogout } from '@hooks/session/useLogin';
 
 const Settings = () => {
     const { t } = useTranslation();
-    const { me, updateSettings, logout } = useMe();
+    const { me, updateSettings } = useMe();
+    const {logout} = useLogout();
     const navi = useNavigate();
     const [deleteAccountMutation] = useMutation(DELETE_ACCOUNT);
     const dispatch = useDispatch();

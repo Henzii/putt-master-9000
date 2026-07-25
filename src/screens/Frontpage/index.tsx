@@ -30,8 +30,9 @@ import distance from '@icons/distance.png';
 import settings from '@icons/settings.png';
 import website from '@icons/www.png';
 import feedback from '@icons/feedback.png';
-import logout from '@icons/sign-out.png';
+import logoutIcon from '@icons/sign-out.png';
 import WebLinkButton, { openWebsite } from '@components/WebLinkButton';
+import { useLogout } from '@hooks/session/useLogin';
 
 const Frontpage = () => {
     const { t } = useTranslation();
@@ -41,6 +42,7 @@ const Frontpage = () => {
     const {colors} = useTheme();
     const styles = createStyles(colors);
     const session = useSession();
+    const {logout} = useLogout();
 
     if (session.state === SESSION_STATE.LOADING) {
         return (
@@ -144,8 +146,8 @@ const Frontpage = () => {
                 <Divider />
                 <List.Item
                     title={t('screens.frontpage.logout')}
-                    left={() => <Image source={logout} style={styles.listItemIcon} />}
-                    onPress={() => session.clear()}
+                    left={() => <Image source={logoutIcon} style={styles.listItemIcon} />}
+                    onPress={logout}
                     titleStyle={styles.logoutText}
                 />
                 <Spacer size={80} />
