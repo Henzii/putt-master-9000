@@ -28,8 +28,16 @@ type Session = {
 
 type LoggedIn = Omit<Session, 'isLoggedIn' | 'id'> & {isLoggedIn: true, id: string}
 
+/**
+ *
+ * @deprecated Use useSessionV2 instead
+ */
 export const isLoggedIn = (session: Session): session is LoggedIn => session.isLoggedIn === true;
 
+/**
+ *
+ * @deprecated Use useSessionV2 instead
+ */
 export const useSession = (): Session => {
     const loginToken = useSelector((state: RootState) => state.common.loginToken);
     const user = useSelector((state: RootState) => state.user);

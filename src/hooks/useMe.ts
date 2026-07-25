@@ -7,6 +7,10 @@ import { AccountType, UpdatableUserSettings, User } from '../types/user';
 
 type GetMeResponse = { getMe: User }
 
+/**
+ *
+ * @deprecated Use useSessionV2 or useFriends instead
+ */
 const useMe = (getFriends = false) => {
 
     // Jos getFriend, valitaan query jossa on ystävät mukana

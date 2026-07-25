@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-native';
 import Container from './ThemedComponents/Container';
 import { GET_ME_WITH_FRIENDS } from '../graphql/queries';
 import { useTranslation } from 'react-i18next';
+import { setCommonState } from 'src/reducers/commonReducer';
 
 type Props = {
     onClose?: () => void
@@ -66,6 +67,7 @@ const SignUp = ({onClose, isFriendSignUp}: Props) => {
                 }
             } else {
                 await AsyncStorage.setItem('token', token.data?.createUser);
+                dispatch(setCommonState({ loginToken: token.data?.createUser}));
                 navi("/");
             }
 

@@ -37,7 +37,7 @@ export const SessionProvider = ({
     fetchPolicy: "no-cache",
   });
 
-  const loading = tokenLoading || (!!loginToken && userLoading);
+  const loading = tokenLoading || userLoading;
 
   return (
     <SessionContext.Provider

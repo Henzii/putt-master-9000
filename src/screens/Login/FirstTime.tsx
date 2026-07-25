@@ -14,6 +14,7 @@ import { addNotification } from '../../reducers/notificationReducer';
 import { useDispatch } from 'react-redux';
 import useTextInput from '../../hooks/useTextInput';
 import WebLinkButton from '@components/WebLinkButton';
+import { setCommonState } from 'src/reducers/commonReducer';
 
 type Errors = {
     [key: string]: string
@@ -78,6 +79,7 @@ export default function FirstTime() {
                     }
                 });
                 await AsyncStorage.setItem('token', token.data?.createUser);
+                dispatch(setCommonState({ loginToken: token.data?.createUser}));
                 dispatch(addNotification(t('screens.firstTime.welcomeToFudisc', { name: username.value }), 'success'));
                 navi("/");
             } catch {

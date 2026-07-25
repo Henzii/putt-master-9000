@@ -2,6 +2,7 @@ import Container from '@components/ThemedComponents/Container';
 import Spacer from '@components/ThemedComponents/Spacer';
 import { openWebsite } from '@components/WebLinkButton';
 import { useLogin } from '@hooks/session/useLogin';
+import { useSessionV2 } from '@hooks/session/useSessionV2';
 import useTextInput from '@hooks/useTextInput';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +15,7 @@ const Login = () => {
     const { login, loading } = useLogin();
     const navi = useNavigate();
     const theme = useTheme();
+    const {user} = useSessionV2({ required: false });
 
     const userName = useTextInput({ defaultValue: '' });
     const password = useTextInput({ defaultValue: '' });
@@ -25,6 +27,10 @@ const Login = () => {
             }
         })();
     }, []);
+
+    useEffect(() => {
+        if (user) navi('/');
+    }, [user]);
 
     const handleLogin = async () => {
         await login(userName.value, password.value);
