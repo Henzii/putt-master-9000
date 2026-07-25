@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { FlatList, StyleSheet, View, } from "react-native";
 import { IconButton, Searchbar, Switch, Text, useTheme } from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-native';
 import { useTranslation } from 'react-i18next';
 import { GET_OLD_GAMES } from '../../graphql/queries';
@@ -11,11 +11,11 @@ import Loading from '../../components/Loading';
 import useTextInput from '../../hooks/useTextInput';
 import GameItem from './GameItem';
 import { Game } from '../../types/game';
-import { RootState } from '../../utils/store';
 import SplitContainer from '../../components/ThemedComponents/SplitContainer';
 import Header from '../../components/RoundedHeader/Header';
 import Spacer from '../../components/ThemedComponents/Spacer';
 import { useGameStore } from 'src/zustand/gameStore';
+import { useSessionV2 } from '@hooks/session/useSessionV2';
 type GamesQueryResponse = {
     games: Game[],
     hasMore: boolean,
@@ -30,7 +30,7 @@ const OldGames = () => {
     const [showSearchBar, setShowSearchBar] = useState(false);
     const setGameId = useGameStore(state => state.setGameId);
     const [filterText, setFilterText] = useState('');
-    const user = useSelector((state: RootState) => state.user.isLoggedIn ? state.user : undefined);
+    const { user } = useSessionV2();
     const [showOnlyGroupGames, setShowOnlyGroupGames] = useState(false);
     const { colors } = useTheme();
     const [headerSpacing, setHeaderSpacing] = useState(81);
