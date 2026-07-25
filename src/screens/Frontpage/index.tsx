@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, Image } from "react-native";
 import { Button, Divider, List, Paragraph, useTheme } from 'react-native-paper';
 import { Link, useNavigate } from 'react-router-native';
@@ -10,7 +10,6 @@ import Container from '@components/ThemedComponents/Container';
 import ErrorScreen from '@components/ErrorScreen';
 import { useQuery } from '@apollo/client';
 import { GET_OLD_GAMES } from '../../graphql/queries';
-import firstTimeLaunched from '../../utils/firstTimeLaunched';
 import NavIcon from './NavIcon';
 import Spacer from '@components/ThemedComponents/Spacer';
 import { SESSION_STATE, useSession } from '../../hooks/useSession';
@@ -42,14 +41,6 @@ const Frontpage = () => {
     const {colors} = useTheme();
     const styles = createStyles(colors);
     const session = useSession();
-
-    useEffect(() => {
-        (async function IIFE() {
-            if (!session.isLoggedIn && session.state === SESSION_STATE.FINISHED && await firstTimeLaunched()) {
-                navi('/firstTime');
-            }
-        })();
-    }, [session]);
 
     if (session.state === SESSION_STATE.LOADING) {
         return (

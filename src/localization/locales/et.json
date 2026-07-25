@@ -334,7 +334,9 @@
       "loginButton": "Logi sisse",
       "welcomeMessage": "Tere tulemast, {{name}}",
       "wrongCredentials": "Vale kasutajanimi või parool",
-      "forgotPassword": "Unustasid parooli?"
+      "forgotPassword": "Unustasid parooli?",
+      "otherOptions": "Muud valikud",
+      "firstTimeWizard": "Registreeru (viisardiga)"
     },
     "signUp": {
       "title": "Registreerimine",

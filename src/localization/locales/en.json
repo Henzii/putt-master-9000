@@ -334,7 +334,9 @@
       "loginButton": "Login",
       "welcomeMessage": "Welcome, {{name}}",
       "wrongCredentials": "Wrong username or password",
-      "forgotPassword": "Forgot password?"
+      "forgotPassword": "Forgot password?",
+      "otherOptions": "Other options",
+      "firstTimeWizard": "Signup (with wizard)"
     },
     "signUp": {
       "title": "Signup",

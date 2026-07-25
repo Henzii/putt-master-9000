@@ -334,7 +334,9 @@
       "loginButton": "Anmelden",
       "welcomeMessage": "Willkommen, {{name}}",
       "wrongCredentials": "Falscher Benutzername oder Passwort",
-      "forgotPassword": "Passwort vergessen?"
+      "forgotPassword": "Passwort vergessen?",
+      "otherOptions": "Weitere Optionen",
+      "firstTimeWizard": "Registrieren (mit Assistent)"
     },
     "signUp": {
       "title": "Anmeldung",

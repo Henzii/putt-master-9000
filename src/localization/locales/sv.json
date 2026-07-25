@@ -334,7 +334,9 @@
       "loginButton": "Logga in",
       "welcomeMessage": "Välkommen, {{name}}",
       "wrongCredentials": "Fel användarnamn eller lösenord",
-      "forgotPassword": "Glömt lösenord?"
+      "forgotPassword": "Glömt lösenord?",
+      "otherOptions": "Andra alternativ",
+      "firstTimeWizard": "Registrera (med guide)"
     },
     "signUp": {
       "title": "Registrering",

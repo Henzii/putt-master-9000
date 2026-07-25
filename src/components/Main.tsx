@@ -24,7 +24,7 @@ import {
 } from "expo-notifications";
 import { useDispatch, useSelector } from "react-redux";
 import { addNotification } from "../reducers/notificationReducer";
-import FirstTime from "../screens/Frontpage/FirstTime";
+import FirstTime from "../screens/Login/FirstTime";
 import { useBackButton } from "./BackButtonProvider";
 import DevPage from "./DevPage";
 import { useLazyQuery } from "@apollo/client";
@@ -32,12 +32,14 @@ import { HANDSHAKE } from "../graphql/queries";
 import appInfo from "../../app.json";
 import { setCommonState } from "../reducers/commonReducer";
 import { RootState } from "../utils/store";
-import { useSession } from "../hooks/useSession";
 import { HandShake } from "../types/queries";
 import Feedback from "../screens/Feedback";
 import Group from "../screens/Group";
 import Distance from "src/screens/Distance";
 import Weeklies from "src/screens/Weeklies";
+import Login from "../screens/Login";
+import RequireAuth from "./RequireAuth";
+import { useSessionV2 } from "@hooks/session/useSessionV2";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -47,7 +49,7 @@ export default function App() {
   const [shakeHands] = useLazyQuery<HandShake>(HANDSHAKE);
   const { t } = useTranslation();
 
-  const user = useSession();
+  const { user } = useSessionV2({ required: false });
 
   const lastNotificationResponse = useLastNotificationResponse();
 
@@ -59,7 +61,7 @@ export default function App() {
         dispatch(setCommonState({ isUpdateAvailable: true }));
       }
     };
-    if (user.isLoggedIn && pushToken !== undefined) {
+    if (user && pushToken !== undefined) {
       doHandShake();
     }
   }, [user, pushToken]);
@@ -92,7 +94,7 @@ export default function App() {
       dispatch(
         addNotification(
           notification.request.content.body ||
-            t("screens.main.emptyNotification"),
+          t("screens.main.emptyNotification"),
           "info",
         ),
       );
@@ -113,21 +115,25 @@ export default function App() {
       <Notifications />
       <ToolBar />
       <Routes>
+        <Route path="/login" element={<Login />} />
         <Route path="/signUp/:param?" element={<SignUp />} />
-        <Route path="/game/:gameId?" element={<Game />} />
-        <Route path="/games" element={<OldGames />} />
-        <Route path="/courses" element={<SelectCourses />} />
-        <Route path="/friends" element={<FriendsList />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/stats" element={<Stats />} />
         <Route path="/firstTime" element={<FirstTime />} />
         <Route path="/development" element={<DevPage />} />
-        <Route path="/achievements" element={<Achievements />} />
-        <Route path="/feedback" element={<Feedback />} />
-        <Route path="/group" element={<Group />} />
-        <Route path="/distance" element={<Distance />} />
-        <Route path="/weeklies" element={<Weeklies />} />
-        <Route path="/" element={<Frontpage />} />
+
+        <Route element={<RequireAuth />}>
+          <Route path="/" element={<Frontpage />} />
+          <Route path="/game/:gameId?" element={<Game />} />
+          <Route path="/games" element={<OldGames />} />
+          <Route path="/courses" element={<SelectCourses />} />
+          <Route path="/friends" element={<FriendsList />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/stats" element={<Stats />} />
+          <Route path="/achievements" element={<Achievements />} />
+          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/group" element={<Group />} />
+          <Route path="/distance" element={<Distance />} />
+          <Route path="/weeklies" element={<Weeklies />} />
+        </Route>
       </Routes>
       <StatusBar style="auto" />
     </>

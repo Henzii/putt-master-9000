@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react-native';
-import FirstTime from '../screens/Frontpage/FirstTime';
+import FirstTime from '../screens/Login/FirstTime';
 import Wrapper from './mocks/MockWrapper';
 import { CREATE_USER } from '../graphql/mutation';
 
