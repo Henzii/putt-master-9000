@@ -9,12 +9,13 @@ import TeeSignImage from './TeeSignImage';
 import { useHoleMapUpload } from '@hooks/useHoleMapUpload';
 import Loading from '@components/Loading';
 import { useTranslation } from 'react-i18next';
-import { useSession } from '@hooks/useSession';
+import { useSessionV2 } from '@hooks/session/useSessionV2';
+import { isAdmin } from 'src/utils/user';
 
 const HoleMap: FC = () => {
   const gameId = useGameStore(state => state.gameId);
   const { layout } = useGame(gameId ?? '');
-  const session = useSession();
+  const {user} = useSessionV2();
   const {t} = useTranslation();
   const {uploadImage, uploading} = useHoleMapUpload();
   const [selectedRound, setSelectedRound] = useGameStore(state => [state.selectedRound, state.setSelectedRound]);
@@ -29,7 +30,7 @@ const HoleMap: FC = () => {
     return <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><Loading loadingText={t('screens.game.holeMap.imageUploading')} /></View>;
   }
 
-  const canReupload = layout.canEdit || teeSign?.uploadedBy.id === session.id || session.isAdmin;
+  const canReupload = layout.canEdit || teeSign?.uploadedBy.id === user.id || isAdmin(user);
 
   return (
     <View style={{ flex: 1 }}>
