@@ -8,8 +8,7 @@ const cache = new InMemoryCache();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Wrapper ({ children, extraMocks = [] }: { children: any, extraMocks?: any}) {
     return (
-        <MockedProvider mocks={[...mockQueries, ...extraMocks]} addTypename={true} cache={cache}
-        >
+        <MockedProvider mocks={[...mockQueries, ...extraMocks]} cache={cache}>
             {children}
         </MockedProvider>
     );

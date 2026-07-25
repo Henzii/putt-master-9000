@@ -22,6 +22,20 @@ jest.mock('react-redux', () => ({
     })),
   }));
 
+jest.mock('@hooks/session/useSessionV2', () => ({
+    useSessionV2: jest.fn().mockReturnValue({
+        user: {
+            id: 'mockedId',
+            name: 'Mock User',
+            email: null,
+            accountType: 'pleb',
+            achievements: [],
+        },
+        loading: false,
+        error: undefined,
+    }),
+}));
+
 jest.mock('graphql-ws', () => ({
     createClient: () => null
 }));
@@ -35,5 +49,38 @@ jest.mock('@expo/vector-icons', () => {
     MaterialIcons: 'MaterialIcons',
     Ionicons: 'Ionicons',
     FontAwesome: 'FontAwesome',
+  };
+});
+
+jest.mock('react-native-paper', () => {
+  const ActualPaper = jest.requireActual('react-native-paper');
+  return {
+    ...ActualPaper,
+    Icon: 'Icon',
+    List: {
+      ...ActualPaper.List,
+      Icon: 'ListIcon',
+      Item: 'ListItem',
+      Section: 'ListSection',
+      Subheader: 'ListSubheader',
+    },
+  };
+});
+
+jest.mock('react-native-paper/lib/commonjs/components/MaterialCommunityIcon', () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const React = require('react');
+  return {
+    __esModule: true,
+    default: ({ testID, ...props }) => React.createElement('Icon', { testID, ...props }),
+  };
+});
+
+jest.mock('react-native-paper/lib/module/components/MaterialCommunityIcon', () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const React = require('react');
+  return {
+    __esModule: true,
+    default: ({ testID, ...props }) => React.createElement('Icon', { testID, ...props }),
   };
 });
