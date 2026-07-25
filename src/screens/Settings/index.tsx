@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import Container from '../../components/ThemedComponents/Container';
 import Divider from '../../components/ThemedComponents/Divider';
 import appInfo from '../../../app.json';
-import useMe from '../../hooks/useMe';
 import { useMutation } from '@apollo/client';
 import { DELETE_ACCOUNT } from '../../graphql/mutation';
 import { useNavigate } from 'react-router-native';
@@ -18,21 +17,25 @@ import DeleteAccount from './DeleteAccount';
 import Units from './Units';
 import Language from './Language';
 import { useLogout } from '@hooks/session/useLogin';
+import { useSessionV2 } from '@hooks/session/useSessionV2';
+import { useUpdateSettings } from '@hooks/useUpdateSettings';
 
 const Settings = () => {
     const { t } = useTranslation();
-    const { me, updateSettings } = useMe();
+    const { user } = useSessionV2();
+    const updateSettings = useUpdateSettings();
     const {logout} = useLogout();
     const navi = useNavigate();
     const [deleteAccountMutation] = useMutation(DELETE_ACCOUNT);
     const dispatch = useDispatch();
+
     const handleBlockFriendsChange = () => {
-        updateSettings({ blockFriendRequests: !me?.blockFriendRequests });
+        updateSettings({ variables: { blockFriendRequests: !user.blockFriendRequests }});
     };
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleBlockStatsSharingChange = () => {
-        updateSettings({ blockStatsSharing: !me?.blockStatsSharing });
+        updateSettings({ variables:{ blockStatsSharing: !user.blockStatsSharing }});
     };
 
     const handleDeleteAccount = async () => {
@@ -46,7 +49,7 @@ const Settings = () => {
         }
     };
     const handlePasswordChange = async (newPassword: string) => {
-        if (await updateSettings({ password: newPassword })) {
+        if (await updateSettings({ variables: { password: newPassword } })) {
             dispatch(addNotification(t('screens.settings.passwordChanged'), 'success'));
         } else {
             dispatch(addNotification(t('screens.settings.passwordChangeFailed'), 'alert'));
@@ -57,9 +60,9 @@ const Settings = () => {
         <Container noPadding withScrollView noFlex>
             <Title style={{ marginTop: 10, marginLeft: 15 }}>{t('screens.settings.friendsTitle')}</Title>
 
-            <SingleSwitch testID="blockFriendRequestsSwitch" onPress={handleBlockFriendsChange} value={me?.blockFriendRequests} text={t('screens.settings.blockFriendRequests')} noBorder />
+            <SingleSwitch testID="blockFriendRequestsSwitch" onPress={handleBlockFriendsChange} value={user.blockFriendRequests} text={t('screens.settings.blockFriendRequests')} noBorder />
             {/* Not fully implemented
-                <SingleSwitch onPress={handleBlockStatsSharingChange} value={me?.blockStatsSharing} text="Block friends from seeing my stats" noBorder />
+                <SingleSwitch onPress={handleBlockStatsSharingChange} value={user.blockStatsSharing} text="Block friends from seeing my stats" noBorder />
             */}
             <Divider />
             <View style={tyyli.section}>
@@ -78,8 +81,8 @@ const Settings = () => {
                 <Title>{t('screens.settings.infoTitle')}</Title>
                 <InfoText text1={t('screens.settings.version')} text2={appInfo.expo.version} />
                 <InfoText text1={t('screens.settings.build')} text2={appInfo.expo.android.versionCode.toString()} />
-                {(me?.accountType && me.accountType !== AccountType.PLEB) && (
-                    <InfoText text1={t('screens.settings.accountType')} text2={me?.accountType ?? 'N/A'} />
+                {(user.accountType !== AccountType.PLEB) && (
+                    <InfoText text1={t('screens.settings.accountType')} text2={user.accountType} />
                 )}
             </View>
             <Divider />

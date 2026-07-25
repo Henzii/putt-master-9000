@@ -34,7 +34,7 @@ export const SessionProvider = ({
     error,
   } = useQuery(GET_ME, {
     skip: tokenLoading || !loginToken,
-    fetchPolicy: "no-cache",
+    fetchPolicy: 'cache-and-network',
   });
 
   const loading = tokenLoading || userLoading;

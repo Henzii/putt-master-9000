@@ -2,28 +2,25 @@ import React, { useState } from 'react';
 import { Alert, StyleSheet, View } from "react-native";
 import { Button, Chip, Headline, Paragraph, TextInput, Title } from "react-native-paper";
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../utils/store';
+import { useDispatch } from 'react-redux';
 import Container from '../../components/ThemedComponents/Container';
 import { useQuery } from '@apollo/client';
 import { GET_GROUP_MEMBERS } from '../../graphql/queries';
 import Loading from '../../components/Loading';
 import Spacer from '../../components/ThemedComponents/Spacer';
-import ErrorScreen from '../../components/ErrorScreen';
 import { useUpdateSettings } from '../../hooks/useUpdateSettings';
 import { addNotification } from '../../reducers/notificationReducer';
-import { setUser } from '../../reducers/userReducer';
 import WebLinkButton from '@components/WebLinkButton';
+import { useSessionV2 } from '@hooks/session/useSessionV2';
 
 const Group = () => {
     const { t } = useTranslation();
-    const user = useSelector((state: RootState) => state.user);
-    const { data, loading, error, refetch } = useQuery(GET_GROUP_MEMBERS, {});
+    const { user} = useSessionV2();
+    const { data, loading, refetch } = useQuery(GET_GROUP_MEMBERS, {});
     const updateSettings = useUpdateSettings();
     const dispatch = useDispatch();
 
     const handleGroupChange = async (groupName: string) => {
-        if (!user.isLoggedIn) return;
         if (!await updateSettings({ variables: { groupName } })) {
             dispatch(addNotification(t('screens.group.groupNotSet'), 'alert'));
         } else {
@@ -33,12 +30,9 @@ const Group = () => {
                 dispatch(addNotification(t('screens.group.leftGroup'), 'warning'));
             }
 
-            dispatch(setUser({ ...user, groupName }));
             refetch();
         }
     };
-
-    if (!user.isLoggedIn || error) return <ErrorScreen errorMessage={t('screens.group.somethingNotWorking')} />;
 
     if (loading) {
         return <Loading />;

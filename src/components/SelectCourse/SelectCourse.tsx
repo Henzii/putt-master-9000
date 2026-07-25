@@ -10,7 +10,6 @@ import Loading from "../Loading";
 import SingleCourse from './SingleCourse';
 import { Coordinates, Course, Layout, NewLayout } from "../../types/course";
 import { useBackButton } from "../BackButtonProvider";
-import useMe from "../../hooks/useMe";
 import useLiveData from "../../hooks/useLiveData";
 import SelectCourseMap from "./SelectCourseMap";
 import { MD3Colors } from "react-native-paper/lib/typescript/types";
@@ -18,6 +17,8 @@ import SplitContainer from "../ThemedComponents/SplitContainer";
 import Header from "../RoundedHeader/Header";
 import HeaderButton from "../RoundedHeader/HeaderButton";
 import Spacer from "../ThemedComponents/Spacer";
+import { useSessionV2 } from "@hooks/session/useSessionV2";
+import { isAdmin } from "src/utils/user";
 
 type SelectCoursesProps = {
     onSelect?: (layout: Layout, course: Course) => void,
@@ -38,7 +39,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
     const ref = useRef<FlatList>(null);
     const { colors } = useTheme();
     const backButton = useBackButton();
-    const { isAdmin } = useMe();
+    const { user } = useSessionV2();
     const liveData = useLiveData(showTraffic);
     const styles = createStyles(colors);
     const [headerSpacing, setHeaderSpacing] = useState(50);
@@ -168,7 +169,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
                             expanded={expandedCourse?.id === item.id}
                             dimmed={Boolean(expandedCourse && expandedCourse?.id !== item.id)}
                             showDistance={gpsAvailable}
-                            isAdmin={isAdmin()}
+                            isAdmin={isAdmin(user)}
                             liveData={liveData}
                         />)
                     }
