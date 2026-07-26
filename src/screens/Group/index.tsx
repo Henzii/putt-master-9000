@@ -12,11 +12,12 @@ import { useUpdateSettings } from '../../hooks/useUpdateSettings';
 import { addNotification } from '../../reducers/notificationReducer';
 import WebLinkButton from '@components/WebLinkButton';
 import { useSessionV2 } from '@hooks/session/useSessionV2';
+import ErrorScreen from '@components/ErrorScreen';
 
 const Group = () => {
     const { t } = useTranslation();
     const { user} = useSessionV2();
-    const { data, loading, refetch } = useQuery(GET_GROUP_MEMBERS, {});
+    const { data, loading, refetch, error } = useQuery(GET_GROUP_MEMBERS, {});
     const updateSettings = useUpdateSettings();
     const dispatch = useDispatch();
 
@@ -36,6 +37,10 @@ const Group = () => {
 
     if (loading) {
         return <Loading />;
+    }
+
+    if (error) {
+        return <ErrorScreen errorMessage={"Error while fetching group members"} />;
     }
 
     const groupName = user.groupName;

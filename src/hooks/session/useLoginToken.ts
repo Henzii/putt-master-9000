@@ -12,20 +12,36 @@ export const useLoginToken = () => {
   );
 
   useEffect(() => {
+    let isCancelled = false;
+
     const getToken = async () => {
-      if (storeToken) {
-        setToken(storeToken);
-        setLoading(false);
-        return;
+      try {
+        if (storeToken) {
+          if (!isCancelled) {
+            setToken(storeToken);
+            setLoading(false);
+          }
+          return;
+        }
+
+        const storageToken = await AsyncStorage.getItem("token");
+
+        if (!isCancelled) {
+          setToken(storageToken);
+          setLoading(false);
+        }
+      } catch {
+        if (!isCancelled) {
+          setLoading(false);
+        }
       }
-
-      const storageToken = await AsyncStorage.getItem("token");
-
-      setToken(storageToken);
-      setLoading(false);
     };
 
     getToken();
+
+    return () => {
+      isCancelled = true;
+    };
   }, [storeToken]);
 
   return {

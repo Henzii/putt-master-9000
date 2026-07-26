@@ -19,9 +19,14 @@ export const useLogin = () => {
             const response = await login({ variables: { user: username, password } });
             const token = response.data?.login;
             if (token) {
-                dispatch(setCommonState({ loginToken: token }));
-                await AsyncStorage.setItem('token', token);
+                try {
+                    await AsyncStorage.setItem('token', token);
+                } catch {
+                    notify("Storage error!", 'alert');
+                    return;
+                }
 
+                dispatch(setCommonState({ loginToken: token }));
                 notify(t('components.login.welcomeMessage', { name: username }), 'success');
                 navigate('/', { replace: true });
             } else throw new Error();
@@ -36,11 +41,17 @@ export const useLogin = () => {
 export const useLogout = () => {
     const dispatch = useDispatch();
     const client = useApolloClient();
+    const notify = useNotification();
     const handleLogout = async () => {
-        await AsyncStorage.removeItem('token');
-        dispatch(setCommonState({ loginToken: null }));
-        await client.cache.reset();
-        await client.clearStore();
+        try {
+            await AsyncStorage.removeItem('token');
+        } catch {
+            notify('Storage error!', 'alert');
+        } finally {
+            dispatch(setCommonState({ loginToken: null }));
+            await client.cache.reset();
+            await client.clearStore();
+        }
     };
     return { logout: handleLogout };
 };

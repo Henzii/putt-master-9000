@@ -15,18 +15,20 @@ const Login = () => {
     const { login, loading } = useLogin();
     const navi = useNavigate();
     const theme = useTheme();
-    const {user} = useSessionV2({ required: false });
+    const {user, loading: sessionLoading} = useSessionV2({ required: false });
 
     const userName = useTextInput({ defaultValue: '' });
     const password = useTextInput({ defaultValue: '' });
 
     useEffect(() => {
         (async function IIFE() {
+            if (sessionLoading) return;
+
             if (await firstTimeLaunched()) {
                 navi('/firstTime');
             }
         })();
-    }, []);
+    }, [sessionLoading]);
 
     useEffect(() => {
         if (user) navi('/');
