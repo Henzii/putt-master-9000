@@ -22,6 +22,7 @@ const RandomItem = ({ items, isRunning, style }: Props) => {
         }
     }, [isRunning]);
     return (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         <Text style={style}>{randomKey ? t(randomKey as any) : ''}</Text>
     );
 };

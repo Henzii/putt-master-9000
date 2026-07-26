@@ -271,25 +271,12 @@ exports[`<FriendList /> should render properly 1`] = `
                             }
                             testID="button-icon-container"
                           >
-                            <Text
-                              accessibilityElementsHidden={true}
-                              importantForAccessibility="no-hide-descendants"
-                              pointerEvents="none"
-                              selectable={false}
-                              style={
-                                [
-                                  {
-                                    "backgroundColor": "transparent",
-                                  },
-                                  {
-                                    "color": "rgb(0, 108, 83)",
-                                    "fontSize": 18,
-                                  },
-                                ]
-                              }
-                            >
-                              □
-                            </Text>
+                            <Icon
+                              color="rgb(0, 108, 83)"
+                              direction={null}
+                              name="account-plus-outline"
+                              size={18}
+                            />
                           </View>
                           <Text
                             numberOfLines={1}
@@ -455,25 +442,12 @@ exports[`<FriendList /> should render properly 1`] = `
                             }
                             testID="button-icon-container"
                           >
-                            <Text
-                              accessibilityElementsHidden={true}
-                              importantForAccessibility="no-hide-descendants"
-                              pointerEvents="none"
-                              selectable={false}
-                              style={
-                                [
-                                  {
-                                    "backgroundColor": "transparent",
-                                  },
-                                  {
-                                    "color": "rgb(0, 108, 83)",
-                                    "fontSize": 18,
-                                  },
-                                ]
-                              }
-                            >
-                              □
-                            </Text>
+                            <Icon
+                              color="rgb(0, 108, 83)"
+                              direction={null}
+                              name="baby-face-outline"
+                              size={18}
+                            />
                           </View>
                           <Text
                             numberOfLines={1}
@@ -877,25 +851,12 @@ exports[`<FriendList /> should render properly 1`] = `
                           }
                           testID="icon-button"
                         >
-                          <Text
-                            accessibilityElementsHidden={true}
-                            importantForAccessibility="no-hide-descendants"
-                            pointerEvents="none"
-                            selectable={false}
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "transparent",
-                                },
-                                {
-                                  "color": "darkred",
-                                  "fontSize": 24,
-                                },
-                              ]
-                            }
-                          >
-                            □
-                          </Text>
+                          <Icon
+                            color="darkred"
+                            direction={null}
+                            name="trash-can-outline"
+                            size={24}
+                          />
                         </View>
                       </View>
                     </View>
@@ -1148,25 +1109,12 @@ exports[`<FriendList /> should render properly 1`] = `
                           }
                           testID="icon-button"
                         >
-                          <Text
-                            accessibilityElementsHidden={true}
-                            importantForAccessibility="no-hide-descendants"
-                            pointerEvents="none"
-                            selectable={false}
-                            style={
-                              [
-                                {
-                                  "backgroundColor": "transparent",
-                                },
-                                {
-                                  "color": "darkred",
-                                  "fontSize": 24,
-                                },
-                              ]
-                            }
-                          >
-                            □
-                          </Text>
+                          <Icon
+                            color="darkred"
+                            direction={null}
+                            name="trash-can-outline"
+                            size={24}
+                          />
                         </View>
                       </View>
                     </View>
@@ -1354,25 +1302,12 @@ exports[`<FriendList /> should render properly 1`] = `
                     }
                     testID="icon-button"
                   >
-                    <Text
-                      accessibilityElementsHidden={true}
-                      importantForAccessibility="no-hide-descendants"
-                      pointerEvents="none"
-                      selectable={false}
-                      style={
-                        [
-                          {
-                            "backgroundColor": "transparent",
-                          },
-                          {
-                            "color": "rgb(64, 73, 68)",
-                            "fontSize": 24,
-                          },
-                        ]
-                      }
-                    >
-                      □
-                    </Text>
+                    <Icon
+                      color="rgb(64, 73, 68)"
+                      direction={null}
+                      name="close"
+                      size={24}
+                    />
                   </View>
                 </View>
               </View>

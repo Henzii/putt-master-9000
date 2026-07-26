@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import Container from "../../components/ThemedComponents/Container";
 import { Button, Headline, TextInput, Title } from 'react-native-paper';
 import Spacer from '../../components/ThemedComponents/Spacer';
-import { useSession } from '../../hooks/useSession';
 import FeedbackSent from './FeedbackSent';
 import { useMutation } from '@apollo/client';
 import { SEND_FEEDBACK } from '../../graphql/mutation';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../../reducers/notificationReducer';
 import { useTranslation } from 'react-i18next';
+import { useSessionV2 } from '@hooks/session/useSessionV2';
 
 const Feedback = () => {
     const { t } = useTranslation();
-    const me = useSession();
+    const {user} = useSessionV2();
     const [subject, setSubject] = useState('');
     const [text, setText] = useState('');
     const [feedbackSent, setFeedbackSent] = useState(false);
@@ -25,7 +25,7 @@ const Feedback = () => {
                 variables: {
                     subject,
                     text,
-                    email: me.email || ''
+                    email: user.email || ''
                 }
             });
             setFeedbackSent(true);
@@ -58,7 +58,7 @@ const Feedback = () => {
             </Title>
             <TextInput
                 mode="outlined"
-                defaultValue={me.email}
+                defaultValue={user.email ?? ''}
                 placeholder={t('screens.feedback.emailPlaceholder')}
             />
             <Spacer />

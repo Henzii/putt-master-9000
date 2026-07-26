@@ -329,7 +329,9 @@
       "loginButton": "Kirjaudu",
       "welcomeMessage": "Tervetuloa, {{name}}",
       "wrongCredentials": "Väärä käyttäjänimi tai salasana",
-      "forgotPassword": "Unohditko salasanasi?"
+      "forgotPassword": "Unohditko salasanasi?",
+      "otherOptions": "Muut vaihtoehdot",
+      "firstTimeWizard": "Rekisteröidy (oppaalla)"
     },
     "signUp": {
       "title": "Rekisteröidy",

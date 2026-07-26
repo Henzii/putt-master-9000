@@ -1,20 +1,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, Image } from "react-native";
-import { Button, Divider, List, Paragraph, useTheme } from 'react-native-paper';
-import { Link, useNavigate } from 'react-router-native';
+import { Divider, List, useTheme } from 'react-native-paper';
+import { useNavigate } from 'react-router-native';
 import { useTranslation } from 'react-i18next';
-import Loading from '@components/Loading';
-import Login from '@components/Login';
-import Container from '@components/ThemedComponents/Container';
-import ErrorScreen from '@components/ErrorScreen';
 import { useQuery } from '@apollo/client';
 import { GET_OLD_GAMES } from '../../graphql/queries';
-import firstTimeLaunched from '../../utils/firstTimeLaunched';
 import NavIcon from './NavIcon';
 import Spacer from '@components/ThemedComponents/Spacer';
-import { SESSION_STATE, useSession } from '../../hooks/useSession';
-import * as ExpoUpdates from 'expo-updates';
 import FrontpageHeader from './Header/Header';
 import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
@@ -31,61 +24,29 @@ import distance from '@icons/distance.png';
 import settings from '@icons/settings.png';
 import website from '@icons/www.png';
 import feedback from '@icons/feedback.png';
-import logout from '@icons/sign-out.png';
-import WebLinkButton, { openWebsite } from '@components/WebLinkButton';
+import logoutIcon from '@icons/sign-out.png';
+import { openWebsite } from '@components/WebLinkButton';
+import { useLogout } from '@hooks/session/useLogin';
+import { useNotification } from '@hooks/useNotification';
 
 const Frontpage = () => {
     const { t } = useTranslation();
     const openGames = useQuery(GET_OLD_GAMES, { variables: { onlyOpenGames: true }, fetchPolicy: 'cache-and-network' });
     const navi = useNavigate();
+    const notify = useNotification();
     const [spacing, setSpacing] = useState(50);
     const {colors} = useTheme();
     const styles = createStyles(colors);
-    const session = useSession();
-
-    useEffect(() => {
-        (async function IIFE() {
-            if (!session.isLoggedIn && session.state === SESSION_STATE.FINISHED && await firstTimeLaunched()) {
-                navi('/firstTime');
-            }
-        })();
-    }, [session]);
-
-    if (session.state === SESSION_STATE.LOADING) {
-        return (
-            <Loading loadingText={t('screens.frontpage.connectingToServer')} showTexts />
-        );
-    }
-    if (session.state === SESSION_STATE.ERROR) {
-        return (
-            <ErrorScreen errorMessage={t('screens.frontpage.sessionFailed')} showBackToFrontpage={false}>
-                <Spacer />
-                <Paragraph>{t('screens.frontpage.sessionFixSuggestion')}</Paragraph>
-                <Button onPress={() => session.clear()}>{t('screens.frontpage.clearSession')}</Button>
-                <Button onPress={() => ExpoUpdates.reloadAsync()}>{t('screens.frontpage.reloadApp')}</Button>
-            </ErrorScreen>
-        );
-    }
-
-    if (!session.isLoggedIn) {
-        return (
-            <Container>
-                <Login />
-                <Link to="/signUp"><Button>{t('screens.frontpage.signUp')}</Button></Link>
-                <WebLinkButton path="restore">
-                    {t('components.login.forgotPassword')}
-                </WebLinkButton>
-
-                {process.env.NODE_ENV === 'development' && (
-                    <>
-                        <Link to="/firstTime"><Button>FirstTime</Button></Link>
-                    </>
-                )}
-            </Container>
-        );
-    }
+    const {logout} = useLogout();
 
     const ongoingGames = openGames.data?.getGames?.games ?? [];
+
+    useEffect(() => {
+        if (openGames.error) {
+            // TODO: Localize
+            notify('Error while fetching open games', 'alert');
+        }
+    }, [openGames]);
 
     return (
         <View style={styles.container}>
@@ -153,8 +114,8 @@ const Frontpage = () => {
                 <Divider />
                 <List.Item
                     title={t('screens.frontpage.logout')}
-                    left={() => <Image source={logout} style={styles.listItemIcon} />}
-                    onPress={() => session.clear()}
+                    left={() => <Image source={logoutIcon} style={styles.listItemIcon} />}
+                    onPress={logout}
                     titleStyle={styles.logoutText}
                 />
                 <Spacer size={80} />

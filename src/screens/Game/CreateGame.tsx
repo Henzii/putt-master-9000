@@ -11,11 +11,9 @@ import Spacer from '../../components/ThemedComponents/Spacer';
 import useStats from '../../hooks/useStats';
 import { Course, Layout } from '../../types/course';
 import { User } from '../../types/user';
-import ErrorScreen from '../../components/ErrorScreen';
 import SplitContainer from '../../components/ThemedComponents/SplitContainer';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../utils/store';
 import InfoDialog from '../../components/InfoDialog';
+import { useSessionV2 } from '@hooks/session/useSessionV2';
 
 export type NewGameData = {
     course?: Course | null,
@@ -33,7 +31,7 @@ type CreateGameProps = {
 const CreateGame = (props: CreateGameProps) => {
     const { t } = useTranslation();
     const [newGameData, setNewGameData] = useState<NewGameData>({ course: undefined, layout: undefined, players: [] });
-    const user = useSelector((state: RootState) => state.user);
+    const {user} = useSessionV2();
     const [selectCourse, setSelectCourse] = useState(false);
     const [addFriend, setAddFriend] = useState(false);
     const { getHc, getBest, getField, loading } = useStats(
@@ -43,7 +41,6 @@ const CreateGame = (props: CreateGameProps) => {
         newGameData.players,
     );
     useEffect(() => {   // Kirjautuneet tiedot playerlistiin mounttauksen yhteydessä
-        if (user.isLoggedIn) {
             setNewGameData({
                 ...newGameData,
                 players: [{
@@ -51,8 +48,7 @@ const CreateGame = (props: CreateGameProps) => {
                     name: user.name
                 }]
             });
-        }
-    }, [user]);
+    }, []);
 
     const handleEditGameData = (data: Partial<NewGameData>) => {
         setNewGameData(old => ({
@@ -100,10 +96,6 @@ const CreateGame = (props: CreateGameProps) => {
     const handleSetSelectCourse = () => {
         setSelectCourse(true);
     };
-
-    if (!user.isLoggedIn) {
-        return <ErrorScreen errorMessage={t('screens.game.notLoggedIn')} />;
-    }
 
     if (selectCourse) return <SelectCourses onSelect={handleSelectCourse} title={t('screens.game.selectCourse')} onBackAction={() => setSelectCourse(false)} showTraffic={false} />;
     if (addFriend) return <FriendsList onClick={handleAddFriend} hideRemoveButton multiSelect onBackAction={() => setAddFriend(false)} />;

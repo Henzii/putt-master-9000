@@ -17,6 +17,7 @@ import { initializeLanguage } from './src/localization/i18n';
 
 import * as SplashScreen from 'expo-splash-screen';
 import ThemeProvider from 'src/context/ThemeProvider';
+import { SessionProvider } from 'src/context/SessionProvider';
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -41,6 +42,7 @@ export default function App() {
       <ErrorBoundary FallbackComponent={BSOD}>
       <ReduxProvider store={store}>
         <ApolloProvider client={client}>
+        <SessionProvider>
           <BackButtonProvider>
             <ThemeProvider>
               <LocalSettingsProvider>
@@ -50,6 +52,7 @@ export default function App() {
               </LocalSettingsProvider>
             </ThemeProvider>
           </BackButtonProvider>
+          </SessionProvider>
         </ApolloProvider>
       </ReduxProvider>
       </ErrorBoundary>

@@ -5,7 +5,6 @@ import SelectCourses from '@components/SelectCourse/SelectCourse';
 import StatsView from './StatsView';
 import Container from '@components/ThemedComponents/Container';
 import FriendsList, { Friend } from '@components/FriendsList';
-import useMe from '../../hooks/useMe';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../utils/store';
 import { setSelectedLayout } from '../../reducers/selectedLayoutReducer';
@@ -13,12 +12,12 @@ import { User } from '../../types/user';
 import { Course, Layout } from '../../types/course';
 import Activity from './Activity';
 import Divider from '@components/ThemedComponents/Divider';
-import Loading from '@components/Loading';
 import Spacer from '@components/ThemedComponents/Spacer';
 import { View } from 'react-native';
 import Header from '@components/RoundedHeader/Header';
 import Stack from '@components/Stack';
 import HeaderButton from '@components/RoundedHeader/HeaderButton';
+import { useSessionV2 } from '@hooks/session/useSessionV2';
 
 const Stats = () => {
     const { t } = useTranslation();
@@ -33,7 +32,7 @@ const Stats = () => {
         dispatch(setSelectedLayout(course, layout));
         setShowSelectCourse(false);
     };
-    const { me } = useMe();
+    const { user } = useSessionV2();
 
     const handleFriendSelect = (friends?: Friend[]) => {
         if (friends) {
@@ -42,7 +41,6 @@ const Stats = () => {
         setShowSelectFriend(false);
     };
 
-    if (!me) return <Loading />;
     if (showSelectCourse) {
         return <SelectCourses onSelect={handleCourseSelect} showTraffic={false} onBackAction={() => setShowSelectCourse(false)} />;
     } else if (showSelectFriend) {
@@ -70,7 +68,7 @@ const Stats = () => {
                         <View style={{paddingHorizontal: 10}}>
                             <Button icon="golf" onPress={() => setShowSelectCourse(true)} mode="outlined">{t('screens.stats.changeCourse')}</Button>
                         </View>
-                        <StatsView selectedCourse={selectedCourse} selectedUser={selectedUser ?? me} />
+                        <StatsView selectedCourse={selectedCourse} selectedUser={selectedUser ?? user} />
                     </>
                 ) : (
                     <Container>

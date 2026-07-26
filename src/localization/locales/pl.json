@@ -334,7 +334,9 @@
       "loginButton": "Zaloguj się",
       "welcomeMessage": "Witaj, {{name}}",
       "wrongCredentials": "Błędna nazwa użytkownika lub hasło",
-      "forgotPassword": "Zapomniane hasło?"
+      "forgotPassword": "Zapomniane hasło?",
+      "otherOptions": "Inne opcje",
+      "firstTimeWizard": "Rejestracja (z kreatorem)"
     },
     "signUp": {
       "title": "Rejestracja",

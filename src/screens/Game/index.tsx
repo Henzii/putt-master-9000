@@ -18,11 +18,11 @@ import { useSettings } from '../../components/LocalSettingsProvider';
 import { GAME_SUBSCRIPTION } from '../../graphql/subscriptions';
 import { updateGame } from '../../utils/gameCahcheUpdates';
 import { useSubscription } from '../../hooks/useSubscription';
-import useMe from '../../hooks/useMe';
 import ThrowStyle from './ThrowStyle';
 import HoleMap from './HoleMap';
 import { useGameStore } from 'src/zustand/gameStore';
 import { useTranslation } from 'react-i18next';
+import { useSessionV2 } from '@hooks/session/useSessionV2';
 
 const NAV_ROUTES_CONFIG = [
     { key: 'gameRoute', titleKey: 'screens.game.tabs.scorecard', focusedIcon: 'card-account-details', unfocusedIcon: 'card-account-details-outline' },
@@ -55,7 +55,7 @@ export default function GameContainer() {
     });
 
     const { gameId } = gameData ?? {};
-    const { me } = useMe();
+    const { user } = useSessionV2();
     const [createGameMutation, { loading }] = useMutation(CREATE_GAME, { refetchQueries: [{ query: GET_OLD_GAMES }] });
     const [addPlayersMutation] = useMutation(ADD_PLAYERS_TO_GAME);
     const dispatch = useDispatch();
@@ -66,10 +66,10 @@ export default function GameContainer() {
     useSubscription(
         (data) => {
             const response = data?.data?.gameUpdated;
-            if (!response || response.updaterId === me?.id) return;
+            if (!response || response.updaterId === user?.id) return;
             updateGame(response.game, client);
 
-            if (response.updaterId !== me?.id && Platform.OS === 'android') {
+            if (response.updaterId !== user?.id && Platform.OS === 'android') {
                 Vibration.vibrate([100, 100]);
             }
         },

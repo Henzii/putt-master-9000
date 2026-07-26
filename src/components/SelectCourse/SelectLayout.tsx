@@ -3,11 +3,12 @@ import { View, Text, StyleSheet } from "react-native";
 import { IconButton, TouchableRipple, useTheme } from 'react-native-paper';
 import Spacer from "../ThemedComponents/Spacer";
 import Divider from "../ThemedComponents/Divider";
-import useMe from "../../hooks/useMe";
 import { useNavigate } from "react-router-native";
 import { useDispatch } from "react-redux";
 import { setSelectedLayout } from "../../reducers/selectedLayoutReducer";
 import { Course, Layout } from "../../types/course";
+import { useSessionV2 } from "@hooks/session/useSessionV2";
+import { isAdmin } from "src/utils/user";
 
 type SelecLayoutProps = {
     course: Course
@@ -19,7 +20,7 @@ const SelectLayout = ({ course, onSelect, onEditLayout }: SelecLayoutProps) => {
     const navi = useNavigate();
     const dispatch = useDispatch();
     const { colors } = useTheme();
-    const {isAdmin} = useMe();
+    const { user } = useSessionV2();
 
     const handleLayoutSelect = (layout: Layout) => {
         if (onSelect) onSelect(layout, course);
@@ -57,7 +58,7 @@ const SelectLayout = ({ course, onSelect, onEditLayout }: SelecLayoutProps) => {
                     </TouchableRipple>
 
                     <View style={styles.icons}>
-                        {(layout.canEdit || isAdmin()) && <IconButton style={{marginRight: 2}} size={30} icon="file-edit-outline" iconColor="white" onPress={() => onEditLayout(layout)} />}
+                        {(layout.canEdit || isAdmin(user)) && <IconButton style={{marginRight: 2}} size={30} icon="file-edit-outline" iconColor="white" onPress={() => onEditLayout(layout)} />}
                         <IconButton size={30} onPress={() => handleStatsClick(layout)} icon="chart-bar" iconColor="white" style={{marginLeft: 0}} />
                     </View>
                 </View>
