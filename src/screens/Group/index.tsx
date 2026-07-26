@@ -22,16 +22,17 @@ const Group = () => {
     const dispatch = useDispatch();
 
     const handleGroupChange = async (groupName: string) => {
-        if (!await updateSettings({ variables: { groupName } })) {
-            dispatch(addNotification(t('screens.group.groupNotSet'), 'alert'));
-        } else {
-            if (groupName) {
-                dispatch(addNotification(t('screens.group.joinedGroup', { name: groupName }), 'success'));
+        try {
+            const result = await updateSettings({ variables: { groupName } });
+            const newGroupName = result.data.changeSettings.groupName;
+            if (newGroupName) {
+                dispatch(addNotification(t('screens.group.joinedGroup', { name: newGroupName }), 'success'));
             } else {
                 dispatch(addNotification(t('screens.group.leftGroup'), 'warning'));
             }
-
             refetch();
+        } catch {
+            dispatch(addNotification(t('screens.group.groupNotSet'), 'alert'));
         }
     };
 
@@ -44,6 +45,7 @@ const Group = () => {
     }
 
     const groupName = user.groupName;
+    const groupMembers = data.getGroupMembers ?? [];
 
     return (
         <Container>
@@ -54,7 +56,7 @@ const Group = () => {
                     <Title>{t('screens.group.membersTitle')}</Title>
                     <Spacer />
                     <View style={styles.container}>
-                        {data.getGroupMembers.map((member: { id: string, name: string }) => (
+                        {groupMembers.map((member: { id: string, name: string }) => (
                             <Chip key={member.id} icon="account">
                                 {member.name}
                             </Chip>

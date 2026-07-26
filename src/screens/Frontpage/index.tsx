@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, Image } from "react-native";
 import { Divider, List, useTheme } from 'react-native-paper';
 import { useNavigate } from 'react-router-native';
@@ -27,17 +27,26 @@ import feedback from '@icons/feedback.png';
 import logoutIcon from '@icons/sign-out.png';
 import { openWebsite } from '@components/WebLinkButton';
 import { useLogout } from '@hooks/session/useLogin';
+import { useNotification } from '@hooks/useNotification';
 
 const Frontpage = () => {
     const { t } = useTranslation();
     const openGames = useQuery(GET_OLD_GAMES, { variables: { onlyOpenGames: true }, fetchPolicy: 'cache-and-network' });
     const navi = useNavigate();
+    const notify = useNotification();
     const [spacing, setSpacing] = useState(50);
     const {colors} = useTheme();
     const styles = createStyles(colors);
     const {logout} = useLogout();
 
     const ongoingGames = openGames.data?.getGames?.games ?? [];
+
+    useEffect(() => {
+        if (openGames.error) {
+            // TODO: Localize
+            notify('Error while fetching open games', 'alert');
+        }
+    }, [openGames]);
 
     return (
         <View style={styles.container}>

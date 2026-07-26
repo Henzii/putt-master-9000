@@ -22,13 +22,13 @@ const Login = () => {
 
     useEffect(() => {
         (async function IIFE() {
-            if (sessionLoading) return;
+            if (sessionLoading || user) return;
 
             if (await firstTimeLaunched()) {
                 navi('/firstTime');
             }
         })();
-    }, [sessionLoading]);
+    }, [sessionLoading, user, navi]);
 
     useEffect(() => {
         if (user) navi('/');
