@@ -9,12 +9,12 @@ import { SafeUser } from '../types/user';
 import Stack from './Stack';
 import Spacer from './ThemedComponents/Spacer';
 import { MD3Colors } from 'react-native-paper/lib/typescript/types';
-import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 
 type AddFriendProps = {
     onClose?: () => void,
     onAddFriend: (friendName: string) => void,
-    friends: SafeUser[]
+    friends: SafeUser[],
+    currentUserId: number | string
 }
 
 type QueryResponse = {
@@ -23,11 +23,10 @@ type QueryResponse = {
     }
 }
 
-const AddFriend = ({ onClose, onAddFriend, friends }: AddFriendProps) => {
+const AddFriend = ({ onClose, onAddFriend, friends, currentUserId }: AddFriendProps) => {
     const { t } = useTranslation();
     const [searchUsers, { data, loading }] = useLazyQuery<QueryResponse>(SEARCH_USER);
     const { colors } = useTheme();
-    const { id } = useAuthenticatedUser();
     const searchTextInput = useTextInput({ callBackDelay: 1000, defaultValue: '' }, (value) => {
         searchUsers({ variables: { search: value.toLowerCase() } });
     });
@@ -62,13 +61,13 @@ const AddFriend = ({ onClose, onAddFriend, friends }: AddFriendProps) => {
                 <Stack gap={8}>
                     {users?.map(user => {
                         const isFriend = friends.some(f => f.id === user.id);
-                        const disabled = user.blockFriendRequests || isFriend || user.id === id;
+                        const disabled = user.blockFriendRequests || isFriend || user.id === currentUserId;
                         return (
                             <View key={user.id} style={tyyli.user}>
                                 <Text variant="labelLarge" style={tyyli.name}>{user.name}</Text>
                                 {isFriend && <Text style={tyyli.badge}>{t('components.addFriend.friendBadge')}</Text>}
-                                {user.id === id && <Text style={tyyli.badge}>{t('components.addFriend.itsMe')}</Text>}
-                                {!isFriend && user.id !== id && (
+                                {user.id === currentUserId && <Text style={tyyli.badge}>{t('components.addFriend.itsMe')}</Text>}
+                                {!isFriend && user.id !== currentUserId && (
                                     <IconButton
                                         icon="account-plus"
                                         iconColor={colors.primary}

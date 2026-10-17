@@ -18,6 +18,7 @@ import HeaderButton from './RoundedHeader/HeaderButton';
 import Color from 'color';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Sheet from './Sheet';
+import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 
 
 type FriendListProps = {
@@ -32,6 +33,7 @@ export type Friend = {
 }
 const FriendsList = (props: FriendListProps) => {
     const { t } = useTranslation();
+    const { id: currentUserId } = useAuthenticatedUser();
     const { friends, loading, error, removeFriend, addFriend } = useFriends();
     const [addFriendModal, setAddFriendModal] = useState(false);
     const [showCreateFriendView, setShowCreateFriendView] = useState(false);
@@ -78,7 +80,12 @@ const FriendsList = (props: FriendListProps) => {
     return (
         <View style={{ position: 'relative', flex: 1 }}>
             <Sheet open={addFriendModal} onClose={() => setAddFriendModal(false)}>
-                <AddFriend onClose={() => setAddFriendModal(false)} onAddFriend={addFriend} friends={friends} />
+                <AddFriend
+                    onClose={() => setAddFriendModal(false)}
+                    onAddFriend={addFriend}
+                    friends={friends}
+                    currentUserId={currentUserId}
+                />
             </Sheet>
 
             <Header bottomSize={20} setSpacing={setHeaderSpacing}>
