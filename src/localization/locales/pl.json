@@ -334,7 +334,12 @@
       "loginButton": "Zaloguj się",
       "welcomeMessage": "Witaj, {{name}}",
       "wrongCredentials": "Błędna nazwa użytkownika lub hasło",
-      "forgotPassword": "Zapomniane hasło?"
+      "forgotPassword": "Zapomniane hasło?",
+      "forgotPasswordDescription": "Otwiera stronę internetową, na której możesz zresetować hasło",
+      "otherOptions": "Inne opcje",
+      "firstTimeWizard": "Rejestracja (z kreatorem)",
+      "firstTimeWizardDescription": "Uruchom kreator konfiguracji pierwszego uruchomienia",
+      "signUpDescription": "Utwórz nowe konto"
     },
     "signUp": {
       "title": "Rejestracja",

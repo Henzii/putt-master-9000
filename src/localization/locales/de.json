@@ -334,7 +334,12 @@
       "loginButton": "Anmelden",
       "welcomeMessage": "Willkommen, {{name}}",
       "wrongCredentials": "Falscher Benutzername oder Passwort",
-      "forgotPassword": "Passwort vergessen?"
+      "forgotPassword": "Passwort vergessen?",
+      "forgotPasswordDescription": "Öffnet eine Webseite, auf der Sie Ihr Passwort zurücksetzen können",
+      "otherOptions": "Weitere Optionen",
+      "firstTimeWizard": "Registrieren (mit Assistent)",
+      "firstTimeWizardDescription": "Starten Sie den Einrichtungsassistenten für die erste Nutzung",
+      "signUpDescription": "Erstellen Sie ein neues Konto"
     },
     "signUp": {
       "title": "Anmeldung",

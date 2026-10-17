@@ -59,8 +59,8 @@ const Weeklies = () => {
     const renderItem = ({ item }: { item: Competition }) => (
         <View style={styles.card}>
             <View style={styles.cardContent}>
-                <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.course}>{item.courseName}</Text>
+                <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.time}>{item.time.slice(0, 5)}</Text>
             </View>
             <View style={styles.badge}>
@@ -199,13 +199,13 @@ const createStyles = (colors: MD3Colors) => StyleSheet.create({
         marginRight: 8,
     },
     name: {
-        fontWeight: 'bold',
-        fontSize: 14,
-    },
-    course: {
         fontSize: 12,
         color: colors.onSurfaceVariant,
         marginTop: 2,
+    },
+    course: {
+        fontWeight: 'bold',
+        fontSize: 14,
     },
     time: {
         fontSize: 12,

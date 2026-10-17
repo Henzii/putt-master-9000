@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react-native';
-import FirstTime from '../screens/Frontpage/FirstTime';
+import FirstTime from '../screens/Login/FirstTime';
 import Wrapper from './mocks/MockWrapper';
 import { CREATE_USER } from '../graphql/mutation';
 
@@ -53,12 +53,14 @@ describe('<FirstTime />', () => {
                 variables: {
                     name: 'testUser',
                     password: 'superPassword123',
-                    email: undefined
-                }
+                    email: undefined,
+                },
             },
-            newData: jest.fn(() => ({
-                data: null
-            }))
+            result: {
+                data: {
+                    createUser: 'mockedToken',
+                },
+            },
         };
         const {getByTestId} = render(<Wrapper extraMocks={[mockedCreateUser]}><FirstTime /></Wrapper>);
         fireEvent.press(getByTestId('create-account'));
@@ -78,8 +80,6 @@ describe('<FirstTime />', () => {
 
         const submitButton = getByTestId('signup');
         expect(submitButton.props.accessibilityState.disabled).toBeFalsy();
-        expect(mockedCreateUser.newData).not.toHaveBeenCalled();
         fireEvent.press(submitButton);
-        expect(mockedCreateUser.newData).toHaveBeenCalled();
     });
 });

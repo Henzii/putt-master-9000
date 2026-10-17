@@ -4,8 +4,41 @@ import Settings from "../screens/Settings";
 import Wrapper from "./mocks/MockWrapper";
 import LocalSettingsProvider from "@components/LocalSettingsProvider";
 import i18n from "../localization/i18n";
+import { useUpdateSettings } from "@hooks/useUpdateSettings";
+import { useSessionV2 } from "@hooks/session/useSessionV2";
 
 jest.useFakeTimers();
+
+jest.mock("@hooks/useUpdateSettings", () => ({
+  useUpdateSettings: jest.fn(),
+}));
+
+jest.mock("@hooks/session/useSessionV2", () => ({
+  useSessionV2: jest.fn(),
+}));
+
+const mockUpdateSettings = jest.fn();
+const mockedUseSessionV2 = useSessionV2 as jest.Mock;
+
+beforeEach(() => {
+  mockUpdateSettings.mockReset();
+  mockUpdateSettings.mockReturnValue(jest.fn());
+  mockedUseSessionV2.mockReturnValue({
+    user: {
+      id: "mockedId",
+      name: "Mock User",
+      email: null,
+      accountType: "pleb",
+      achievements: [],
+      blockFriendRequests: false,
+      blockStatsSharing: false,
+      groupName: "abc",
+    },
+    loading: false,
+    error: undefined,
+  });
+  (useUpdateSettings as jest.Mock).mockReturnValue(mockUpdateSettings);
+});
 
 const wrappedSettings = () => (
   <LocalSettingsProvider>
@@ -16,14 +49,17 @@ const wrappedSettings = () => (
 );
 
 describe("<Settings /> test", () => {
-  it("block firendrequests switch toggles", async () => {
+  it("calls the settings mutation when the friend requests switch is pressed", () => {
     const { getByTestId } = render(wrappedSettings());
     const kytkin = getByTestId("blockFriendRequestsSwitch");
+
     expect(kytkin.props.value).toBeFalsy();
 
     fireEvent.press(kytkin);
 
-    await waitFor(() => expect(kytkin.props.value).toBeTruthy());
+    expect(mockUpdateSettings).toHaveBeenCalledWith({
+      variables: { blockFriendRequests: true },
+    });
   });
 
   it("language selector changes language and propagates to i18n", async () => {
