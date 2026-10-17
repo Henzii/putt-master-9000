@@ -36,6 +36,20 @@ jest.mock('@hooks/session/useSessionV2', () => ({
     }),
 }));
 
+jest.mock('src/context/AuthenticatedUserContext', () => ({
+    ...jest.requireActual('src/context/AuthenticatedUserContext'),
+    useAuthenticatedUser: jest.fn().mockReturnValue({
+        id: 'mockedId',
+        name: 'Mock User',
+        email: null,
+        accountType: 'pleb',
+        achievements: [],
+        blockFriendRequests: false,
+        blockStatsSharing: false,
+        groupName: 'abc',
+    }),
+}));
+
 jest.mock('graphql-ws', () => ({
     createClient: () => null
 }));
