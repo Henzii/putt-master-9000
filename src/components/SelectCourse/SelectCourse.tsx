@@ -17,7 +17,7 @@ import SplitContainer from "../ThemedComponents/SplitContainer";
 import Header from "../RoundedHeader/Header";
 import HeaderButton from "../RoundedHeader/HeaderButton";
 import Spacer from "../ThemedComponents/Spacer";
-import { useSessionV2 } from "@hooks/session/useSessionV2";
+import { useAuthenticatedUser } from "src/context/AuthenticatedUserContext";
 import { isAdmin } from "src/utils/user";
 
 type SelectCoursesProps = {
@@ -39,7 +39,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
     const ref = useRef<FlatList>(null);
     const { colors } = useTheme();
     const backButton = useBackButton();
-    const { user } = useSessionV2();
+    const user = useAuthenticatedUser();
     const liveData = useLiveData(showTraffic);
     const styles = createStyles(colors);
     const [headerSpacing, setHeaderSpacing] = useState(50);

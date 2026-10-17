@@ -2,11 +2,11 @@ import React from 'react';
 import { StyleSheet, Text, View } from "react-native";
 import { useTranslation } from 'react-i18next';
 import SplitContainer from '../../../components/ThemedComponents/SplitContainer';
-import { useSessionV2 } from '@hooks/session/useSessionV2';
+import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 
 const LoggedIn = () => {
     const { t } = useTranslation();
-    const { user } = useSessionV2();
+    const user = useAuthenticatedUser();
 
     return (
             <SplitContainer>

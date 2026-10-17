@@ -49,7 +49,7 @@ export default function App() {
   const [shakeHands] = useLazyQuery<HandShake>(HANDSHAKE);
   const { t } = useTranslation();
 
-  const { user } = useSessionV2({ required: false });
+  const { user } = useSessionV2();
 
   const lastNotificationResponse = useLastNotificationResponse();
 

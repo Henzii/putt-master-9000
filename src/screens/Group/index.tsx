@@ -11,12 +11,12 @@ import Spacer from '../../components/ThemedComponents/Spacer';
 import { useUpdateSettings } from '../../hooks/useUpdateSettings';
 import { addNotification } from '../../reducers/notificationReducer';
 import WebLinkButton from '@components/WebLinkButton';
-import { useSessionV2 } from '@hooks/session/useSessionV2';
+import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 import ErrorScreen from '@components/ErrorScreen';
 
 const Group = () => {
     const { t } = useTranslation();
-    const { user} = useSessionV2();
+    const user = useAuthenticatedUser();
     const { data, loading, refetch, error } = useQuery(GET_GROUP_MEMBERS, {});
     const updateSettings = useUpdateSettings();
     const dispatch = useDispatch();

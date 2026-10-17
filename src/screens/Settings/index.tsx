@@ -17,12 +17,12 @@ import DeleteAccount from './DeleteAccount';
 import Units from './Units';
 import Language from './Language';
 import { useLogout } from '@hooks/session/useLogin';
-import { useSessionV2 } from '@hooks/session/useSessionV2';
+import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 import { useUpdateSettings } from '@hooks/useUpdateSettings';
 
 const Settings = () => {
     const { t } = useTranslation();
-    const { user } = useSessionV2();
+    const user = useAuthenticatedUser();
     const updateSettings = useUpdateSettings();
     const {logout} = useLogout();
     const navi = useNavigate();
@@ -130,4 +130,3 @@ const tyyli = StyleSheet.create({
 });
 
 export default Settings;
-

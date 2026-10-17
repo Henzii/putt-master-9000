@@ -17,7 +17,7 @@ import { View } from 'react-native';
 import Header from '@components/RoundedHeader/Header';
 import Stack from '@components/Stack';
 import HeaderButton from '@components/RoundedHeader/HeaderButton';
-import { useSessionV2 } from '@hooks/session/useSessionV2';
+import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 
 const Stats = () => {
     const { t } = useTranslation();
@@ -32,7 +32,7 @@ const Stats = () => {
         dispatch(setSelectedLayout(course, layout));
         setShowSelectCourse(false);
     };
-    const { user } = useSessionV2();
+    const user = useAuthenticatedUser();
 
     const handleFriendSelect = (friends?: Friend[]) => {
         if (friends) {

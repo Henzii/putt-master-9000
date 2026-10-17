@@ -335,8 +335,11 @@
       "welcomeMessage": "Välkommen, {{name}}",
       "wrongCredentials": "Fel användarnamn eller lösenord",
       "forgotPassword": "Glömt lösenord?",
+      "forgotPasswordDescription": "Öppnar en webbsida där du kan återställa ditt lösenord",
       "otherOptions": "Andra alternativ",
-      "firstTimeWizard": "Registrera (med guide)"
+      "firstTimeWizard": "Registrera (med guide)",
+      "firstTimeWizardDescription": "Kör konfigurationsguiden för första användningen",
+      "signUpDescription": "Skapa ett nytt konto"
     },
     "signUp": {
       "title": "Registrering",

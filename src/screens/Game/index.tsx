@@ -22,7 +22,7 @@ import ThrowStyle from './ThrowStyle';
 import HoleMap from './HoleMap';
 import { useGameStore } from 'src/zustand/gameStore';
 import { useTranslation } from 'react-i18next';
-import { useSessionV2 } from '@hooks/session/useSessionV2';
+import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 
 const NAV_ROUTES_CONFIG = [
     { key: 'gameRoute', titleKey: 'screens.game.tabs.scorecard', focusedIcon: 'card-account-details', unfocusedIcon: 'card-account-details-outline' },
@@ -55,7 +55,7 @@ export default function GameContainer() {
     });
 
     const { gameId } = gameData ?? {};
-    const { user } = useSessionV2();
+    const user = useAuthenticatedUser();
     const [createGameMutation, { loading }] = useMutation(CREATE_GAME, { refetchQueries: [{ query: GET_OLD_GAMES }] });
     const [addPlayersMutation] = useMutation(ADD_PLAYERS_TO_GAME);
     const dispatch = useDispatch();
@@ -187,4 +187,3 @@ export default function GameContainer() {
     );
 
 }
-

@@ -335,8 +335,11 @@
       "welcomeMessage": "Tere tulemast, {{name}}",
       "wrongCredentials": "Vale kasutajanimi või parool",
       "forgotPassword": "Unustasid parooli?",
+      "forgotPasswordDescription": "Avab veebilehe, kus saate oma parooli taastada",
       "otherOptions": "Muud valikud",
-      "firstTimeWizard": "Registreeru (viisardiga)"
+      "firstTimeWizard": "Registreeru (viisardiga)",
+      "firstTimeWizardDescription": "Käivita esmakordse seadistamise viisard",
+      "signUpDescription": "Loo uus konto"
     },
     "signUp": {
       "title": "Registreerimine",

@@ -335,8 +335,11 @@
       "welcomeMessage": "Welcome, {{name}}",
       "wrongCredentials": "Wrong username or password",
       "forgotPassword": "Forgot password?",
+      "forgotPasswordDescription": "Opens a web page where you can reset your password",
       "otherOptions": "Other options",
-      "firstTimeWizard": "Signup (with wizard)"
+      "firstTimeWizard": "Signup (with wizard)",
+      "firstTimeWizardDescription": "Run the first-time setup wizard",
+      "signUpDescription": "Create a new account"
     },
     "signUp": {
       "title": "Signup",

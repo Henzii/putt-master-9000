@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-native";
 import { useDispatch } from "react-redux";
 import { setSelectedLayout } from "../../reducers/selectedLayoutReducer";
 import { Course, Layout } from "../../types/course";
-import { useSessionV2 } from "@hooks/session/useSessionV2";
+import { useAuthenticatedUser } from "src/context/AuthenticatedUserContext";
 import { isAdmin } from "src/utils/user";
 
 type SelecLayoutProps = {
@@ -20,7 +20,7 @@ const SelectLayout = ({ course, onSelect, onEditLayout }: SelecLayoutProps) => {
     const navi = useNavigate();
     const dispatch = useDispatch();
     const { colors } = useTheme();
-    const { user } = useSessionV2();
+    const user = useAuthenticatedUser();
 
     const handleLayoutSelect = (layout: Layout) => {
         if (onSelect) onSelect(layout, course);

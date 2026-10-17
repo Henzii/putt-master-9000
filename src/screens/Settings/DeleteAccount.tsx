@@ -3,14 +3,14 @@ import { StyleSheet, View } from 'react-native';
 import { Button, Paragraph, TextInput, Title } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import Spacer from '../../components/ThemedComponents/Spacer';
-import { useSessionV2 } from '@hooks/session/useSessionV2';
+import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 
 type Props = {
     handleDeleteAccount: () => void
 }
 const DeleteAccount = ({handleDeleteAccount}: Props) => {
     const { t } = useTranslation();
-    const {user} = useSessionV2();
+    const user = useAuthenticatedUser();
     const [showConfirm, setShowConfirm] = useState(false);
     const [nameInput, setNameInput] = useState('');
     const handleDeleteClick = () => {

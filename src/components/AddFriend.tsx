@@ -9,7 +9,7 @@ import { SafeUser } from '../types/user';
 import Stack from './Stack';
 import Spacer from './ThemedComponents/Spacer';
 import { MD3Colors } from 'react-native-paper/lib/typescript/types';
-import { useSessionV2 } from '@hooks/session/useSessionV2';
+import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 
 type AddFriendProps = {
     onClose?: () => void,
@@ -27,7 +27,7 @@ const AddFriend = ({ onClose, onAddFriend, friends }: AddFriendProps) => {
     const { t } = useTranslation();
     const [searchUsers, { data, loading }] = useLazyQuery<QueryResponse>(SEARCH_USER);
     const { colors } = useTheme();
-    const {user: { id } } = useSessionV2();
+    const { id } = useAuthenticatedUser();
     const searchTextInput = useTextInput({ callBackDelay: 1000, defaultValue: '' }, (value) => {
         searchUsers({ variables: { search: value.toLowerCase() } });
     });

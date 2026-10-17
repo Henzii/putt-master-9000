@@ -1,10 +1,11 @@
 import { useSessionV2 } from '@hooks/session/useSessionV2';
 import React from 'react';
 import { Navigate, Outlet } from "react-router-native";
+import AuthenticatedUserContext from 'src/context/AuthenticatedUserContext';
 import Loading from './Loading';
 
 const RequireAuth = () => {
-  const { user, loading } = useSessionV2({ required: false });
+  const { user, loading } = useSessionV2();
 
   if (loading) {
     return <Loading />;
@@ -14,7 +15,11 @@ const RequireAuth = () => {
     return <Navigate to="/login" replace />;
   }
 
-  return <Outlet />;
+  return (
+    <AuthenticatedUserContext.Provider value={user}>
+      <Outlet />
+    </AuthenticatedUserContext.Provider>
+  );
 };
 
 export default RequireAuth;

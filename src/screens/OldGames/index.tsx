@@ -15,7 +15,7 @@ import SplitContainer from '../../components/ThemedComponents/SplitContainer';
 import Header from '../../components/RoundedHeader/Header';
 import Spacer from '../../components/ThemedComponents/Spacer';
 import { useGameStore } from 'src/zustand/gameStore';
-import { useSessionV2 } from '@hooks/session/useSessionV2';
+import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 type GamesQueryResponse = {
     games: Game[],
     hasMore: boolean,
@@ -30,7 +30,7 @@ const OldGames = () => {
     const [showSearchBar, setShowSearchBar] = useState(false);
     const setGameId = useGameStore(state => state.setGameId);
     const [filterText, setFilterText] = useState('');
-    const { user } = useSessionV2();
+    const user = useAuthenticatedUser();
     const [showOnlyGroupGames, setShowOnlyGroupGames] = useState(false);
     const { colors } = useTheme();
     const [headerSpacing, setHeaderSpacing] = useState(81);

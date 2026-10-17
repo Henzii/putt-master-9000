@@ -13,7 +13,7 @@ import { Course, Layout } from '../../types/course';
 import { User } from '../../types/user';
 import SplitContainer from '../../components/ThemedComponents/SplitContainer';
 import InfoDialog from '../../components/InfoDialog';
-import { useSessionV2 } from '@hooks/session/useSessionV2';
+import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 
 export type NewGameData = {
     course?: Course | null,
@@ -31,7 +31,7 @@ type CreateGameProps = {
 const CreateGame = (props: CreateGameProps) => {
     const { t } = useTranslation();
     const [newGameData, setNewGameData] = useState<NewGameData>({ course: undefined, layout: undefined, players: [] });
-    const {user} = useSessionV2();
+    const user = useAuthenticatedUser();
     const [selectCourse, setSelectCourse] = useState(false);
     const [addFriend, setAddFriend] = useState(false);
     const { getHc, getBest, getField, loading } = useStats(

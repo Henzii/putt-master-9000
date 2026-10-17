@@ -9,13 +9,13 @@ import TeeSignImage from './TeeSignImage';
 import { useHoleMapUpload } from '@hooks/useHoleMapUpload';
 import Loading from '@components/Loading';
 import { useTranslation } from 'react-i18next';
-import { useSessionV2 } from '@hooks/session/useSessionV2';
+import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 import { isAdmin } from 'src/utils/user';
 
 const HoleMap: FC = () => {
   const gameId = useGameStore(state => state.gameId);
   const { layout } = useGame(gameId ?? '');
-  const {user} = useSessionV2();
+  const user = useAuthenticatedUser();
   const {t} = useTranslation();
   const {uploadImage, uploading} = useHoleMapUpload();
   const [selectedRound, setSelectedRound] = useGameStore(state => [state.selectedRound, state.setSelectedRound]);

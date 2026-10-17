@@ -8,11 +8,11 @@ import { SEND_FEEDBACK } from '../../graphql/mutation';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../../reducers/notificationReducer';
 import { useTranslation } from 'react-i18next';
-import { useSessionV2 } from '@hooks/session/useSessionV2';
+import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 
 const Feedback = () => {
     const { t } = useTranslation();
-    const {user} = useSessionV2();
+    const user = useAuthenticatedUser();
     const [subject, setSubject] = useState('');
     const [text, setText] = useState('');
     const [feedbackSent, setFeedbackSent] = useState(false);

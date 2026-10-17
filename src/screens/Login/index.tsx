@@ -15,7 +15,7 @@ const Login = () => {
     const { login, loading } = useLogin();
     const navi = useNavigate();
     const theme = useTheme();
-    const {user, loading: sessionLoading} = useSessionV2({ required: false });
+    const {user, loading: sessionLoading} = useSessionV2();
 
     const userName = useTextInput({ defaultValue: '' });
     const password = useTextInput({ defaultValue: '' });
@@ -61,19 +61,19 @@ const Login = () => {
                 <List.Item
                     title={t('components.login.firstTimeWizard')}
                     onPress={() => navi('/firstTime')}
-                    description="Run the first-time setup wizard"
+                    description={t('components.login.firstTimeWizardDescription')}
                     style={{ backgroundColor: theme.colors.surfaceVariant }}
                 />
                 <List.Item
                     title={t('components.signUp.title')}
                     onPress={() => navi('/signUp')}
-                    description="Create a new account"
+                    description={t('components.login.signUpDescription')}
                 />
                 <List.Item
                     title={t('components.login.forgotPassword')}
                     right={() => <List.Icon icon="open-in-new" />}
                     onPress={() => openWebsite({ path: 'restore' })}
-                    description="Opens a web page where you can reset your password"
+                    description={t('components.login.forgotPasswordDescription')}
                     style={{ backgroundColor: theme.colors.surfaceVariant }}
                 />
             </List.Section>
