@@ -44,6 +44,7 @@
       "weeklies": "Veckovisa",
       "weekliesDescription": "Hitta veckovisa tävlingar nära dig",
       "feedback": "Feedback",
+      "feedbackDescription": "Lämna feedback eller rapportera ett fel",
       "logout": "Logga ut",
       "connectingToServer": "Ansluter till servern...",
       "sessionFailed": "Sessionen misslyckades",

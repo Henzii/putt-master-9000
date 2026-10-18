@@ -3,7 +3,7 @@ import { RadioButton, Text } from 'react-native-paper';
 import { View } from "react-native";
 import { useTranslation } from 'react-i18next';
 import Stack from "@components/Stack";
-import { useSettings } from "@components/LocalSettingsProvider";
+import { useSettings } from "../../context/LocalSettingsProvider";
 
 const Distance: FC = () => {
     const { t } = useTranslation();

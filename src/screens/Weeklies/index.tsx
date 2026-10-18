@@ -12,7 +12,7 @@ import Loading from '../../components/Loading';
 import Header from '../../components/RoundedHeader/Header';
 import Sheet from '../../components/Sheet';
 import Spacer from '../../components/ThemedComponents/Spacer';
-import { useSettings } from '@components/LocalSettingsProvider';
+import { useSettings } from '../../context/LocalSettingsProvider';
 
 const RANGES_KM = [25, 50, 100, 250];
 

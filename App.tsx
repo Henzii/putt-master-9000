@@ -7,7 +7,7 @@ import { ApolloProvider } from '@apollo/client';
 import Main from './src/components/Main';
 import store from './src/utils/store';
 import { client } from './src/graphql/apolloClient';
-import LocalSettingsProvider from './src/components/LocalSettingsProvider';
+import LocalSettingsProvider from './src/context/LocalSettingsProvider';
 import BackButtonProvider from './src/components/BackButtonProvider';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ErrorBoundary from 'react-native-error-boundary';

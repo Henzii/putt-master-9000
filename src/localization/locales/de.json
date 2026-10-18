@@ -44,6 +44,7 @@
       "weeklies": "Wöchentliche",
       "weekliesDescription": "Finden Sie wöchentliche Wettbewerbe in Ihrer Nähe",
       "feedback": "Feedback",
+      "feedbackDescription": "Feedback geben oder einen Fehler melden",
       "logout": "Abmelden",
       "connectingToServer": "Verbindung zum Server wird hergestellt...",
       "sessionFailed": "Sitzung fehlgeschlagen",

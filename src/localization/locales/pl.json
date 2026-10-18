@@ -44,6 +44,7 @@
       "weeklies": "Tygodniowe",
       "weekliesDescription": "Znajdź tygodniowe konkurencje w pobliżu",
       "feedback": "Opinia",
+      "feedbackDescription": "Przekaż opinię lub zgłoś błąd",
       "logout": "Wyloguj się",
       "connectingToServer": "Łączenie z serwerem...",
       "sessionFailed": "Sesja nie powiodła się",

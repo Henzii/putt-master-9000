@@ -7,7 +7,7 @@ import { RootState } from '../../../utils/store';
 import Loading from '../../../components/Loading';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
-import { useSettings } from '../../../components/LocalSettingsProvider';
+import { useSettings } from '../../../context/LocalSettingsProvider';
 import TableNames from './TableNames';
 import TableScores from './TableScores';
 import Container from '../../../components/ThemedComponents/Container';

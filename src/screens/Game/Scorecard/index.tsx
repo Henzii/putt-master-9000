@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, FlatList, LayoutChangeEvent } from 'react-native';
 import { Text } from 'react-native-paper';
-import { useSettings } from '../../../components/LocalSettingsProvider';
+import { useSettings } from '../../../context/LocalSettingsProvider';
 import useStats from '../../../hooks/useStats';
 import Statsbar from './Statsbar';
 import SplitContainer from '../../../components/ThemedComponents/SplitContainer';

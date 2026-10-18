@@ -107,6 +107,7 @@ const Frontpage = () => {
                 <Divider />
                 <List.Item
                     title={t('screens.frontpage.feedback')}
+                    description={t('screens.frontpage.feedbackDescription')}
                     left={() => <Image source={feedback} style={styles.listItemIcon} />}
                     right={(p) => <List.Icon {...p} icon="chevron-right" />}
                     onPress={() => navi('/feedback')}

@@ -44,6 +44,7 @@
       "weeklies": "Weeklies",
       "weekliesDescription": "Find weekly competitions near you",
       "feedback": "Feedback",
+      "feedbackDescription": "Leave feedback, report a bug",
       "logout": "Logout",
       "connectingToServer": "Connecting to server...",
       "sessionFailed": "Session failed",

@@ -12,7 +12,7 @@ import { gameData, unloadGame } from '../../reducers/gameDataReducer';
 import Loading from '../../components/Loading';
 import { RootState } from '../../utils/store';
 import ErrorScreen from '../../components/ErrorScreen';
-import { useSettings } from '../../components/LocalSettingsProvider';
+import { useSettings } from '../../context/LocalSettingsProvider';
 import type { Scorecard } from '../../types/game';
 import { useGameStore } from 'src/zustand/gameStore';
 

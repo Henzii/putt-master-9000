@@ -43,6 +43,7 @@
       "weeklies": "Viikkokisat",
       "weekliesDescription": "Löydä lähellä olevat viikkokisat",
       "feedback": "Palaute",
+      "feedbackDescription": "Jätä palautetta tai ilmoita bugista",
       "logout": "Kirjaudu ulos",
       "connectingToServer": "Yhdistetään palvelimeen...",
       "sessionFailed": "Istunto epäonnistui",

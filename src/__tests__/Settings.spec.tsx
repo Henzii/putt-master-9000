@@ -2,7 +2,7 @@ import React from "react";
 import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import Settings from "../screens/Settings";
 import Wrapper from "./mocks/MockWrapper";
-import LocalSettingsProvider from "@components/LocalSettingsProvider";
+import LocalSettingsProvider, { useSettings } from "../context/LocalSettingsProvider";
 import i18n from "../localization/i18n";
 import { useUpdateSettings } from "@hooks/useUpdateSettings";
 import { useSessionV2 } from "@hooks/session/useSessionV2";
@@ -17,12 +17,27 @@ jest.mock("@hooks/session/useSessionV2", () => ({
   useSessionV2: jest.fn(),
 }));
 
+jest.mock("../context/LocalSettingsProvider", () => ({
+  __esModule: true,
+  default: ({ children }: { children: React.ReactNode }) => children,
+  useSettings: jest.fn(),
+}));
+
 const mockUpdateSettings = jest.fn();
+const mockSetLocalValue = jest.fn();
 const mockedUseSessionV2 = useSessionV2 as jest.Mock;
 
 beforeEach(() => {
   mockUpdateSettings.mockReset();
   mockUpdateSettings.mockReturnValue(jest.fn());
+  mockSetLocalValue.mockReset();
+  (useSettings as jest.Mock).mockReturnValue({
+    toggle: jest.fn(),
+    setValue: mockSetLocalValue,
+    settingsData: {},
+    getValue: jest.fn().mockReturnValue("auto"),
+    getBoolValue: jest.fn().mockReturnValue(false),
+  });
   mockedUseSessionV2.mockReturnValue({
     user: {
       id: "mockedId",
@@ -60,6 +75,14 @@ describe("<Settings /> test", () => {
     expect(mockUpdateSettings).toHaveBeenCalledWith({
       variables: { blockFriendRequests: true },
     });
+  });
+
+  it("updates the local theme setting when the theme is changed", () => {
+    const { getByTestId } = render(wrappedSettings());
+
+    fireEvent.press(getByTestId("themePreference-dark"));
+
+    expect(mockSetLocalValue).toHaveBeenCalledWith("Theme", "dark");
   });
 
   it("language selector changes language and propagates to i18n", async () => {

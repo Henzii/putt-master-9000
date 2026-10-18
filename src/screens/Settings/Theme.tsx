@@ -3,7 +3,7 @@ import { Pressable, View } from "react-native";
 import { RadioButton, Text } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import { ThemePreference, useChangeTheme } from "src/context/ThemeProvider";
-import { useSettings } from "@components/LocalSettingsProvider";
+import { useSettings } from "../../context/LocalSettingsProvider";
 
 const Theme: FC = () => {
     const { t } = useTranslation();
