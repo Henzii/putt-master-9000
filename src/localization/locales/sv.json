@@ -253,7 +253,11 @@
       "languageSwedish": "Svenska",
       "languageEstonian": "Eesti",
       "languagePolish": "Polski",
-      "languageGerman": "Deutsch"
+      "languageGerman": "Deutsch",
+      "themeTitle": "Tema",
+      "themeAuto": "Automatiskt",
+      "themeLight": "Ljust",
+      "themeDark": "Mörkt"
     },
     "feedback": {
       "title": "Lämna feedback",

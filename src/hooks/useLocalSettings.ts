@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export type SettingName = 'SortHC' | 'SortBox' | 'Prohibition' | 'AutoAdvance' | 'HideStatsBars' | 'HidePlusMinus' | 'RandomThrowStyle' | 'ImperialUnits' | 'HideTeeSign';
+export type SettingName = 'SortHC' | 'SortBox' | 'Prohibition' | 'AutoAdvance' | 'HideStatsBars' | 'HidePlusMinus' | 'RandomThrowStyle' | 'ImperialUnits' | 'HideTeeSign' | 'Theme';
 
 /**
  *
@@ -38,8 +38,12 @@ export default function useLocalSettings() {
     const getBoolValue = (name: SettingName) => {
         return !!settingsData[name];
     };
+    const setValue = (name: SettingName, value: string | boolean) => {
+        handleChangeData({[name]: value});
+    };
     return {
         toggle,
+        setValue,
         settingsData,
         getValue,
         getBoolValue

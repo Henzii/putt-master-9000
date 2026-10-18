@@ -55,7 +55,6 @@ export const theme = {
     "backdrop": "rgba(41, 50, 46, 0.4)",
   }
 };
-
 export const darkTheme = {
   ...DefaultTheme,
   dark: true,
@@ -112,23 +111,4 @@ export const darkTheme = {
     onSurfaceDisabled: "rgba(225, 227, 224, 0.38)",
     backdrop: "rgba(41, 50, 46, 0.4)",
   },
-};
-
-
-export const devTheme = {
-  ...theme,
-  colors: {
-    ...theme.colors,
-    primary: 'rgb(0, 83, 108)',
-    tertiary: "rgb(150, 200, 235)",
-  }
-};
-
-export const prevTheme = {
-  ...theme,
-  colors: {
-    ...theme.colors,
-    primary: 'rgb(108, 0, 108)',
-    tertiary: "rgb(235, 0, 235)",
-  }
 };

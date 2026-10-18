@@ -253,7 +253,11 @@
       "languageSwedish": "Svenska",
       "languageEstonian": "Eesti",
       "languagePolish": "Polski",
-      "languageGerman": "Deutsch"
+      "languageGerman": "Deutsch",
+      "themeTitle": "Design",
+      "themeAuto": "Automatisch",
+      "themeLight": "Hell",
+      "themeDark": "Dunkel"
     },
     "feedback": {
       "title": "Feedback hinterlassen",

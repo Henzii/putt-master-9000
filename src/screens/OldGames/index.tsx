@@ -87,7 +87,7 @@ const OldGames = () => {
                             {t('screens.oldGames.totalRounds', { count: data?.getGames.count ?? 0 })}
                         </Text>
                     </View>
-                    <IconButton icon="magnify" mode="contained-tonal" containerColor={colors.tertiary} onPress={() => setShowSearchBar(val => !val)} />
+                    <IconButton icon="magnify" mode="contained-tonal" containerColor={colors.tertiary} iconColor={colors.onTertiary} onPress={() => setShowSearchBar(val => !val)} />
                 </SplitContainer>
                 <Spacer size={1} />
                 {Boolean(user?.groupName) && (

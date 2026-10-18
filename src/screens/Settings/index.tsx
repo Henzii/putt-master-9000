@@ -16,6 +16,7 @@ import { AccountType } from '../../types/user';
 import DeleteAccount from './DeleteAccount';
 import Units from './Units';
 import Language from './Language';
+import Theme from './Theme';
 import { useLogout } from '@hooks/session/useLogin';
 import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 import { useUpdateSettings } from '@hooks/useUpdateSettings';
@@ -77,6 +78,10 @@ const Settings = () => {
             <Divider />
             <View style={tyyli.section}>
                 <Language />
+            </View>
+            <Divider />
+            <View style={tyyli.section}>
+                <Theme />
             </View>
             <Divider />
             <View style={tyyli.section}>

@@ -248,7 +248,11 @@
       "languageSwedish": "Svenska",
       "languageEstonian": "Eesti",
       "languagePolish": "Polski",
-      "languageGerman": "Deutsch"
+      "languageGerman": "Deutsch",
+      "themeTitle": "Teema",
+      "themeAuto": "Automaattinen",
+      "themeLight": "Vaalea",
+      "themeDark": "Tumma"
     },
     "feedback": {
       "title": "Jätä palautetta",
