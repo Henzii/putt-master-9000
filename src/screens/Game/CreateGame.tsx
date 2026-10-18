@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View, ViewStyle, StyleProp } from "react-native";
-import { Button, Text, IconButton, Switch, TextInput, useTheme } from 'react-native-paper';
+import { Text, IconButton, Switch, TextInput, useTheme } from 'react-native-paper';
 import FriendsList from '../../components/FriendsList';
 import SelectCourses from '../../components/SelectCourse/SelectCourse';
 import Container from '../../components/ThemedComponents/Container';
@@ -15,6 +15,7 @@ import SplitContainer from '../../components/ThemedComponents/SplitContainer';
 import InfoDialog from '../../components/InfoDialog';
 import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 import { MD3Colors } from 'react-native-paper/lib/typescript/types';
+import Button from '@components/ThemedComponents/Button';
 
 export type NewGameData = {
     course?: Course | null,
@@ -129,7 +130,7 @@ const CreateGame = (props: CreateGameProps) => {
                     <Spacer size={10} />
                 </>
             ) : null}
-            <Button style={tyyli.button} onPress={handleSetSelectCourse} mode={newGameData.course ? 'outlined' : 'contained'}>
+            <Button style={tyyli.button} onPress={handleSetSelectCourse} variant={newGameData.course ? 'secondary' : 'primary'}>
                 {newGameData.course ? t('screens.game.changeCourse') : t('screens.game.selectCourse')}
             </Button>
             <Divider margin={30} />
@@ -159,7 +160,7 @@ const CreateGame = (props: CreateGameProps) => {
                 })}
             </>
             <Spacer />
-            <Button style={tyyli.button} compact mode={newGameData.players.length > 1 ? 'outlined' : 'contained'} onPress={handleShowFriendsList}>{t('screens.game.addPlayers')}</Button>
+            <Button style={tyyli.button} compact variant={newGameData.players.length > 1 ? 'secondary' : 'primary'} onPress={handleShowFriendsList}>{t('screens.game.addPlayers')}</Button>
             <Divider />
             <NumberedTitle number="3" title={t('screens.game.gameSettings')} accordion>
                 <View>
@@ -208,14 +209,13 @@ const CreateGame = (props: CreateGameProps) => {
             <Spacer />
             <View style={tyyli.bottomButtons}>
                 <Button
-                    mode='contained'
                     onPress={handleCreate}
                     disabled={(!newGameData.course || !newGameData.layout || newGameData.players.length < 1 || props.loading || (newGameData.bHcMultiplier !== undefined && isNaN(Number(newGameData.bHcMultiplier))))}
                     loading={props.loading}
                 >
                     {t('common.create')}
                 </Button>
-                <Button mode="contained-tonal" onPress={props.onCancel}>
+                <Button variant="secondary" onPress={props.onCancel}>
                     {t('common.cancel')}
                 </Button>
             </View>

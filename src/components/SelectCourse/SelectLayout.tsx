@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { IconButton, TouchableRipple, useTheme } from 'react-native-paper';
+import { View, StyleSheet } from "react-native";
+import { IconButton, TouchableRipple, useTheme, Text } from 'react-native-paper';
 import Spacer from "../ThemedComponents/Spacer";
 import Divider from "../ThemedComponents/Divider";
 import { useNavigate } from "react-router-native";
@@ -46,11 +46,11 @@ const SelectLayout = ({ course, onSelect, onEditLayout }: SelecLayoutProps) => {
                 return (
                     <View
                         key={layout.id}
-                        style={[{backgroundColor: layout.deprecated ? colors.surfaceVariant : colors.primary}, styles.layout]}
+                        style={[{backgroundColor: layout.deprecated ? colors.surface : colors.primary}, styles.layout]}
                     >
                         {layout.deprecated && (
                             <View style={styles.deprecatedTextView}>
-                                <Text style={[styles.deprecatedText, { color: contentColor }]}>OBSOLETE</Text>
+                                <Text style={[styles.deprecatedText, { color: colors.onSurfaceDisabled }]}>OBSOLETE</Text>
                             </View>
                         )}
                         <TouchableRipple onPress={() => handleLayoutSelect(layout)} style={{flex: 1}}>
@@ -75,13 +75,15 @@ const SelectLayout = ({ course, onSelect, onEditLayout }: SelecLayoutProps) => {
 const createStyles = (colors: MD3Colors) => StyleSheet.create({
     deprecatedTextView: {
         position: 'absolute',
-        width: '100%',
-        height: '100%',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        opacity: 0.2,
-        marginHorizontal: 7,
-        marginVertical: 9
+        opacity: 0.7,
+        zIndex: 10,
+        backgroundColor: colors.secondary,
     },
     deprecatedText: {
         fontSize: 40,
@@ -92,12 +94,13 @@ const createStyles = (colors: MD3Colors) => StyleSheet.create({
     layout: {
         borderRadius: 7,
         marginTop: 4,
-        elevation: 5,
         paddingHorizontal: 7,
         paddingVertical: 9,
+        elevation: 4,
         flexDirection: 'row',
         borderWidth: 1,
         borderColor: colors.outline,
+        position: 'relative',
     },
     layoutName: {
         color: colors.onPrimary,

@@ -33,7 +33,7 @@ export const theme = {
     "onBackground": "rgb(25, 28, 27)",
     "surface": "rgb(251, 253, 249)",
     "onSurface": "rgb(25, 28, 27)",
-    "surfaceVariant": "rgb1(241, 243, 239)",
+    "surfaceVariant": "rgb(241, 243, 239)",
     "onSurfaceVariant": "rgb(64, 73, 68)",
     "outline": "rgb(112, 121, 116)",
     "outlineVariant": "rgb(191, 201, 195)",

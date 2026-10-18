@@ -1,12 +1,15 @@
 import React from 'react';
-import { DataTable } from "react-native-paper";
-import { tableStyles } from './styles';
+import { DataTable, useTheme } from "react-native-paper";
+import { createTableStyles } from './styles';
 import { Scorecard } from '../../../types/game';
 
 type Props = {
     scorecards: Scorecard[]
 }
 const TableNames = ({ scorecards }: Props) => {
+    const { colors } = useTheme();
+    const tableStyles = createTableStyles(colors);
+
     return (
         <DataTable style={{maxWidth: 110}}>
             <DataTable.Header>

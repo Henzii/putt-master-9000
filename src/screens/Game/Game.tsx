@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, AppState, ScrollView } from 'react-native';
+import { View, StyleSheet, AppState, ScrollView } from 'react-native';
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PlayerScorecard from './Scorecard';
@@ -6,7 +6,7 @@ import { Dimensions } from 'react-native';
 import RoundTabs from '../../components/RoundTabs';
 import useGame from '../../hooks/useGame';
 import Container from '../../components/ThemedComponents/Container';
-import { Button, Title } from 'react-native-paper';
+import { Button, Text } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { gameData, unloadGame } from '../../reducers/gameDataReducer';
 import Loading from '../../components/Loading';
@@ -160,7 +160,7 @@ const ClosedGame = () => {
     };
     return (
         <Container style={peliStyles.gameover}>
-            <Title style={peliStyles.gameoverText}>{t('screens.game.gameOver')}</Title>
+            <Text style={peliStyles.gameoverText}>{t('screens.game.gameOver')}</Text>
             <Button onPress={handleButtonClick}>{t('screens.game.startNewGame')}</Button>
         </Container>
     );
