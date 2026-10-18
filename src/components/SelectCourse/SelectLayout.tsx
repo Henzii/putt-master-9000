@@ -81,7 +81,7 @@ const createStyles = (colors: MD3Colors) => StyleSheet.create({
         right: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        opacity: 0.7,
+        opacity: 0.8,
         zIndex: 10,
         backgroundColor: colors.secondary,
     },

@@ -35,7 +35,7 @@ export const theme = {
     "onSurface": "rgb(25, 28, 27)",
     "surfaceVariant": "rgb(241, 243, 239)",
     "onSurfaceVariant": "rgb(64, 73, 68)",
-    "outline": "rgb(112, 121, 116)",
+    "outline": "rgb(153, 165, 158)",
     "outlineVariant": "rgb(191, 201, 195)",
     "shadow": "rgb(0, 0, 0)",
     "scrim": "rgb(0, 0, 0)",
