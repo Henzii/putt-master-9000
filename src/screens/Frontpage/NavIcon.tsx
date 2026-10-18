@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, ImageSourcePropType, Image } from "react-native";
 import { useTheme } from 'react-native-paper';
+import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 import { Link } from 'react-router-native';
 
 type NavIconProps = {
@@ -18,6 +19,7 @@ const NavIcon = (props : NavIconProps) => {
     const [pressed, setPressed] = useState(false);
 
     const { colors } = useTheme();
+    const styles = createStyles(colors);
 
     if (props.placeholder) {
         return null;
@@ -45,13 +47,13 @@ const NavIcon = (props : NavIconProps) => {
     );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (colors: MD3Colors) => StyleSheet.create({
     container: {
-        backgroundColor: '#ffffff',
+        backgroundColor: colors.surface,
         borderRadius: 6,
         elevation: 2,
         borderWidth: 1,
-        borderColor: '#eeeeee',
+        borderColor: colors.outline,
         marginHorizontal: 12,
         marginVertical: 4,
     },
@@ -78,10 +80,11 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 20,
         fontWeight: '600',
+        color: colors.onSurface,
     },
     description: {
         fontSize: 13,
-        color: '#888',
+        color: colors.onSurfaceVariant,
         marginTop: 3,
     },
     badge: {

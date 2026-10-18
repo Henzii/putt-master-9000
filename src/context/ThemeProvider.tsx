@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect } from 'react';
 import { createContext, FC, ReactNode, useContext, useState } from "react";
+import { useColorScheme } from 'react-native';
 import { PaperProvider } from "react-native-paper";
-import { theme as defaultTheme, devTheme, prevTheme } from "src/utils/theme";
+import { darkTheme, theme as defaultTheme, devTheme, prevTheme } from "src/utils/theme";
 
 type ChangeThemeFunction = (theme?: string | null) => void;
 
@@ -18,14 +19,17 @@ export const useChangeTheme = () => {
 
 const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const [theme, setTheme] = useState(defaultTheme);
-
+    const colorScheme = useColorScheme();
     const handleChangeTheme: ChangeThemeFunction = (theme) => {
+        setTheme(colorScheme === 'dark' ? darkTheme : defaultTheme);
+        return;
         if (theme === 'development') {
             setTheme(devTheme);
         } else if (theme === 'preview') {
             setTheme(prevTheme);
         } else {
-            setTheme(defaultTheme);
+            setTheme(colorScheme === 'dark' ? darkTheme : defaultTheme);
+
         }
     };
 

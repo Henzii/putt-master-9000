@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView, View, Text } from "react-native";
-import { Button, Caption, Headline, IconButton, Switch, TextInput, Title } from "react-native-paper";
+import { StyleSheet, ScrollView, View } from "react-native";
+import { Button, Caption, Headline, Text, IconButton, Switch, TextInput, Title, useTheme } from "react-native-paper";
 import { useTranslation } from 'react-i18next';
 import Divider from './ThemedComponents/Divider';
 import { Layout, NewLayout } from '../types/course';
 
 const AddLayout = ({ onCancel, onAdd, layout }: AddLayoutProps) => {
     const { t } = useTranslation();
+    const { colors } = useTheme();
     const [holes, setHoles] = useState<number | undefined>(layout?.holes);
     const [pars, setPars] = useState<number[]>(layout?.pars || []);
     const [names, setNames] = useState(layout?.names ?? []);
@@ -59,7 +60,7 @@ const AddLayout = ({ onCancel, onAdd, layout }: AddLayoutProps) => {
     const isEditMode = !!layout;
 
     return (
-        <ScrollView contentContainerStyle={{ paddingBottom: 40, }} style={tyyli.main}>
+        <ScrollView contentContainerStyle={{ paddingBottom: 40, }} style={[tyyli.main, { backgroundColor: colors.surface }]}>
             <Headline>{isEditMode ? t('components.addLayout.editTitle') : t('components.addLayout.addTitle')}</Headline>
             <Caption>{t('components.addLayout.layoutName')}</Caption>
             <TextInput autoComplete='off' value={name} onChangeText={(value) => setName(value)} disabled={deprecated} />
@@ -79,7 +80,7 @@ const AddLayout = ({ onCancel, onAdd, layout }: AddLayoutProps) => {
             </Text>
             <View style={tyyli.buttonsContainer}>
                 <Button onPress={handleAdd} icon="check"  mode='contained'>{layout ? t('common.save') : t('common.add')}</Button>
-                <Button onPress={handleCancel} icon="cancel" mode='outlined'>{t('common.cancel')}</Button>
+                <Button onPress={handleCancel} icon="cancel" mode='contained-tonal'>{t('common.cancel')}</Button>
             </View>
         </ScrollView>
     );
@@ -95,6 +96,7 @@ type HoleParsProps = {
 
 const HolesPars = ({ onParChange, pars, onNameChange, names, deprecated }: HoleParsProps) => {
     const { t } = useTranslation();
+    const { colors } = useTheme();
     const returni = [];
     for (let i = 0; i < pars.length; i++) {
         if (pars[i] === undefined) continue;
@@ -125,7 +127,7 @@ const HolesPars = ({ onParChange, pars, onNameChange, names, deprecated }: HoleP
                     <IconButton
                         style={tyyli.parInputButtons}
                         icon="minus"
-                        iconColor="red"
+                        iconColor={colors.error}
                         onPress={() => {
                             if (pars[i] > 1) {
                                 onParChange(i, pars[i] - 1);
@@ -136,7 +138,7 @@ const HolesPars = ({ onParChange, pars, onNameChange, names, deprecated }: HoleP
                     <IconButton
                         icon="plus"
                         style={tyyli.parInputButtons}
-                        iconColor='green'
+                        iconColor={colors.primary}
                         onPress={() => {
                             onParChange(i, pars[i] + 1);
                         }}
@@ -168,7 +170,6 @@ const tyyli = StyleSheet.create({
         alignItems: 'center',
     },
     main: {
-        backgroundColor: '#fafafa',
         height: '90%',
         width: '90%',
         padding: 30,

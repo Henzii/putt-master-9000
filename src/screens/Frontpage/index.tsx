@@ -127,7 +127,7 @@ const Frontpage = () => {
 const createStyles = (colors: MD3Colors) => StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.surface,
+        backgroundColor: colors.background,
     },
     iconsContainer: {
     },

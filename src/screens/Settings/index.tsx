@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Title } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
+import { Text } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import Container from '../../components/ThemedComponents/Container';
 import Divider from '../../components/ThemedComponents/Divider';
@@ -58,7 +58,9 @@ const Settings = () => {
 
     return (
         <Container noPadding withScrollView noFlex>
-            <Title style={{ marginTop: 10, marginLeft: 15 }}>{t('screens.settings.friendsTitle')}</Title>
+            <Text variant="headlineSmall" style={{ marginTop: 10, marginLeft: 15 }}>
+                {t('screens.settings.friendsTitle')}
+            </Text>
 
             <SingleSwitch testID="blockFriendRequestsSwitch" onPress={handleBlockFriendsChange} value={user.blockFriendRequests} text={t('screens.settings.blockFriendRequests')} noBorder />
             {/* Not fully implemented
@@ -78,7 +80,7 @@ const Settings = () => {
             </View>
             <Divider />
             <View style={tyyli.section}>
-                <Title>{t('screens.settings.infoTitle')}</Title>
+                <Text variant="headlineSmall">{t('screens.settings.infoTitle')}</Text>
                 <InfoText text1={t('screens.settings.version')} text2={appInfo.expo.version} />
                 <InfoText text1={t('screens.settings.build')} text2={appInfo.expo.android.versionCode.toString()} />
                 {(user.accountType !== AccountType.PLEB) && (

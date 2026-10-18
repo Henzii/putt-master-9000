@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { Button, Menu, Text } from "react-native-paper";
+import { Button, Menu, Text, useTheme } from "react-native-paper";
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 import Stack from "@components/Stack";
@@ -17,6 +17,7 @@ const Language: FC = () => {
   const { t } = useTranslation();
   const [preference, setPreference] = useState<LanguagePreference>(AUTO_LANGUAGE);
   const [menuVisible, setMenuVisible] = useState(false);
+  const colors = useTheme().colors;
 
   useEffect(() => {
     getUserLanguagePreference().then(setPreference);
@@ -68,6 +69,7 @@ const Language: FC = () => {
           anchor={
             <Button
               mode="outlined"
+              textColor={colors.onBackground}
               onPress={() => setMenuVisible(true)}
               style={{ flex: 1 }}
               icon="chevron-down"

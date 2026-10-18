@@ -1,7 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
-import { BackHandler } from "react-native";
+import { BackHandler, View } from "react-native";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "react-native-paper";
 import ToolBar from "./ToolBar";
 
 import { Routes, Route, useNavigate } from "react-router-native";
@@ -48,6 +49,7 @@ export default function App() {
   const pushToken = useSelector((state: RootState) => state.common.pushToken);
   const [shakeHands] = useLazyQuery<HandShake>(HANDSHAKE);
   const { t } = useTranslation();
+  const { colors } = useTheme();
 
   const { user } = useSessionV2();
 
@@ -111,7 +113,7 @@ export default function App() {
     };
   }, []);
   return (
-    <>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <Notifications />
       <ToolBar />
       <Routes>
@@ -136,6 +138,6 @@ export default function App() {
         </Route>
       </Routes>
       <StatusBar style="auto" />
-    </>
+    </View>
   );
 }

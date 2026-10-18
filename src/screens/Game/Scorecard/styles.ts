@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native';
+import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
 
-export const styles = StyleSheet.create({
+export const createStyles = (colors: MD3Colors) => StyleSheet.create({
     scoreButton: {
         marginRight: 5,
         borderWidth: 1,
-        borderColor: '#000',
-        backgroundColor: 'lightgray',
+        borderColor: colors.outline,
+        backgroundColor: colors.secondary,
         width: 45,
         height: 45,
         display: 'flex',
@@ -34,7 +35,7 @@ export const styles = StyleSheet.create({
     scoreButtonText: {
         fontSize: 18,
         fontWeight: '600',
-        color: '#4a4a4a'
+        color: colors.onSecondary,
     },
     scoreButtonSelected: {
         backgroundColor: '#8ecf8a',
@@ -50,9 +51,10 @@ export const styles = StyleSheet.create({
         alignSelf: 'center',
         marginBottom: 8,
         borderRadius: 4,
+        backgroundColor: colors.surface,
     },
     header: {
-        backgroundColor: "#d8e8d8",
+        backgroundColor: colors.secondaryContainer,
         paddingVertical: 7,
         paddingHorizontal: 15,
         borderTopRightRadius: 4,
