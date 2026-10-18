@@ -35,13 +35,12 @@ jobs:
       - name: Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20.x
+          node-version: 22
       - name: Install
         run: npm ci
       - name: Expo
-        uses: expo/expo-github-action@v7
+        uses: expo/expo-github-action@v8
         with:
-          expo-version: latest
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
       - name: Build App
