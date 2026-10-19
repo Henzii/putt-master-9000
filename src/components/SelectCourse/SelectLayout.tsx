@@ -81,9 +81,10 @@ const createStyles = (colors: MD3Colors) => StyleSheet.create({
         right: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        opacity: 0.8,
+        opacity: 0.5,
         zIndex: 10,
-        backgroundColor: colors.secondary,
+        backgroundColor: colors.surface,
+        pointerEvents: 'none',
     },
     deprecatedText: {
         fontSize: 40,

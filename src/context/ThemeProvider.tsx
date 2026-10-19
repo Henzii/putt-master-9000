@@ -22,10 +22,11 @@ const isThemePreference = (value: unknown): value is ThemePreference =>
     value === 'auto' || value === 'light' || value === 'dark';
 
 const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
-    const [preference, setPreferenceState] = useState<ThemePreference>('auto');
+    const [preference, setPreferenceState] = useState<ThemePreference>();
     const colorScheme = useColorScheme();
 
     const handleChangeTheme: ChangeThemeFunction = (newPreference) => {
+        if (!preference) return; // preference not initialized yet, don't override data, just quit...
         setPreferenceState(newPreference);
     };
 
@@ -36,6 +37,8 @@ const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
             if (localSettings && typeof localSettings === 'object' && 'Theme' in localSettings &&
                 isThemePreference(localSettings.Theme)) {
                 setPreferenceState(localSettings.Theme);
+            } else {
+                setPreferenceState('auto');
             }
         };
 
@@ -43,7 +46,7 @@ const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }, []);
 
     const theme = useMemo(() => {
-        const isDark = preference === 'dark' || (preference === 'auto' && colorScheme === 'dark');
+        const isDark = preference === 'dark' || (preference !== 'light' && colorScheme === 'dark');
         return isDark ? darkTheme : lightTheme;
     }, [colorScheme, preference]);
 

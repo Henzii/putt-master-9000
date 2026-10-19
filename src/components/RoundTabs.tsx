@@ -98,7 +98,7 @@ function SingleTab({ id, selected, onClick, finished, skipped }: SingleTabProps 
                 height: riseAnim,
                 width: riseAnim
             }]} >
-                <Text style={selected ? styles.textSelected : styles.text}>{id+1}</Text>
+                <Text style={selected ? styles.textSelected : skipped ? styles.textSkipped : styles.text}>{id+1}</Text>
             </Animated.View>
         </Pressable>
         <Separator />
@@ -156,9 +156,14 @@ const createStyles = (colors: MD3Colors) => StyleSheet.create({
         elevation: 2,
     },
     skipped: {
-        backgroundColor: colors.error
+        backgroundColor: colors.error,
+    },
+    textSkipped: {
+        color: colors.onError,
+        fontSize: 17,
+        fontWeight: 'bold'
     },
     finished: {
-        backgroundColor: 'rgba(40, 182, 40, 0.7)'
+        backgroundColor: colors.primary
     },
 });

@@ -32,7 +32,11 @@ const Theme: FC = () => {
                     testID={`themePreference-${option}`}
                     style={{ flexDirection: "row", alignItems: "center" }}
                 >
-                    <RadioButton value={option} status={preference === option ? "checked" : "unchecked"} />
+                    <RadioButton
+                        value={option}
+                        status={preference === option ? "checked" : "unchecked"}
+                        onPress={() => handlePreferenceChange(option)}
+                    />
                     <Text>{labels[option]}</Text>
                 </Pressable>
             ))}
