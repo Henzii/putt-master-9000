@@ -44,6 +44,7 @@
       "weeklies": "Veckovisa",
       "weekliesDescription": "Hitta veckovisa tävlingar nära dig",
       "feedback": "Feedback",
+      "feedbackDescription": "Lämna feedback eller rapportera ett fel",
       "logout": "Logga ut",
       "connectingToServer": "Ansluter till servern...",
       "sessionFailed": "Sessionen misslyckades",
@@ -253,7 +254,11 @@
       "languageSwedish": "Svenska",
       "languageEstonian": "Eesti",
       "languagePolish": "Polski",
-      "languageGerman": "Deutsch"
+      "languageGerman": "Deutsch",
+      "themeTitle": "Tema",
+      "themeAuto": "Automatiskt",
+      "themeLight": "Ljust",
+      "themeDark": "Mörkt"
     },
     "feedback": {
       "title": "Lämna feedback",

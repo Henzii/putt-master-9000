@@ -1,6 +1,8 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { Title } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
+import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 import BADGES from '../../constants/badges';
 import { parseDate } from '../../utils/dates';
 
@@ -12,6 +14,8 @@ type Props = {
 }
 
 const Badge = ({badgeName, date, course, layout}: Props) => {
+    const { colors } = useTheme();
+    const styles = createStyles(colors);
     const badge = BADGES.find(b => b.name === badgeName);
     if (!badge) return null;
     return (
@@ -31,20 +35,22 @@ const Badge = ({badgeName, date, course, layout}: Props) => {
     );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (colors: MD3Colors) => StyleSheet.create({
     info: {
         fontSize: 12,
+        color: colors.onSurfaceVariant,
     },
     text: {
         textAlign: 'center',
-        fontSize: 80
+        fontSize: 80,
+        color: colors.onSurface,
     },
     container: {
         height: 250,
         width: "45%",
         maxWidth: 200,
         borderRadius: 20,
-        backgroundColor: '#fafafa',
+        backgroundColor: colors.surface,
         margin: 5,
         padding: 10,
         elevation: 5,

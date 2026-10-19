@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
-import { StyleSheet, View, Text } from "react-native";
-import { List } from 'react-native-paper';
+import { StyleSheet, View } from "react-native";
+import { List, useTheme, Text } from 'react-native-paper';
+import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
 type Props = {
     number: string,
@@ -10,9 +11,12 @@ type Props = {
 }
 
 const NumberedTitle = (props: Props) => {
+    const { colors } = useTheme();
+    const styles = createStyles(colors);
+
     if (props.accordion) {
         return (
-            <List.Accordion title={<Title {...props} />} titleStyle={styles.accordionTitle} style={styles.accordion}>
+            <List.Accordion title={<Title {...props} />} titleStyle={styles.accordionTitle} >
                 {props.children}
             </List.Accordion>
         );
@@ -21,14 +25,18 @@ const NumberedTitle = (props: Props) => {
     return <Title {...props} />;
 };
 
-const Title = ({number, title}: {number: string, title: string}) => (
-    <View style={styles.container}>
-        <Text style={[styles.text, styles.number]}>{number}</Text>
-        <Text style={styles.text}>{title}</Text>
-    </View>
-);
+const Title = ({ number, title }: { number: string, title: string }) => {
+    const { colors } = useTheme();
+    const styles = createStyles(colors);
+    return (
+        <View style={styles.container}>
+            <Text style={[styles.text, styles.number]}>{number}</Text>
+            <Text style={styles.text}>{title}</Text>
+        </View>
+    );
+};
 
-const styles = StyleSheet.create({
+const createStyles = (colors: MD3Colors) => StyleSheet.create({
     container: {
         width: '100%',
         display: 'flex',
@@ -36,14 +44,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     accordionTitle: {
-        marginLeft: -15
-    },
-    accordion: {
-        backgroundColor: 'white',
+        marginLeft: -15,
     },
     text: {
         fontSize: 18,
         fontWeight: '600',
+        color: colors.onBackground,
     },
     number: {
         borderWidth: 1,

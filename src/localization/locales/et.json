@@ -44,6 +44,7 @@
       "weeklies": "Nädalalased",
       "weekliesDescription": "Otsi nädalalaseid võistlusi sinule lähedal",
       "feedback": "Tagasiside",
+      "feedbackDescription": "Jäta tagasisidet või teata veast",
       "logout": "Logi välja",
       "connectingToServer": "Ühendumine serveriga...",
       "sessionFailed": "Seanss ebaõnnestus",
@@ -253,7 +254,11 @@
       "languageSwedish": "Svenska",
       "languageEstonian": "Eesti",
       "languagePolish": "Polski",
-      "languageGerman": "Deutsch"
+      "languageGerman": "Deutsch",
+      "themeTitle": "Teema",
+      "themeAuto": "Automaatne",
+      "themeLight": "Hele",
+      "themeDark": "Tume"
     },
     "feedback": {
       "title": "Jäta tagasiside",

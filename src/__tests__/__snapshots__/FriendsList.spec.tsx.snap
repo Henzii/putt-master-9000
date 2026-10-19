@@ -95,7 +95,7 @@ exports[`<FriendList /> should render properly 1`] = `
                           "lineHeight": 32,
                         },
                         {
-                          "color": "white",
+                          "color": "rgb(255, 255, 255)",
                         },
                       ],
                     ]
@@ -646,8 +646,9 @@ exports[`<FriendList /> should render properly 1`] = `
                       [
                         {
                           "alignItems": "center",
-                          "borderColor": "lightgray",
-                          "borderWidth": 0,
+                          "backgroundColor": "rgb(251, 253, 249)",
+                          "borderColor": "rgb(191, 201, 195)",
+                          "borderWidth": 1,
                           "display": "flex",
                           "elevation": 1,
                           "flexDirection": "row",
@@ -655,9 +656,6 @@ exports[`<FriendList /> should render properly 1`] = `
                           "marginHorizontal": 10,
                           "marginVertical": 3,
                           "padding": 10,
-                        },
-                        {
-                          "backgroundColor": "#fff",
                         },
                         false,
                       ]
@@ -741,6 +739,7 @@ exports[`<FriendList /> should render properly 1`] = `
                               "writingDirection": "ltr",
                             },
                             {
+                              "color": "rgb(25, 28, 27)",
                               "fontSize": 18,
                               "marginLeft": 8,
                             },
@@ -754,7 +753,7 @@ exports[`<FriendList /> should render properly 1`] = `
                       collapsable={false}
                       style={
                         {
-                          "backgroundColor": "rgb(239, 241, 238)",
+                          "backgroundColor": "rgb(241, 243, 239)",
                           "borderRadius": 20,
                           "height": 40,
                           "margin": 6,
@@ -774,8 +773,8 @@ exports[`<FriendList /> should render properly 1`] = `
                         collapsable={false}
                         style={
                           {
-                            "backgroundColor": "rgb(239, 241, 238)",
-                            "borderColor": "rgb(112, 121, 116)",
+                            "backgroundColor": "rgb(241, 243, 239)",
+                            "borderColor": "rgb(153, 165, 158)",
                             "borderRadius": 20,
                             "borderWidth": 0,
                             "elevation": 0,
@@ -852,7 +851,7 @@ exports[`<FriendList /> should render properly 1`] = `
                           testID="icon-button"
                         >
                           <Icon
-                            color="darkred"
+                            color="rgb(186, 26, 26)"
                             direction={null}
                             name="trash-can-outline"
                             size={24}
@@ -904,8 +903,9 @@ exports[`<FriendList /> should render properly 1`] = `
                       [
                         {
                           "alignItems": "center",
-                          "borderColor": "lightgray",
-                          "borderWidth": 0,
+                          "backgroundColor": "rgb(251, 253, 249)",
+                          "borderColor": "rgb(191, 201, 195)",
+                          "borderWidth": 1,
                           "display": "flex",
                           "elevation": 1,
                           "flexDirection": "row",
@@ -913,9 +913,6 @@ exports[`<FriendList /> should render properly 1`] = `
                           "marginHorizontal": 10,
                           "marginVertical": 3,
                           "padding": 10,
-                        },
-                        {
-                          "backgroundColor": "#fff",
                         },
                         false,
                       ]
@@ -999,6 +996,7 @@ exports[`<FriendList /> should render properly 1`] = `
                               "writingDirection": "ltr",
                             },
                             {
+                              "color": "rgb(25, 28, 27)",
                               "fontSize": 18,
                               "marginLeft": 8,
                             },
@@ -1012,7 +1010,7 @@ exports[`<FriendList /> should render properly 1`] = `
                       collapsable={false}
                       style={
                         {
-                          "backgroundColor": "rgb(239, 241, 238)",
+                          "backgroundColor": "rgb(241, 243, 239)",
                           "borderRadius": 20,
                           "height": 40,
                           "margin": 6,
@@ -1032,8 +1030,8 @@ exports[`<FriendList /> should render properly 1`] = `
                         collapsable={false}
                         style={
                           {
-                            "backgroundColor": "rgb(239, 241, 238)",
-                            "borderColor": "rgb(112, 121, 116)",
+                            "backgroundColor": "rgb(241, 243, 239)",
+                            "borderColor": "rgb(153, 165, 158)",
                             "borderRadius": 20,
                             "borderWidth": 0,
                             "elevation": 0,
@@ -1110,7 +1108,7 @@ exports[`<FriendList /> should render properly 1`] = `
                           testID="icon-button"
                         >
                           <Icon
-                            color="darkred"
+                            color="rgb(186, 26, 26)"
                             direction={null}
                             name="trash-can-outline"
                             size={24}
@@ -1142,7 +1140,7 @@ exports[`<FriendList /> should render properly 1`] = `
           collapsable={false}
           style={
             {
-              "backgroundColor": "#fafafa",
+              "backgroundColor": "rgb(251, 253, 249)",
               "bottom": 0,
               "left": -750,
               "padding": 10,
@@ -1226,7 +1224,7 @@ exports[`<FriendList /> should render properly 1`] = `
                   style={
                     {
                       "backgroundColor": "transparent",
-                      "borderColor": "rgb(112, 121, 116)",
+                      "borderColor": "rgb(153, 165, 158)",
                       "borderRadius": 20,
                       "borderWidth": 0,
                       "elevation": 0,
@@ -1353,8 +1351,8 @@ exports[`<FriendList /> should render properly 1`] = `
                     },
                     false,
                     {
-                      "backgroundColor": "rgb(251, 253, 249)",
-                      "borderColor": "rgb(112, 121, 116)",
+                      "backgroundColor": "rgb(247, 247, 247)",
+                      "borderColor": "rgb(153, 165, 158)",
                       "borderRadius": 4,
                       "borderWidth": 1,
                     },
@@ -1430,7 +1428,7 @@ exports[`<FriendList /> should render properly 1`] = `
                         numberOfLines={1}
                         style={
                           {
-                            "backgroundColor": "rgb(251, 253, 249)",
+                            "backgroundColor": "rgb(247, 247, 247)",
                             "color": "transparent",
                             "fontFamily": "System",
                             "fontSize": 16,

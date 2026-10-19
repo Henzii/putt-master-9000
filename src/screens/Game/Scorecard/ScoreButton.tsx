@@ -1,7 +1,7 @@
 import React from 'react';
-import { Text, Pressable } from 'react-native';
-import { ActivityIndicator } from 'react-native-paper';
-import { styles } from './styles';
+import { Pressable } from 'react-native';
+import { ActivityIndicator, useTheme, Text } from 'react-native-paper';
+import { createStyles } from './styles';
 
 type Props = {
     par?: number
@@ -12,7 +12,8 @@ type Props = {
 }
 
 export const ScoreButton = ({ onClick, number, selected, pending, par }: Props) => {
-
+    const { colors } = useTheme();
+    const styles = createStyles(colors);
     const bgStyles = [
         styles.scoreButton,
         (par === number) && styles.scoreButtonPar,

@@ -2,7 +2,8 @@ import ErrorScreen from "@components/ErrorScreen";
 import useGPS from "@hooks/useGPS";
 import React from "react";
 import { FC } from "react";
-import { Text, Button } from "react-native-paper";
+import { Text, Button, useTheme } from "react-native-paper";
+import { MD3Colors } from "react-native-paper/lib/typescript/types";
 import { StyleSheet, View } from "react-native";
 import Stack from "@components/Stack";
 import Spacer from "@components/ThemedComponents/Spacer";
@@ -132,32 +133,28 @@ const Point: FC<{
   title: string;
 }> = ({ point, gps, title }) => {
   const { t } = useTranslation();
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
   const [lat, lon] = point?.coordinates ?? [gps.lat ?? 0, gps.lon ?? 0];
 
   const acc = point?.acc ?? gps.acc ?? 0;
 
-  const accStyle =
-    acc > 7 ? styles.red : acc > 3 ? styles.orange : styles.green;
+  const accColor =
+    acc > 7 ? colors.error : acc > 3 ? colors.tertiary : colors.primary;
 
   return (
     <Stack style={{ flex: 0 }}>
       <Text variant="titleMedium">{title}</Text>
       <Text>{t('screens.distance.measure.latitude')} {lat}</Text>
       <Text>{t('screens.distance.measure.longitude')} {lon}</Text>
-      <Text style={accStyle}>{t('screens.distance.measure.accuracy')} {acc?.toFixed(2) || "-"}</Text>
+      <Text style={[styles.accuracy, { color: accColor }]}>{t('screens.distance.measure.accuracy')} {acc?.toFixed(2) || "-"}</Text>
     </Stack>
   );
 };
 
-const styles = StyleSheet.create({
-  red: {
-    color: "red",
-  },
-  orange: {
-    color: "orange",
-  },
-  green: {
-    color: "green",
+const createStyles = (colors: MD3Colors) => StyleSheet.create({
+  accuracy: {
+    color: colors.primary,
   },
 });
 

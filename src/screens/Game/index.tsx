@@ -14,7 +14,7 @@ import CreateGame, { NewGameData } from './CreateGame';
 import Game from './Game';
 import Setup from './Setup';
 import Summary from './Summary/Summary';
-import { useSettings } from '../../components/LocalSettingsProvider';
+import { useSettings } from '../../context/LocalSettingsProvider';
 import { GAME_SUBSCRIPTION } from '../../graphql/subscriptions';
 import { updateGame } from '../../utils/gameCahcheUpdates';
 import { useSubscription } from '../../hooks/useSubscription';

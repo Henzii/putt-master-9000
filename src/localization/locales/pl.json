@@ -44,6 +44,7 @@
       "weeklies": "Tygodniowe",
       "weekliesDescription": "Znajdź tygodniowe konkurencje w pobliżu",
       "feedback": "Opinia",
+      "feedbackDescription": "Przekaż opinię lub zgłoś błąd",
       "logout": "Wyloguj się",
       "connectingToServer": "Łączenie z serwerem...",
       "sessionFailed": "Sesja nie powiodła się",
@@ -253,7 +254,11 @@
       "languageSwedish": "Svenska",
       "languageEstonian": "Eesti",
       "languagePolish": "Polski",
-      "languageGerman": "Deutsch"
+      "languageGerman": "Deutsch",
+      "themeTitle": "Motyw",
+      "themeAuto": "Automatyczny",
+      "themeLight": "Jasny",
+      "themeDark": "Ciemny"
     },
     "feedback": {
       "title": "Prześlij opinię",

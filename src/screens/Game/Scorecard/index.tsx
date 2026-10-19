@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, FlatList, LayoutChangeEvent } from 'react-native';
-import { useSettings } from '../../../components/LocalSettingsProvider';
+import { View, FlatList, LayoutChangeEvent } from 'react-native';
+import { Text } from 'react-native-paper';
+import { useSettings } from '../../../context/LocalSettingsProvider';
 import useStats from '../../../hooks/useStats';
 import Statsbar from './Statsbar';
 import SplitContainer from '../../../components/ThemedComponents/SplitContainer';
 import { useTheme } from 'react-native-paper';
 import type { Scorecard } from '../../../types/game';
 import { ScoreButton } from './ScoreButton';
-import { styles } from './styles';
+import { createStyles } from './styles';
 
 type PlayerArgs = {
     player: Scorecard,
@@ -51,8 +52,10 @@ const Player = React.memo(function Scorecard ({ player, selectedRound, setScore,
     };
 
     const plusMinus = player.plusminus ?? 0;
+    const styles = createStyles(theme.colors);
+
     return (
-        <View style={[styles.container, {backgroundColor: theme.colors.surface}]} onLayout={handleOnLayout}>
+        <View style={styles.container} onLayout={handleOnLayout}>
             <SplitContainer style={styles.header}>
                 <Text style={styles.title}>{player.user.name}</Text>
                 {!settings.getBoolValue('HidePlusMinus') &&

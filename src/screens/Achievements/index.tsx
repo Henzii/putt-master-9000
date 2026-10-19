@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { IconButton, Text, useTheme } from "react-native-paper";
 import ErrorScreen from '@components/ErrorScreen';
 import Loading from '@components/Loading';
@@ -48,13 +48,13 @@ const Achievements = () => {
     const achievements = selectedFriend ? data.getMe.friends?.find(f => f.id === selectedFriend.id)?.achievements : data.getMe.achievements;
 
     return (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1, backgroundColor: colors.background }}>
             <Header setSpacing={setHeaderSpacing} bottomSize={20}>
                 <Stack gap={20} direction='row' justifyContent="space-between" alignItems='center' maxWidth="100%">
-                    <Text variant="headlineSmall" style={styles.headerText} numberOfLines={2}>
+                    <Text variant="headlineSmall" style={{ color: colors.onPrimary, flexShrink: 1 }} numberOfLines={2}>
                         {selectedFriend ? t('screens.achievements.userAchievements', { name: selectedFriend.name }) : t('screens.achievements.myAchievements')}
                     </Text>
-                    <IconButton onPress={handleSpyButtonPress} icon={selectedFriend ? 'account' : 'incognito'} containerColor={colors.tertiary} iconColor={colors.primary} />
+                    <IconButton onPress={handleSpyButtonPress} icon={selectedFriend ? 'account' : 'incognito'} containerColor={colors.tertiary} iconColor={colors.onTertiary} />
                 </Stack>
             </Header>
             <ScrollView>
@@ -70,7 +70,7 @@ const Achievements = () => {
                         />
                     ))}
                     {achievements?.length === 0 && (
-                        <Text style={{ textAlign: 'center', width: '100%' }}>{t('screens.achievements.noAchievements')}</Text>
+                        <Text style={{ textAlign: 'center', width: '100%', color: colors.onSurface }}>{t('screens.achievements.noAchievements')}</Text>
                     )}
                 </View>
                 <Spacer />
@@ -78,13 +78,5 @@ const Achievements = () => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    headerText: {
-        color: '#fff',
-        flexShrink: 1
-    }
-});
-
 
 export default Achievements;

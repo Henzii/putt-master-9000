@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, type JSX } from 'react';
-import { View, Text, ScrollView, Pressable, StyleSheet, Animated } from 'react-native';
+import { View, ScrollView, Pressable, StyleSheet, Animated } from 'react-native';
 import { Game } from '../types/game';
+import { useTheme, Text } from 'react-native-paper';
+import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
 const TAB_WIDTH = 47;
 const TAB_HEIGHT = 47;
@@ -12,6 +14,8 @@ const BORDER_COLOR = "#6a6a6a";
 export default function RoundTabs({ gameData, selectedRound, setSelectedRound }: RoundTabsProps) {
     const tabsList: JSX.Element[] = [];
     const scrollRef = useRef<ScrollView>(null);
+    const {colors} = useTheme();
+    const styles = createStyles(colors);
     // Kun rata vaihtuu, scrollataan rata esille
     useEffect(() => {
         scrollRef.current?.scrollTo({
@@ -46,10 +50,10 @@ export default function RoundTabs({ gameData, selectedRound, setSelectedRound }:
 
     }
     return (
-        <View style={tabsStyle.container}>
+        <View style={styles.container}>
             <ScrollView
                 horizontal
-                contentContainerStyle={tabsStyle.root}
+                contentContainerStyle={styles.root}
                 showsHorizontalScrollIndicator={false}
                 ref={scrollRef}
             >
@@ -63,6 +67,9 @@ const Separator = () => <View style={{ borderBottomWidth: 1, borderBottomColor: 
 
 function SingleTab({ id, selected, onClick, finished, skipped }: SingleTabProps ) {
     const riseAnim = useRef(new Animated.Value(TAB_SIZE)).current;
+    const {colors} = useTheme();
+    const styles = createStyles(colors);
+
     useEffect(() => {
         if (selected) {
             Animated.timing(riseAnim, {
@@ -78,20 +85,20 @@ function SingleTab({ id, selected, onClick, finished, skipped }: SingleTabProps 
             }).start();
         }
     }, [selected]);
-    const styles = [
-        tabsStyle.single,
-        selected && tabsStyle.selected,
-        finished && tabsStyle.finished,
-        skipped && tabsStyle.skipped
+    const defaultStyles = [
+        styles.single,
+        selected && styles.selected,
+        finished && styles.finished,
+        skipped && styles.skipped
     ];
     return (
         <>
         <Pressable onPress={() => onClick(id)} testID="SingleTab">
-            <Animated.View style={[styles, {
+            <Animated.View style={[defaultStyles, {
                 height: riseAnim,
                 width: riseAnim
             }]} >
-                <Text style={selected ? tabsStyle.textSelected : tabsStyle.text}>{id+1}</Text>
+                <Text style={selected ? styles.textSelected : skipped ? styles.textSkipped : styles.text}>{id+1}</Text>
             </Animated.View>
         </Pressable>
         <Separator />
@@ -111,7 +118,7 @@ type RoundTabsProps = {
     setSelectedRound: (round: number) => void,
 }
 
-const tabsStyle = StyleSheet.create({
+const createStyles = (colors: MD3Colors) => StyleSheet.create({
     container: {
         width: '100%',
         marginTop: 2,
@@ -140,18 +147,23 @@ const tabsStyle = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.7,
-        backgroundColor: '#dedede'
+        backgroundColor: colors.background,
     },
     selected: {
         borderBottomWidth: 0,
         opacity: 1,
-        backgroundColor: 'white',
+        backgroundColor: colors.surface,
         elevation: 2,
     },
     skipped: {
-        backgroundColor: 'rgb(225,120,120)'
+        backgroundColor: colors.error,
+    },
+    textSkipped: {
+        color: colors.onError,
+        fontSize: 17,
+        fontWeight: 'bold'
     },
     finished: {
-        backgroundColor: 'rgb(180,220,180)'
+        backgroundColor: colors.primary
     },
 });

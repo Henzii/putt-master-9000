@@ -1,11 +1,12 @@
 import { StyleSheet } from "react-native";
 import { scoreColors } from "../../../utils/theme";
+import { MD3Colors } from "react-native-paper/lib/typescript/types";
 
-export const tableStyles = StyleSheet.create({
+export const createTableStyles = (colors: MD3Colors) => StyleSheet.create({
     headerText: {
         fontSize: 15,
         fontWeight: '700',
-        color: '#5f6a7e',
+        color: colors.onSurfaceVariant,
     },
     rank: {
         maxWidth: 15,
@@ -21,7 +22,7 @@ export const tableStyles = StyleSheet.create({
     scoreText: {
         fontSize: 12,
         fontWeight: '800',
-        color: '#3d4f3a'
+        color: colors.onSurface,
     },
     total: {
         minWidth: 50,
@@ -34,7 +35,7 @@ export const tableStyles = StyleSheet.create({
     totalText: {
         fontSize: 12,
         fontWeight: 'bold',
-        color: 'black',
+        color: colors.onSurface,
     }
 });
 

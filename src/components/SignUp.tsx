@@ -76,7 +76,7 @@ const SignUp = ({onClose, isFriendSignUp}: Props) => {
         }
     };
     return (
-        <Container withScrollView style={tyyli.main}>
+        <Container withScrollView style={tyyli.main} fullHeight>
             <Title>{isFriendSignUp ? t('components.signUp.titleFriend') : t('components.signUp.title')}</Title>
             {(isFriendSignUp) &&
                 <>

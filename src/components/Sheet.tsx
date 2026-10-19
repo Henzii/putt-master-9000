@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { PropsWithChildren } from "react";
 import { Animated, Dimensions, Pressable, StyleSheet } from 'react-native';
-import { Portal } from 'react-native-paper';
+import { Portal, useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
 const screenWidth = Dimensions.get('screen').width;
 
@@ -12,6 +13,8 @@ type Props = PropsWithChildren & {
 }
 const Sheet = ({children, open, onClose}: Props) => {
     const insets = useSafeAreaInsets();
+    const { colors } = useTheme();
+    const styles = createStyles(colors);
     const slideAnim = useRef(new Animated.Value(-screenWidth)).current;
 
     useEffect(() => {
@@ -39,13 +42,13 @@ const Sheet = ({children, open, onClose}: Props) => {
     );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (colors: MD3Colors) => StyleSheet.create({
     container: {
         position: 'absolute',
         top: 0,
         bottom: 0,
         width: screenWidth - 50,
-        backgroundColor: '#fafafa',
+        backgroundColor: colors.surface,
         zIndex: 10,
         padding: 10,
     },
@@ -55,8 +58,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        backgroundColor: 'black',
-        opacity: 0.6,
+        backgroundColor: colors.backdrop,
         zIndex: 1
     }
 });

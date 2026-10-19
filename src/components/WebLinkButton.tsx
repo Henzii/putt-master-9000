@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { ComponentProps } from 'react';
 import { Linking } from "react-native";
-import { Button } from "react-native-paper";
+import { Button, useTheme } from "react-native-paper";
 
 import store from '../utils/store';
 import { addNotification } from 'src/reducers/notificationReducer';
@@ -29,12 +29,14 @@ export const openWebsite = async ({path, withToken, url = BASE_URL}: Omit<Props,
 };
 
 const WebLinkButton = ({children, path, withToken, url = BASE_URL, ...rest}: Props) => {
+    const {colors} = useTheme();
+
     const handlePress = () => {
         openWebsite({path, withToken, url});
     };
 
     return (
-        <Button onPress={handlePress} icon="open-in-new" contentStyle={{ flexDirection: 'row-reverse' }} {...rest}>
+        <Button onPress={handlePress} textColor={colors.secondary} icon="open-in-new" contentStyle={{ flexDirection: 'row-reverse' }} {...rest}>
             {children ?? url}
         </Button>
     );

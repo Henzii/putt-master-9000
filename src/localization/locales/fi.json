@@ -43,6 +43,7 @@
       "weeklies": "Viikkokisat",
       "weekliesDescription": "Löydä lähellä olevat viikkokisat",
       "feedback": "Palaute",
+      "feedbackDescription": "Jätä palautetta tai ilmoita bugista",
       "logout": "Kirjaudu ulos",
       "connectingToServer": "Yhdistetään palvelimeen...",
       "sessionFailed": "Istunto epäonnistui",
@@ -248,7 +249,11 @@
       "languageSwedish": "Svenska",
       "languageEstonian": "Eesti",
       "languagePolish": "Polski",
-      "languageGerman": "Deutsch"
+      "languageGerman": "Deutsch",
+      "themeTitle": "Teema",
+      "themeAuto": "Automaattinen",
+      "themeLight": "Vaalea",
+      "themeDark": "Tumma"
     },
     "feedback": {
       "title": "Jätä palautetta",

@@ -8,12 +8,10 @@ import { View } from "react-native";
 import { addNotification } from "../reducers/notificationReducer";
 import { useDispatch } from "react-redux";
 import { getAPIUrl } from "../graphql/apolloClient";
-import { useChangeTheme } from "src/context/ThemeProvider";
 
 export default function DevPage() {
     const [env, setEnvState] = useState<string | undefined>();
     const [api, setApi] = useState('');
-    const changeTheme = useChangeTheme();
 
     useEffect(() => {
         (async function IIFE() {
@@ -24,9 +22,6 @@ export default function DevPage() {
 
     useEffect(() => {
         getAPIUrl().then(setApi);
-        if (env) {
-            changeTheme(env);
-        }
     }, [env]);
 
     const dispatch = useDispatch();

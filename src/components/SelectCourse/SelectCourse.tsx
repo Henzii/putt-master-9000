@@ -154,7 +154,7 @@ const SelectCourses = ({ onSelect, onBackAction, title, showDistance = true, sho
                     ListFooterComponent={
                         (loading)
                             ? <Loading noFullScreen loadingText="" />
-                            : <Text style={{ color: 'rgba(0,0,0,0.2)' }}>    {t('components.selectCourse.noMore')}</Text>
+                            : <Text style={styles.footer}>{t('components.selectCourse.noMore')}</Text>
                     }
                     onEndReached={fetchMore}
                     onEndReachedThreshold={0.1}
@@ -184,8 +184,11 @@ const createStyles = (colors: MD3Colors) => StyleSheet.create({
         backgroundColor: colors.surface,
     },
     title: {
-        color: 'white',
+        color: colors.onPrimary,
         paddingBottom: 10
+    },
+    footer: {
+        color: colors.onSurfaceDisabled,
     }
 });
 export default SelectCourses;

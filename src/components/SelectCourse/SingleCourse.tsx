@@ -7,8 +7,9 @@ import AddLayout from '../AddLayout';
 import ExtraMenu from './ExtraMenu';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import { LiveData } from '../../hooks/useLiveData';
-import { theme } from '../../utils/theme';
 import { useDistanceUnit } from '@hooks/useDistanceUnit';
+import { MD3Colors } from 'react-native-paper/lib/typescript/types';
+import { useTheme } from 'react-native-paper';
 
 type SingleCourseProps = {
     course: Course,
@@ -28,6 +29,8 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, onEdi
     const [addLayoutModal, setAddLayoutModal] = useState(false);
     const [layoutToEdit, setLayoutToEdit] = useState<Layout>();
     const distanceString = useDistanceUnit(course.distance.meters);
+    const { colors } = useTheme();
+    const styles = createStyles(colors);
 
     const handleCourseClick = () => {
         if (!onCourseClick) return;
@@ -79,13 +82,13 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, onEdi
                         <View style={styles.extraInfo}>
                             {showDistance && (
                                 <View style={styles.distance}>
-                                    <Icon name="map-marker-distance" size={18} color="gray" />
+                                    <Icon name="map-marker-distance" size={18} color={colors.onSurfaceVariant} />
                                     <Text style={styles.iconText}>{distanceString}</Text>
                                 </View>
                             )}
                             {courseLiveData && (
                                 <View style={styles.distance}>
-                                    <Icon name={getLiveIcon(courseLiveData.liveNow)} size={18} color="gray" />
+                                    <Icon name={getLiveIcon(courseLiveData.liveNow)} size={18} color={colors.onSurfaceVariant} />
                                     <Text style={styles.iconText}>{courseLiveData.liveNow} ({courseLiveData.liveToday})</Text>
                                 </View>
                             )}
@@ -102,7 +105,7 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, onEdi
                 <View>
                     <SelectLayout course={course} onSelect={onLayoutClick} onEditLayout={handleEditLayout} />
                     <View style={styles.bottomButtons}>
-                        <Button onPress={handleAddLayoutClick} mode='outlined' icon="text-box-plus-outline" uppercase={false}>Add layout</Button>
+                        <Button onPress={handleAddLayoutClick} mode="contained-tonal" icon="text-box-plus-outline" uppercase={false}>Add layout</Button>
                         {(course.canEdit || isAdmin) && <ExtraMenu course={course} onEditCoursePress={onEditCoursePress} />}
                     </View>
                 </View>
@@ -111,7 +114,7 @@ const SingleCourse = ({ course, onAddLayout, onLayoutClick, onCourseClick, onEdi
     );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (colors: MD3Colors) => StyleSheet.create({
     notSelected: {
         opacity: 0.4
     },
@@ -122,10 +125,10 @@ const styles = StyleSheet.create({
         marginVertical: 3,
         elevation: 1,
         minHeight: 77,
-        backgroundColor: '#fff',
+        backgroundColor: colors.surface,
     },
     expanded: {
-        backgroundColor: theme.colors.elevation.level4,
+        backgroundColor: colors.elevation.level2,
         elevation: 4
     },
     header: {
@@ -134,10 +137,11 @@ const styles = StyleSheet.create({
     },
     courseName: {
         fontSize: 20,
+        color: colors.onSurface,
     },
     layouts: {
         fontSize: 14,
-        color: '#808080',
+        color: colors.onSurfaceVariant,
         marginRight: 10
     },
     extraInfo: {
@@ -155,7 +159,7 @@ const styles = StyleSheet.create({
         margin: 0,
         padding: 0,
         fontSize: 13,
-        color: '#808080',
+        color: colors.onSurfaceVariant,
 
     },
     bottomButtons: {

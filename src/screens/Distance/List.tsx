@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Container from "@components/ThemedComponents/Container";
 import { FC } from "react";
 import { IconButton, Text, useTheme } from "react-native-paper";
+import { MD3Colors } from "react-native-paper/lib/typescript/types";
 import Stack from "@components/Stack";
 import { StyleSheet, View } from "react-native";
 import { getDistanceFromLatLonInMeters } from "src/utils/distance";
@@ -75,6 +76,7 @@ const Card: FC<{
     measurement.startingPoint.acc + measurement.landingPoint.acc
   );
   const { colors } = useTheme();
+  const styles = createStyles(colors);
 
   return (
     <View style={styles.card}>
@@ -94,7 +96,7 @@ const Card: FC<{
         <Stack direction="row">
           <IconButton
             icon="map"
-            iconColor={colors.primary}
+            iconColor={colors.onSecondaryContainer}
             mode="contained"
             onPress={() => onMap(measurement.id)}
           />
@@ -105,28 +107,31 @@ const Card: FC<{
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (colors: MD3Colors) => StyleSheet.create({
   card: {
     elevation: 2,
     paddingVertical: 15,
     paddingHorizontal: 10,
     borderRadius: 5,
-    backgroundColor: "white",
+    backgroundColor: colors.surface,
   },
   indexText: {
     fontWeight: "semibold",
     fontSize: 18,
+    color: colors.onSurface,
   },
   distance: {
     fontWeight: "bold",
     fontSize: 20,
+    color: colors.onSurface,
   },
   dateText: {
     fontSize: 12,
+    color: colors.onSurfaceVariant,
   },
   plusMinus: {
     fontSize: 12,
-    color: "gray",
+    color: colors.onSurfaceVariant,
   },
 });
 

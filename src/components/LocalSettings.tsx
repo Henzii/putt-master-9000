@@ -1,9 +1,9 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
-import { Switch } from "react-native-paper";
+import { StyleSheet } from "react-native";
+import { Switch, Text } from "react-native-paper";
 import { useTranslation } from 'react-i18next';
-import type { SettingName } from "../hooks/useLocalSettings";
-import { useSettings } from "./LocalSettingsProvider";
+import { useSettings } from "../context/LocalSettingsProvider";
+import type { SettingName } from "../context/LocalSettingsProvider";
 import SplitContainer from "./ThemedComponents/SplitContainer";
 
 export default function LocalSettings() {

@@ -1,4 +1,4 @@
-import { useSettings } from "@components/LocalSettingsProvider";
+import { useSettings } from "../context/LocalSettingsProvider";
 
 export const useDistanceUnit = (meters: number): string => {
   const settings = useSettings();

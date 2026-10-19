@@ -1,10 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect } from 'react';
-import { createContext, FC, ReactNode, useContext, useState } from "react";
+import { createContext, FC, ReactNode, useContext, useMemo, useState } from "react";
+import { useColorScheme } from 'react-native';
 import { PaperProvider } from "react-native-paper";
-import { theme as defaultTheme, devTheme, prevTheme } from "src/utils/theme";
+import { darkTheme, theme as lightTheme } from "src/utils/theme";
 
-type ChangeThemeFunction = (theme?: string | null) => void;
+export type ThemePreference = 'auto' | 'light' | 'dark';
+type ChangeThemeFunction = (preference: ThemePreference) => void;
 
 const ThemeContext = createContext<ChangeThemeFunction | null>(null);
 
@@ -16,27 +18,37 @@ export const useChangeTheme = () => {
     return changeFunction;
 };
 
-const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
-    const [theme, setTheme] = useState(defaultTheme);
+const isThemePreference = (value: unknown): value is ThemePreference =>
+    value === 'auto' || value === 'light' || value === 'dark';
 
-    const handleChangeTheme: ChangeThemeFunction = (theme) => {
-        if (theme === 'development') {
-            setTheme(devTheme);
-        } else if (theme === 'preview') {
-            setTheme(prevTheme);
-        } else {
-            setTheme(defaultTheme);
-        }
+const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
+    const [preference, setPreferenceState] = useState<ThemePreference>();
+    const colorScheme = useColorScheme();
+
+    const handleChangeTheme: ChangeThemeFunction = (newPreference) => {
+        if (!preference) return; // preference not initialized yet, don't override data, just quit...
+        setPreferenceState(newPreference);
     };
 
     useEffect(() => {
         const initializeTheme = async () => {
-            const env = await AsyncStorage.getItem('apiEnv') || process.env.NODE_ENV as string;
-            handleChangeTheme(env);
+            const settings = await AsyncStorage.getItem('localSettings');
+            const localSettings: unknown = settings ? JSON.parse(settings) : null;
+            if (localSettings && typeof localSettings === 'object' && 'Theme' in localSettings &&
+                isThemePreference(localSettings.Theme)) {
+                setPreferenceState(localSettings.Theme);
+            } else {
+                setPreferenceState('auto');
+            }
         };
 
         initializeTheme();
     }, []);
+
+    const theme = useMemo(() => {
+        const isDark = preference === 'dark' || (preference !== 'light' && colorScheme === 'dark');
+        return isDark ? darkTheme : lightTheme;
+    }, [colorScheme, preference]);
 
     return (
         <ThemeContext.Provider value={handleChangeTheme}>

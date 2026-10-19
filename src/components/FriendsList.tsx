@@ -9,16 +9,15 @@ import SplitContainer from './ThemedComponents/SplitContainer';
 import { InitialsAndColors, initialsAndColorGenerator } from '../utils/initialsAndColorGenerator';
 import { User } from '../types/user';
 import { useBackButton } from './BackButtonProvider';
-import { theme } from '../utils/theme';
 import Spacer from './ThemedComponents/Spacer';
 import { useFriends } from '../hooks/useFriends';
 import SignUp from './SignUp';
 import Header from './RoundedHeader/Header';
 import HeaderButton from './RoundedHeader/HeaderButton';
-import Color from 'color';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Sheet from './Sheet';
 import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
+import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
 
 type FriendListProps = {
@@ -41,6 +40,8 @@ const FriendsList = (props: FriendListProps) => {
     const backButton = useBackButton();
     const [headerSpacing, setHeaderSpacing] = useState(50);
     const insets = useSafeAreaInsets();
+    const { colors } = useTheme();
+    const styles = createStyles(colors);
 
     useEffect(() => {
         if (props.onBackAction) {
@@ -90,9 +91,9 @@ const FriendsList = (props: FriendListProps) => {
 
             <Header bottomSize={20} setSpacing={setHeaderSpacing}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-                    <Text variant="headlineSmall" style={tyyli.headline}>{t('components.friendsList.title')}</Text>
+                    <Text variant="headlineSmall" style={styles.headline}>{t('components.friendsList.title')}</Text>
                     {selectedFriends.length > 0 && props.multiSelect && (
-                        <Text style={{ color: 'white' }}>{t('components.friendsList.selectedCount', { count: selectedFriends.length })}</Text>)}
+                        <Text style={{ color: colors.onPrimary }}>{t('components.friendsList.selectedCount', { count: selectedFriends.length })}</Text>)}
                 </View>
                 <Spacer size={10} />
                 <SplitContainer spaceAround>
@@ -103,7 +104,7 @@ const FriendsList = (props: FriendListProps) => {
             </Header>
             {loading ? <Loading loadingText={t('components.friendsList.loadingFriends')} /> : (
                 <FlatList
-                    style={tyyli.lista}
+                    style={styles.lista}
                     contentContainerStyle={{ paddingTop: headerSpacing * 2 - 15, paddingBottom: headerSpacing * 2 }}
                     data={friends}
                     renderItem={({ item }) => (
@@ -121,9 +122,9 @@ const FriendsList = (props: FriendListProps) => {
             )}
             {props.multiSelect ?
                 <Button
-                    style={[tyyli.button, { bottom: insets.bottom }]}
+                    style={[styles.button, { bottom: insets.bottom }]}
                     mode="contained"
-                    buttonColor={Color(theme.colors.primary).alpha(0.9).toString()}
+                    buttonColor={colors.primary}
                     onPress={handleOkClick}
                 >
                     {t('components.friendsList.addPlayersToGame')}
@@ -144,6 +145,7 @@ type SingleFriendProps = {
 }
 const SingleFriend = ({ friend, onClick, onDelete, showRemoveButton = true, showCheckBox = false, selected = false, initialsAndColors }: SingleFriendProps) => {
     const { colors } = useTheme();
+    const styles = createStyles(colors);
     const handleFriendClick = () => {
         if (onClick) onClick(friend);
     };
@@ -153,25 +155,24 @@ const SingleFriend = ({ friend, onClick, onDelete, showRemoveButton = true, show
     const { label: avatarLabel, color: avatarColor } = initialsAndColors[friend.id];
     return (
         <Pressable onPress={handleFriendClick}>
-            <View style={[tyyli.singleFriend, { backgroundColor: '#fff' }, (selected && tyyli.selectedBackground)]}>
-                <View style={tyyli.singleFriendName}>
+            <View style={[styles.singleFriend, selected && styles.selectedBackground]}>
+                <View style={styles.singleFriendName}>
                     <Avatar.Text
                         label={avatarLabel}
                         size={40}
                         labelStyle={{ fontSize: avatarLabel.length > 1 ? 18 : 20 }}
                         style={{ backgroundColor: avatarColor }}
                     />
-                    {/*<Avatar.Icon icon={selected ? 'account-tie' : 'account'} size={40} style={{backgroundColor: selected ? colors.surface : '#89ab9f'}} />*/}
-                    <Text style={tyyli.singleFriendText}>{friend.name}</Text>
+                    <Text style={styles.singleFriendText}>{friend.name}</Text>
                 </View>
-                {showRemoveButton && <IconButton icon="trash-can-outline" iconColor='darkred' onPress={handleDelete} style={{ backgroundColor: colors.inverseOnSurface }} />}
+                {showRemoveButton && <IconButton icon="trash-can-outline" iconColor={colors.error} onPress={handleDelete} style={{ backgroundColor: colors.surfaceVariant }} />}
                 {showCheckBox && <Checkbox status={selected ? 'checked' : 'unchecked'} />}
             </View>
         </Pressable>
     );
 };
 
-const tyyli = StyleSheet.create({
+const createStyles = (colors: MD3Colors) => StyleSheet.create({
     button: {
         position: 'absolute',
         zIndex: 2,
@@ -182,12 +183,8 @@ const tyyli = StyleSheet.create({
         alignSelf: 'center',
 
     },
-    header: {
-        marginHorizontal: 20,
-        marginVertical: 8
-    },
     selectedBackground: {
-        backgroundColor: theme.colors.tertiary,
+        backgroundColor: colors.tertiaryContainer,
         elevation: 4
     },
     singleFriendName: {
@@ -198,10 +195,11 @@ const tyyli = StyleSheet.create({
     singleFriendText: {
         fontSize: 18,
         marginLeft: 8,
+        color: colors.onSurface,
     },
     singleFriend: {
-        borderWidth: 0,
-        borderColor: 'lightgray',
+        borderWidth: 1,
+        borderColor: colors.outlineVariant,
         display: 'flex',
         justifyContent: 'space-between',
         flexDirection: 'row',
@@ -210,21 +208,18 @@ const tyyli = StyleSheet.create({
         padding: 10,
         marginHorizontal: 10,
         marginVertical: 3,
+        backgroundColor: colors.surface,
     },
     separator: {
         minHeight: 1,
         borderTopWidth: 1,
-        borderColor: 'lightgray',
+        borderColor: colors.outlineVariant,
     },
     lista: {
-        backgroundColor: theme.colors.surface,
-    },
-    otsikko: {
-        padding: 10,
-        textAlign: 'center',
+        backgroundColor: colors.surface,
     },
     headline: {
-        color: 'white',
+        color: colors.onPrimary,
     }
 });
 export default FriendsList;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View, Text, ViewStyle, StyleProp } from "react-native";
-import { Button, Headline, IconButton, Switch, TextInput } from 'react-native-paper';
+import { StyleSheet, View, ViewStyle, StyleProp } from "react-native";
+import { Text, IconButton, Switch, TextInput, useTheme } from 'react-native-paper';
 import FriendsList from '../../components/FriendsList';
 import SelectCourses from '../../components/SelectCourse/SelectCourse';
 import Container from '../../components/ThemedComponents/Container';
@@ -14,6 +14,8 @@ import { User } from '../../types/user';
 import SplitContainer from '../../components/ThemedComponents/SplitContainer';
 import InfoDialog from '../../components/InfoDialog';
 import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
+import { MD3Colors } from 'react-native-paper/lib/typescript/types';
+import Button from '@components/ThemedComponents/Button';
 
 export type NewGameData = {
     course?: Course | null,
@@ -34,6 +36,7 @@ const CreateGame = (props: CreateGameProps) => {
     const user = useAuthenticatedUser();
     const [selectCourse, setSelectCourse] = useState(false);
     const [addFriend, setAddFriend] = useState(false);
+    const {colors}  = useTheme();
     const { getHc, getBest, getField, loading } = useStats(
         (newGameData.layout?.id as string | undefined),
         (newGameData.players.map(player => player.id) as string[]),
@@ -101,10 +104,12 @@ const CreateGame = (props: CreateGameProps) => {
     if (addFriend) return <FriendsList onClick={handleAddFriend} hideRemoveButton multiSelect onBackAction={() => setAddFriend(false)} />;
 
     const tyyli = createStyle();
+    const tableStyle = createTableStyles(colors);
+
     const { course, layout } = newGameData;
     return (
         <Container withScrollView noFlex fullHeight>
-            <Headline>{t('screens.game.newGame')}</Headline>
+            <Text variant="headlineMedium">{t('screens.game.newGame')}</Text>
             <Spacer size={10} />
             <NumberedTitle number='1' title={course ? `${course.name} / ${layout?.name}` : t('screens.game.selectCourse')} />
             <Spacer size={10} />
@@ -125,7 +130,7 @@ const CreateGame = (props: CreateGameProps) => {
                     <Spacer size={10} />
                 </>
             ) : null}
-            <Button style={tyyli.button} onPress={handleSetSelectCourse} mode={newGameData.course ? 'outlined' : 'contained'}>
+            <Button style={tyyli.button} onPress={handleSetSelectCourse} variant={newGameData.course ? 'secondary' : 'primary'}>
                 {newGameData.course ? t('screens.game.changeCourse') : t('screens.game.selectCourse')}
             </Button>
             <Divider margin={30} />
@@ -137,7 +142,7 @@ const CreateGame = (props: CreateGameProps) => {
                 <Text style={tableStyle.headerRest}>{t('screens.game.tableHeaderGames')}</Text>
                 <Text style={tableStyle.headerRest}>{t('screens.game.tableHeaderBest')}</Text>
                 <Text style={tableStyle.headerRest}>{t('screens.game.tableHeaderHc')}</Text>
-                <Text style={{ flex: 1.2 }}></Text>
+                <Text style={{ flex: 1.2 }}> </Text>
             </View>
             <>
                 {newGameData.players.map((player, index) => {
@@ -155,7 +160,7 @@ const CreateGame = (props: CreateGameProps) => {
                 })}
             </>
             <Spacer />
-            <Button style={tyyli.button} compact mode={newGameData.players.length > 1 ? 'outlined' : 'contained'} onPress={handleShowFriendsList}>{t('screens.game.addPlayers')}</Button>
+            <Button style={tyyli.button} compact variant={newGameData.players.length > 1 ? 'secondary' : 'primary'} onPress={handleShowFriendsList}>{t('screens.game.addPlayers')}</Button>
             <Divider />
             <NumberedTitle number="3" title={t('screens.game.gameSettings')} accordion>
                 <View>
@@ -204,14 +209,15 @@ const CreateGame = (props: CreateGameProps) => {
             <Spacer />
             <View style={tyyli.bottomButtons}>
                 <Button
-                    mode='contained'
                     onPress={handleCreate}
                     disabled={(!newGameData.course || !newGameData.layout || newGameData.players.length < 1 || props.loading || (newGameData.bHcMultiplier !== undefined && isNaN(Number(newGameData.bHcMultiplier))))}
                     loading={props.loading}
                 >
                     {t('common.create')}
                 </Button>
-                <Button mode='outlined' onPress={props.onCancel}>{t('common.cancel')}</Button>
+                <Button variant="secondary" onPress={props.onCancel}>
+                    {t('common.cancel')}
+                </Button>
             </View>
         </Container>
     );
@@ -228,6 +234,8 @@ type TableItemProps = {
 }
 
 const TableItem = ({ name, games, best, hc, even, onRemove, additionalStyle }: TableItemProps) => {
+    const {colors} = useTheme();
+    const tableStyle = createTableStyles(colors);
     return (
         <View style={[tableStyle.table, additionalStyle, even && tableStyle.background]}>
             <Text style={tableStyle.listName}>{name}</Text>
@@ -239,16 +247,16 @@ const TableItem = ({ name, games, best, hc, even, onRemove, additionalStyle }: T
     );
 };
 
-const tableStyle = StyleSheet.create({
+const createTableStyles = (colors: MD3Colors) => StyleSheet.create({
     background: {
-        backgroundColor: '#f5f5f5'
+        backgroundColor: colors.surfaceVariant
     },
     playersTable: {
         borderWidth: 1,
-        borderColor: "lightgray",
+        borderColor: colors.outline,
         borderRadius: 10,
         elevation: 4,
-        backgroundColor: '#f0f0f0',
+        backgroundColor: colors.surface,
         minHeight: 30,
         alignItems: 'center',
     },
@@ -281,6 +289,7 @@ const tableStyle = StyleSheet.create({
         textAlign: 'center',
     }
 });
+
 const createStyle = () => StyleSheet.create({
     courseText: {
         width: '50%',

@@ -78,22 +78,22 @@ const OldGames = () => {
     };
 
     return (
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, backgroundColor: colors.background}}>
             <Header setSpacing={setHeaderSpacing} bottomSize={20}>
                 <SplitContainer style={{ flexWrap: 'wrap' }}>
                     <View>
-                        <Text variant="headlineSmall" style={styles.header}>{t('screens.oldGames.title')}</Text>
-                        <Text style={styles.header}>
+                        <Text variant="headlineSmall" style={{ color: colors.onPrimary }}>{t('screens.oldGames.title')}</Text>
+                        <Text style={{ color: colors.onPrimary }}>
                             {t('screens.oldGames.totalRounds', { count: data?.getGames.count ?? 0 })}
                         </Text>
                     </View>
-                    <IconButton icon="magnify" mode="contained-tonal" containerColor={colors.tertiary} onPress={() => setShowSearchBar(val => !val)} />
+                    <IconButton icon="magnify" mode="contained-tonal" containerColor={colors.tertiary} iconColor={colors.onTertiary} onPress={() => setShowSearchBar(val => !val)} />
                 </SplitContainer>
                 <Spacer size={1} />
                 {Boolean(user?.groupName) && (
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                         <Switch value={showOnlyGroupGames} onValueChange={setShowOnlyGroupGames} color={colors.tertiary} />
-                        <Text style={styles.header}>{t('screens.oldGames.showOnlyGroupGames')}</Text>
+                        <Text style={{ color: colors.onPrimary }}>{t('screens.oldGames.showOnlyGroupGames')}</Text>
                     </View>
                 )}
                 {showSearchBar && <Searchbar {...filter} autoComplete='off' autoFocus traileringIcon="close" onTraileringIconPress={() => setShowSearchBar(false)} />}
@@ -123,9 +123,6 @@ const styles = StyleSheet.create({
     separator: {
         height: 5,
     },
-    header: {
-        color: '#fff'
-    }
 });
 
 export default OldGames;

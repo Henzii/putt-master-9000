@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { IconButton, TouchableRipple, useTheme } from 'react-native-paper';
+import { View, StyleSheet } from "react-native";
+import { IconButton, TouchableRipple, useTheme, Text } from 'react-native-paper';
 import Spacer from "../ThemedComponents/Spacer";
 import Divider from "../ThemedComponents/Divider";
 import { useNavigate } from "react-router-native";
@@ -9,6 +9,7 @@ import { setSelectedLayout } from "../../reducers/selectedLayoutReducer";
 import { Course, Layout } from "../../types/course";
 import { useAuthenticatedUser } from "src/context/AuthenticatedUserContext";
 import { isAdmin } from "src/utils/user";
+import { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
 type SelecLayoutProps = {
     course: Course
@@ -20,6 +21,7 @@ const SelectLayout = ({ course, onSelect, onEditLayout }: SelecLayoutProps) => {
     const navi = useNavigate();
     const dispatch = useDispatch();
     const { colors } = useTheme();
+    const styles = createStyles(colors);
     const user = useAuthenticatedUser();
 
     const handleLayoutSelect = (layout: Layout) => {
@@ -39,48 +41,50 @@ const SelectLayout = ({ course, onSelect, onEditLayout }: SelecLayoutProps) => {
             <Divider margin={3} opacity={1} />
             <Spacer size={5} />
 
-            {layouts.map(layout => (
-                <View
-                    key={layout.id}
-                    style={[{backgroundColor: colors.primary}, styles.layout, layout.deprecated && styles.deprecatedLayout]}
-                >
-                    {layout.deprecated && (
-                        <View style={styles.deprecatedTextView}>
-                            <Text style={styles.deprecatedText}>OBSOLETE</Text>
-                        </View>
-                    )}
-                    <TouchableRipple onPress={() => handleLayoutSelect(layout)} style={{flex: 1}}>
-                        <View>
-                            <Text style={styles.layoutName}>{layout.name}</Text>
-                            <Text style={styles.layoutInfo}>{layout.holes} holes, par {layout.par}</Text>
-                            <Text style={styles.layoutInfo}>{layout.pars.join(' ')}</Text>
-                        </View>
-                    </TouchableRipple>
+            {layouts.map(layout => {
+                const contentColor = layout.deprecated ? colors.onSurfaceVariant : colors.onPrimary;
+                return (
+                    <View
+                        key={layout.id}
+                        style={[{backgroundColor: layout.deprecated ? colors.surface : colors.primary}, styles.layout]}
+                    >
+                        {layout.deprecated && (
+                            <View style={styles.deprecatedTextView}>
+                                <Text style={[styles.deprecatedText, { color: colors.onSurfaceDisabled }]}>OBSOLETE</Text>
+                            </View>
+                        )}
+                        <TouchableRipple onPress={() => handleLayoutSelect(layout)} style={{flex: 1}}>
+                            <View>
+                                <Text style={[styles.layoutName, { color: contentColor }]}>{layout.name}</Text>
+                                <Text style={[styles.layoutInfo, { color: contentColor }]}>{layout.holes} holes, par {layout.par}</Text>
+                                <Text style={[styles.layoutInfo, { color: contentColor }]}>{layout.pars.join(' ')}</Text>
+                            </View>
+                        </TouchableRipple>
 
-                    <View style={styles.icons}>
-                        {(layout.canEdit || isAdmin(user)) && <IconButton style={{marginRight: 2}} size={30} icon="file-edit-outline" iconColor="white" onPress={() => onEditLayout(layout)} />}
-                        <IconButton size={30} onPress={() => handleStatsClick(layout)} icon="chart-bar" iconColor="white" style={{marginLeft: 0}} />
+                        <View style={styles.icons}>
+                            {(layout.canEdit || isAdmin(user)) && <IconButton style={{marginRight: 2}} size={30} icon="file-edit-outline" iconColor={contentColor} onPress={() => onEditLayout(layout)} />}
+                            <IconButton size={30} onPress={() => handleStatsClick(layout)} icon="chart-bar" iconColor={contentColor} style={{marginLeft: 0}} />
+                        </View>
                     </View>
-                </View>
-            ))}
+                );
+            })}
         </View>
     );
 };
 
-const styles = StyleSheet.create({
-    deprecatedLayout: {
-        backgroundColor: '#999999',
-        overlayColor: 'black'
-    },
+const createStyles = (colors: MD3Colors) => StyleSheet.create({
     deprecatedTextView: {
         position: 'absolute',
-        width: '100%',
-        height: '100%',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        opacity: 0.2,
-        marginHorizontal: 7,
-        marginVertical: 9
+        opacity: 0.5,
+        zIndex: 10,
+        backgroundColor: colors.surface,
+        pointerEvents: 'none',
     },
     deprecatedText: {
         fontSize: 40,
@@ -91,20 +95,21 @@ const styles = StyleSheet.create({
     layout: {
         borderRadius: 7,
         marginTop: 4,
-        elevation: 5,
         paddingHorizontal: 7,
         paddingVertical: 9,
+        elevation: 4,
         flexDirection: 'row',
         borderWidth: 1,
-        borderColor: '#00000050',
+        borderColor: colors.outline,
+        position: 'relative',
     },
     layoutName: {
-        color: 'white',
+        color: colors.onPrimary,
         fontSize: 18,
         fontWeight: '600'
     },
     layoutInfo: {
-        color: '#e0e0e0',
+        color: colors.onPrimary,
         fontSize: 16,
     },
     icons: {

@@ -70,7 +70,7 @@ const AddFriend = ({ onClose, onAddFriend, friends, currentUserId }: AddFriendPr
                                 {!isFriend && user.id !== currentUserId && (
                                     <IconButton
                                         icon="account-plus"
-                                        iconColor={colors.primary}
+                                        iconColor={colors.onTertiary}
                                         containerColor={disabled ? colors.surfaceDisabled : colors.tertiary}
                                         disabled={disabled}
                                         onPress={() => handleAddFriend(user.name)}
@@ -93,8 +93,9 @@ const createStyles = (color: MD3Colors) => StyleSheet.create({
         maxHeight: '100%'
     },
     badge: {
-        color: color.primary,
-        borderColor: color.primary,
+        color: color.onPrimaryContainer,
+        borderColor: color.outline,
+        backgroundColor: color.primaryContainer,
         borderWidth: 1,
         fontWeight: 'bold',
         padding: 5,
@@ -108,7 +109,7 @@ const createStyles = (color: MD3Colors) => StyleSheet.create({
         paddingVertical: 5,
         paddingHorizontal: 10,
         borderWidth: 1,
-        borderColor: color.elevation.level4,
+        borderColor: color.outlineVariant,
         minHeight: 80,
         gap: 5
     },
