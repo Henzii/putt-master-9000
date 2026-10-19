@@ -22,6 +22,9 @@ exports[`<AlcConverter /> renders 1`] = `
         },
         undefined,
         undefined,
+        {
+          "backgroundColor": "rgb(247, 247, 247)",
+        },
       ]
     }
   >
@@ -98,8 +101,8 @@ exports[`<AlcConverter /> renders 1`] = `
                   "top": 0,
                 },
                 {
-                  "backgroundColor": "rgb(251, 253, 249)",
-                  "borderColor": "rgb(112, 121, 116)",
+                  "backgroundColor": "rgb(247, 247, 247)",
+                  "borderColor": "rgb(153, 165, 158)",
                   "borderRadius": 4,
                   "borderWidth": 1,
                 },
@@ -213,8 +216,8 @@ exports[`<AlcConverter /> renders 1`] = `
                   "top": 0,
                 },
                 {
-                  "backgroundColor": "rgb(251, 253, 249)",
-                  "borderColor": "rgb(112, 121, 116)",
+                  "backgroundColor": "rgb(247, 247, 247)",
+                  "borderColor": "rgb(153, 165, 158)",
                   "borderRadius": 4,
                   "borderWidth": 1,
                 },
@@ -328,8 +331,8 @@ exports[`<AlcConverter /> renders 1`] = `
                   "top": 0,
                 },
                 {
-                  "backgroundColor": "rgb(251, 253, 249)",
-                  "borderColor": "rgb(112, 121, 116)",
+                  "backgroundColor": "rgb(247, 247, 247)",
+                  "borderColor": "rgb(153, 165, 158)",
                   "borderRadius": 4,
                   "borderWidth": 1,
                 },
@@ -443,8 +446,8 @@ exports[`<AlcConverter /> renders 1`] = `
                   "top": 0,
                 },
                 {
-                  "backgroundColor": "rgb(251, 253, 249)",
-                  "borderColor": "rgb(112, 121, 116)",
+                  "backgroundColor": "rgb(247, 247, 247)",
+                  "borderColor": "rgb(153, 165, 158)",
                   "borderRadius": 4,
                   "borderWidth": 1,
                 },
@@ -558,8 +561,8 @@ exports[`<AlcConverter /> renders 1`] = `
                   "top": 0,
                 },
                 {
-                  "backgroundColor": "rgb(251, 253, 249)",
-                  "borderColor": "rgb(112, 121, 116)",
+                  "backgroundColor": "rgb(247, 247, 247)",
+                  "borderColor": "rgb(153, 165, 158)",
                   "borderRadius": 4,
                   "borderWidth": 1,
                 },
