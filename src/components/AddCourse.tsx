@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { ActivityIndicator, Button, Caption, Headline, Subheading, Switch, TextInput, useTheme } from "react-native-paper";
+import { View, StyleSheet } from "react-native";
+import { ActivityIndicator, Text, Switch, TextInput, useTheme } from "react-native-paper";
 import { useTranslation } from 'react-i18next';
 import { TFunction } from "i18next";
 import useGPS from "../hooks/useGPS";
@@ -8,6 +8,9 @@ import Divider from "./ThemedComponents/Divider";
 import { Coordinates, Course } from "../types/course";
 import { GPShookReturn } from "../types/gps";
 import SelectLocationFromMap from "./SelectLocationFromMap";
+import Button from "./ThemedComponents/Button";
+import SplitContainer from "./ThemedComponents/SplitContainer";
+import Spacer from "./ThemedComponents/Spacer";
 
 type AddCourseProps = {
     onCancel?: () => void,
@@ -55,8 +58,8 @@ const AddCourse = ({ onCancel, onAdd, course, loading = false }: AddCourseProps)
 
     return (
         <View style={[styles.root, { backgroundColor: colors.surface }]}>
-            <Headline testID="AddCourseTitle">{course ? t('components.addCourse.editTitle') : t('components.addCourse.addTitle')}</Headline>
-            <Subheading>{t('components.addCourse.nameLabel')}</Subheading>
+            <Text variant="headlineMedium" testID="AddCourseTitle">{course ? t('components.addCourse.editTitle') : t('components.addCourse.addTitle')}</Text>
+            <Text variant="titleSmall">{t('components.addCourse.nameLabel')}</Text>
             <TextInput value={newName} autoComplete='off' mode="outlined" label={t('components.addCourse.courseName')} onChangeText={(value) => setNewName(value)} />
             <Divider />
             <LocationForm
@@ -69,15 +72,16 @@ const AddCourse = ({ onCancel, onAdd, course, loading = false }: AddCourseProps)
                 setManualCoordinates={setManualCoordinates}
                 t={t}
             />
-            {gps.error && <Caption style={{ color: colors.error }}>{gps.error} {t('components.addCourse.setCoordinatesManuallyHint')}</Caption>}
-            <Button disabled={!manualCoordinates} onPress={() => setDisplayMap(true)}>{t('components.addCourse.selectLocationFromMap')}</Button>
+            <Spacer />
+            {gps.error && <Text style={{ color: colors.error }}>{gps.error} {t('components.addCourse.setCoordinatesManuallyHint')}</Text>}
+            <Button variant="tertiary" disabled={!manualCoordinates} onPress={() => setDisplayMap(true)}>{t('components.addCourse.selectLocationFromMap')}</Button>
             <Divider />
-            <View style={[styles.split, { margin: 20 }]}>
-                <Button icon="check" onPress={handleAddCourse} mode="contained" loading={loading} disabled={loading}>
+            <SplitContainer style={{ justifyContent: 'space-evenly', flex: 1 }}>
+                <Button icon="check" onPress={handleAddCourse} loading={loading} disabled={loading}>
                     {course ? t('common.save') : t('common.add')}
                 </Button>
-                <Button icon="cancel" onPress={onCancel} mode="outlined">{t('common.cancel')}</Button>
-            </View>
+                <Button icon="cancel" onPress={onCancel} variant="secondary">{t('common.cancel')}</Button>
+            </SplitContainer>
         </View>
     );
 
@@ -92,7 +96,7 @@ const LocationForm = ({ latitude, longitude, setLat, setLon, gps, manualCoordina
 }) => {
     return (
         <>
-            <Subheading>{t('components.addCourse.locationTitle')}</Subheading>
+            <Text>{t('components.addCourse.locationTitle')}</Text>
             <View style={[styles.split, { justifyContent: 'space-between' }]}>
                 <Text>{t('components.addCourse.setCoordinatesManually')}</Text>
                 <Switch value={manualCoordinates} onChange={() => setManualCoordinates(!manualCoordinates)} />

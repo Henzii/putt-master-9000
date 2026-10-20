@@ -109,6 +109,6 @@ export const darkTheme = {
 
     surfaceDisabled: "rgba(225, 227, 224, 0.12)",
     onSurfaceDisabled: "rgba(225, 227, 224, 0.38)",
-    backdrop: "rgba(41, 50, 46, 0.4)",
+    backdrop: "rgba(117, 117, 117, 0.4)",
   },
 };
