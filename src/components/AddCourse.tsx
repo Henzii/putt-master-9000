@@ -76,12 +76,14 @@ const AddCourse = ({ onCancel, onAdd, course, loading = false }: AddCourseProps)
             {gps.error && <Text style={{ color: colors.error }}>{gps.error} {t('components.addCourse.setCoordinatesManuallyHint')}</Text>}
             <Button variant="tertiary" disabled={!manualCoordinates} onPress={() => setDisplayMap(true)}>{t('components.addCourse.selectLocationFromMap')}</Button>
             <Divider />
-            <SplitContainer style={{ justifyContent: 'space-evenly', flex: 1 }}>
-                <Button icon="check" onPress={handleAddCourse} loading={loading} disabled={loading}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 10 }}>
+                <Button icon="check" onPress={handleAddCourse} loading={loading} disabled={loading} style={{ flex: 1 }}>
                     {course ? t('common.save') : t('common.add')}
                 </Button>
-                <Button icon="cancel" onPress={onCancel} variant="secondary">{t('common.cancel')}</Button>
-            </SplitContainer>
+                <Button icon="cancel" onPress={onCancel} variant="secondary" style={{ flex: 1 }}>
+                    {t('common.cancel')}
+                </Button>
+            </View>
         </View>
     );
 

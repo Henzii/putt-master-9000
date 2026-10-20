@@ -1,12 +1,14 @@
 import React from 'react';
 import { Course, Layout } from '../../types/course';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import Sheet from '../Sheet';
-import { Button, Headline } from 'react-native-paper';
+import { Text, useTheme} from 'react-native-paper';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import Spacer from '../ThemedComponents/Spacer';
 import SplitContainer from '../ThemedComponents/SplitContainer';
 import { useDistanceUnit } from '@hooks/useDistanceUnit';
+import { MD3Colors } from 'react-native-paper/lib/typescript/types';
+import Button from '@components/ThemedComponents/Button';
 
 
 type Props = {
@@ -17,15 +19,17 @@ type Props = {
 }
 
 const CourseDetailsSheet = ({course, open, onClose, onSelectLayout}: Props) => {
+    const {colors} = useTheme();
     const handleLayoutSelect = (layout: Layout) => {
         onSelectLayout(layout, course);
     };
 
     const distanceString = useDistanceUnit(course.distance.meters);
+    const styles = createStyles(colors);
 
     return (
         <Sheet open={open} onClose={onClose}>
-            <Headline style={styles.courseName}>{course.name}</Headline>
+            <Text variant="headlineMedium">{course.name}</Text>
             <View style={styles.row}>
                 <Icon name="golf" size={18} color="#707070" />
                 <Text>{course.layouts.length} layouts</Text>
@@ -36,7 +40,7 @@ const CourseDetailsSheet = ({course, open, onClose, onSelectLayout}: Props) => {
             </View>
             <ScrollView>
                 <Spacer />
-                <Headline>Layouts</Headline>
+                <Text variant="titleLarge">Layouts</Text>
                 {course.layouts.map(layout => <SingleLayout layout={layout} key={layout.id} onSelect={handleLayoutSelect} />)}
             </ScrollView>
         </Sheet>
@@ -44,9 +48,11 @@ const CourseDetailsSheet = ({course, open, onClose, onSelectLayout}: Props) => {
 };
 
 const SingleLayout = ({layout, onSelect}: {layout: Layout, onSelect: (layout: Layout) => void}) => {
+    const {colors} = useTheme();
     const handleSelectClick = () => {
         onSelect(layout);
     };
+    const styles = createStyles(colors);
     return (
         <View style={styles.layout}>
             <SplitContainer>
@@ -56,21 +62,17 @@ const SingleLayout = ({layout, onSelect}: {layout: Layout, onSelect: (layout: La
                     <Text numberOfLines={2}>{layout.pars.join(',')}</Text>
                 </View>
                 <View>
-                    <Button onPress={handleSelectClick}>Select</Button>
+                    <Button variant="secondary" onPress={handleSelectClick}>Select</Button>
                 </View>
             </SplitContainer>
         </View>
     );
 };
 
-const styles = StyleSheet.create({
-    courseName: {
-        fontSize: 30,
-        fontWeight: '600'
-    },
+const createStyles = (colors: MD3Colors) => StyleSheet.create({
     layout: {
         borderWidth: 0,
-        backgroundColor: 'white',
+        backgroundColor: colors.surface,
         elevation: 3,
         marginBottom: 5,
         marginTop: 5,
