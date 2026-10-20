@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, ProgressBar, Text, TextInput } from 'react-native-paper';
+import { ProgressBar, Text, TextInput } from 'react-native-paper';
 import Container from '../../components/ThemedComponents/Container';
 import UsernameGenerator from 'username-generator';
 import Spacer from '../../components/ThemedComponents/Spacer';
@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import useTextInput from '../../hooks/useTextInput';
 import WebLinkButton from '@components/WebLinkButton';
 import { setCommonState } from 'src/reducers/commonReducer';
+import Button from '@components/ThemedComponents/Button';
 
 type Errors = {
     [key: string]: string
@@ -114,7 +115,7 @@ export default function FirstTime() {
                         {t('screens.firstTime.existingAccountInfo')}
                     </Text>
                     <Spacer />
-                    <Button mode="contained-tonal" onPress={() => navi('/login')} >{t('screens.firstTime.toLoginScreen')}</Button>
+                    <Button variant="tertiary" onPress={() => navi('/login')} >{t('screens.firstTime.toLoginScreen')}</Button>
                     <Spacer size={5} />
                     <WebLinkButton path="restore">
                         {t('screens.firstTime.forgotPassword')}
@@ -125,14 +126,14 @@ export default function FirstTime() {
                         {t('screens.firstTime.createAccountInfo')}
                     </Text>
                     <Spacer />
-                    <Button mode="contained" onPress={() => setStep(1)} testID="create-account">{t('screens.firstTime.createProperAccount')}</Button>
+                    <Button onPress={() => setStep(1)} testID="create-account">{t('screens.firstTime.createProperAccount')}</Button>
                     <Spacer size={15} />
                     <Text variant="headlineSmall">{t('screens.firstTime.shutUpLetMeIn')}</Text>
                     <Text variant="bodyMedium">
                         {t('screens.firstTime.shutUpLetMeInInfo')}
                     </Text>
                     <Spacer />
-                    <Button mode="outlined" onPress={handleSignUp}>{t('screens.firstTime.shutUpLetMeIn')}</Button>
+                    <Button variant="secondary" onPress={handleSignUp}>{t('screens.firstTime.shutUpLetMeIn')}</Button>
                 </>
             )}
             {step === 1 && (
@@ -153,7 +154,6 @@ export default function FirstTime() {
                     />
                     <Spacer />
                     <Button
-                        mode="contained"
                         disabled={'userName' in errors}
                         onPress={() => setStep(2)}
                         testID="nextStep"
@@ -193,7 +193,6 @@ export default function FirstTime() {
                     />
                     <Spacer />
                     <Button
-                        mode="contained"
                         disabled={'password1' in errors || 'password2' in errors}
                         onPress={() => setStep(3)}
                         testID="nextStep"
@@ -218,9 +217,9 @@ export default function FirstTime() {
                         {t('screens.firstTime.signUpComplete')}
                     </Text>
                     <Spacer />
-                    <Button mode="contained" disabled={Object.keys(errors).length > 0} onPress={handleSignUp} testID="signup">{t('screens.frontpage.signUp')}</Button>
+                    <Button disabled={Object.keys(errors).length > 0} onPress={handleSignUp} testID="signup">{t('screens.frontpage.signUp')}</Button>
                     <Spacer size={5} />
-                    <Button mode="contained-tonal" onPress={() => setStep(0)}>{t('screens.firstTime.backToStart')}</Button>
+                    <Button variant="secondary" onPress={() => setStep(0)}>{t('screens.firstTime.backToStart')}</Button>
                 </>
             )
             }
