@@ -173,6 +173,7 @@
       "tabs": {
         "info": "Info",
         "game": "Peli",
+        "statistics": "Tilastot",
         "oldGames": "Vanhat pelit"
       },
       "description": "RagePuttissa on kaksi pelimuotoa: normaali 20 kierroksen peli ja 10 kierroksen pikapeli. Jokainen pelaaja puttaa viisi kertaa kierroksella, ja tulos on koriin menneiden puttien määrä.",
@@ -199,6 +200,7 @@
       "deleteFailed": "RagePutt-pelin poisto epäonnistui: {{message}}",
       "unknownError": "Tuntematon virhe",
       "noGames": "RagePutt-pelejä ei vielä ole.",
+      "noDefaultGamesWithPoints": "Oletustilan peleissä ei ole vielä pisteitä.",
       "unknownDate": "Tuntematon päivämäärä",
       "openGameAccessibility": "Avaa RagePutt-peli, aloitettu {{date}}",
       "deleteGameAccessibility": "Poista RagePutt-peli",
@@ -208,6 +210,9 @@
       "roundCount": "{{current}}/{{total}}",
       "playerProgress": "{{points}} pistettä · Kierros {{current}} / {{total}}",
       "yourPoints": "Pisteesi",
+      "defaultGamesOnly": "Vain oletustilan pelit (20 kierrosta) näytetään.",
+      "puttingPercentage": "Puttiprosentti etäisyyksittäin",
+      "noPuttingPercentageData": "Valituilta etäisyyksiltä ei ole vielä putteja.",
       "gameNotFound": "Peliä ei löytynyt.",
       "roundsSummary": "{{rounds}} kierrosta · {{putts}} puttia pelaajaa kohden kierroksella",
       "previous": "Edellinen",

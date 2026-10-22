@@ -178,6 +178,7 @@
       "tabs": {
         "info": "Info",
         "game": "Mäng",
+        "statistics": "Statistika",
         "oldGames": "Vanad mängud"
       },
       "description": "RagePutil on kaks mängurežiimi: tavaline 20 vooruga mäng ja 10 vooruga kiirmäng. Iga mängija teeb voorus viis putti ning tulemus on sisse läinud puttide arv.",
@@ -204,6 +205,7 @@
       "deleteFailed": "RagePutt-mängu kustutamine ebaõnnestus: {{message}}",
       "unknownError": "Tundmatu viga",
       "noGames": "RagePutt-mänge veel pole.",
+      "noDefaultGamesWithPoints": "Vaikimisi režiimis punktidega mänge veel pole.",
       "unknownDate": "Tundmatu kuupäev",
       "openGameAccessibility": "Ava RagePutt-mäng kuupäevaga {{date}}",
       "deleteGameAccessibility": "Kustuta RagePutt-mäng",
@@ -213,6 +215,9 @@
       "roundCount": "{{current}}/{{total}}",
       "playerProgress": "{{points}} punkti · Voor {{current}} / {{total}}",
       "yourPoints": "Sinu punktid",
+      "defaultGamesOnly": "Kuvatakse ainult vaikimisi režiimi mänge (20 vooru).",
+      "puttingPercentage": "Puttimise protsent distantsi järgi",
+      "noPuttingPercentageData": "Valitud distantsidelt pole veel putte registreeritud.",
       "gameNotFound": "Mängu ei leitud.",
       "roundsSummary": "{{rounds}} vooru · {{putts}} putti mängija kohta voorus",
       "previous": "Eelmine",

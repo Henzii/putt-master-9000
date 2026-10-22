@@ -178,6 +178,7 @@
       "tabs": {
         "info": "Informacje",
         "game": "Gra",
+        "statistics": "Statystyki",
         "oldGames": "Stare gry"
       },
       "description": "RagePutt ma dwa tryby: standardowy z 20 rundami i szybki z 10 rundami. Każdy gracz wykonuje pięć puttów na rundę, a wynik to liczba trafień.",
@@ -204,6 +205,7 @@
       "deleteFailed": "Nie udało się usunąć gry RagePutt: {{message}}",
       "unknownError": "Nieznany błąd",
       "noGames": "Nie ma jeszcze żadnych gier RagePutt.",
+      "noDefaultGamesWithPoints": "Brak jeszcze gier w trybie standardowym z punktami.",
       "unknownDate": "Nieznana data",
       "openGameAccessibility": "Otwórz grę RagePutt z dnia {{date}}",
       "deleteGameAccessibility": "Usuń grę RagePutt",
@@ -213,6 +215,9 @@
       "roundCount": "{{current}}/{{total}}",
       "playerProgress": "{{points}} pkt · Runda {{current}} z {{total}}",
       "yourPoints": "Twoje punkty",
+      "defaultGamesOnly": "Wyświetlane są tylko gry w trybie standardowym (20 rund).",
+      "puttingPercentage": "Skuteczność puttowania według odległości",
+      "noPuttingPercentageData": "Nie zarejestrowano jeszcze puttów z wybranych odległości.",
       "gameNotFound": "Nie znaleziono gry.",
       "roundsSummary": "{{rounds}} rund · {{putts}} puttów na gracza w każdej rundzie",
       "previous": "Poprzednia",

@@ -178,6 +178,7 @@
       "tabs": {
         "info": "Info",
         "game": "Spiel",
+        "statistics": "Statistik",
         "oldGames": "Alte Spiele"
       },
       "description": "RagePutt hat zwei Spielmodi: Standard mit 20 Runden und Schnellspiel mit 10 Runden. Jeder Spieler puttet fünfmal pro Runde; die Anzahl der Treffer ist der Rundenscore.",
@@ -204,6 +205,7 @@
       "deleteFailed": "RagePutt-Spiel konnte nicht gelöscht werden: {{message}}",
       "unknownError": "Unbekannter Fehler",
       "noGames": "Noch keine RagePutt-Spiele.",
+      "noDefaultGamesWithPoints": "Noch keine Spiele im Standardmodus mit Punkten.",
       "unknownDate": "Unbekanntes Datum",
       "openGameAccessibility": "RagePutt-Spiel vom {{date}} öffnen",
       "deleteGameAccessibility": "RagePutt-Spiel löschen",
@@ -213,6 +215,9 @@
       "roundCount": "{{current}}/{{total}}",
       "playerProgress": "{{points}} Punkte · Runde {{current}} von {{total}}",
       "yourPoints": "Deine Punkte",
+      "defaultGamesOnly": "Es werden nur Spiele im Standardmodus (20 Runden) angezeigt.",
+      "puttingPercentage": "Trefferquote nach Entfernung",
+      "noPuttingPercentageData": "Für die ausgewählten Entfernungen wurden noch keine Putts erfasst.",
       "gameNotFound": "Spiel nicht gefunden.",
       "roundsSummary": "{{rounds}} Runden · {{putts}} Putts pro Spieler und Runde",
       "previous": "Zurück",

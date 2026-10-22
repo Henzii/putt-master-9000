@@ -178,6 +178,7 @@
       "tabs": {
         "info": "Info",
         "game": "Game",
+        "statistics": "Statistics",
         "oldGames": "Old Games"
       },
       "description": "RagePutt has two modes: Default with 20 rounds and Quick game with 10 rounds. Each player takes five putts per round, and the score is the number that go in.",
@@ -204,6 +205,7 @@
       "deleteFailed": "Failed to delete RagePutt game: {{message}}",
       "unknownError": "Unknown error",
       "noGames": "No RagePutt games yet.",
+      "noDefaultGamesWithPoints": "No default-mode games with points yet.",
       "unknownDate": "Unknown date",
       "openGameAccessibility": "Open RagePutt game from {{date}}",
       "deleteGameAccessibility": "Delete RagePutt game",
@@ -213,6 +215,9 @@
       "roundCount": "{{current}}/{{total}}",
       "playerProgress": "{{points}} points · Round {{current}} of {{total}}",
       "yourPoints": "Your points",
+      "defaultGamesOnly": "Only default-mode games (20 rounds) are shown.",
+      "puttingPercentage": "Putting percentage by distance",
+      "noPuttingPercentageData": "No putts recorded at the selected distances yet.",
       "gameNotFound": "Game not found.",
       "roundsSummary": "{{rounds}} rounds · {{putts}} putts per player each round",
       "previous": "Previous",

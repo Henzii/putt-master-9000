@@ -178,6 +178,7 @@
       "tabs": {
         "info": "Info",
         "game": "Spel",
+        "statistics": "Statistik",
         "oldGames": "Gamla spel"
       },
       "description": "RagePutt har två spellägen: standard med 20 rundor och snabbspel med 10 rundor. Varje spelare puttar fem gånger per runda, och poängen är antalet träffar.",
@@ -204,6 +205,7 @@
       "deleteFailed": "Det gick inte att ta bort RagePutt-spelet: {{message}}",
       "unknownError": "Okänt fel",
       "noGames": "Det finns inga RagePutt-spel ännu.",
+      "noDefaultGamesWithPoints": "Inga spel i standardläget med poäng ännu.",
       "unknownDate": "Okänt datum",
       "openGameAccessibility": "Öppna RagePutt-spelet från {{date}}",
       "deleteGameAccessibility": "Ta bort RagePutt-spelet",
@@ -213,6 +215,9 @@
       "roundCount": "{{current}}/{{total}}",
       "playerProgress": "{{points}} poäng · Runda {{current}} av {{total}}",
       "yourPoints": "Dina poäng",
+      "defaultGamesOnly": "Endast spel i standardläget (20 rundor) visas.",
+      "puttingPercentage": "Träffprocent efter avstånd",
+      "noPuttingPercentageData": "Inga puttar har registrerats från de valda avstånden ännu.",
       "gameNotFound": "Spelet hittades inte.",
       "roundsSummary": "{{rounds}} rundor · {{putts}} puttar per spelare och runda",
       "previous": "Föregående",

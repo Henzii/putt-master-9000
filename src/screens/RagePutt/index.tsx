@@ -3,6 +3,7 @@ import { BottomNavigation } from "react-native-paper";
 import { RageputtGame } from "./RageputtGame";
 import { OldRages } from "./OldRages";
 import { Info } from './Info';
+import { Statistics } from "./Statistics";
 import { useTranslation } from "react-i18next";
 
 
@@ -13,6 +14,7 @@ export const RagePutt = () => {
     const routes = [
         { key: 'info', title: t("screens.ragePutt.tabs.info"), focusedIcon: 'information-outline', unfocusedIcon: 'information-outline'},
         { key: 'game', title: t("screens.ragePutt.tabs.game"), focusedIcon: 'golf', unfocusedIcon: 'golf' },
+        { key: 'statistics', title: t("screens.ragePutt.tabs.statistics"), focusedIcon: 'chart-box-outline', unfocusedIcon: 'chart-box-outline' },
         { key: 'oldGames', title: t("screens.ragePutt.tabs.oldGames"), focusedIcon: 'history', unfocusedIcon: 'history' },
     ];
 
@@ -44,6 +46,8 @@ export const RagePutt = () => {
                             }}
                         />
                     );
+                case "statistics":
+                    return <Statistics />;
                 default:
                     return null;
             }

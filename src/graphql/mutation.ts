@@ -67,7 +67,7 @@ export const CREATE_RAGE_PUTT_GAME = gql`
   }
 `;
 export const UPDATE_RAGE_PUTT_SCORECARD = gql`
-  mutation UpdateRagePuttScorecard($gameId: ID!, $playerId: ID!, $scores: [Int]) {
+  mutation UpdateRagePuttScorecard($gameId: ID!, $playerId: ID!, $scores: [Int!]!) {
     updateRagePuttScorecard(gameId: $gameId, playerId: $playerId, scores: $scores) {
       id
       scores
