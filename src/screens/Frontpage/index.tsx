@@ -71,7 +71,7 @@ const Frontpage = () => {
                 />
                 <List.Item
                     title={"RagePutt"}
-                    description={"A mini-game for testing your putting skills"}
+                    description={t('screens.frontpage.ragePuttDescription')}
                     left={() => <Image source={ragePutt} style={styles.listItemIcon} />}
                     right={(p) => <List.Icon {...p} icon="chevron-right" />}
                     onPress={() => navi('/rageputt')}

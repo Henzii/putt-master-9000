@@ -75,9 +75,9 @@ export const Statistics = () => {
         );
     }
 
+    // Each distance omits games without attempts, so these datasets are not aligned with the full game list.
     const puttingDatasets = selectedDistances
         .map((distance) => {
-            let madePutts = 0;
             let attempts = 0;
             const data: number[] = [];
 
@@ -86,21 +86,20 @@ export const Statistics = () => {
                 if (!result) {
                     return;
                 }
-                madePutts += result.madePutts;
                 attempts += result.attempts;
-                data.push((madePutts / attempts) * 100);
+                data.push(result.percentage);
             });
 
             const dataset = {
                 data,
                 color: () => DISTANCE_COLORS[distance - 5],
                 key: distance,
-                withDots: false,
+                withDots: true,
             };
 
-            return { dataset, madePutts };
+            return { dataset, attempts };
         })
-        .filter(({ madePutts }) => madePutts > 0)
+        .filter(({ attempts }) => attempts > 0)
         .map(({ dataset }) => dataset);
     const hasPuttingData = puttingDatasets.length > 0;
 
