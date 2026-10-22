@@ -6,6 +6,7 @@ import {
   CORE_ACHIEVEMENT_INFO,
   CORE_SAFE_USER_INFO,
   MEASURED_THROW,
+  RAGE_PUTT_GAME,
 } from "./fragments";
 
 export const GET_LAYOUT = gql`
@@ -293,4 +294,22 @@ export const GET_USER_WITH_THROWS = gql`
     }
   }
   ${MEASURED_THROW}
+`;
+
+export const GET_RAGE_PUTT_GAMES = gql`
+  query GetRagePuttGames {
+    getRagePuttGames {
+      ...RagePuttGame
+    }
+  }
+  ${RAGE_PUTT_GAME}
+`;
+
+export const GET_RAGE_PUTT_GAME = gql`
+  query GetRagePuttGame($gameId: ID!) {
+    getRagePuttGame(gameId: $gameId) {
+      ...RagePuttGame
+    }
+  }
+  ${RAGE_PUTT_GAME}
 `;

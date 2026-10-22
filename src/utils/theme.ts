@@ -59,7 +59,7 @@ export const darkTheme = {
   ...DefaultTheme,
   dark: true,
   colors: {
-    primary: "rgb(19, 73, 59)",
+    primary: "rgb(24, 92, 74)",
     onPrimary: "rgb(184, 184, 184)",
     primaryContainer: "rgb(0, 81, 62)",
     onPrimaryContainer: "rgb(129, 248, 208)",

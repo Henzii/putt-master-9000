@@ -41,6 +41,7 @@ import Weeklies from "src/screens/Weeklies";
 import Login from "../screens/Login";
 import RequireAuth from "./RequireAuth";
 import { useSessionV2 } from "@hooks/session/useSessionV2";
+import { RagePutt } from "src/screens/RagePutt";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -135,6 +136,7 @@ export default function App() {
           <Route path="/group" element={<Group />} />
           <Route path="/distance" element={<Distance />} />
           <Route path="/weeklies" element={<Weeklies />} />
+          <Route path="/rageputt" element={<RagePutt />} />
         </Route>
       </Routes>
       <StatusBar style="auto" />
