@@ -25,6 +25,7 @@ import settings from '@icons/settings.png';
 import website from '@icons/www.png';
 import feedback from '@icons/feedback.png';
 import logoutIcon from '@icons/sign-out.png';
+import ragePutt from '@icons/rage-putt.png';
 import { openWebsite } from '@components/WebLinkButton';
 import { useLogout } from '@hooks/session/useLogin';
 import { useNotification } from '@hooks/useNotification';
@@ -68,6 +69,14 @@ const Frontpage = () => {
                     right={(p) => <List.Icon {...p} icon="chevron-right" />}
                     onPress={() => navi('/friends')}
                 />
+                <List.Item
+                    title={"RagePutt"}
+                    description={"A mini-game for testing your putting skills"}
+                    left={() => <Image source={ragePutt} style={styles.listItemIcon} />}
+                    right={(p) => <List.Icon {...p} icon="chevron-right" />}
+                    onPress={() => navi('/rageputt')}
+                />
+                <Divider />
                 <List.Item
                     title={t('screens.frontpage.achievements')}
                     left={() => <Image source={achievements} style={styles.listItemIcon} />}

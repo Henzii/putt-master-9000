@@ -61,6 +61,25 @@ export const CREATE_GAME = gql`
     )
   }
 `;
+export const CREATE_RAGE_PUTT_GAME = gql`
+  mutation CreateRagePuttGame($mode: String!, $playerIds: [ID!]!) {
+    createRagePuttGame(mode: $mode, playerIds: $playerIds)
+  }
+`;
+export const UPDATE_RAGE_PUTT_SCORECARD = gql`
+  mutation UpdateRagePuttScorecard($gameId: ID!, $playerId: ID!, $scores: [Int]) {
+    updateRagePuttScorecard(gameId: $gameId, playerId: $playerId, scores: $scores) {
+      id
+      scores
+      points
+    }
+  }
+`;
+export const DELETE_RAGE_PUTT_GAME = gql`
+  mutation DeleteRagePuttGame($gameId: ID!) {
+    deleteRagePuttGame(gameId: $gameId)
+  }
+`;
 export const ADD_PLAYERS_TO_GAME = gql`
   mutation ($gameId: ID!, $playerIds: [ID!]!) {
     addPlayersToGame(gameId: $gameId, playerIds: $playerIds) {

@@ -73,3 +73,22 @@ export const MEASURED_THROW = gql`
     createdAt
   }
 `;
+
+export const RAGE_PUTT_GAME = gql`
+  fragment RagePuttGame on RagePuttGame {
+    id
+    startTime
+    endTime
+    isFinished
+    mode
+    scorecards {
+      id
+      user {
+        id
+        name
+      }
+      scores
+      points
+    }
+  }
+`;
