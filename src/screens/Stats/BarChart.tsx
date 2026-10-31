@@ -46,10 +46,10 @@ const BarChart = ({stats, holes}: {stats: SingleStats[] | undefined, holes: numb
         barColors,
     };
     const chartConfig = {
-        backgroundGradientTo: colors.secondary,
-        backgroundGradientToOpacity: 0.4,
-        backgroundGradientFrom: colors.primary,
-        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+        backgroundGradientTo: colors.surface,
+        backgroundGradientFrom: colors.surface,
+        color: () => colors.onSurface,
+        labelColor: () => colors.onSurface,
         strokeWidth: 2, // optional, default 3
         barPercentage: 0.75,
         useShadowColorFromDataset: false // optional,

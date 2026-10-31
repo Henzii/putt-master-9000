@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from "react-native";
-import { Chip, Headline, Paragraph, TextInput, Title } from "react-native-paper";
+import { View, StyleSheet } from "react-native";
+import { Chip, Headline, Paragraph, Text, TextInput, Title } from "react-native-paper";
 import { useTranslation } from 'react-i18next';
 import Spacer from '../../components/ThemedComponents/Spacer';
 import useTextInput from '../../hooks/useTextInput';

@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import { Text, StyleSheet, View } from 'react-native';
-import { MD3Theme, Title, useTheme} from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
+import { MD3Theme, Text, Title, useTheme } from 'react-native-paper';
 
 type InfoCardProps = {
     title?: string,
@@ -27,14 +27,18 @@ const createTyyli = (theme: MD3Theme) => StyleSheet.create({
         paddingHorizontal: 15,
         margin: 7,
         paddingVertical: 5,
-        backgroundColor: theme.colors.surface,
+        backgroundColor: theme.colors.surfaceVariant,
+        borderColor: theme.colors.outlineVariant,
+        borderWidth: StyleSheet.hairlineWidth,
         borderRadius: 7,
         elevation: 2,
     },
     title: {
         fontSize: 16,
+        color: theme.colors.onSurfaceVariant,
     },
     content: {
         fontSize: 14,
+        color: theme.colors.onSurface,
     }
 });
