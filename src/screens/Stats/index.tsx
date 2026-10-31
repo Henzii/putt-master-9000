@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Text } from 'react-native-paper';
+import { Button, Text, useTheme } from 'react-native-paper';
 import SelectCourses from '@components/SelectCourse/SelectCourse';
 import StatsView from './StatsView';
 import Container from '@components/ThemedComponents/Container';
@@ -21,6 +21,7 @@ import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 
 const Stats = () => {
     const { t } = useTranslation();
+    const { colors } = useTheme();
     const [selectedUser, setSelectedUser] = useState<User>();
     const [showSelectCourse, setShowSelectCourse] = useState(false);
     const [showSelectFriend, setShowSelectFriend] = useState(false);
@@ -50,7 +51,7 @@ const Stats = () => {
         <View style={{flex: 1}}>
             <Header setSpacing={setHeaderSpacing} bottomSize={20}>
             <Stack gap={20} direction='column' justifyContent="space-between" maxWidth="100%">
-                <Text variant="titleLarge" style={{color: '#fff'}} numberOfLines={2}>
+                <Text variant="titleLarge" style={{ color: colors.onPrimary }} numberOfLines={2}>
                     {selectedUser ? t('screens.stats.userStats', { name: selectedUser.name }) : t('screens.stats.myStats')}
                 </Text>
                 <Stack direction='row' justifyContent='space-between'>

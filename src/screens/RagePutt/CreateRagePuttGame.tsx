@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { Chip, Menu, Text } from "react-native-paper";
+import { Chip, RadioButton, Text } from "react-native-paper";
 import { useMutation } from "@apollo/client";
 import { useDispatch } from "react-redux";
 import Button from "@components/ThemedComponents/Button";
@@ -33,7 +33,6 @@ export const CreateRagePuttGame = ({ onGameCreated }: CreateRagePuttGameProps) =
     const [players, setPlayers] = React.useState<Friend[]>([]);
     const [showAddPlayers, setShowAddPlayers] = React.useState(false);
     const [mode, setMode] = React.useState<RagePuttGameMode>("default");
-    const [modeMenuVisible, setModeMenuVisible] = React.useState(false);
     const user = useAuthenticatedUser();
     const dispatch = useDispatch();
     const [createGame, { loading: creatingGame }] = useMutation<CreateRagePuttGameResponse, CreateRagePuttGameVariables>(
@@ -93,34 +92,17 @@ export const CreateRagePuttGame = ({ onGameCreated }: CreateRagePuttGameProps) =
             <Spacer size={15} />
             <Text variant="titleMedium">{t("screens.ragePutt.gameMode")}</Text>
             <Spacer size={4} />
-            <Menu
-                visible={modeMenuVisible}
-                onDismiss={() => setModeMenuVisible(false)}
-                anchor={
-                    <Button
-                        variant="secondary"
-                        icon="chevron-down"
-                        onPress={() => setModeMenuVisible(true)}
-                    >
-                        {t(mode === "quick" ? "screens.ragePutt.quickMode" : "screens.ragePutt.defaultMode")}
-                    </Button>
-                }
+            <RadioButton.Group
+                value={mode}
+                onValueChange={(value) => {
+                    if (value === "default" || value === "quick") {
+                        setMode(value);
+                    }
+                }}
             >
-                <Menu.Item
-                    title={t("screens.ragePutt.defaultMode")}
-                    onPress={() => {
-                        setMode("default");
-                        setModeMenuVisible(false);
-                    }}
-                />
-                <Menu.Item
-                    title={t("screens.ragePutt.quickMode")}
-                    onPress={() => {
-                        setMode("quick");
-                        setModeMenuVisible(false);
-                    }}
-                />
-            </Menu>
+                <RadioButton.Item label={t("screens.ragePutt.defaultMode")} value="default" />
+                <RadioButton.Item label={t("screens.ragePutt.quickMode")} value="quick" />
+            </RadioButton.Group>
             <Spacer size={15} />
             <Text variant="titleLarge">RagePutt</Text>
             <Spacer />

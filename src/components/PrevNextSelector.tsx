@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, View, Text } from "react-native";
-import { IconButton } from 'react-native-paper';
+import { StyleSheet, View } from "react-native";
+import { IconButton, Text } from 'react-native-paper';
 
 type Props = {
     options: {

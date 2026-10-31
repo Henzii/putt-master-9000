@@ -34,12 +34,12 @@ const LineChart = ({ data, par }: LineChartProps) => {
                     {
                         data: new Array(data.length).fill(par),
                         withDots: false,
-                        color: () => '#40ff4080',
+                        color: () => colors.tertiary,
                     },
                     {
                         data: new Array(data.length).fill(Math.min(...data)),
                         withDots: false,
-                        color: () => '#4c99ef60'
+                        color: () => colors.secondary
                     }
                 ],
             }}
@@ -47,12 +47,11 @@ const LineChart = ({ data, par }: LineChartProps) => {
             width={Dimensions.get('screen').width}
             yAxisInterval={2} // optional, defaults to 1
             chartConfig={{
-                backgroundGradientTo: colors.primary,
-                backgroundGradientToOpacity: 0.4,
-                backgroundGradientFrom: colors.secondary,
+                backgroundGradientTo: colors.surface,
+                backgroundGradientFrom: colors.surface,
                 decimalPlaces: 0, // optional, defaults to 2dp
-                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                color: () => colors.primary,
+                labelColor: () => colors.onSurface,
                 propsForDots: {
                     r: "2",
                     strokeWidth: "4",

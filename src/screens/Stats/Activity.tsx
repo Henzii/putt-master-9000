@@ -1,12 +1,11 @@
 import { useQuery } from '@apollo/client';
 import React, { useState } from 'react';
-import { View, Text, Dimensions } from "react-native";
+import { View, Dimensions } from "react-native";
+import { Text, useTheme } from "react-native-paper";
 import { useTranslation } from 'react-i18next';
 import { GET_ACTIVITY } from '../../graphql/queries';
 import Loading from '../../components/Loading';
 import { BarChart } from 'react-native-chart-kit';
-import { theme } from '../../utils/theme';
-import { AbstractChartConfig } from 'react-native-chart-kit/dist/AbstractChart';
 import PrevNextSelector from '../../components/PrevNextSelector';
 import { User } from '../../types/user';
 
@@ -31,6 +30,7 @@ type Props = {
 
 const Activity = ({selectedUser}: Props) => {
     const { t } = useTranslation();
+    const { colors } = useTheme();
     const [selectedYear, setSelectedYear] = useState<number>();
     const { data, error, loading } = useQuery<ActivityResponse>(GET_ACTIVITY, {
         variables: {
@@ -80,7 +80,13 @@ const Activity = ({selectedUser}: Props) => {
                 height={250}
                 yAxisLabel=""
                 width={Dimensions.get('window').width+1}
-                chartConfig={chartConfig}
+                chartConfig={{
+                    backgroundGradientFrom: colors.surface,
+                    backgroundGradientTo: colors.surface,
+                    color: () => colors.primary,
+                    labelColor: () => colors.onSurface,
+                    barPercentage: 0.50,
+                }}
                 yAxisSuffix=''
                 showValuesOnTopOfBars
             />
@@ -92,14 +98,6 @@ const Activity = ({selectedUser}: Props) => {
 };
 
 export default Activity;
-
-const chartConfig: AbstractChartConfig = {
-    backgroundGradientTo: theme.colors.secondary,
-    backgroundGradientToOpacity: 0.75,
-    backgroundGradientFrom: theme.colors.primary,
-    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-    barPercentage: 0.50,
-};
 
 type ActivityResponse = {
     getPastActivity: {

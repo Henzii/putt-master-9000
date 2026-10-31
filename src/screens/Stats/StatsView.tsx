@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from "react";
 import { useQuery } from "@apollo/client";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useTranslation } from 'react-i18next';
-import { Headline, Title } from "react-native-paper";
+import { Headline, Text, Title } from "react-native-paper";
 import ErrorScreen from "../../components/ErrorScreen";
 import InfoCard from "../../components/InfoCard";
 import Loading from "../../components/Loading";
