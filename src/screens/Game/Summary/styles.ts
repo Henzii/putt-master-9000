@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import { scoreColors } from "../../../utils/theme";
 import { MD3Colors } from "react-native-paper/lib/typescript/types";
 
 export const createTableStyles = (colors: MD3Colors) => StyleSheet.create({
@@ -38,15 +37,3 @@ export const createTableStyles = (colors: MD3Colors) => StyleSheet.create({
         color: colors.onSurface,
     }
 });
-
-export const scoreColor = (plusMinus: number) => {
-    switch(plusMinus) {
-        case -3: return scoreColors.alba;
-        case -2: return scoreColors.eagle;
-        case -1: return scoreColors.birdie;
-        case 0: return scoreColors.par;
-        case 1: return scoreColors.bogey;
-        case 2: return scoreColors.doubleBogey;
-        default: return scoreColors.other;
-    }
-};

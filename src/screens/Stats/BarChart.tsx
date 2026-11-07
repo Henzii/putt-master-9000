@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions, ScrollView } from 'react-native';
 import { StackedBarChart } from "react-native-chart-kit";
 import { useTheme } from 'react-native-paper';
-import { scoreColors } from '../../utils/theme';
+import type { AppTheme } from '../../utils/theme';
 import { SingleStats } from '../../types/stats';
 
 const LEFT_MARGIN = 70;
@@ -20,15 +20,6 @@ const parseData = (stats: SingleStats[]) => {
     }, [] as number[][]);
 };
 
-const barColors = [
-    scoreColors.eagle,
-    scoreColors.birdie,
-    scoreColors.par,
-    scoreColors.bogey,
-    scoreColors.doubleBogey,
-    'red'
-];
-
 const calcChartWidth = (holes: number) => {
     const singleBarWidth = Dimensions.get('screen').width / holes;
     if (singleBarWidth > 30) return Dimensions.get('screen').width + LEFT_MARGIN;
@@ -36,9 +27,17 @@ const calcChartWidth = (holes: number) => {
 };
 
 const BarChart = ({stats, holes}: {stats: SingleStats[] | undefined, holes: number}) => {
-    const {colors} = useTheme();
+    const {colors} = useTheme<AppTheme>();
     if (!stats) return null;
     const labels = Array.from({length: holes}, (_, i) => (i + 1).toString());
+    const barColors = [
+        colors.scoreColors.eagle,
+        colors.scoreColors.birdie,
+        colors.scoreColors.par,
+        colors.scoreColors.bogey,
+        colors.scoreColors.doubleBogey,
+        colors.scoreColors.other
+    ];
     const data = {
         labels,
         legend: [],
