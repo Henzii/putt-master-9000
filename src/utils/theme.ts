@@ -1,6 +1,8 @@
 
 import { DefaultTheme } from "react-native-paper";
-export const scoreColors = {
+import type { MD3Colors, MD3Theme } from "react-native-paper/lib/typescript/types";
+
+const scoreColors = {
   alba: '#ffcf40',
   eagle: 'rgb(255,207,64)',
   birdie: '#9adaff',
@@ -9,10 +11,36 @@ export const scoreColors = {
   doubleBogey: '#fcbc9a',
   other: '#ff7f7f',
 };
+const darkScoreColors = {
+  alba: '#8f6c13',
+  eagle: 'rgb(143,108,19)',
+  birdie: '#28627f',
+  par: '#356b56',
+  bogey: '#80651b',
+  doubleBogey: '#855234',
+  other: '#8c3737',
+};
+export type ScoreColors = typeof scoreColors;
+export type ScoreThemeColors = MD3Colors & { scoreColors: ScoreColors };
+export type AppTheme = Omit<MD3Theme, 'colors'> & { colors: ScoreThemeColors };
+
+export const scoreColor = (plusMinus: number, colors: ScoreColors) => {
+  switch (plusMinus) {
+    case -3: return colors.alba;
+    case -2: return colors.eagle;
+    case -1: return colors.birdie;
+    case 0: return colors.par;
+    case 1: return colors.bogey;
+    case 2: return colors.doubleBogey;
+    default: return colors.other;
+  }
+};
+
 export const theme = {
   ...DefaultTheme,
   dark: false,
   "colors": {
+    scoreColors,
     "primary": "rgb(0, 108, 83)",
     "onPrimary": "rgb(255, 255, 255)",
     "primaryContainer": "rgb(129, 248, 208)",
@@ -59,6 +87,7 @@ export const darkTheme = {
   ...DefaultTheme,
   dark: true,
   colors: {
+    scoreColors: darkScoreColors,
     primary: "rgb(24, 92, 74)",
     onPrimary: "rgb(184, 184, 184)",
     primaryContainer: "rgb(0, 81, 62)",

@@ -70,6 +70,7 @@ const Player = React.memo(function Scorecard ({ player, selectedRound, setScore,
                             return <ScoreButton
                                 number={item}
                                 onClick={handleButtonClick}
+                                scorePar={par}
                                 par={!player.scores[selectedRound] ? par : undefined}
                                 selected={(player.scores[selectedRound] - 1 === index)}
                                 pending={(pendingButton?.pendingScore === item && pendingButton?.selectedRound === selectedRound)}

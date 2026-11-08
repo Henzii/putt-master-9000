@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useTranslation } from 'react-i18next';
-import { scoreColors } from '../../../utils/theme';
+import { Text, useTheme } from 'react-native-paper';
+import type { AppTheme } from '../../../utils/theme';
 import type { SingleStats } from '../../../types/stats';
 
 const displayStats = [
@@ -10,11 +11,12 @@ const displayStats = [
     'par',
     'bogey',
     'doubleBogey'
-];
+] as const;
 type Indexed = Record<string, number | string>
 
 export default function Statsbar({statsCard, viewWidth}: {statsCard?: SingleStats, viewWidth: number }) {
     const { t } = useTranslation();
+    const { colors } = useTheme<AppTheme>();
     if (!statsCard) {
         return null;
     }
@@ -23,7 +25,7 @@ export default function Statsbar({statsCard, viewWidth}: {statsCard?: SingleStat
         let counter = 0;
         const bars = displayStats.map(single => {
             const value = (statsCard as Indexed)[single] as number;
-            const color = (scoreColors as Indexed)[single] as string;
+            const color = colors.scoreColors[single];
             const percent = Math.round(value/total*100);
             const width = viewWidth * (value/total);
             counter += width;

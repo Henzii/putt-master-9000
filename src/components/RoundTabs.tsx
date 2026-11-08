@@ -147,12 +147,12 @@ const createStyles = (colors: MD3Colors) => StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.7,
-        backgroundColor: colors.background,
+        backgroundColor: colors.surface,
     },
     selected: {
         borderBottomWidth: 0,
         opacity: 1,
-        backgroundColor: colors.surface,
+        backgroundColor: colors.background,
         elevation: 2,
     },
     skipped: {

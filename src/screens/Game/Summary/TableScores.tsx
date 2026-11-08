@@ -1,7 +1,8 @@
 import React from 'react';
 import { DataTable, useTheme } from 'react-native-paper';
-import { scoreColor, createTableStyles } from './styles';
+import { createTableStyles } from './styles';
 import { Scorecard } from '../../../types/game';
+import { scoreColor, type AppTheme } from '../../../utils/theme';
 
 type Props = {
     scorecards: Scorecard[]
@@ -11,7 +12,7 @@ type Props = {
 }
 
 const TableScores = ({ scorecards, pars, showBeers, bHcMultiplier }: Props) => {
-    const { colors } = useTheme();
+    const { colors } = useTheme<AppTheme>();
     const tableStyles = createTableStyles(colors);
     const showBeersInfo = showBeers || scorecards.some(sc => sc.beers > 0);
     return (
@@ -37,12 +38,12 @@ const TableScores = ({ scorecards, pars, showBeers, bHcMultiplier }: Props) => {
                 <DataTable.Row key={`dt-row-${sc.user.id}`}>
                     {pars.map((par, index) => {
                         const score = sc.scores[index];
-                        const scoreBackgroundColor = score ? scoreColor(score - par) : undefined;
+                        const scoreBackgroundColor = score ? scoreColor(score - par, colors.scoreColors) : undefined;
                         return (
                             <DataTable.Cell
                                 key={`score-${index}`}
                                 style={[tableStyles.score, { backgroundColor: scoreBackgroundColor }]}
-                                textStyle={[tableStyles.scoreText, { color: 'black' }]}
+                                textStyle={[tableStyles.scoreText, { color: colors.onSurface }]}
                             >
                                 {score ?? ''}
                             </DataTable.Cell>
