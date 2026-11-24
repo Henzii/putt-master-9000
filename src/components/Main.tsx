@@ -42,6 +42,7 @@ import Login from "../screens/Login";
 import RequireAuth from "./RequireAuth";
 import { useSessionV2 } from "@hooks/session/useSessionV2";
 import { RagePutt } from "src/screens/RagePutt";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -51,6 +52,7 @@ export default function App() {
   const [shakeHands] = useLazyQuery<HandShake>(HANDSHAKE);
   const { t } = useTranslation();
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
 
   const { user } = useSessionV2();
 
@@ -117,28 +119,30 @@ export default function App() {
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <Notifications />
       <ToolBar />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signUp/:param?" element={<SignUp />} />
-        <Route path="/firstTime" element={<FirstTime />} />
-        <Route path="/development" element={<DevPage />} />
+      <View style={{ flex: 1, paddingBottom: insets.bottom }}>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signUp/:param?" element={<SignUp />} />
+          <Route path="/firstTime" element={<FirstTime />} />
+          <Route path="/development" element={<DevPage />} />
 
-        <Route element={<RequireAuth />}>
-          <Route path="/" element={<Frontpage />} />
-          <Route path="/game/:gameId?" element={<Game />} />
-          <Route path="/games" element={<OldGames />} />
-          <Route path="/courses" element={<SelectCourses />} />
-          <Route path="/friends" element={<FriendsList />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/stats" element={<Stats />} />
-          <Route path="/achievements" element={<Achievements />} />
-          <Route path="/feedback" element={<Feedback />} />
-          <Route path="/group" element={<Group />} />
-          <Route path="/distance" element={<Distance />} />
-          <Route path="/weeklies" element={<Weeklies />} />
-          <Route path="/rageputt" element={<RagePutt />} />
-        </Route>
-      </Routes>
+          <Route element={<RequireAuth />}>
+            <Route path="/" element={<Frontpage />} />
+            <Route path="/game/:gameId?" element={<Game />} />
+            <Route path="/games" element={<OldGames />} />
+            <Route path="/courses" element={<SelectCourses />} />
+            <Route path="/friends" element={<FriendsList />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/stats" element={<Stats />} />
+            <Route path="/achievements" element={<Achievements />} />
+            <Route path="/feedback" element={<Feedback />} />
+            <Route path="/group" element={<Group />} />
+            <Route path="/distance" element={<Distance />} />
+            <Route path="/weeklies" element={<Weeklies />} />
+            <Route path="/rageputt" element={<RagePutt />} />
+          </Route>
+        </Routes>
+      </View>
       <StatusBar style="auto" />
     </View>
   );
