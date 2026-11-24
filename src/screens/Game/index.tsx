@@ -176,6 +176,7 @@ export default function GameContainer() {
     return (
         <BottomNavigation
             shifting={false}
+            safeAreaInsets={{ bottom: 0 }}
             // style={{ width: '100%' }}
             navigationState={{
                 index: navIndex < navRoutes.length ? navIndex : navRoutes.length - 1,

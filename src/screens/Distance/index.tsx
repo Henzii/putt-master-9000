@@ -68,6 +68,7 @@ const Distance: FC = () => {
       navigationState={{ index, routes }}
       onIndexChange={setIndex}
       renderScene={renderScene}
+      safeAreaInsets={{ bottom: 0 }}
     />
   );
 };

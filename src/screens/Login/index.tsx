@@ -76,6 +76,13 @@ const Login = () => {
                     description={t('components.login.forgotPasswordDescription')}
                     style={{ backgroundColor: theme.colors.surfaceVariant }}
                 />
+                <List.Item
+                    title={t('screens.frontpage.feedback')}
+                    right={() => <List.Icon icon="open-in-new" />}
+                    onPress={() => openWebsite({ path: 'feedback' })}
+                    description={t('screens.frontpage.feedbackDescription')}
+                    style={{ backgroundColor: theme.colors.surfaceVariant }}
+                />
             </List.Section>
 
         </Container>

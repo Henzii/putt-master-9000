@@ -14,7 +14,6 @@ import { useFriends } from '../hooks/useFriends';
 import SignUp from './SignUp';
 import Header from './RoundedHeader/Header';
 import HeaderButton from './RoundedHeader/HeaderButton';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Sheet from './Sheet';
 import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 import { MD3Colors } from 'react-native-paper/lib/typescript/types';
@@ -39,7 +38,6 @@ const FriendsList = (props: FriendListProps) => {
     const [selectedFriends, setSelectedFriends] = useState<Friend[]>([]);
     const backButton = useBackButton();
     const [headerSpacing, setHeaderSpacing] = useState(50);
-    const insets = useSafeAreaInsets();
     const { colors } = useTheme();
     const styles = createStyles(colors);
 
@@ -122,7 +120,7 @@ const FriendsList = (props: FriendListProps) => {
             )}
             {props.multiSelect ?
                 <Button
-                    style={[styles.button, { bottom: insets.bottom }]}
+                    style={styles.button}
                     mode="contained"
                     buttonColor={colors.primary}
                     onPress={handleOkClick}

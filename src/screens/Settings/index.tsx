@@ -20,8 +20,6 @@ import Theme from './Theme';
 import { useLogout } from '@hooks/session/useLogin';
 import { useAuthenticatedUser } from 'src/context/AuthenticatedUserContext';
 import { useUpdateSettings } from '@hooks/useUpdateSettings';
-import Spacer from '@components/ThemedComponents/Spacer';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Settings = () => {
     const { t } = useTranslation();
@@ -31,7 +29,6 @@ const Settings = () => {
     const navi = useNavigate();
     const [deleteAccountMutation] = useMutation(DELETE_ACCOUNT);
     const dispatch = useDispatch();
-    const insets = useSafeAreaInsets();
 
     const handleBlockFriendsChange = () => {
         updateSettings({ variables: { blockFriendRequests: !user.blockFriendRequests }});
@@ -99,7 +96,6 @@ const Settings = () => {
             <View style={tyyli.section}>
                 <DeleteAccount handleDeleteAccount={handleDeleteAccount} />
             </View>
-            <Spacer size={insets.bottom} />
         </Container >
     );
 };
