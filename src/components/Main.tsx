@@ -119,7 +119,12 @@ export default function App() {
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <Notifications />
       <ToolBar />
-      <View style={{ flex: 1, paddingBottom: insets.bottom }}>
+      <View
+        style={{
+          flex: 1,
+          paddingBottom: insets.bottom,
+        }}
+      >
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signUp/:param?" element={<SignUp />} />

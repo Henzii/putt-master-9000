@@ -21,6 +21,7 @@ export const RagePutt = () => {
     return <BottomNavigation
         navigationState={{ index: pageIndex, routes }}
         onIndexChange={setPageIndex}
+        safeAreaInsets={{ bottom: 0 }}
         renderScene={({ route }) => {
             switch (route.key) {
                 case "game":
